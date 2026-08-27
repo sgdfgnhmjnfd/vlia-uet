@@ -1,15 +1,21 @@
 # Giai đoạn 1 — Baseline nhẹ (Layer Skipping + giới hạn Visual Tokens)
+#
+# Layer Skipping: num_vlm_layers=16 (dùng 16 lớp đầu của SmolVLM2-500M-Video-Instruct)
+# Visual Tokens:  resize_imgs_with_padding=(224,224) → SigLIP patch 14×14 → ~64 tokens/ảnh
+#                 (so với mặc định 512×512 → ~1024 tokens/ảnh)
+
 policy:
   path: lerobot/smolvla_base
-  # TODO: xác nhận số lớp thực tế của SmolVLM2-500M-Video-Instruct trước khi set num_layers
-  num_layers: 16
-  num_visual_tokens: 64
+  num_vlm_layers: 16          # Layer Skipping: SmolVLM2-500M có 24 layers, dùng 16 lớp đầu
+  # num_visual_tokens được kiểm soát gián tiếp qua resize_imgs_with_padding trong train script
+
 dataset:
   repo_id: HuggingFaceVLA/libero
   task_suite: libero_spatial
   rename_map:
     observation.images.image: observation.images.camera1
     observation.images.image2: observation.images.camera2
+
 training:
   steps: 25000
   batch_size: 32
@@ -18,3 +24,6 @@ training:
   scheduler_warmup_steps: 1000
   scheduler_decay_steps: 30000
   scheduler_decay_lr: 2.5e-6
+
+output:
+  dir: outputs/phase1_baseline
