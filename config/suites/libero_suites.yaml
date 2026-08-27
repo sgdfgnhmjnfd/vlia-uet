@@ -1,0 +1,10 @@
+# Các suite LIBERO dùng cho eval Giai đoạn 5
+suites:
+  - name: libero_spatial
+    n_episodes: 10
+  - name: libero_object
+    n_episodes: 10
+  - name: libero_goal
+    n_episodes: 10
+  - name: libero_10
+    n_episodes: 10

@@ -1,0 +1,10 @@
+torch
+torchvision
+transformers
+accelerate
+huggingface_hub
+lerobot @ git+https://github.com/huggingface/lerobot.git
+qwen-vl-utils
+pyyaml
+numpy
+tqdm

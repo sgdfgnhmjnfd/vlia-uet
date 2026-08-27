@@ -1,0 +1,12 @@
+# Giai đoạn 4 — Intention Token trong Prefix Embedding
+policy:
+  path: outputs/phase3_text_intention/checkpoints/last/pretrained_model
+  intention_token_dim: 960    # cùng không gian prefix token (Image 16x960 + Language 48x960 + State 1x960)
+  prefix_len_before: 97
+  prefix_len_after: 98        # +1 token ý định
+training:
+  steps: 25000
+  batch_size: 32
+  save_freq: 500
+  # Loss căn chỉnh token ý định với nhãn Giai đoạn 3 — điền cụ thể khi implement
+  alignment_loss: null

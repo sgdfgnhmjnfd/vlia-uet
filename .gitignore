@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Training outputs — checkpoint lớn không nên đưa vào git
+outputs/
+checkpoints/
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+wandb/
+eval_logs/
+
+# Dataset lớn — tải riêng, không commit
+datasets/*
+!datasets/.gitkeep
+!datasets/intention_labels/
+datasets/intention_labels/*.jsonl
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

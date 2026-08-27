@@ -1,0 +1,11 @@
+# Giai đoạn 3 — Text-based Intention baseline
+policy:
+  path: outputs/phase1_baseline/checkpoints/last/pretrained_model
+  prompt_template: "<think>{think}</think><intention>{intention}</intention><action>"
+dataset:
+  repo_id: HuggingFaceVLA/libero
+  intention_labels_path: datasets/intention_labels/phase2_labels.jsonl
+training:
+  steps: 25000
+  batch_size: 32
+  save_freq: 500
