@@ -61,9 +61,9 @@ def main():
     # Lệnh eval chuẩn của lerobot
     eval_cmd = [
         LEROBOT_PYTHON, "-m", "lerobot.scripts.lerobot_eval",
-        "-p", str(policy_path),
+        f"--policy.path={policy_path}",
         "--env.type", "libero",
-        f"--env.name={args.task}",
+        f"--env.task={args.task}",
         f"--eval.n_episodes={args.episodes}",
         "--eval.batch_size=1",  # Chạy 1 env để tránh ngốn RAM
         # Rename map để trùng với camera model train

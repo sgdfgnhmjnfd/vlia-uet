@@ -1,22 +1,32 @@
-"""Kiến trúc PyTorch SmolVLA mở rộng — chèn Intention Token vào Prefix Embedding.
+"""VLIA extension for SmolVLA.
 
-Kiến trúc gốc SmolVLA:
-    Image (16x960) + Language (48x960) + State (1x960) -> Prefix Embedding (97x960)
-    -> SmolVLM (16 layers) -> Cross-Attention Expert -> Flow Matching (10 steps) -> Action (50x32)
+V0 design:
+    SmolVLA prefix:
+        [image][language][intention][state]
 
-Giai đoạn 4 (VLIA): chèn thêm 1 Intention Token (960D) vào Prefix Embedding
-    -> Prefix Embedding (98x960)
-Token này được huấn luyện để căn chỉnh (align) với không gian nhãn ý định
-đã học ở Giai đoạn 3 (Text-based Intention baseline).
+The intention representation z_int is projected into the current
+SmolVLA VLM hidden dimension using IntentionAdapter.
 
-TODO: import SmolVLAPolicy gốc từ lerobot, override forward() / prepare_inputs()
-để chèn intention token trước khi đưa vào SmolVLM backbone.
+Do not assume a fixed prefix length.
 """
 
+from __future__ import annotations
 
-class IntentionToken:
-    """Placeholder cho learned intention token (960D), gắn vào đầu prefix embedding."""
+import torch
+from torch import nn
 
-    def __init__(self, dim: int = 960):
-        self.dim = dim
-        raise NotImplementedError
+from policies.intention.adapter import IntentionAdapter
+
+
+class VLIAIntentionModule(nn.Module):
+    """Convert z_int into one SmolVLA-compatible prefix token."""
+
+    def __init__(self, intention_dim: int, vlm_dim: int):
+        super().__init__()
+        self.adapter = IntentionAdapter(
+            intention_dim=intention_dim,
+            vlm_dim=vlm_dim,
+        )
+
+    def forward(self, z_int: torch.Tensor) -> torch.Tensor:
+        return self.adapter(z_int)
