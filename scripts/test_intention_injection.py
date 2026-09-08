@@ -29,8 +29,8 @@ def main():
     assert grad is not None
     assert torch.isfinite(grad).all()
 
-    print("loss:", float(loss))
-    print("grad norm:", float(grad.norm()))
+    print("loss:", loss.detach().item())
+    print("grad norm:", grad.norm().detach().item())
     print("SMOKE TEST: PASS")
 
 

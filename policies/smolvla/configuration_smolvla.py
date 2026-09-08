@@ -1,16 +1,13 @@
-"""Dataclass cấu hình SmolVLA mở rộng cho VLIA (Giai đoạn 4).
-
-Kế thừa từ lerobot SmolVLAConfig gốc, thêm các trường liên quan Intention Token.
-"""
+"""VLIA configuration extending LeRobot SmolVLA."""
 
 from dataclasses import dataclass
 
+from lerobot.policies.smolvla.configuration_smolvla import SmolVLAConfig
+
 
 @dataclass
-class VLIASmolVLAConfig:
-    # --- Kế thừa từ SmolVLA gốc (điền lại theo lerobot khi implement) ---
-    # ...
+class VLIASmolVLAConfig(SmolVLAConfig):
+    """SmolVLA config with an optional semantic intention representation."""
 
-    # --- Mở rộng cho Intention Token (Giai đoạn 4) ---
-    use_intention_token: bool = False
-    intention_token_dim: int = 960
+    use_intention_token: bool = True
+    intention_dim: int = 256
