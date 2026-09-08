@@ -1,0 +1,38 @@
+{
+  "sample_id": "string",
+  "source": "insight|robosuite|ur3_gazebo",
+  "split": "train|val|test",
+
+  "observation": {
+    "images": [],
+    "state": null
+  },
+
+  "language": {
+    "task": "string"
+  },
+
+  "history": {
+    "semantic_actions": []
+  },
+
+  "intention": {
+    "what": "string",
+    "why": "string",
+    "next": "string",
+    "phase": "string",
+    "source": "ground_truth|pseudo|predicted"
+  },
+
+  "future_actions": [],
+
+  "action": {
+    "low_level": null
+  },
+
+  "provenance": {
+    "dataset": "string",
+    "trajectory_id": "string",
+    "step_id": null
+  }
+}
