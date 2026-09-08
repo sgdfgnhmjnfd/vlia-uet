@@ -1,0 +1,1204 @@
+{
+  "clips": [
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 0,
+      "verb": "verb0",
+      "noun": "noun0"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 1,
+      "verb": "verb1",
+      "noun": "noun1"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 2,
+      "verb": "verb2",
+      "noun": "noun2"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 3,
+      "verb": "verb3",
+      "noun": "noun3"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 4,
+      "verb": "verb4",
+      "noun": "noun4"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 5,
+      "verb": "verb5",
+      "noun": "noun5"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 6,
+      "verb": "verb6",
+      "noun": "noun6"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 7,
+      "verb": "verb7",
+      "noun": "noun7"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 8,
+      "verb": "verb8",
+      "noun": "noun8"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 9,
+      "verb": "verb9",
+      "noun": "noun9"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 10,
+      "verb": "verb10",
+      "noun": "noun10"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 11,
+      "verb": "verb11",
+      "noun": "noun11"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 12,
+      "verb": "verb12",
+      "noun": "noun12"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 13,
+      "verb": "verb13",
+      "noun": "noun13"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 14,
+      "verb": "verb14",
+      "noun": "noun14"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 15,
+      "verb": "verb15",
+      "noun": "noun15"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 16,
+      "verb": "verb16",
+      "noun": "noun16"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 17,
+      "verb": "verb17",
+      "noun": "noun17"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 18,
+      "verb": "verb18",
+      "noun": "noun18"
+    },
+    {
+      "clip_uid": "fixture_clip_00",
+      "action_idx": 19,
+      "verb": "verb19",
+      "noun": "noun19"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 0,
+      "verb": "verb0",
+      "noun": "noun0"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 1,
+      "verb": "verb1",
+      "noun": "noun1"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 2,
+      "verb": "verb2",
+      "noun": "noun2"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 3,
+      "verb": "verb3",
+      "noun": "noun3"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 4,
+      "verb": "verb4",
+      "noun": "noun4"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 5,
+      "verb": "verb5",
+      "noun": "noun5"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 6,
+      "verb": "verb6",
+      "noun": "noun6"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 7,
+      "verb": "verb7",
+      "noun": "noun7"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 8,
+      "verb": "verb8",
+      "noun": "noun8"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 9,
+      "verb": "verb9",
+      "noun": "noun9"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 10,
+      "verb": "verb10",
+      "noun": "noun10"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 11,
+      "verb": "verb11",
+      "noun": "noun11"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 12,
+      "verb": "verb12",
+      "noun": "noun12"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 13,
+      "verb": "verb13",
+      "noun": "noun13"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 14,
+      "verb": "verb14",
+      "noun": "noun14"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 15,
+      "verb": "verb15",
+      "noun": "noun15"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 16,
+      "verb": "verb16",
+      "noun": "noun16"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 17,
+      "verb": "verb17",
+      "noun": "noun17"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 18,
+      "verb": "verb18",
+      "noun": "noun18"
+    },
+    {
+      "clip_uid": "fixture_clip_01",
+      "action_idx": 19,
+      "verb": "verb19",
+      "noun": "noun19"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 0,
+      "verb": "verb0",
+      "noun": "noun0"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 1,
+      "verb": "verb1",
+      "noun": "noun1"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 2,
+      "verb": "verb2",
+      "noun": "noun2"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 3,
+      "verb": "verb3",
+      "noun": "noun3"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 4,
+      "verb": "verb4",
+      "noun": "noun4"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 5,
+      "verb": "verb5",
+      "noun": "noun5"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 6,
+      "verb": "verb6",
+      "noun": "noun6"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 7,
+      "verb": "verb7",
+      "noun": "noun7"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 8,
+      "verb": "verb8",
+      "noun": "noun8"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 9,
+      "verb": "verb9",
+      "noun": "noun9"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 10,
+      "verb": "verb10",
+      "noun": "noun10"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 11,
+      "verb": "verb11",
+      "noun": "noun11"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 12,
+      "verb": "verb12",
+      "noun": "noun12"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 13,
+      "verb": "verb13",
+      "noun": "noun13"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 14,
+      "verb": "verb14",
+      "noun": "noun14"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 15,
+      "verb": "verb15",
+      "noun": "noun15"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 16,
+      "verb": "verb16",
+      "noun": "noun16"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 17,
+      "verb": "verb17",
+      "noun": "noun17"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 18,
+      "verb": "verb18",
+      "noun": "noun18"
+    },
+    {
+      "clip_uid": "fixture_clip_02",
+      "action_idx": 19,
+      "verb": "verb19",
+      "noun": "noun19"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 0,
+      "verb": "verb0",
+      "noun": "noun0"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 1,
+      "verb": "verb1",
+      "noun": "noun1"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 2,
+      "verb": "verb2",
+      "noun": "noun2"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 3,
+      "verb": "verb3",
+      "noun": "noun3"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 4,
+      "verb": "verb4",
+      "noun": "noun4"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 5,
+      "verb": "verb5",
+      "noun": "noun5"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 6,
+      "verb": "verb6",
+      "noun": "noun6"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 7,
+      "verb": "verb7",
+      "noun": "noun7"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 8,
+      "verb": "verb8",
+      "noun": "noun8"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 9,
+      "verb": "verb9",
+      "noun": "noun9"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 10,
+      "verb": "verb10",
+      "noun": "noun10"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 11,
+      "verb": "verb11",
+      "noun": "noun11"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 12,
+      "verb": "verb12",
+      "noun": "noun12"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 13,
+      "verb": "verb13",
+      "noun": "noun13"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 14,
+      "verb": "verb14",
+      "noun": "noun14"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 15,
+      "verb": "verb15",
+      "noun": "noun15"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 16,
+      "verb": "verb16",
+      "noun": "noun16"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 17,
+      "verb": "verb17",
+      "noun": "noun17"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 18,
+      "verb": "verb18",
+      "noun": "noun18"
+    },
+    {
+      "clip_uid": "fixture_clip_03",
+      "action_idx": 19,
+      "verb": "verb19",
+      "noun": "noun19"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 0,
+      "verb": "verb0",
+      "noun": "noun0"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 1,
+      "verb": "verb1",
+      "noun": "noun1"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 2,
+      "verb": "verb2",
+      "noun": "noun2"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 3,
+      "verb": "verb3",
+      "noun": "noun3"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 4,
+      "verb": "verb4",
+      "noun": "noun4"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 5,
+      "verb": "verb5",
+      "noun": "noun5"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 6,
+      "verb": "verb6",
+      "noun": "noun6"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 7,
+      "verb": "verb7",
+      "noun": "noun7"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 8,
+      "verb": "verb8",
+      "noun": "noun8"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 9,
+      "verb": "verb9",
+      "noun": "noun9"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 10,
+      "verb": "verb10",
+      "noun": "noun10"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 11,
+      "verb": "verb11",
+      "noun": "noun11"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 12,
+      "verb": "verb12",
+      "noun": "noun12"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 13,
+      "verb": "verb13",
+      "noun": "noun13"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 14,
+      "verb": "verb14",
+      "noun": "noun14"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 15,
+      "verb": "verb15",
+      "noun": "noun15"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 16,
+      "verb": "verb16",
+      "noun": "noun16"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 17,
+      "verb": "verb17",
+      "noun": "noun17"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 18,
+      "verb": "verb18",
+      "noun": "noun18"
+    },
+    {
+      "clip_uid": "fixture_clip_04",
+      "action_idx": 19,
+      "verb": "verb19",
+      "noun": "noun19"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 0,
+      "verb": "verb0",
+      "noun": "noun0"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 1,
+      "verb": "verb1",
+      "noun": "noun1"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 2,
+      "verb": "verb2",
+      "noun": "noun2"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 3,
+      "verb": "verb3",
+      "noun": "noun3"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 4,
+      "verb": "verb4",
+      "noun": "noun4"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 5,
+      "verb": "verb5",
+      "noun": "noun5"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 6,
+      "verb": "verb6",
+      "noun": "noun6"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 7,
+      "verb": "verb7",
+      "noun": "noun7"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 8,
+      "verb": "verb8",
+      "noun": "noun8"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 9,
+      "verb": "verb9",
+      "noun": "noun9"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 10,
+      "verb": "verb10",
+      "noun": "noun10"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 11,
+      "verb": "verb11",
+      "noun": "noun11"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 12,
+      "verb": "verb12",
+      "noun": "noun12"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 13,
+      "verb": "verb13",
+      "noun": "noun13"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 14,
+      "verb": "verb14",
+      "noun": "noun14"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 15,
+      "verb": "verb15",
+      "noun": "noun15"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 16,
+      "verb": "verb16",
+      "noun": "noun16"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 17,
+      "verb": "verb17",
+      "noun": "noun17"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 18,
+      "verb": "verb18",
+      "noun": "noun18"
+    },
+    {
+      "clip_uid": "fixture_clip_05",
+      "action_idx": 19,
+      "verb": "verb19",
+      "noun": "noun19"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 0,
+      "verb": "verb0",
+      "noun": "noun0"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 1,
+      "verb": "verb1",
+      "noun": "noun1"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 2,
+      "verb": "verb2",
+      "noun": "noun2"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 3,
+      "verb": "verb3",
+      "noun": "noun3"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 4,
+      "verb": "verb4",
+      "noun": "noun4"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 5,
+      "verb": "verb5",
+      "noun": "noun5"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 6,
+      "verb": "verb6",
+      "noun": "noun6"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 7,
+      "verb": "verb7",
+      "noun": "noun7"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 8,
+      "verb": "verb8",
+      "noun": "noun8"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 9,
+      "verb": "verb9",
+      "noun": "noun9"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 10,
+      "verb": "verb10",
+      "noun": "noun10"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 11,
+      "verb": "verb11",
+      "noun": "noun11"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 12,
+      "verb": "verb12",
+      "noun": "noun12"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 13,
+      "verb": "verb13",
+      "noun": "noun13"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 14,
+      "verb": "verb14",
+      "noun": "noun14"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 15,
+      "verb": "verb15",
+      "noun": "noun15"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 16,
+      "verb": "verb16",
+      "noun": "noun16"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 17,
+      "verb": "verb17",
+      "noun": "noun17"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 18,
+      "verb": "verb18",
+      "noun": "noun18"
+    },
+    {
+      "clip_uid": "fixture_clip_06",
+      "action_idx": 19,
+      "verb": "verb19",
+      "noun": "noun19"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 0,
+      "verb": "verb0",
+      "noun": "noun0"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 1,
+      "verb": "verb1",
+      "noun": "noun1"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 2,
+      "verb": "verb2",
+      "noun": "noun2"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 3,
+      "verb": "verb3",
+      "noun": "noun3"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 4,
+      "verb": "verb4",
+      "noun": "noun4"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 5,
+      "verb": "verb5",
+      "noun": "noun5"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 6,
+      "verb": "verb6",
+      "noun": "noun6"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 7,
+      "verb": "verb7",
+      "noun": "noun7"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 8,
+      "verb": "verb8",
+      "noun": "noun8"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 9,
+      "verb": "verb9",
+      "noun": "noun9"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 10,
+      "verb": "verb10",
+      "noun": "noun10"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 11,
+      "verb": "verb11",
+      "noun": "noun11"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 12,
+      "verb": "verb12",
+      "noun": "noun12"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 13,
+      "verb": "verb13",
+      "noun": "noun13"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 14,
+      "verb": "verb14",
+      "noun": "noun14"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 15,
+      "verb": "verb15",
+      "noun": "noun15"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 16,
+      "verb": "verb16",
+      "noun": "noun16"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 17,
+      "verb": "verb17",
+      "noun": "noun17"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 18,
+      "verb": "verb18",
+      "noun": "noun18"
+    },
+    {
+      "clip_uid": "fixture_clip_07",
+      "action_idx": 19,
+      "verb": "verb19",
+      "noun": "noun19"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 0,
+      "verb": "verb0",
+      "noun": "noun0"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 1,
+      "verb": "verb1",
+      "noun": "noun1"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 2,
+      "verb": "verb2",
+      "noun": "noun2"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 3,
+      "verb": "verb3",
+      "noun": "noun3"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 4,
+      "verb": "verb4",
+      "noun": "noun4"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 5,
+      "verb": "verb5",
+      "noun": "noun5"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 6,
+      "verb": "verb6",
+      "noun": "noun6"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 7,
+      "verb": "verb7",
+      "noun": "noun7"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 8,
+      "verb": "verb8",
+      "noun": "noun8"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 9,
+      "verb": "verb9",
+      "noun": "noun9"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 10,
+      "verb": "verb10",
+      "noun": "noun10"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 11,
+      "verb": "verb11",
+      "noun": "noun11"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 12,
+      "verb": "verb12",
+      "noun": "noun12"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 13,
+      "verb": "verb13",
+      "noun": "noun13"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 14,
+      "verb": "verb14",
+      "noun": "noun14"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 15,
+      "verb": "verb15",
+      "noun": "noun15"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 16,
+      "verb": "verb16",
+      "noun": "noun16"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 17,
+      "verb": "verb17",
+      "noun": "noun17"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 18,
+      "verb": "verb18",
+      "noun": "noun18"
+    },
+    {
+      "clip_uid": "fixture_clip_08",
+      "action_idx": 19,
+      "verb": "verb19",
+      "noun": "noun19"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 0,
+      "verb": "verb0",
+      "noun": "noun0"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 1,
+      "verb": "verb1",
+      "noun": "noun1"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 2,
+      "verb": "verb2",
+      "noun": "noun2"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 3,
+      "verb": "verb3",
+      "noun": "noun3"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 4,
+      "verb": "verb4",
+      "noun": "noun4"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 5,
+      "verb": "verb5",
+      "noun": "noun5"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 6,
+      "verb": "verb6",
+      "noun": "noun6"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 7,
+      "verb": "verb7",
+      "noun": "noun7"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 8,
+      "verb": "verb8",
+      "noun": "noun8"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 9,
+      "verb": "verb9",
+      "noun": "noun9"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 10,
+      "verb": "verb10",
+      "noun": "noun10"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 11,
+      "verb": "verb11",
+      "noun": "noun11"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 12,
+      "verb": "verb12",
+      "noun": "noun12"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 13,
+      "verb": "verb13",
+      "noun": "noun13"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 14,
+      "verb": "verb14",
+      "noun": "noun14"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 15,
+      "verb": "verb15",
+      "noun": "noun15"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 16,
+      "verb": "verb16",
+      "noun": "noun16"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 17,
+      "verb": "verb17",
+      "noun": "noun17"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 18,
+      "verb": "verb18",
+      "noun": "noun18"
+    },
+    {
+      "clip_uid": "fixture_clip_09",
+      "action_idx": 19,
+      "verb": "verb19",
+      "noun": "noun19"
+    }
+  ]
+}
