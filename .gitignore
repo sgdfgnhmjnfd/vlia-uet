@@ -17,7 +17,10 @@ wandb/
 eval_logs/
 
 # Dataset lớn — tải riêng, không commit
-datasets/*
+# Dataset source code under datasets/ is tracked.
+# Large/raw datasets must live outside the repository.
+datasets/__pycache__/
+datasets/**/*.pyc
 !datasets/.gitkeep
 !datasets/intention_labels/
 datasets/intention_labels/*.jsonl
