@@ -5,7 +5,7 @@ from policies.smolvla.modeling_smolvla import VLIAIntentionModule
 
 def main():
     batch_size = 4
-    intention_dim = 256
+    intention_dim = 960
     vlm_dim = 960
 
     module = VLIAIntentionModule(

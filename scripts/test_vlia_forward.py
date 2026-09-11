@@ -17,7 +17,7 @@ def main():
 
     cfg = VLIASmolVLAConfig(
         use_intention_token=True,
-        intention_dim=256,
+        intention_dim=960,
         prefix_length=0,
         num_steps=2,
     )

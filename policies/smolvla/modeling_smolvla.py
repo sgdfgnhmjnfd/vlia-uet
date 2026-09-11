@@ -49,7 +49,7 @@ class VLIAFlowMatching(VLAFlowMatching):
         self.intention_dim = getattr(
             config,
             "intention_dim",
-            256,
+            960,
         )
 
         # Never hardcode 960.

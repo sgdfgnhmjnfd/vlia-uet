@@ -10,4 +10,4 @@ class VLIASmolVLAConfig(SmolVLAConfig):
     """SmolVLA config with an optional semantic intention representation."""
 
     use_intention_token: bool = True
-    intention_dim: int = 256
+    intention_dim: int = 960
