@@ -2,9 +2,13 @@
 
 from dataclasses import dataclass
 
-from lerobot.policies.smolvla.configuration_smolvla import SmolVLAConfig
+from lerobot.configs import PreTrainedConfig
+from lerobot.policies.smolvla.configuration_smolvla import (
+    SmolVLAConfig,
+)
 
 
+@PreTrainedConfig.register_subclass("vlia_smolvla")
 @dataclass
 class VLIASmolVLAConfig(SmolVLAConfig):
     """SmolVLA config with an optional semantic intention representation."""

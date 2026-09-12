@@ -57,12 +57,14 @@ def main():
     oracle = LiberoOracleSubset(
         base_dataset=base,
         add_intention=True,
+        semantic_action_padding=False,
     )
 
     matched_baseline = (
         LiberoOracleSubset(
             base_dataset=base,
             add_intention=False,
+            semantic_action_padding=False,
         )
     )
 
