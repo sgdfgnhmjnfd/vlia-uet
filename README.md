@@ -1,186 +1,459 @@
-# vlia-uet — VLIA (Vision-Language-Intention-Action) trên SmolVLA & LIBERO
+# VLIA-UET
 
-Nghiên cứu bổ sung một **module Ý định (Intention)** vào pipeline SmolVLA, hướng tới hợp tác người-robot nhận biết ý định (intention-aware human-robot collaboration). Backbone SmolVLA (chuẩn Hugging Face LeRobot), benchmark **LIBERO** (spatial / object / goal / 10), robot mục tiêu triển khai thật: **UR5**.
+**VLIA (Vision-Language-Intention-Action)** is a research project that extends **SmolVLA** with an explicit human-intention representation for robot manipulation.
 
----
+The main research question is:
 
-## 💻 1. Môi trường Hoạt động (Environment Setup)
+> Can a VLA policy benefit from an intention representation predicted from human egocentric observations?
 
-Kích hoạt môi trường trước khi chạy bất kỳ script nào:
-
-```bash
-conda activate vlia_uet
-# hoặc: source .venv/bin/activate  (nếu dùng venv thay vì conda)
-```
-
-Cài đặt lần đầu:
-
-```bash
-conda env create -f environment.yml
-conda activate vlia_uet
-pip install -r requirements.txt
-```
+The project separates **intention prediction** from **action prediction**. A frozen vision-language backbone extracts semantic visual features from egocentric video, an intention module predicts a compact latent intention representation, and that representation is injected into SmolVLA as an additional prefix token before action generation.
 
 ---
 
-## 📂 2. Cấu trúc Dự án (Repository Architecture)
+## Overview
 
+```text
+Human egocentric observation
+        │
+        ▼
+Frozen SmolVLM visual backbone
+        │
+        ▼
+Temporal Intention Predictor
+        │
+        ▼
+Predicted intention z_int
+        │
+        ▼
+VLIA / SmolVLA
+        │
+        ▼
+Robot action
 ```
+
+VLIA uses the prefix structure:
+
+```text
+[IMAGE] [LANGUAGE] [INTENTION] [STATE]
+```
+
+The intention representation is intended to capture a **phase-level semantic behavioral objective**: why the current manipulation behavior is being performed, rather than the low-level action itself.
+
+---
+
+## Research Scope
+
+This repository currently focuses on three questions:
+
+1. **Intention prediction** — Can phase-level human intention be predicted from egocentric visual observations?
+2. **Temporal intention modeling** — Does explicit temporal reasoning improve over mean-pooled visual representations?
+3. **Downstream VLA conditioning** — Can a predicted intention representation improve robot action prediction when injected into SmolVLA?
+
+An Oracle intention condition is also used as a controlled diagnostic upper bound. It is **not** the main method and should not be interpreted as ground-truth human cognition.
+
+---
+
+## Intention Prediction
+
+### Baseline: mean-pooled visual representation
+
+The current Stage-A baseline uses a frozen `SmolVLM2-500M-Video-Instruct` visual backbone.
+
+```text
+8 RGB frames
+   │
+   ▼
+SmolVLM image processor
+   │
+   ▼
+Vision model + connector
+   │
+   ▼
+mean visual-token pooling
+   │
+   ▼
+mean tile pooling
+   │
+   ▼
+per-frame features [T, 960]
+   │
+   ▼
+temporal mean pooling
+   │
+   ▼
+visual feature [960]
+   │
+   ▼
+intention encoder
+   │
+   ▼
+z_int [256]
+```
+
+The clean visual-only Stage-A predictor uses no future annotation, observed-next-step label, or privileged intention text as predictor input.
+
+### Proposed temporal intention module
+
+The proposed module replaces temporal mean pooling with learnable temporal reasoning:
+
+```text
+Per-frame SmolVLM features [B, T, 960]
+        │
+        ▼
+Linear projection 960 -> 256
+        │
+        ▼
+Learnable temporal positional embeddings
+        │
+        ▼
+2-layer Transformer Encoder
+        │
+        ▼
+Learnable INTENT query
+        │
+        ▼
+Cross-attention over temporal features
+        │
+        ▼
+z_int [B, 256]
+```
+
+The module can also return attention weights over frames for qualitative analysis.
+
+---
+
+## VLIA Integration
+
+The predicted intention latent is mapped into the SmolVLA hidden space using an intention adapter:
+
+```text
+predicted z_int [256]
+        │
+        ▼
+IntentionAdapter
+        │
+        ▼
+intention token [1, 960]
+        │
+        ▼
+SmolVLA prefix
+```
+
+A synthetic integration test currently verifies:
+
+```text
+baseline prefix:  [1, 113, 960]
+VLIA prefix:      [1, 114, 960]
+```
+
+The additional token corresponds to the predicted intention representation.
+
+The repository also supports a separate Oracle experiment in which a privileged 960-D semantic WHY representation is injected into the same VLIA path.
+
+---
+
+## Data
+
+### EgoIntent
+
+EgoIntent is used for Stage-A human-intention prediction experiments.
+
+Current pilot split:
+
+- 771 egocentric clips
+- 8 event categories
+- 8 unique source videos
+- 556 training samples
+- 215 validation samples
+- zero `video_uid` overlap between train and validation
+
+The validation split is intentionally difficult: it combines unseen videos, unseen event categories, and a domain shift between indoor and outdoor scenes.
+
+Predictor inputs do **not** use:
+
+- `observed_next_step`
+- future actions
+- plausible future steps
+- WHY text
+
+WHY text is used only as semantic supervision.
+
+### LIBERO
+
+LIBERO is used for downstream action-policy experiments.
+
+The matched LIBERO-10 training subset contains:
+
+- 88,302 canonical frames
+- 335 episodes
+- action chunk size: 50
+- semantic action padding at episode boundaries
+
+---
+
+## Current Experimental Results
+
+These results are intermediate research diagnostics and should not be interpreted as final task-level conclusions.
+
+### Stage-A intention retrieval
+
+Random multi-positive retrieval baseline:
+
+| Metric | Value |
+| --- | ---: |
+| Top-1 | 0.0087 |
+| Top-3 | 0.0259 |
+| MRR | 0.0420 |
+
+Clean visual-only Stage-A predictor:
+
+| Metric | Value |
+| --- | ---: |
+| Top-1 | 0.0233 |
+| Top-3 | 0.0372 |
+| MRR | 0.0542 |
+| Positive cosine | 0.0504 |
+| Margin | -0.1248 |
+
+The clean predictor is above the random ranking baseline in MRR, but absolute retrieval performance remains low. The temporal intention module is being developed to test whether explicit temporal modeling improves this result.
+
+### LIBERO reference baseline
+
+A previous LIBERO-10 evaluation produced:
+
+- 50 successes / 100 episodes
+- 50% success rate
+
+This result is retained only as a reference. Final VLIA comparisons use a matched retraining protocol.
+
+### Oracle diagnostic
+
+A 500-step matched optimization pilot showed lower training loss for Oracle VLIA than the matched baseline. This is only an optimization signal; no downstream success-rate improvement is claimed from that pilot.
+
+---
+
+## Repository Structure
+
+```text
 vlia-uet/
+├── config/
+│   ├── data/
+│   ├── suites/
+│   └── tasks/
 │
-├── ⚙️ config/                     # Cấu hình Tasks & Suites
-│   ├── tasks/                    # phase1_baseline / phase3_text_intention / phase4_intention_token
-│   └── suites/                   # libero_suites.yaml (spatial, object, goal, 10)
+├── models/
+│   ├── intention_encoder.py
+│   └── temporal_intention_encoder.py
 │
-├── 🌐 envs/                       # Môi trường & tiện ích dữ liệu
-│   ├── libero_env.py             # Wrapper Gym-style quanh benchmark LIBERO
-│   ├── intention_labeler.py      # Gọi VLM ngoài (Qwen2.5-VL-3B) sinh nhãn What/Why/Next
-│   └── scene_config.py           # Parser nạp TaskConfig từ YAML
+├── policies/
+│   ├── intention/
+│   │   └── clean_stage_a_encoder.py
+│   └── smolvla/
+│       ├── configuration_smolvla.py
+│       └── modeling_smolvla.py
 │
-├── 🧠 policies/                   # Kiến trúc Model AI
-│   └── smolvla/                  # SmolVLA Policy mở rộng cho VLIA
-│       ├── configuration_smolvla.py  # Dataclass cấu hình (+ use_intention_token, intention_token_dim)
-│       ├── modeling_smolvla.py       # Chèn Intention Token (960D) vào Prefix Embedding
-│       └── processor_smolvla.py      # Prompt template <think>-><intention>-><action>
+├── vlia_data/
+│   └── libero_oracle_dataset.py
 │
-├── 🦾 robots/                     # Trừu tượng hoá phần cứng
-│   └── ur5_robot.py              # Driver UR5 cho Giai đoạn 5 (triển khai thật)
-│
-├── 📦 datasets/                   # Dataset LIBERO + nhãn ý định (tải riêng, không commit)
-│
-├── 🎯 scripts/                    # Entrypoints CLI theo từng giai đoạn
-│   ├── train_baseline.py             # [1] Baseline nhẹ (Layer Skipping, Visual Tokens)
-│   ├── generate_intention_labels.py  # [2] Sinh nhãn ý định bằng Qwen2.5-VL-3B
-│   ├── train_text_intention.py       # [3] Text-based Intention baseline
-│   ├── train_intention_token.py      # [4] Intention Token trong Prefix Embedding
-│   ├── eval_policy.py                # [5] Đánh giá & so sánh 3 hệ thống
-│   ├── push_to_hub.py                # Đẩy checkpoint/dataset lên Hugging Face Hub
-│   └── 🛠️ tools/
-│       ├── inspect_scheduler.py      # Debug LR scheduler khi resume checkpoint
-│       └── verify_checkpoint.py      # Kiểm tra checkpoint hợp lệ trước khi eval/resume
-│
-├── urdf/ & meshes/                # (Dự phòng) file 3D nếu cần mô phỏng UR5 riêng ngoài LIBERO
+├── scripts/
+│   ├── cache_egointent_stage_a_features.py
+│   ├── cache_egointent_temporal_features.py
+│   ├── eval_stage_a_cached.py
+│   ├── train_matched_oracle.py
+│   ├── test_clean_stage_a_encoder.py
+│   ├── test_predicted_intention_adapter.py
+│   ├── test_predicted_vlia_prefix.py
+│   └── test_predicted_intention_real_cached.py
 │
 ├── docs/
-│   └── ROADMAP.md                 # Bảng lộ trình 5 giai đoạn + ghi chú kỹ thuật
-│
-├── .gitignore
-├── AGENT.md
-├── LICENSE
+├── robots/
+├── urdf/
+├── meshes/
 ├── README.md
-├── environment.yml
+├── LICENSE
 └── requirements.txt
 ```
 
----
-
-## 🚀 3. Hướng dẫn Toàn bộ Các Lệnh Chạy (Full Workflow CLI)
+Some older phase-based scripts and configuration files may remain in the repository for experiment history. They are not necessarily part of the current VLIA training path.
 
 ---
 
-### 📦 GIAI ĐOẠN 1 (Tuần 1): Baseline nhẹ (`train_baseline.py`)
+## Environment
 
-> Layer Skipping 16 lớp + 64 Visual Tokens, train trên LIBERO spatial. Mục tiêu: chạy mượt, success rate ổn định.
+The project is developed on top of the Hugging Face LeRobot stack.
+
+Activate the LeRobot virtual environment:
 
 ```bash
-python scripts/train_baseline.py --config config/tasks/phase1_baseline.yaml
+cd ~/lerobot
+source .venv/bin/activate
+cd ~/vlia-uet
+```
+
+The expected Python executable is:
+
+```bash
+/home/dhqg/lerobot/.venv/bin/python
+```
+
+Because this repository contains a local `datasets/` package, the current development setup uses:
+
+```bash
+export PYTHONPATH=/home/dhqg/lerobot/.venv/lib/python3.12/site-packages:/home/dhqg/lerobot/src:/home/dhqg/vlia-uet
+```
+
+For repository scripts, `python -P` is recommended to avoid local package shadowing:
+
+```bash
+python -P scripts/<script_name>.py
 ```
 
 ---
 
-### 🏷️ GIAI ĐOẠN 2 (Tuần 2): Sinh dữ liệu Ý định (`generate_intention_labels.py`)
+## Key Validation Commands
 
-> Dùng Qwen2.5-VL-3B quét video rollout LIBERO, sinh nhãn **What / Why / Next**.
+### Clean Stage-A encoder
 
 ```bash
-python scripts/generate_intention_labels.py \
-    --video-dir datasets/libero_rollouts \
-    --out datasets/intention_labels/phase2_labels.jsonl
+python -P scripts/test_clean_stage_a_encoder.py
+```
+
+Expected:
+
+```text
+CLEAN STAGE-A ENCODER: PASS
+```
+
+### Predicted intention adapter
+
+```bash
+python -P scripts/test_predicted_intention_adapter.py
+```
+
+Expected:
+
+```text
+PREDICTED INTENTION ADAPTER: PASS
+```
+
+### Predicted VLIA prefix injection
+
+```bash
+python -P scripts/test_predicted_vlia_prefix.py
+```
+
+Expected:
+
+```text
+PREDICTED VLIA PREFIX: PASS
+```
+
+### Real cached EgoIntent feature
+
+```bash
+python -P scripts/test_predicted_intention_real_cached.py
+```
+
+Expected:
+
+```text
+REAL CACHED PREDICTED INTENTION: PASS
 ```
 
 ---
 
-### 🧠 GIAI ĐOẠN 3 (Tuần 3): Text Baseline (`train_text_intention.py`)
+## Matched LIBERO Training
 
-> Train SmolVLA với cấu trúc prompt `<think> -> <intention> -> <action>` trên nhãn Giai đoạn 2.
+Baseline:
 
 ```bash
-python scripts/train_text_intention.py --config config/tasks/phase3_text_intention.yaml
+python -u -P scripts/train_matched_oracle.py \
+  --condition baseline \
+  --output-root /media/dhqg/d1/vlia_outputs/oracle_matched_full \
+  --steps 25000 \
+  --batch-size 32 \
+  --warmup-steps 1000 \
+  --save-freq 1000 \
+  --log-freq 50 \
+  --seed 0
+```
+
+Oracle:
+
+```bash
+python -u -P scripts/train_matched_oracle.py \
+  --condition oracle \
+  --output-root /media/dhqg/d1/vlia_outputs/oracle_matched_full \
+  --steps 25000 \
+  --batch-size 32 \
+  --warmup-steps 1000 \
+  --save-freq 1000 \
+  --log-freq 50 \
+  --seed 0
+```
+
+The trainer stores:
+
+```text
+checkpoint_xxxxxx/
+├── pretrained_model/
+└── training_state.pt
+```
+
+`training_state.pt` contains the training step, optimizer state, scheduler state, arguments, and running information.
+
+Resume example:
+
+```bash
+python -u -P scripts/train_matched_oracle.py \
+  --condition baseline \
+  --output-root /media/dhqg/d1/vlia_outputs/oracle_matched_full \
+  --steps 25000 \
+  --batch-size 32 \
+  --warmup-steps 1000 \
+  --save-freq 1000 \
+  --log-freq 50 \
+  --seed 0 \
+  --resume /path/to/checkpoint_xxxxxx
 ```
 
 ---
 
-### 🔧 GIAI ĐOẠN 4 (Tuần 4-5): Intention Token (`train_intention_token.py`)
+## Development Status
 
-> Chèn 1 token ý định (960D) vào Prefix Embedding của `modeling_smolvla.py`, huấn luyện căn chỉnh với không gian nhãn Giai đoạn 3.
-
-```bash
-python scripts/train_intention_token.py --config config/tasks/phase4_intention_token.yaml
-```
-
----
-
-### 📊 GIAI ĐOẠN 5 (Tuần 6): Đánh giá & Triển khai (`eval_policy.py`)
-
-> Rollout kiểm tra, so sánh Success Rate: **SmolVLA gốc** vs **Text-based VLIA** vs **Token-based VLIA**.
-
-```bash
-# Đánh giá 1 checkpoint trên 1 suite
-python scripts/eval_policy.py \
-    --policy.path outputs/phase4_intention_token/checkpoints/last/pretrained_model \
-    --env.task libero_10 \
-    --eval.n_episodes 10
-
-# Đánh giá đầy đủ 4 suite, gộp bảng so sánh 3 hệ thống
-python scripts/eval_policy.py \
-    --suites-config config/suites/libero_suites.yaml \
-    --compare baseline,text_intention,intention_token
-```
-
-#### 📋 Chỉ số đánh giá
-
-| Chỉ số | Ý nghĩa |
+| Component | Status |
 | --- | --- |
-| **Success Rate** | Tỷ lệ episode hoàn thành nhiệm vụ thành công (%) |
-| **Avg Sum Reward** | Tổng reward trung bình mỗi episode |
-| **Avg Max Reward** | Reward cao nhất trung bình mỗi episode |
+| SmolVLA baseline integration | Implemented |
+| VLIA intention token injection | Implemented |
+| Oracle intention conditioning | Implemented |
+| Clean visual-only Stage-A predictor | Implemented |
+| 256 -> 960 intention adapter | Implemented |
+| Predicted VLIA prefix path | Implemented |
+| Real cached EgoIntent -> predicted intention path | Implemented |
+| Temporal Intention Encoder | Implemented, training pipeline in progress |
+| Per-frame EgoIntent feature cache | In progress |
+| Predicted-intention downstream training | Planned |
+| Matched LIBERO baseline / Oracle evaluation | In progress |
+| UR3 Gazebo + ROS2 deployment path | In progress |
 
 ---
 
-### 🛠️ Công cụ phụ trợ (`scripts/tools/`)
+## Experimental Principles
 
-```bash
-# Xem scheduler_state.json / training_step.json / optimizer_param_groups.json của 1 checkpoint
-python scripts/tools/inspect_scheduler.py --checkpoint-dir outputs/smolvla_libero/checkpoints/025000
+To keep comparisons interpretable:
 
-# Kiểm tra checkpoint tồn tại & hợp lệ trước khi eval/resume
-python scripts/tools/verify_checkpoint.py --path outputs/smolvla_libero/checkpoints/050000
-```
-
----
-
-## 🤝 4. Đẩy Checkpoint/Dataset lên Hugging Face Hub (`push_to_hub.py`)
-
-```bash
-python scripts/push_to_hub.py \
-    --checkpoint-dir outputs/phase4_intention_token/checkpoints/last/pretrained_model \
-    --repo-id username/vlia-smolvla-libero \
-    --private
-```
+- intention prediction is evaluated separately from action prediction;
+- train/validation splits are separated by source video;
+- future information is never used as predictor input;
+- Oracle intention is treated as privileged supervision/diagnostic information;
+- baseline and Oracle downstream runs use matched training settings;
+- training loss alone is not treated as evidence of task-level improvement;
+- final claims require downstream rollout evaluation.
 
 ---
 
-## 📈 Trạng thái hiện tại
+## Project Goal
 
-- [x] Fine-tune SmolVLA baseline trên LIBERO (10k → đang tiếp tục tới 100k step)
-- [ ] Giai đoạn 1: Baseline nhẹ (Layer Skipping 16 lớp, 64 Visual Tokens)
-- [ ] Giai đoạn 2: Sinh nhãn ý định bằng Qwen2.5-VL-3B
-- [ ] Giai đoạn 3: Text-based Intention baseline
-- [ ] Giai đoạn 4: Intention Token (960D) trong Prefix Embedding
-- [ ] Giai đoạn 5: Đánh giá & so sánh
+The final goal is a VLA system in which a robot action policy can be conditioned on a compact semantic representation of **predicted human intention**, enabling intention-aware robot manipulation and future human-robot collaboration experiments.
 
-Chi tiết đầy đủ: [`docs/ROADMAP.md`](docs/ROADMAP.md).
-
-## About
-
-Intention-aware SmolVLA (Vision-Language-Intention-Action) cho manipulation trên benchmark LIBERO, hướng triển khai UR5.
+The current deployment platform is based on **UR3 + ROS2 + Gazebo**, while LIBERO is used as the main policy benchmark.
