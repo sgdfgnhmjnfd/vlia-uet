@@ -8,7 +8,12 @@ class IntentionAlignmentSample:
     task: str
     history: list[str]
     observation: dict[str, Any]
+
+    # Structured semantic supervision.
+    what: str
     why: str
+    next: str
+
     phase: str
 
 
@@ -22,26 +27,78 @@ def to_intention_alignment_sample(sample):
         - semantic action history
 
     Supervision:
+        - WHAT
         - WHY
+        - NEXT
         - phase (for evaluation only)
 
-    Future actions and offline annotation metadata are intentionally
-    excluded to prevent future-information leakage.
+    Important:
+        WHAT and NEXT are supervision targets only.
+        NEXT must never become a predictor input, otherwise future
+        information leakage is introduced.
     """
 
     intention = sample["intention"]
 
-    why = intention["why"].strip()
+    what = str(
+        intention.get(
+            "what",
+            "",
+        )
+    ).strip()
+
+    why = str(
+        intention.get(
+            "why",
+            "",
+        )
+    ).strip()
+
+    next_text = str(
+        intention.get(
+            "next",
+            "",
+        )
+    ).strip()
+
     if not why:
-        raise ValueError("Stage-A sample requires a non-empty WHY label.")
+        raise ValueError(
+            "Stage-A sample requires "
+            "a non-empty WHY label."
+        )
 
     return IntentionAlignmentSample(
-        sample_id=sample["sample_id"],
-        task=sample["language"]["task"],
+        sample_id=sample[
+            "sample_id"
+        ],
+
+        task=sample[
+            "language"
+        ][
+            "task"
+        ],
+
         history=list(
-            sample["history"]["semantic_actions"]
+            sample[
+                "history"
+            ][
+                "semantic_actions"
+            ]
         ),
-        observation=dict(sample["observation"]),
+
+        observation=dict(
+            sample[
+                "observation"
+            ]
+        ),
+
+        what=what,
+
         why=why,
-        phase=intention["phase"],
+
+        next=next_text,
+
+        phase=intention[
+            "phase"
+        ],
     )

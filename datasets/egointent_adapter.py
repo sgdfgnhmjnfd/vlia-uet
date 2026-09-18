@@ -1,8 +1,7 @@
 import json
 from pathlib import Path
 
-from datasets.intention_alignment_dataset import IntentionAlignmentSample
-
+from intention_alignment_dataset import IntentionAlignmentSample
 
 def load_egointent_event(label_path):
     label_path = Path(label_path)
@@ -31,25 +30,28 @@ def find_step_video(event_dir, step_id):
 
 def build_egointent_alignment_samples(label_path):
     """
-    Build Stage-A intention-alignment samples for one EgoIntent event.
+    Build Stage-A structured intention-alignment samples
+    for one EgoIntent event.
 
     Predictor inputs:
         - egocentric pre-outcome video
         - event string as weak task-level context
-        - previous annotated local intents as semantic-history proxy
+        - previous annotated local intents as
+          semantic-history proxy
 
-    Supervision:
+    Structured supervision:
+        - local_intent -> WHAT
         - procedural_intent -> WHY
+        - observed_next_step -> NEXT
 
     Explicitly excluded from predictor inputs:
         - current local_intent
         - observed_next_step
         - plausible_next_steps
 
-    Note:
-        Previous local_intent labels are annotation-derived history.
-        They should not be treated as deployment-observable signals
-        without a separate prediction mechanism.
+    Important:
+        WHAT and NEXT are supervision targets only.
+        NEXT must never become a predictor input.
     """
 
     label_path = Path(label_path)
@@ -82,10 +84,15 @@ def build_egointent_alignment_samples(label_path):
         ]
 
         sample = IntentionAlignmentSample(
-            sample_id=f"egointent_{video_uid}_{step_id}",
+            sample_id=(
+                f"egointent_"
+                f"{video_uid}_"
+                f"{step_id}"
+            ),
 
-            # EgoIntent does not provide a natural-language robot task
-            # instruction. The event name is used as weak task context.
+            # EgoIntent does not provide a natural-language
+            # robot task instruction. The event name is used
+            # as weak task-level context.
             task=event,
 
             # Annotation-derived semantic-history proxy.
@@ -96,17 +103,43 @@ def build_egointent_alignment_samples(label_path):
                 "state": None,
                 "video_path": (
                     str(video_path)
-                    if video_path is not None
+                    if video_path
+                    is not None
                     else None
                 ),
-                "start_time": step["start_time"],
-                "obs_end_time": step["obs_end_time"],
+                "start_time": (
+                    step[
+                        "start_time"
+                    ]
+                ),
+                "obs_end_time": (
+                    step[
+                        "obs_end_time"
+                    ]
+                ),
             },
 
-            # EgoIntent procedural intent is used as WHY supervision.
-            why=step["procedural_intent"],
+            # EgoIntent local intent is used as WHAT
+            # auxiliary supervision.
+            what=step[
+                "local_intent"
+            ],
 
-            # EgoIntent does not provide the VLIA V1.1 phase taxonomy.
+            # EgoIntent procedural intent is the main
+            # WHY / intention supervision.
+            why=step[
+                "procedural_intent"
+            ],
+
+            # Observed next step is used only as NEXT
+            # auxiliary supervision. It must never be
+            # provided as predictor input.
+            next=step[
+                "observed_next_step"
+            ],
+
+            # EgoIntent does not provide the VLIA
+            # V1.1 phase taxonomy.
             phase="unassigned",
         )
 
