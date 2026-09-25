@@ -1,623 +1,245 @@
 # VLIA-UET
 
-## Intention Prediction for Vision-Language-Action Models
+**VLIA (Vision-Language-Intention-Action)** is a research project that extends **SmolVLA** with an explicit human-intention representation for robot manipulation.
 
-This repository focuses on **human intention prediction for Vision-Language-Action (VLA) systems**.
+The main research question is:
 
-The main research problem is not to redesign the downstream action policy itself, but to build an intention prediction module that can infer a structured semantic state from visual observations and expose it as a compact representation for a VLA policy.
+> Can a VLA policy benefit from an intention representation predicted from human egocentric observations?
 
-The current direction is:
-
-```text
-Human visual observation
-        ↓
-Temporal / cross-view intention predictor
-        ↓
-What / Why / Next reasoning
-        ↓
-predicted intention representation z_int
-        ↓
-VLA policy interface
-        ↓
-robot action generation
-```
-
-The downstream VLA policy is treated as a consumer of the predicted intention representation. The core contribution of this repository is the **intention prediction side**.
+The project separates **intention prediction** from **action prediction**. A frozen vision-language backbone extracts semantic visual features from egocentric video, an intention module predicts a compact latent intention representation, and that representation is injected into SmolVLA as an additional prefix token before action generation.
 
 ---
 
-## 1. Research Motivation
-
-Vision-Language-Action models typically map visual observations, language instructions, and robot state directly to low-level action chunks.
-
-However, long-horizon manipulation is naturally organized into semantic phases. A task instruction may remain unchanged while the local behavioral purpose changes over time.
-
-For example:
+## Overview
 
 ```text
-Task:
-place the cup under the faucet and fill it with water
-
-Semantic progression:
-approach cup
-→ grasp cup
-→ move cup toward faucet
-→ align cup under faucet
-→ activate faucet
-→ fill cup
+Human egocentric observation
+        │
+        ▼
+Frozen SmolVLM visual backbone
+        │
+        ▼
+Temporal Intention Predictor
+        │
+        ▼
+Predicted intention z_int
+        │
+        ▼
+VLIA / SmolVLA
+        │
+        ▼
+Robot action
 ```
 
-The low-level robot actions are embodiment-specific, but the local semantic intention can be more abstract.
+VLIA uses the prefix structure:
 
-This motivates the following hypothesis:
+```text
+[IMAGE] [LANGUAGE] [INTENTION] [STATE]
+```
 
-> **Intention should be represented as a temporally evolving semantic state that can be inferred from visual behavior and consumed by a downstream VLA policy.**
+The intention representation is intended to capture a **phase-level semantic behavioral objective**: why the current manipulation behavior is being performed, rather than the low-level action itself.
 
 ---
 
-## 2. Main Research Questions
+## Research Scope
 
-This project currently studies three main questions:
+This repository currently focuses on three questions:
 
-1. **Can phase-level intention be predicted from temporal visual observations?**
+1. **Intention prediction** — Can phase-level human intention be predicted from egocentric visual observations?
+2. **Temporal intention modeling** — Does explicit temporal reasoning improve over mean-pooled visual representations?
+3. **Downstream VLA conditioning** — Can a predicted intention representation improve robot action prediction when injected into SmolVLA?
 
-2. **Does modeling temporal progression improve intention prediction compared with static mean-pooled visual representations?**
-
-3. **Can structured What–Why–Next supervision and cross-view training improve the quality and generalization of the predicted intention representation?**
-
-A downstream VLA experiment is used only as a final validation step:
-
-> Can the predicted intention representation serve as a useful conditioning signal for a VLA policy?
+An Oracle intention condition is also used as a controlled diagnostic upper bound. It is **not** the main method and should not be interpreted as ground-truth human cognition.
 
 ---
 
-## 3. Intention Definition
+## Intention Prediction
 
-In this project, intention is defined as a **local semantic objective at the current behavioral phase**.
+### Baseline: mean-pooled visual representation
 
-The representation is organized around three related concepts:
-
-### What
-
-What is currently happening.
-
-Examples:
+The current Stage-A baseline uses a frozen `SmolVLM2-500M-Video-Instruct` visual backbone.
 
 ```text
-holding the cup
-moving the cup toward the faucet
-aligning the cup under the faucet
+8 RGB frames
+   │
+   ▼
+SmolVLM image processor
+   │
+   ▼
+Vision model + connector
+   │
+   ▼
+mean visual-token pooling
+   │
+   ▼
+mean tile pooling
+   │
+   ▼
+per-frame features [T, 960]
+   │
+   ▼
+temporal mean pooling
+   │
+   ▼
+visual feature [960]
+   │
+   ▼
+intention encoder
+   │
+   ▼
+z_int [256]
 ```
 
-### Why
+The clean visual-only Stage-A predictor uses no future annotation, observed-next-step label, or privileged intention text as predictor input.
 
-Why the current behavior is being performed.
+### Proposed temporal intention module
 
-This is the main intention target.
-
-Examples:
+The proposed module replaces temporal mean pooling with learnable temporal reasoning:
 
 ```text
-position the cup so that it can receive water
-establish a stable grasp before transport
-align the object with the target before placement
+Per-frame SmolVLM features [B, T, 960]
+        │
+        ▼
+Linear projection 960 -> 256
+        │
+        ▼
+Learnable temporal positional embeddings
+        │
+        ▼
+2-layer Transformer Encoder
+        │
+        ▼
+Learnable INTENT query
+        │
+        ▼
+Cross-attention over temporal features
+        │
+        ▼
+z_int [B, 256]
 ```
 
-### Next
-
-What semantic step is likely to follow.
-
-Examples:
-
-```text
-place cup under faucet
-→ activate faucet
-→ fill cup
-```
-
-The project does **not** use future annotations as predictor inputs. Future information is only used as supervision or evaluation targets.
+The module can also return attention weights over frames for qualitative analysis.
 
 ---
 
-## 4. Structured Intention Prediction
+## VLIA Integration
 
-Instead of predicting only a single isolated intention label, the current direction models a structured semantic state:
+The predicted intention latent is mapped into the SmolVLA hidden space using an intention adapter:
 
-\[
-\hat{\mathcal{S}}_t
-=
-\{
-\hat{W}_t,
-\hat{Y}_t,
-\hat{N}_{t+1:t+K}
-\}
-\]
+```text
+predicted z_int [256]
+        │
+        ▼
+IntentionAdapter
+        │
+        ▼
+intention token [1, 960]
+        │
+        ▼
+SmolVLA prefix
+```
 
-where:
+A synthetic integration test currently verifies:
 
-- \(W_t\): current **What**
-- \(Y_t\): current **Why / Intention**
-- \(N_{t+1:t+K}\): short future semantic sequence
+```text
+baseline prefix:  [1, 113, 960]
+VLIA prefix:      [1, 114, 960]
+```
 
-The main exported representation remains:
+The additional token corresponds to the predicted intention representation.
 
-\[
-z_t^{\mathrm{int}}
-\in
-\mathbb{R}^{256}
-\]
-
-This latent is intended to be used as the interface to a downstream VLA policy.
+The repository also supports a separate Oracle experiment in which a privileged 960-D semantic WHY representation is injected into the same VLIA path.
 
 ---
 
-## 5. Current Model Direction
-
-### 5.1 Static Mean-Pooling Baseline
-
-The current clean baseline uses frozen SmolVLM visual features.
-
-```text
-video frames
-→ frozen SmolVLM
-→ frame / tile features
-→ temporal mean pooling
-→ visual feature [960]
-→ intention predictor
-→ z_int [256]
-```
-
-This baseline is used to measure whether temporal reasoning provides a real improvement.
-
----
-
-### 5.2 Temporal Intention Encoder
-
-The proposed temporal module keeps the frame sequence instead of averaging over time.
-
-```text
-8 visual frames
-→ frozen SmolVLM
-→ per-frame features [8, 960]
-→ Linear 960→256
-→ temporal positional embeddings
-→ 2-layer Transformer Encoder
-→ learnable INTENT query
-→ attention pooling
-→ z_int [256]
-```
-
-Current implementation:
-
-```text
-models/temporal_intention_encoder.py
-```
-
-The module can optionally return temporal attention weights for qualitative analysis.
-
----
-
-### 5.3 Cross-View Intention Prediction
-
-The next extension is to train the predictor on multiple visual viewpoints.
-
-Target setting:
-
-```text
-egocentric clip ──┐
-                  ├── Temporal Intention Predictor
-exocentric clip ──┘
-                           ↓
-                     shared z_int
-```
-
-The goal is to learn an intention representation that is less dependent on camera viewpoint.
-
-The intended training principle is:
-
-```text
-same intention + different view
-→ similar latent representation
-
-same task + different phase
-→ hard negative
-```
-
-This is particularly important because a representation trained only on egocentric data may not generalize well to observations with different viewpoints.
-
----
-
-## 6. Multi-View Dataset Direction
-
-The project is moving toward a unified intention dataset that can mix:
-
-```text
-egocentric human video
-exocentric human video
-optional robot-view video
-```
-
-The canonical sample schema is intended to include:
-
-```text
-sample_id
-source_dataset
-
-task
-phase
-what
-why
-next
-
-view_type
-view_id
-
-subject_id
-scene_id
-video_uid
-video_path
-
-start_time
-end_time
-
-pair_group_id
-split
-```
-
-The most important field for cross-view learning is:
-
-```text
-pair_group_id
-```
-
-Samples with the same semantic intention but different views can be grouped as positives.
-
-Perfect temporal synchronization is not required for the first version. Weak semantic pairing by:
-
-```text
-task + phase + intention
-```
-
-is acceptable.
-
----
-
-## 7. Dataset Sources
+## Data
 
 ### EgoIntent
 
-The current Stage-A experiments use EgoIntent as the main egocentric human-intention source.
+EgoIntent is used for Stage-A human-intention prediction experiments.
 
-The mapping currently used is:
+Current pilot split:
 
-```text
-procedural_intent      → Why / Intention
-local_intent           → What
-observed_next_step     → Next supervision / evaluation only
-plausible_next_steps   → auxiliary supervision / evaluation only
-```
+- 771 egocentric clips
+- 8 event categories
+- 8 unique source videos
+- 556 training samples
+- 215 validation samples
+- zero `video_uid` overlap between train and validation
 
-Future annotations are never used as predictor inputs.
+The validation split is intentionally difficult: it combines unseen videos, unseen event categories, and a domain shift between indoor and outdoor scenes.
 
-Current pilot:
+Predictor inputs do **not** use:
 
-```text
-8 source videos
-771 micro-step clips
+- `observed_next_step`
+- future actions
+- plausible future steps
+- WHY text
 
-train:
-556 samples
-6 indoor videos
+WHY text is used only as semantic supervision.
 
-validation:
-215 samples
-2 outdoor videos
-```
+### LIBERO
 
-The split is performed by `video_uid` to avoid leakage across clips from the same source video.
+LIBERO is used for downstream action-policy experiments.
 
-The validation split is intentionally difficult because it includes:
+The matched LIBERO-10 training subset contains:
 
-```text
-unseen video
-cross-event transfer
-indoor → outdoor domain shift
-```
+- 88,302 canonical frames
+- 335 episodes
+- action chunk size: 50
+- semantic action padding at episode boundaries
 
 ---
 
-## 8. Temporal Feature Cache
+## Current Experimental Results
 
-To train temporal models efficiently, frozen visual features are cached per frame.
+These results are intermediate research diagnostics and should not be interpreted as final task-level conclusions.
 
-Current cache representation:
+### Stage-A intention retrieval
 
-```text
-frame_features.shape = [8, 960]
-```
+Random multi-positive retrieval baseline:
 
-For clips that decode fewer than 8 frames, the pipeline performs uniform temporal repetition while preserving frame order.
+| Metric | Value |
+| --- | ---: |
+| Top-1 | 0.0087 |
+| Top-3 | 0.0259 |
+| MRR | 0.0420 |
 
-Example:
+Clean visual-only Stage-A predictor:
 
-```text
-4 decoded frames
-→ 8 temporal positions
-```
+| Metric | Value |
+| --- | ---: |
+| Top-1 | 0.0233 |
+| Top-3 | 0.0372 |
+| MRR | 0.0542 |
+| Positive cosine | 0.0504 |
+| Margin | -0.1248 |
 
-The temporal cache script is:
+The clean predictor is above the random ranking baseline in MRR, but absolute retrieval performance remains low. The temporal intention module is being developed to test whether explicit temporal modeling improves this result.
 
-```bash
-python -P scripts/cache_egointent_temporal_features.py \
-  --split train
-```
+### LIBERO reference baseline
 
-and:
+A previous LIBERO-10 evaluation produced:
 
-```bash
-python -P scripts/cache_egointent_temporal_features.py \
-  --split val
-```
+- 50 successes / 100 episodes
+- 50% success rate
 
-Default output:
+This result is retained only as a reference. Final VLIA comparisons use a matched retraining protocol.
 
-```text
-/media/dhqg/d1/datasets/egointent/cache/temporal_intention_v1/
-```
+### Oracle diagnostic
 
----
-
-## 9. Stage-A Intention Prediction Results
-
-The current Stage-A results should be interpreted as baselines for the new temporal predictor.
-
-### Random Multi-Positive Baseline
-
-```text
-Top-1: 0.00868
-Top-3: 0.02591
-MRR:   0.04203
-```
-
-### V0: Cosine-Only Alignment
-
-The cosine-only objective produced high cosine similarity but poor retrieval.
-
-```text
-Top-1: ~0.0047
-Top-3: ~0.0140
-MRR:   ~0.028
-```
-
-This indicated representation collapse toward the semantic centroid.
+A 500-step matched optimization pilot showed lower training loss for Oracle VLIA than the matched baseline. This is only an optimization signal; no downstream success-rate improvement is claimed from that pilot.
 
 ---
 
-### V1: Multi-Positive Contrastive Learning
-
-A contrastive objective improved retrieval.
-
-Important reference:
-
-```text
-visual-only 960-D
-MRR ≈ 0.0540
-```
-
-Multi-input variants using task/history sometimes achieved higher MRR, but annotation-derived history is not treated as a clean deployment-time input.
-
----
-
-### Clean V1: Mean-Pooling Baseline
-
-The current clean baseline predicts a 256-D latent intention from mean-pooled visual features.
-
-Best validation result:
-
-```text
-Top-1: 0.0233
-Top-3: 0.0372
-MRR:   0.0542
-Margin: -0.1248
-```
-
-This model is now treated as the **static mean-pooling baseline**.
-
-It is not the final proposed method.
-
-The next main comparison is:
-
-```text
-Clean V1 mean-pooling
-vs.
-Temporal Intention Encoder
-vs.
-Cross-view Temporal Intention Encoder
-```
-
----
-
-## 10. Training Objective Direction
-
-The intended structured training objective is:
-
-\[
-\mathcal{L}
-=
-\mathcal{L}_{\mathrm{why}}
-+
-\lambda_w \mathcal{L}_{\mathrm{what}}
-+
-\lambda_n \mathcal{L}_{\mathrm{next}}
-+
-\lambda_{cv} \mathcal{L}_{\mathrm{crossview}}
-\]
-
-where:
-
-- `L_why` is the main intention prediction objective
-- `L_what` encourages understanding of the current behavior
-- `L_next` encourages predictive temporal structure
-- `L_crossview` encourages viewpoint-invariant intention representations
-
-The final design of these losses is still under active development.
-
----
-
-## 11. VLA Interface
-
-The intention prediction module exports:
-
-```text
-z_int ∈ R^256
-```
-
-The downstream VLA policy consumes this representation through an intention adapter.
-
-Conceptually:
-
-```text
-visual observation
-→ intention predictor
-→ z_int
-────────────────────────
-prediction / policy boundary
-────────────────────────
-→ intention adapter
-→ VLA policy
-→ action chunk
-```
-
-The policy side is not the primary methodological contribution of this repository.
-
----
-
-## 12. Oracle Intention
-
-Oracle intention is used only as a controlled upper-bound experiment.
-
-Conceptually:
-
-```text
-semantic Why
-→ frozen text encoder
-→ oracle intention embedding
-→ downstream VLA
-```
-
-The purpose is to answer:
-
-> If a high-quality phase-level intention signal is available, can the downstream VLA policy make use of it?
-
-Oracle intention is **not** treated as ground-truth human cognitive intention.
-
-It is also not the main contribution of the intention prediction module.
-
----
-
-## 13. Current Oracle / Matched Training Status
-
-A matched LIBERO-10 pipeline has been prepared for downstream evaluation.
-
-Current matched subset:
-
-```text
-88,302 training frames
-335 canonical episodes
-38 Oracle Why embeddings
-```
-
-Both baseline and Oracle conditions use matched:
-
-```text
-training samples
-action chunks
-semantic padding
-optimizer
-scheduler
-pretrained initialization
-seed protocol
-```
-
-A 500-step pilot completed successfully.
-
-```text
-Baseline loss_100: 0.583925
-Oracle loss_100:   0.565286
-```
-
-These numbers are only optimization diagnostics.
-
-They are **not** evidence that Oracle improves task success.
-
-Task-level conclusions require matched LIBERO evaluation.
-
----
-
-## 14. Experimental Plan
-
-The main intention-prediction experiments are:
-
-### Stage A — Representation / Prediction
-
-```text
-Random baseline
-V0 cosine-only
-V1 contrastive
-Clean V1 mean-pooling
-Temporal Intention Encoder
-Cross-view Temporal Intention Encoder
-```
-
-Primary metrics:
-
-```text
-Top-1
-Top-3
-MRR
-positive-negative cosine margin
-```
-
-Additional structured metrics are planned for:
-
-```text
-What prediction
-Why prediction
-Next@1
-Next@K
-cross-view retrieval
-unseen-view generalization
-```
-
----
-
-### Stage B — Downstream Validation
-
-The downstream evaluation will compare:
-
-```text
-No intention
-Oracle intention
-Predicted intention
-```
-
-The purpose is to verify whether intention prediction quality transfers to a VLA consumer.
-
----
-
-## 15. Repository Structure
-
-Current relevant structure:
+## Repository Structure
 
 ```text
 vlia-uet/
 ├── config/
-│   └── data/
-│
-├── datasets/
-│   ├── egointent_adapter.py
-│   ├── egointent_video.py
-│   └── intention_alignment_dataset.py
+│   ├── data/
+│   ├── suites/
+│   └── tasks/
 │
 ├── models/
 │   ├── intention_encoder.py
@@ -625,186 +247,213 @@ vlia-uet/
 │
 ├── policies/
 │   ├── intention/
+│   │   └── clean_stage_a_encoder.py
 │   └── smolvla/
+│       ├── configuration_smolvla.py
+│       └── modeling_smolvla.py
+│
+├── vlia_data/
+│   └── libero_oracle_dataset.py
 │
 ├── scripts/
 │   ├── cache_egointent_stage_a_features.py
 │   ├── cache_egointent_temporal_features.py
+│   ├── eval_stage_a_cached.py
 │   ├── train_matched_oracle.py
-│   └── test_*.py
+│   ├── test_clean_stage_a_encoder.py
+│   ├── test_predicted_intention_adapter.py
+│   ├── test_predicted_vlia_prefix.py
+│   └── test_predicted_intention_real_cached.py
 │
-└── README.md
+├── docs/
+├── robots/
+├── urdf/
+├── meshes/
+├── README.md
+├── LICENSE
+└── requirements.txt
 ```
+
+Some older phase-based scripts and configuration files may remain in the repository for experiment history. They are not necessarily part of the current VLIA training path.
 
 ---
 
-## 16. Environment
+## Environment
 
-The project currently uses the LeRobot virtual environment.
+The project is developed on top of the Hugging Face LeRobot stack.
 
-Example:
+Activate the LeRobot virtual environment:
 
 ```bash
 cd ~/lerobot
 source .venv/bin/activate
-
 cd ~/vlia-uet
-which python
 ```
 
-Expected interpreter:
+The expected Python executable is:
 
-```text
+```bash
 /home/dhqg/lerobot/.venv/bin/python
 ```
 
-Because the repository contains a local `datasets/` directory, some scripts are run with:
+Because this repository contains a local `datasets/` package, the current development setup uses:
 
 ```bash
-python -P ...
+export PYTHONPATH=/home/dhqg/lerobot/.venv/lib/python3.12/site-packages:/home/dhqg/lerobot/src:/home/dhqg/vlia-uet
 ```
 
-to avoid Python package resolution issues.
+For repository scripts, `python -P` is recommended to avoid local package shadowing:
 
----
-
-## 17. Important Experimental Constraints
-
-The following rules are treated as part of the experimental protocol.
-
-### No future leakage
-
-The predictor must not receive:
-
-```text
-observed_next_step
-plausible_next_steps
-future semantic actions
-future frames beyond the allowed observation window
-```
-
-as input.
-
-These fields may only be used as supervision or evaluation targets.
-
-### Video-level split
-
-Samples from the same source video must not be split across training and validation.
-
-### Annotation-derived history
-
-History created from manually annotated semantic actions is not assumed to be available at deployment time.
-
-It is used only for controlled ablation experiments.
-
-### Oracle is an upper bound
-
-Oracle semantic intention is privileged information and must not be presented as normal deployment input.
-
----
-
-## 18. Current Research Direction
-
-The repository is currently transitioning from:
-
-```text
-single-view static intention alignment
-```
-
-to:
-
-```text
-temporal structured intention prediction
-+
-cross-view semantic alignment
-```
-
-The target final predictor is:
-
-```text
-Ego / Exo visual sequence
-        ↓
-Temporal visual encoder
-        ↓
-What / Why / Next reasoning
-        ↓
-view-robust intention latent
-        ↓
-z_int
-```
-
-The intended main contribution is therefore:
-
-> **A temporal and cross-view intention prediction module that reasons jointly about current behavior, current semantic purpose, and short-horizon semantic progression, while exposing a compact latent representation for downstream VLA models.**
-
----
-
-## 19. Project Status
-
-Completed:
-
-```text
-EgoIntent pilot dataset
-video-level train/validation split
-frozen visual feature extraction
-cosine-only baseline
-contrastive baseline
-modality ablations
-Clean V1 256-D mean-pooling baseline
-Temporal Intention Encoder implementation
-temporal frame-feature cache smoke test
-VLA intention-token integration tests
-matched Oracle training pipeline
-```
-
-In progress:
-
-```text
-full temporal feature caching
-Temporal Intention Encoder training
-structured What–Why–Next formulation
-cross-view dataset construction
-cross-view intention learning
-matched Oracle training / evaluation
-```
-
-Planned:
-
-```text
-cross-view benchmark
-unseen-view evaluation
-Predicted intention export
-downstream VLA evaluation
-final ablation study
+```bash
+python -P scripts/<script_name>.py
 ```
 
 ---
 
-## 20. Research Scope
+## Key Validation Commands
 
-This repository focuses primarily on:
+### Clean Stage-A encoder
 
-```text
-visual intention prediction
-temporal reasoning
-cross-view generalization
-structured semantic supervision
+```bash
+python -P scripts/test_clean_stage_a_encoder.py
 ```
 
-The downstream robot policy is used as an evaluation interface, not as the main algorithmic contribution.
+Expected:
+
+```text
+CLEAN STAGE-A ENCODER: PASS
+```
+
+### Predicted intention adapter
+
+```bash
+python -P scripts/test_predicted_intention_adapter.py
+```
+
+Expected:
+
+```text
+PREDICTED INTENTION ADAPTER: PASS
+```
+
+### Predicted VLIA prefix injection
+
+```bash
+python -P scripts/test_predicted_vlia_prefix.py
+```
+
+Expected:
+
+```text
+PREDICTED VLIA PREFIX: PASS
+```
+
+### Real cached EgoIntent feature
+
+```bash
+python -P scripts/test_predicted_intention_real_cached.py
+```
+
+Expected:
+
+```text
+REAL CACHED PREDICTED INTENTION: PASS
+```
 
 ---
 
-## License
+## Matched LIBERO Training
 
-This repository contains research code only.
+Baseline:
 
-External datasets, pretrained models, and third-party repositories remain subject to their original licenses and terms of use.
+```bash
+python -u -P scripts/train_matched_oracle.py \
+  --condition baseline \
+  --output-root /media/dhqg/d1/vlia_outputs/oracle_matched_full \
+  --steps 25000 \
+  --batch-size 32 \
+  --warmup-steps 1000 \
+  --save-freq 1000 \
+  --log-freq 50 \
+  --seed 0
+```
 
-In particular, EgoIntent-related data may depend on the licensing and usage conditions of the underlying Ego4D source material.
+Oracle:
+
+```bash
+python -u -P scripts/train_matched_oracle.py \
+  --condition oracle \
+  --output-root /media/dhqg/d1/vlia_outputs/oracle_matched_full \
+  --steps 25000 \
+  --batch-size 32 \
+  --warmup-steps 1000 \
+  --save-freq 1000 \
+  --log-freq 50 \
+  --seed 0
+```
+
+The trainer stores:
+
+```text
+checkpoint_xxxxxx/
+├── pretrained_model/
+└── training_state.pt
+```
+
+`training_state.pt` contains the training step, optimizer state, scheduler state, arguments, and running information.
+
+Resume example:
+
+```bash
+python -u -P scripts/train_matched_oracle.py \
+  --condition baseline \
+  --output-root /media/dhqg/d1/vlia_outputs/oracle_matched_full \
+  --steps 25000 \
+  --batch-size 32 \
+  --warmup-steps 1000 \
+  --save-freq 1000 \
+  --log-freq 50 \
+  --seed 0 \
+  --resume /path/to/checkpoint_xxxxxx
+```
 
 ---
 
-## Citation
+## Development Status
 
-Citation information will be added when the corresponding thesis or paper is publicly available.
+| Component | Status |
+| --- | --- |
+| SmolVLA baseline integration | Implemented |
+| VLIA intention token injection | Implemented |
+| Oracle intention conditioning | Implemented |
+| Clean visual-only Stage-A predictor | Implemented |
+| 256 -> 960 intention adapter | Implemented |
+| Predicted VLIA prefix path | Implemented |
+| Real cached EgoIntent -> predicted intention path | Implemented |
+| Temporal Intention Encoder | Implemented, training pipeline in progress |
+| Per-frame EgoIntent feature cache | In progress |
+| Predicted-intention downstream training | Planned |
+| Matched LIBERO baseline / Oracle evaluation | In progress |
+| UR3 Gazebo + ROS2 deployment path | In progress |
+
+---
+
+## Experimental Principles
+
+To keep comparisons interpretable:
+
+- intention prediction is evaluated separately from action prediction;
+- train/validation splits are separated by source video;
+- future information is never used as predictor input;
+- Oracle intention is treated as privileged supervision/diagnostic information;
+- baseline and Oracle downstream runs use matched training settings;
+- training loss alone is not treated as evidence of task-level improvement;
+- final claims require downstream rollout evaluation.
+
+---
+
+## Project Goal
+
+The final goal is a VLA system in which a robot action policy can be conditioned on a compact semantic representation of **predicted human intention**, enabling intention-aware robot manipulation and future human-robot collaboration experiments.
+
+The current deployment platform is based on **UR3 + ROS2 + Gazebo**, while LIBERO is used as the main policy benchmark.
