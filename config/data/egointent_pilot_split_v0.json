@@ -1,0 +1,56 @@
+{
+  "name": "egointent_pilot_split_v0",
+  "description": "Pilot Stage-A split by video_uid. Six indoor videos for training and two outdoor videos for validation. Validation is cross-video, cross-event, and cross-domain.",
+  "train": [
+    {
+      "video_uid": "8bef8b33-a1ee-43e7-a2d0-8cf68653cb0c",
+      "scene": "art_studio",
+      "event": "draw",
+      "num_steps": 90
+    },
+    {
+      "video_uid": "ce3ef2da-c918-42c8-9d22-533f776366bd",
+      "scene": "bedroom",
+      "event": "sort_clothes",
+      "num_steps": 93
+    },
+    {
+      "video_uid": "6269fa52-58af-46d3-9a4b-7aca66c3b622",
+      "scene": "garage",
+      "event": "repair_bicycle",
+      "num_steps": 125
+    },
+    {
+      "video_uid": "8301a3fc-aac5-466d-bb02-d0ac7a81ccc6",
+      "scene": "kitchen",
+      "event": "boil_noodles",
+      "num_steps": 57
+    },
+    {
+      "video_uid": "cd8590b6-4c27-4932-9ccf-501380d35b14",
+      "scene": "kitchen",
+      "event": "wash_dishes",
+      "num_steps": 112
+    },
+    {
+      "video_uid": "3ae7ab6b-793e-4a77-9749-010c94b1b0ee",
+      "scene": "workshop",
+      "event": "assemble_wood",
+      "num_steps": 79
+    }
+  ],
+  "val": [
+    {
+      "video_uid": "02d1f024-1470-4ce6-acde-b938f7847eb6",
+      "scene": "farm",
+      "event": "pick_fruits",
+      "num_steps": 111
+    },
+    {
+      "video_uid": "cc883eb4-7772-4ef8-bd85-2c9cb5c6565d",
+      "scene": "garden",
+      "event": "cut_branches",
+      "num_steps": 104
+    }
+  ]
+}

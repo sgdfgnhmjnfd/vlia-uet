@@ -14,8 +14,11 @@ class IntentionVisualEncoder(nn.Module):
         List of RGB uint8 frames [H, W, 3].
 
     Outputs:
+        encode_frame_features():
+            Frozen per-frame visual features [T, 960].
+
         encode_video_features():
-            Frozen pooled visual feature [1, 960].
+            Frozen temporally pooled visual feature [1, 960].
 
         forward():
             Projected visual representation
@@ -54,11 +57,21 @@ class IntentionVisualEncoder(nn.Module):
         for param in self.connector.parameters():
             param.requires_grad = False
 
-        hidden_size = self.vlm.config.text_config.hidden_size
+        hidden_size = (
+            self.vlm
+            .config
+            .text_config
+            .hidden_size
+        )
 
         self.visual_projection = nn.Sequential(
-            nn.Linear(hidden_size, intention_dim),
-            nn.LayerNorm(intention_dim),
+            nn.Linear(
+                hidden_size,
+                intention_dim,
+            ),
+            nn.LayerNorm(
+                intention_dim,
+            ),
         )
 
     def train(self, mode=True):
@@ -66,6 +79,7 @@ class IntentionVisualEncoder(nn.Module):
         Keep the frozen visual backbone in eval mode even
         when the surrounding module is switched to train mode.
         """
+
         super().train(mode)
 
         self.vision_model.eval()
@@ -78,6 +92,10 @@ class IntentionVisualEncoder(nn.Module):
         Process each original frame independently using the
         official SmolVLM image processor.
 
+        Args:
+            frames:
+                List of RGB uint8 frames [H, W, 3].
+
         Returns:
             pixel_values:
                 [N_tiles_total, C, H, W]
@@ -87,28 +105,40 @@ class IntentionVisualEncoder(nn.Module):
                 original video frame.
         """
 
+        if len(frames) == 0:
+            raise ValueError(
+                "At least one frame is required."
+            )
+
         processed_frames = []
         tiles_per_frame = []
 
         for frame in frames:
-            inputs = self.processor.image_processor(
-                images=frame,
-                return_tensors="pt",
+            inputs = (
+                self.processor
+                .image_processor(
+                    images=frame,
+                    return_tensors="pt",
+                )
             )
 
-            pixel_values = inputs["pixel_values"]
+            pixel_values = inputs[
+                "pixel_values"
+            ]
 
-            # SmolVLM may produce multiple image tiles for
-            # one high-resolution input frame.
+            # SmolVLM may produce multiple image tiles
+            # for one original high-resolution frame.
             #
-            # Collapse processor-specific leading dimensions
-            # while preserving [C, H, W].
+            # Collapse processor-specific leading
+            # dimensions while preserving [C, H, W].
             pixel_values = pixel_values.reshape(
                 -1,
                 *pixel_values.shape[-3:],
             )
 
-            processed_frames.append(pixel_values)
+            processed_frames.append(
+                pixel_values
+            )
 
             tiles_per_frame.append(
                 pixel_values.shape[0]
@@ -119,63 +149,97 @@ class IntentionVisualEncoder(nn.Module):
             dim=0,
         )
 
-        return pixel_values, tiles_per_frame
+        return (
+            pixel_values,
+            tiles_per_frame,
+        )
 
-    def encode_video_features(self, frames):
+    def encode_frame_features(self, frames):
         """
-        Encode video frames using the frozen SmolVLM visual
-        backbone.
+        Encode each original video frame into one frozen
+        SmolVLM semantic feature.
 
-        Aggregation:
-            visual tokens -> tile
-            tiles -> original frame
-            frames -> video
+        Pipeline:
+            original frame
+                -> SmolVLM image processor
+                -> image tiles
+                -> frozen vision model
+                -> connector
+                -> mean visual-token pooling
+                -> mean tile pooling
+                -> one feature per original frame
+
+        Args:
+            frames:
+                List of RGB uint8 frames [H, W, 3].
 
         Returns:
-            video_feature: [1, 960]
+            frame_features:
+                [T, 960]
         """
 
         pixel_values, tiles_per_frame = (
-            self.preprocess_frames(frames)
+            self.preprocess_frames(
+                frames
+            )
         )
 
         device = next(
             self.visual_projection.parameters()
         ).device
 
-        pixel_values = pixel_values.to(device)
+        pixel_values = pixel_values.to(
+            device
+        )
 
         with torch.no_grad():
             hidden = self.vision_model(
-                pixel_values=pixel_values.to(
-                    dtype=self.vision_model.dtype
+                pixel_values=(
+                    pixel_values.to(
+                        dtype=(
+                            self.vision_model
+                            .dtype
+                        )
+                    )
                 ),
                 patch_attention_mask=None,
             ).last_hidden_state
 
-            hidden = self.connector(hidden)
+            hidden = self.connector(
+                hidden
+            )
 
         # hidden:
         # [N_tiles_total, N_visual_tokens, 960]
-        #
+
         # Pool visual tokens within each tile.
-        tile_features = hidden.mean(dim=1)
+        tile_features = hidden.mean(
+            dim=1
+        )
         # [N_tiles_total, 960]
 
-        # Recover the original frame structure.
         frame_features = []
         offset = 0
 
         for num_tiles in tiles_per_frame:
             frame_tiles = tile_features[
-                offset : offset + num_tiles
+                offset:
+                offset + num_tiles
             ]
 
-            # Aggregate all tiles generated from one
-            # original video frame.
-            frame_feature = frame_tiles.mean(
-                dim=0
+            if frame_tiles.shape[0] == 0:
+                raise RuntimeError(
+                    "A frame produced zero visual tiles."
+                )
+
+            # Aggregate all tiles belonging to one
+            # original frame.
+            frame_feature = (
+                frame_tiles.mean(
+                    dim=0
+                )
             )
+            # [960]
 
             frame_features.append(
                 frame_feature
@@ -183,32 +247,80 @@ class IntentionVisualEncoder(nn.Module):
 
             offset += num_tiles
 
+        if offset != tile_features.shape[0]:
+            raise RuntimeError(
+                "Tile reconstruction mismatch: "
+                f"consumed {offset}, "
+                f"available "
+                f"{tile_features.shape[0]}."
+            )
+
         frame_features = torch.stack(
             frame_features,
             dim=0,
         )
         # [T, 960]
 
-        # V0 temporal aggregation.
-        video_feature = frame_features.mean(
-            dim=0,
-            keepdim=True,
+        return frame_features.float()
+
+    def encode_video_features(self, frames):
+        """
+        Encode video frames using the frozen SmolVLM visual
+        backbone and temporal mean pooling.
+
+        This method preserves the original Stage-A V0/Clean
+        behavior so existing checkpoints and cached features
+        remain compatible.
+
+        Aggregation:
+            visual tokens
+                -> tiles
+                -> original frames
+                -> temporal mean
+
+        Args:
+            frames:
+                List of RGB uint8 frames [H, W, 3].
+
+        Returns:
+            video_feature:
+                [1, 960]
+        """
+
+        frame_features = (
+            self.encode_frame_features(
+                frames
+            )
+        )
+        # [T, 960]
+
+        # Original Stage-A temporal aggregation.
+        video_feature = (
+            frame_features.mean(
+                dim=0,
+                keepdim=True,
+            )
         )
         # [1, 960]
 
-        return video_feature.float()
+        return video_feature
 
     def forward(self, frames):
         """
         Backward-compatible projected visual representation.
 
         Stage-A multimodal fusion should use
-        encode_video_features() to obtain the frozen
-        960-D feature before projection.
+        encode_video_features() when reproducing the original
+        mean-pooled predictor.
+
+        The new temporal intention module should instead use
+        encode_frame_features().
         """
 
-        video_feature = self.encode_video_features(
-            frames
+        video_feature = (
+            self.encode_video_features(
+                frames
+            )
         )
 
         z_visual = self.visual_projection(
@@ -223,11 +335,11 @@ class IntentionTextEncoder(nn.Module):
     """
     Frozen SmolVLM text encoder for VLIA Stage A.
 
-    Text
+    Text:
         -> frozen SmolVLM text model
         -> contextual token hidden states
         -> masked mean pooling
-        -> 960-D representation
+        -> 960-D semantic representation
     """
 
     def __init__(
@@ -237,18 +349,26 @@ class IntentionTextEncoder(nn.Module):
     ):
         super().__init__()
 
-        self.text_model = vlm.model.text_model
-        self.tokenizer = processor.tokenizer
+        self.text_model = (
+            vlm.model.text_model
+        )
+
+        self.tokenizer = (
+            processor.tokenizer
+        )
 
         self.text_model.eval()
 
-        for param in self.text_model.parameters():
+        for param in (
+            self.text_model.parameters()
+        ):
             param.requires_grad = False
 
     def train(self, mode=True):
         """
         Keep the frozen text backbone in eval mode.
         """
+
         super().train(mode)
 
         self.text_model.eval()
@@ -279,36 +399,58 @@ class IntentionTextEncoder(nn.Module):
 
         input_ids = tokens[
             "input_ids"
-        ].to(device)
+        ].to(
+            device
+        )
 
         attention_mask = tokens[
             "attention_mask"
-        ].to(device)
+        ].to(
+            device
+        )
 
         with torch.no_grad():
-            outputs = self.text_model(
-                input_ids=input_ids,
-                attention_mask=attention_mask,
-                return_dict=True,
+            outputs = (
+                self.text_model(
+                    input_ids=input_ids,
+                    attention_mask=(
+                        attention_mask
+                    ),
+                    return_dict=True,
+                )
             )
 
-        hidden = outputs.last_hidden_state.float()
+        hidden = (
+            outputs
+            .last_hidden_state
+            .float()
+        )
         # [B, L, 960]
 
-        mask = attention_mask.unsqueeze(
-            -1
-        ).to(
-            hidden.dtype
+        mask = (
+            attention_mask
+            .unsqueeze(-1)
+            .to(
+                hidden.dtype
+            )
         )
         # [B, L, 1]
 
         pooled = (
-            (hidden * mask).sum(dim=1)
-            / mask.sum(dim=1).clamp(min=1.0)
+            (hidden * mask)
+            .sum(dim=1)
+            /
+            mask.sum(
+                dim=1
+            ).clamp(
+                min=1.0
+            )
         )
         # [B, 960]
 
         return pooled
+
+
 class IntentionEncoderV0(nn.Module):
     """
     VLIA Stage-A multimodal intention predictor.
@@ -319,12 +461,15 @@ class IntentionEncoderV0(nn.Module):
         - semantic history
 
     Stage-A alignment representation:
-        z_align: [1, 960]
+        z_align:
+            [1, 960]
 
     VLIA intention representation:
-        z_int: [1, intention_dim]
+        z_int:
+            [1, intention_dim]
 
-    WHY/future information is never used as predictor input.
+    WHY / future information is supervision only and is
+    never used as predictor input.
     """
 
     def __init__(
@@ -335,14 +480,25 @@ class IntentionEncoderV0(nn.Module):
     ):
         super().__init__()
 
-        self.visual_encoder = visual_encoder
-        self.text_encoder = text_encoder
-
-        self.hidden_size = (
-            visual_encoder.vlm.config.text_config.hidden_size
+        self.visual_encoder = (
+            visual_encoder
         )
 
-        fusion_input_dim = self.hidden_size * 3
+        self.text_encoder = (
+            text_encoder
+        )
+
+        self.hidden_size = (
+            visual_encoder
+            .vlm
+            .config
+            .text_config
+            .hidden_size
+        )
+
+        fusion_input_dim = (
+            self.hidden_size * 3
+        )
 
         self.fusion = nn.Sequential(
             nn.Linear(
@@ -359,17 +515,22 @@ class IntentionEncoderV0(nn.Module):
             ),
         )
 
-        self.intention_projection = nn.Sequential(
-            nn.Linear(
-                self.hidden_size,
-                intention_dim,
-            ),
-            nn.LayerNorm(
-                intention_dim,
-            ),
+        self.intention_projection = (
+            nn.Sequential(
+                nn.Linear(
+                    self.hidden_size,
+                    intention_dim,
+                ),
+                nn.LayerNorm(
+                    intention_dim,
+                ),
+            )
         )
 
-    def encode_history(self, history):
+    def encode_history(
+        self,
+        history,
+    ):
         if len(history) == 0:
             device = next(
                 self.fusion.parameters()
@@ -382,7 +543,9 @@ class IntentionEncoderV0(nn.Module):
                 device=device,
             )
 
-        history_text = " ; ".join(history)
+        history_text = " ; ".join(
+            history
+        )
 
         return self.text_encoder(
             [history_text]
@@ -395,19 +558,24 @@ class IntentionEncoderV0(nn.Module):
         history,
     ):
         visual_feature = (
-            self.visual_encoder.encode_video_features(
+            self.visual_encoder
+            .encode_video_features(
                 frames
             )
         )
         # [1, 960]
 
-        task_feature = self.text_encoder(
-            [task]
+        task_feature = (
+            self.text_encoder(
+                [task]
+            )
         )
         # [1, 960]
 
-        history_feature = self.encode_history(
-            history
+        history_feature = (
+            self.encode_history(
+                history
+            )
         )
         # [1, 960]
 
@@ -434,29 +602,37 @@ class IntentionEncoderV0(nn.Module):
         task,
         history,
     ):
-        z_align = self.encode_alignment_feature(
-            frames=frames,
-            task=task,
-            history=history,
+        z_align = (
+            self.encode_alignment_feature(
+                frames=frames,
+                task=task,
+                history=history,
+            )
         )
 
-        z_int = self.intention_projection(
-            z_align
+        z_int = (
+            self.intention_projection(
+                z_align
+            )
         )
         # [1, intention_dim]
 
         return z_int
+
+
 class StageAAlignmentModel(nn.Module):
     """
     Stage-A intention alignment.
 
     Predictor:
-        observation + task + history -> z_align
+        observation + task + history
+            -> z_align
 
     Frozen target:
-        WHY -> frozen SmolVLM text representation
+        WHY
+            -> frozen SmolVLM text representation
 
-    Loss:
+    Original Stage-A V0 loss:
         1 - cosine(z_align, z_why)
     """
 
@@ -467,10 +643,18 @@ class StageAAlignmentModel(nn.Module):
     ):
         super().__init__()
 
-        self.intention_encoder = intention_encoder
-        self.text_encoder = text_encoder
+        self.intention_encoder = (
+            intention_encoder
+        )
 
-    def encode_why(self, why):
+        self.text_encoder = (
+            text_encoder
+        )
+
+    def encode_why(
+        self,
+        why,
+    ):
         """
         WHY is supervision only.
 
@@ -479,8 +663,10 @@ class StageAAlignmentModel(nn.Module):
         """
 
         with torch.no_grad():
-            z_why = self.text_encoder(
-                [why]
+            z_why = (
+                self.text_encoder(
+                    [why]
+                )
             )
 
         return z_why.detach()
@@ -506,7 +692,8 @@ class StageAAlignmentModel(nn.Module):
         )
 
         cosine_similarity = (
-            torch.nn.functional.cosine_similarity(
+            torch.nn.functional
+            .cosine_similarity(
                 z_align,
                 z_why,
                 dim=-1,
