@@ -1,6 +1,6 @@
 """Tiền/hậu xử lý ảnh và action chunk cho VLIA-SmolVLA.
 
-Giai đoạn 3 dùng thêm prompt template:
+Phase 3 additionally uses the following prompt template:
     <think>{think}</think><intention>{intention}</intention><action>
 """
 
