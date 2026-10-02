@@ -1,0 +1,51 @@
+{
+  "version": "crossview_intention_v0",
+  "description": "Canonical schema for cross-view human intention learning.",
+  "sample_fields": {
+    "sample_id": "string",
+    "source_dataset": "string",
+
+    "task": "string",
+    "phase": "string",
+    "why": "string",
+
+    "view_type": "ego|exo|robot",
+    "view_id": "string",
+
+    "subject_id": "string|null",
+    "scene_id": "string|null",
+
+    "video_uid": "string",
+    "video_path": "string",
+
+    "start_time": "float|null",
+    "end_time": "float|null",
+
+    "pair_group_id": "string",
+
+    "split": "train|val|test"
+  },
+
+  "pairing_rule": {
+    "positive": [
+      "same pair_group_id",
+      "same semantic intention",
+      "different view_type preferred"
+    ],
+    "hard_negative": [
+      "same task but different phase",
+      "same scene but different intention"
+    ]
+  },
+
+  "allowed_predictor_inputs": [
+    "video"
+  ],
+
+  "forbidden_predictor_inputs": [
+    "future_action",
+    "observed_next_step",
+    "plausible_next_steps",
+    "future_frames_after_target"
+  ]
+}
