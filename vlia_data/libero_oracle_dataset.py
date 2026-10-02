@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -7,7 +8,10 @@ from torch.utils.data import Dataset
 
 
 DEFAULT_ORACLE_ROOT = Path(
-    "/media/dhqg/d1/datasets/libero_oracle/v0"
+    os.environ.get(
+        "VLIA_ORACLE_ROOT",
+        "data/libero_oracle/v0",
+    )
 )
 
 
