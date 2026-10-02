@@ -4,28 +4,72 @@ __pycache__/
 *.egg-info/
 .venv/
 venv/
+.env
+.env.*
+!.env.example
 .ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
 
-# Training outputs — checkpoint lớn không nên đưa vào git
+# Editors / OS
+.DS_Store
+.vscode/
+.idea/
+*~
+*.swp
+
+# Training / evaluation outputs
 outputs/
 checkpoints/
+eval_logs/
+wandb/
+runs/
+logs/
+*.log
+
+# Model / optimizer artifacts
 *.safetensors
 *.ckpt
 *.pt
 *.pth
-wandb/
-eval_logs/
+*.bin
 
-# Dataset lớn — tải riêng, không commit
-# Dataset source code under datasets/ is tracked.
-# Large/raw datasets must live outside the repository.
-datasets/__pycache__/
-datasets/**/*.pyc
-!datasets/.gitkeep
-!datasets/intention_labels/
+# Large generated arrays / caches
+*.npy
+*.npz
+*.pkl
+*.pickle
+cache/
+**/cache/
+
+# Videos / media generated during evaluation
+*.mp4
+*.avi
+*.mov
+*.webm
+
+# Local datasets
+datasets/raw/
+datasets/downloads/
+datasets/local/
 datasets/intention_labels/*.jsonl
 
-# OS / editor
-.DS_Store
-.vscode/
-.idea/
+# Local machine-specific config
+.local/
+scratch/
+tmp/
+
+# LaTeX build products
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+# Keep source and lightweight result summaries
+!results/**/*.md
+!docs/**/*.md

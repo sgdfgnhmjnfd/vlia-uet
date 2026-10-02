@@ -1,21 +1,39 @@
 [project]
 name = "vlia"
 version = "0.1.0"
-description = "Vision-Language-Intention-Action: an intention module for SmolVLA"
+description = "Vision-Language-Intention-Action: semantic intention conditioning for SmolVLA"
+readme = "README.md"
 requires-python = ">=3.10"
+license = { file = "LICENSE" }
 dependencies = [
-    # lerobot cài riêng theo hướng dẫn README (submodule hoặc pip -e trỏ tới bản đã sửa modeling_smolvla.py)
     "torch",
+    "torchvision",
     "transformers",
+    "accelerate",
+    "huggingface_hub",
+    "qwen-vl-utils",
+    "pyyaml",
     "numpy",
+    "tqdm",
+    "matplotlib",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest", "ruff"]
+dev = [
+    "pytest",
+    "ruff",
+]
 
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
+include = [
+    "datasets*",
+    "models*",
+    "policies*",
+    "vlia_data*",
+]
+namespaces = true
