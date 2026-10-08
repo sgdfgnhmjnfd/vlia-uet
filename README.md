@@ -744,6 +744,6 @@ SmolVLA integration tests chứng minh tính đúng đắn của implementation,
 
 **\*\*VLIA-UET Research Team\*\***  
 
-*\*Khoa Công nghệ Thông tin — Trường Đại học Công nghệ, ĐHQGHN\**
+*\*Ngành Kỹ thuật Robot - Khoa Điện tử Viễn thông— Trường Đại học Công nghệ, ĐHQGHN\**
 
 \</div>
