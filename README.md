@@ -1,512 +1,686 @@
-<div align="center">
-
 # VLIA-UET
 
-### Vision · Language · Intention · Action
+## Vision · Language · Intention · Action
 
-**Explicit semantic intention conditioning for Vision-Language-Action robot policies**
+### Early Robot-Relevant Goal Disambiguation from Egocentric Manipulation Video
 
-[![Project Status](https://img.shields.io/badge/status-active%20research-2ea44f)](#current-status)
-[![Benchmark](https://img.shields.io/badge/benchmark-LIBERO--10-blue)](#stage-b--intention-conditioned-smolvla)
-[![Backbone](https://img.shields.io/badge/backbone-SmolVLA-purple)](#stage-b--intention-conditioned-smolvla)
-[![License](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
+VLIA-UET investigates **early robot-relevant goal disambiguation from
+egocentric manipulation video**.
 
-</div>
+The central research question is:
 
----
+> **How early can a robot-relevant goal be disambiguated from egocentric
+> manipulation video when multiple candidate goals share the same
+> observed sub-actions?**
 
-## Why VLIA?
+The project focuses on intention/goal prediction as the primary research
+problem. A VLA policy is treated as a downstream interface rather than
+the main scientific contribution.
 
-A standard VLA policy sees the scene, reads the instruction, and predicts robot actions.
+------------------------------------------------------------------------
 
-VLIA asks a narrower question:
+## 1. Research Problem
 
-> **Can an explicit semantic representation of human intention help a VLA policy disambiguate what the robot should do next?**
+In egocentric manipulation videos, the same early action can be
+compatible with several different future goals.
 
-The project separates the problem into two stages:
+For example:
 
-```text
-Human egocentric video                          Robot observation
-         │                                            │
-         ▼                                            │
-  Stage-A intention reasoning                         │
-         │                                            │
-         ▼                                            │
-      z_int ∈ R^256                                   │
-         │                                            │
-         └──────────────┐                             │
-                        ▼                             ▼
-                 Intention Adapter              Image + Language
-                     256 → 960                    + Robot State
-                        │                             │
-                        └──────────────┬──────────────┘
-                                       ▼
-                        [Image | Language | Intention | State]
-                                       │
-                                       ▼
-                                    SmolVLA
-                                       │
-                                       ▼
-                                Robot action chunk
+``` text
+pick up cup
+   ├── move to shelf
+   ├── put into box
+   └── move to tray
 ```
 
-The current implementation adds **one intention token** to the SmolVLA prefix, immediately before the state token.
+The observed sub-action alone may therefore be insufficient to determine
+the intended goal.
 
----
+The project studies this ambiguity as a **fine-grained goal
+disambiguation problem**, with particular attention to cases where
+candidate goals share the same early manipulation behavior.
 
-## Research questions
+The target is not generic action recognition. The goal is to infer a
+**robot-relevant intended outcome** before the final trajectory or
+outcome becomes explicit.
 
-VLIA is organized around three questions:
+------------------------------------------------------------------------
 
-1. **Can semantic intention be predicted from egocentric human observations?**
-2. **What form of semantic reasoning is useful for fine-grained within-task disambiguation?**
-3. **Does an explicit intention signal improve downstream VLA behavior under a matched LIBERO protocol?**
+## 2. Research Hypothesis
 
-The intended claim is stronger than “an extra token helps”:
+The current hypothesis is:
 
-> **Semantic intention should act as a disambiguating control variable when observation and language alone are insufficient.**
+> When multiple goals are compatible with the same observed sub-action,
+> explicitly conditioning goal inference on the predicted sub-action can
+> provide a useful inductive bias for fine-grained goal disambiguation.
 
----
+The proposed reasoning structure is:
 
-# Stage A — Human intention reasoning
-
-## Input and representation
-
-Stage A uses **EgoIntent** egocentric clips and a frozen
-`SmolVLM2-500M-Video-Instruct` visual backbone.
-
-Current pilot protocol:
-
-| Item | Setting |
-|---|---|
-| Input | 8 RGB frames per clip |
-| Train samples | 556 |
-| Validation samples | 215 |
-| Split | by `video_uid` |
-| Primary semantic target | WHY |
-| Future annotations as input | No |
-
-A major empirical finding is that most retrieval errors are **within the same task**, indicating that the bottleneck is not broad task recognition but **fine-grained semantic state / purpose disambiguation**.
-
----
-
-## Selected reasoning path
-
-```text
-visual feature
-    │
-    ├────────────► direct WHY branch
-    │
-    └────────────► predicted WHAT
-                         │
-                         ▼
-                  WHAT-guided reasoning
-                         │
-                         ▼
-                    gated WHY output
-                         │
-                         ▼
-                  residual reranker
-               (base predictor frozen)
-                         │
-                         ▼
-                    z_int ∈ R^256
+``` text
+Egocentric video prefix
+        │
+        ▼
+ Frozen visual representation
+        │
+        ├──────────────► WHAT
+        │                observed sub-action
+        │
+        ▼
+      WHY
+ intended goal / purpose
+        │
+        ▼
+ Robot-relevant intention
 ```
 
-The important architectural result is that **WHAT helps WHY when it lies on the computational path**, not merely as an auxiliary prediction target.
+Here:
 
----
+-   **WHAT** describes what is currently being done.
+-   **WHY** describes the intended purpose or goal.
+-   **Intention** is the robot-relevant goal representation derived from
+    WHY.
 
-## Stage-A results
+The WHAT → WHY relationship is treated as a **research
+hypothesis/mechanism**, not as an established bottleneck.
 
-Three-seed validation results:
+------------------------------------------------------------------------
 
-| Method | WHY MRR |
-|---|---:|
-| Direct WHY | 0.04754 ± 0.00608 |
-| Predicted-WHAT-guided WHY | 0.05178 ± 0.00151 |
-| + same-task WHAT hard negatives | 0.05401 ± 0.00227 |
-| + Soft-MRR objective | 0.05454 ± 0.00231 |
-| Frozen-base residual reranker | **0.05508 ± 0.00087** |
-| Oracle WHAT diagnostic | 0.10546 ± 0.00665 |
+## 3. Research Questions
+
+### RQ1 --- Goal disambiguation
+
+Can a model distinguish between robot-relevant goals that share the same
+early sub-actions?
+
+### RQ2 --- Role of observed sub-actions
+
+Does explicitly conditioning goal inference on WHAT improve fine-grained
+goal prediction compared with direct goal prediction?
+
+### RQ3 --- Early anticipation
+
+How early can the intended goal be inferred while excluding evidence
+that directly reveals the final outcome?
+
+### RQ4 --- Robot relevance
+
+Can predicted goals be mapped reliably to robot-relevant skills or
+targets?
+
+------------------------------------------------------------------------
+
+## 4. Method
+
+The main comparison is deliberately simple.
+
+### A. Direct WHY
+
+``` text
+Video prefix → visual representation → WHY
+```
+
+### B. Auxiliary WHAT + WHY
+
+``` text
+Video prefix → shared representation
+                    ├── WHAT supervision
+                    └── WHY prediction
+```
+
+### C. Predicted WHAT → WHY
+
+``` text
+Video prefix
+      │
+      ▼
+    WHAT
+      │
+      ▼
+    WHY
+```
+
+The third configuration is the main proposed mechanism.
+
+### D. Oracle WHAT
+
+``` text
+Video prefix + ground-truth WHAT → WHY
+```
+
+Oracle WHAT is used only as a privileged diagnostic to estimate the
+remaining headroom. It is not a deployable setting and must not be
+presented as the main method.
+
+------------------------------------------------------------------------
+
+## 5. Strong Baseline
+
+A simple temporal mean-pooling baseline is included because temporal
+architecture alone should not be assumed to solve the problem.
+
+``` text
+8 sampled frames
+      │
+      ▼
+Frozen visual encoder
+      │
+      ▼
+Mean pooling
+      │
+      ▼
+WHY prediction
+```
+
+This baseline is important because previous GRU and Transformer temporal
+variants did not outperform mean pooling in preliminary experiments.
+
+Therefore, the project does not rely on increasing temporal model
+complexity as the main research contribution.
+
+------------------------------------------------------------------------
+
+## 6. Same-Task Goal Disambiguation
+
+Preliminary error analysis indicates that many top-1 failures are not
+broad task mistakes. They are **same-task goal confusions**.
+
+Current preliminary analysis:
+
+``` text
+510 / 626 Top-1 errors
+≈ 81.5%
+```
+
+were same-task confusions.
+
+This motivates a dedicated evaluation setting in which candidate goals
+share the same observed task/sub-action but differ in their intended
+outcome.
+
+The benchmark should therefore report:
+
+-   Overall performance
+-   Cross-task performance
+-   Same-task performance
+
+This makes the evaluation target more specific than generic action
+anticipation.
+
+------------------------------------------------------------------------
+
+## 7. Temporal Anticipation
+
+Fixed observation percentages are useful for controlled experiments:
+
+-   10%
+-   25%
+-   50%
+-   75%
+
+However, percentage-of-video alone is not a semantic definition of
+anticipation difficulty.
+
+The stronger protocol is based on **trajectory/outcome exclusion**.
+
+Let:
+
+-   `t_obs` = end of the observed prefix
+-   `t_divergence` = point at which physical motion begins to reveal the
+    intended goal
+-   `Δ` = anticipation margin
+
+Then an observation is valid when:
+
+``` text
+t_obs ≤ t_divergence - Δ
+```
+
+This prevents the model from being evaluated after the goal has already
+become physically obvious.
+
+A pilot annotation of approximately 100--200 clips can first be used to
+verify whether fixed percentage cuts actually occur before goal-specific
+evidence becomes explicit.
+
+If they do not, time-to-divergence or time-to-outcome should be
+preferred.
+
+------------------------------------------------------------------------
+
+## 8. Data and Evaluation
+
+### Main benchmark
+
+The current Stage-A experiments use EgoIntent.
+
+Preliminary setup:
+
+-   8 videos
+-   6 indoor training videos
+-   2 outdoor validation videos
+-   556 training microsteps
+-   215 validation samples
+-   split by `video_uid`
+-   3 random seeds
+-   MRR retrieval metric
+
+The current validation set has been used during tuning, so these results
+should **not** be treated as final generalization results.
+
+A clean untouched test split is required for the final benchmark.
+
+------------------------------------------------------------------------
+
+## 9. Preliminary Stage-A Results
+
+Current preliminary MRR results:
+
+  Configuration                                       MRR
+  ------------------------------- -----------------------
+  Direct WHY                        `0.047538 ± 0.006076`
+  Auxiliary WHAT + WHY                  `0.0471 ± 0.0030`
+  Predicted-WHAT-guided WHY         `0.051780 ± 0.001507`
+  WHAT same-task hard-negative      `0.054014 ± 0.002265`
+  Soft-MRR                          `0.054538 ± 0.002305`
+  Frozen-base residual reranker     `0.055083 ± 0.000865`
+  Mean-pool 8-frame baseline          `0.05887 ± 0.00159`
+  Oracle WHAT                           `0.1055 ± 0.0067`
 
 ### Interpretation
 
-- Predicted WHAT improves WHY when used as a reasoning input.
-- Same-task hard negatives help build more task-discriminative WHAT geometry.
-- Oracle WHAT exposes substantial semantic headroom.
-- The Oracle condition is **privileged diagnostic supervision**, not a deployable system.
-- The selected Stage-A branch does **not** clearly exceed the strongest historical mean-pool result (`MRR ≈ 0.0589`), so Stage A is not treated as a solved problem.
+The current results do **not** demonstrate that the proposed method
+beats the strongest simple baseline.
 
----
+In particular:
 
-## Cross-view diagnostic
+-   Predicted WHAT → WHY is more promising than auxiliary WHAT
+    supervision alone.
+-   Oracle WHAT shows substantial diagnostic headroom.
+-   The mean-pool baseline currently remains stronger.
+-   The current evidence is insufficient for a claim of superiority.
+-   Repeated tuning on the same validation set means these results are
+    preliminary.
 
-ENIGMA-360 is used to study ego/exo representation alignment.
+The correct scientific response is to test the hypothesis more carefully
+rather than add increasingly complex architectures without evidence.
 
-Current conclusion:
+------------------------------------------------------------------------
 
-```text
-ego ↔ exo alignment can be learned
-            │
-            ▼
-but viewpoint alignment alone
-does not reliably improve WHY retrieval
+## 10. Required Ablations
+
+The minimum experimental matrix should include:
+
+### Core ablation
+
+1.  Direct WHY
+2.  Auxiliary WHAT + WHY
+3.  Predicted WHAT → WHY
+4.  Oracle WHAT → WHY
+
+### Parameter-matched control
+
+A Direct WHY model with comparable additional parameters should be
+compared against WHAT → WHY.
+
+This tests whether any improvement comes from the proposed conditioning
+mechanism rather than simply increased model capacity.
+
+### Hard-negative evaluation
+
+Compare:
+
+``` text
+Normal objective
+vs.
+Same-task hard-negative objective
 ```
 
-Cross-view learning is therefore kept as a **representation diagnostic**, not as a required component of the selected predictor.
+The hard-negative setting directly targets the dominant failure mode.
 
----
+### Temporal evaluation
 
-# Stage B — Intention-conditioned SmolVLA
+Evaluate only prefixes that satisfy the temporal exclusion protocol.
 
-## Intention injection
+### OOD evaluation
 
-The predicted latent is projected into the SmolVLA hidden dimension:
+Use the self-collected dataset as an out-of-distribution stress test
+rather than as a large-scale training set.
 
-```text
-z_int [B, 256]
+------------------------------------------------------------------------
+
+## 11. Robot Relevance
+
+The robotics component should remain lightweight.
+
+Instead of training a complete robot policy, use a downstream proxy:
+
+``` text
+Predicted goal
       │
       ▼
-Intention Adapter
-      │
-      ▼
-[B, 1, 960]
+Robot skill / target selection
 ```
 
-The token is inserted as:
+Example:
 
-```text
-[Image | Language | Intention | State]
+``` text
+"move cup to shelf"
+        ↓
+ShelfPlacementSkill
 ```
 
-The integration has been tested for:
+Possible metrics:
 
-- forward / backward training,
-- gradient flow into the adapter,
-- action sampling,
-- KV-cache inference,
-- baseline fallback without intention,
-- mask consistency,
-- checkpoint serialization,
-- pretrained initialization compatibility.
+-   Skill-selection accuracy
+-   Target-selection accuracy
+-   Top-k skill retrieval
 
----
+This provides a measurable connection to robot execution without turning
+robot policy learning into a second research problem.
 
-# LIBERO schema validation
+------------------------------------------------------------------------
 
-## Important historical note
+## 12. SmolVLA Integration
 
-Early custom matched-training runs inherited an incorrect action schema:
+SmolVLA is used as a downstream VLA interface and engineering testbed.
 
-```text
-action = 6-D
-empty_cameras = 0
+The VLIA integration adds one intention token:
+
+``` text
+Baseline:
+[Image tokens ; Language tokens ; State]
+
+VLIA:
+[Image tokens ; Language tokens ; Intention token ; State]
 ```
 
-Those runs are **invalid for scientific comparison**.
+The current implementation has been checked for:
 
-The current validated LIBERO protocol requires:
+-   Intention adapter shape
+-   Prefix length increase by one token
+-   Intention token placement before state
+-   Attention masks
+-   Forward pass
+-   Backward pass
+-   Gradient propagation to the adapter
+-   Action sampling
+-   KV cache
+-   Training/inference paths
+-   Baseline fallback
+-   Pretrained initialization
+-   Matched preprocessing
+-   Semantic action padding
+-   Checkpoint serialization
 
-```text
-action = 7-D
-state = 6-D
+These checks establish **implementation correctness**.
+
+They do not establish scientific benefit from intention conditioning.
+
+------------------------------------------------------------------------
+
+## 13. LIBERO Status
+
+LIBERO is not the primary research benchmark for the current direction.
+
+Earlier matched runs exposed schema mismatches, including:
+
+-   Action dimension mismatch
+-   Camera/empty-camera configuration mismatch
+
+The canonical setup uses:
+
+``` text
+state: [6]
+action: [7]
+camera1 / camera2 / camera3
+empty_camera_0
 empty_cameras = 1
 ```
 
-The active downstream trainer is:
+The current research direction therefore does not depend on large-scale
+LIBERO policy training.
 
-```text
-scripts/train_matched_oracle_LIBERO7D_FIXED.py
+LIBERO/SmolVLA can remain useful as an optional downstream demonstration
+after the intention prediction experiments are established.
+
+------------------------------------------------------------------------
+
+## 14. Self-Collected OOD Dataset
+
+A small egocentric manipulation dataset is planned for
+out-of-distribution evaluation.
+
+Current pilot design:
+
+-   2 participants
+-   12 tasks
+-   2 repetitions
+-   48 videos
+-   Chest/neck-mounted egocentric camera
+-   Hands, objects, workspace, and targets visible
+-   No verbalized intention
+
+The pilot task taxonomy includes:
+
+``` text
+T01  Cup → Shelf
+T02  Bottle → Box
+T03  Block → Tray
+T04  Sort Blocks
+T05  Sort Objects
+T06  Object → Target
+T07  Peg → Hole
+T08  Object → Container
+T09  Simple Assembly
+T10  Component → Base
+T11  Open → Retrieve
+T12  Retrieve → Put Back
 ```
 
-It copies the LIBERO feature schema from a validated standard SmolVLA checkpoint and hard-asserts the expected action and camera configuration.
+The exact taxonomy should be finalized only after checking the actual
+objects and hardware used during collection.
 
----
+### Annotation schema
 
-# Current downstream status
-
-Latest documented 10-episode smoke evaluations of the fixed 7-D baseline:
-
-| Checkpoint | Success | Successful task |
-|---:|---:|---|
-| 1k | 0% | — |
-| 5k | 10% | task 5 |
-| 10k | 10% | task 2 |
-
-These are **1 episode per task** smoke tests and should not be interpreted as final benchmark results.
-
-A separate validated standard SmolVLA 25k checkpoint produced 30% success in the same small smoke-evaluation setting.
-
-The main downstream comparison is:
-
-```text
-SmolVLA baseline
-       │
-       ├──────────────► Oracle semantic intention
-       │
-       ├──────────────► Predicted semantic intention
-       │
-       └──────────────► Controls
-                         ├─ null token
-                         ├─ shuffled intention
-                         ├─ phase ID
-                         └─ random code
+``` text
+video_id
+participant_id
+task_id
+repetition_id
+video_duration
+observation_end
+outcome_start
+object
+target
+what
+why
+next
+intention_id
 ```
 
-The controls are necessary to separate **semantic utility** from simply adding extra conditioning capacity.
+Definitions:
 
----
+-   `WHAT` = `[verb] + [object]`
+-   `WHY` = intended purpose/goal, not a paraphrase of WHAT
+-   `NEXT` = likely next manipulation step
 
-# Current status
+With only two participants, participant-disjoint machine-learning
+training is not a reliable objective. The pilot should instead serve
+primarily as an OOD stress test.
 
-| Component | Status |
-|---|---|
-| Stage-A visual baseline | ✅ Complete |
-| Predicted-WHAT-guided WHY | ✅ Complete |
-| Same-task WHAT hard negatives | ✅ Complete |
-| Soft-MRR experiments | ✅ Complete |
-| Frozen-base residual reranker | ✅ Complete |
-| ENIGMA-360 cross-view diagnostic | ✅ Complete |
-| SmolVLA intention-token integration | ✅ Complete |
-| LIBERO 7-D schema validation | ✅ Complete |
-| Fixed matched baseline training | 🚧 In progress / being evaluated |
-| Oracle VLIA matched training | ⏳ Next |
-| Null / shuffled / phase controls | ⏳ Planned |
-| Predicted VLIA downstream evaluation | ⏳ Planned |
-| Ambiguity / counterfactual evaluation | ⏳ Planned |
-| UR3 / ROS2 deployment validation | ⏳ Planned |
+------------------------------------------------------------------------
 
----
+## 15. Experimental Roadmap
 
-# Repository layout
+The recommended order is:
 
-```text
+``` text
+Clean train/validation/test split
+            ↓
+Strong mean-pool baseline
+            ↓
+Direct WHY
+            ↓
+Auxiliary WHAT
+            ↓
+Predicted WHAT → WHY
+            ↓
+Parameter-matched control
+            ↓
+Oracle WHAT diagnostic
+            ↓
+Same-task hard negatives
+            ↓
+Temporal exclusion protocol
+            ↓
+Same-task evaluation
+            ↓
+OOD evaluation
+            ↓
+Robot skill-selection proxy
+```
+
+If WHAT → WHY still fails to outperform the strongest simple baseline
+under a clean evaluation protocol, the hypothesis should be weakened or
+rejected rather than protected by adding arbitrary architectural
+complexity.
+
+------------------------------------------------------------------------
+
+## 16. Repository Structure
+
+``` text
 vlia-uet/
-├── config/
-│   ├── data/
-│   ├── suites/
-│   └── tasks/
-│
-├── datasets/
-│   └── enigma360_adapter.py
-│
-├── docs/
-│   └── ROADMAP.md
-│
-├── models/
-├── policies/
-│   ├── intention/
-│   └── smolvla/
-│
-├── results/
-│
-├── scripts/
-│   ├── archive/
-│   ├── experiments/
-│   ├── train_matched_oracle_LIBERO7D_FIXED.py
-│   ├── build_matched_eval_processors.py
-│   ├── plot_training_history.py
-│   └── ...
-│
-├── tests/
-├── vlia_data/
-│   └── libero_oracle_dataset.py
-│
 ├── README.md
-├── LICENSE
-├── pyproject.toml
-└── requirements.txt
+├── .gitignore
+├── .gitattributes
+├── requirements.txt
+├── src/
+├── scripts/
+├── configs/
+├── tests/
+├── docs/
+│   ├── architecture/
+│   ├── experiments/
+│   └── notes/
+├── results/
+│   └── README.md
+└── artifacts/
+    └── checkpoint_025000/
+        └── pretrained_model/
 ```
 
-Historical ablations are intentionally retained for research provenance, but the active experimental path is documented in [`docs/ROADMAP.md`](docs/ROADMAP.md).
+### Recommended source organization
 
----
-
-# Environment
-
-VLIA currently uses a **separate LeRobot checkout** and a separate VLIA checkout.
-
-## 1. Clone
-
-```bash
-git clone https://github.com/huggingface/lerobot.git ~/lerobot
-git clone https://github.com/sgdfgnhmjnfd/vlia-uet.git ~/vlia-uet
+``` text
+src/
+├── intention/
+├── models/
+├── datasets/
+├── evaluation/
+└── utils/
 ```
 
-## 2. Prepare LeRobot environment
+------------------------------------------------------------------------
 
-```bash
-cd ~/lerobot
+## 17. Reproducibility Principles
 
-python -m venv .venv
-source .venv/bin/activate
+All experiments should record:
 
-pip install -e ".[smolvla]"
-```
+-   Dataset version
+-   Split definition
+-   Model configuration
+-   Random seed
+-   Training configuration
+-   Evaluation protocol
+-   Observation horizon
+-   Hard-negative definition
+-   Retrieval metric
+-   Checkpoint used
 
-> **Important:** do not rely on `pip install -e ~/vlia-uet` as the primary setup yet.
+Final claims should be based on an untouched test set whenever possible.
 
-The repository currently contains a local Python package named `datasets/`, which can shadow Hugging Face `datasets`.
+Validation results used repeatedly during development must be labeled as
+preliminary.
 
----
+------------------------------------------------------------------------
 
-# Running VLIA scripts safely
+## 18. What Belongs in Git
 
-The tested execution pattern is:
+### Commit
 
-```bash
-cd ~/lerobot
-source .venv/bin/activate
-unset PYTHONPATH
+-   Source code
+-   WHAT/WHY/intention code
+-   Intention Adapter
+-   SmolVLA integration
+-   Integration tests
+-   Stage-A experiment code
+-   Configuration files
+-   Training/evaluation scripts
+-   Results and metrics
+-   README and documentation
+-   Environment information
+-   Architecture diagrams/notes
 
-SITEPKG=$(python -c 'import site; print(site.getsitepackages()[0])')
+### Do not commit
 
-env PYTHONPATH="$SITEPKG:$HOME/vlia-uet" \
-python "$HOME/vlia-uet/scripts/train_matched_oracle_LIBERO7D_FIXED.py" --help
-```
+-   Raw videos
+-   Full datasets
+-   Hugging Face/model caches
+-   Virtual environments
+-   Full `~/lerobot`
+-   Large temporary logs
+-   Dataset caches
+-   Rendered videos
 
-This checks that the fixed 7-D trainer is importable without launching a training run.
+Large selected checkpoints may be stored with Git LFS when explicitly
+required.
 
-## Verify imports
+------------------------------------------------------------------------
 
-```bash
-cd ~/lerobot
-source .venv/bin/activate
-unset PYTHONPATH
+## 19. Scientific Scope
 
-SITEPKG=$(python -c 'import site; print(site.getsitepackages()[0])')
+The primary contribution is:
 
-env PYTHONPATH="$SITEPKG:$HOME/vlia-uet" python - <<'PY'
-import datasets
-import vlia_data
+> **A focused study of early robot-relevant goal disambiguation from
+> egocentric manipulation video, with explicit evaluation of same-task
+> goal confusion and temporal exclusion.**
 
-print("datasets:", datasets.__file__)
-print("vlia_data:", vlia_data.__file__)
-PY
-```
+The project does not claim to solve general human intention
+understanding.
 
-Expected behavior:
+It does not claim that the robot can autonomously understand arbitrary
+human intentions.
 
-```text
-datasets  -> .../.venv/.../site-packages/datasets/__init__.py
-vlia_data -> ~/vlia-uet/vlia_data/__init__.py
-```
+It does not make large-scale VLA policy learning the central research
+problem.
 
-For other scripts, replace only the final script path with an **actual file under**:
+Instead, the research isolates the intention-prediction problem and
+evaluates whether the inferred goal can provide useful information for a
+downstream robot interface.
 
-```text
-$HOME/vlia-uet/scripts/
-```
+------------------------------------------------------------------------
 
-Do not execute documentation placeholders such as `/path/to/script.py`.
+## 20. Future Work
 
----
+Potential future directions include:
 
-# Dataset and output locations
+-   Larger participant-diverse egocentric datasets
+-   Stronger trajectory-aware temporal modeling
+-   Explicit uncertainty estimation
+-   Multi-modal cues such as gaze
+-   Online intention updating
+-   Closed-loop human-robot interaction
+-   Integration with full VLA policy execution
+-   More realistic robot skill planning
+-   Larger-scale cross-dataset evaluation
 
-Large datasets, model checkpoints, videos, cached embeddings, and generated features are intentionally excluded from Git.
+These are future directions rather than requirements for the current
+core contribution.
 
-Recommended external layout:
-
-```text
-$VLIA_DATA_ROOT/
-├── egointent/
-├── egointent_full/
-├── enigma360/
-└── libero_oracle/
-
-$VLIA_OUTPUT_ROOT/
-├── stage_a/
-├── crossview/
-└── libero/
-```
-
-The Oracle dataset wrapper supports:
-
-```bash
-export VLIA_ORACLE_ROOT=/path/to/libero_oracle/v0
-```
-
-Historical experiment scripts may still contain machine-specific default paths. Those defaults are retained only for provenance and should be overridden for new runs.
-
----
-
-# Reproducibility checklist
-
-Before reporting a downstream result, verify:
-
-```text
-[ ] action dimension = 7
-[ ] state dimension = 6
-[ ] empty_cameras = 1
-[ ] intention token is inserted before state
-[ ] baseline and Oracle share the same initialization
-[ ] same optimizer and LR schedule
-[ ] same training subset
-[ ] same number of steps
-[ ] same evaluation protocol
-[ ] number of evaluation episodes is reported
-[ ] Oracle is labeled as privileged supervision
-[ ] 6-D historical runs are excluded
-[ ] semantic controls are included before making causal claims
-```
-
-Training loss alone is **not** treated as downstream evidence.
-
----
-
-# Research roadmap
-
-The current critical path is:
-
-```text
-Fixed LIBERO 7-D baseline
-          │
-          ▼
-Matched baseline evaluation
-          │
-          ▼
-Oracle VLIA
-          │
-          ▼
-Null / shuffle / phase controls
-          │
-          ▼
-Predicted VLIA
-          │
-          ▼
-Ambiguity & counterfactual evaluation
-          │
-          ▼
-UR3 / ROS2 / MoveIt2 validation
-```
-
-See [`docs/ROADMAP.md`](docs/ROADMAP.md) for the detailed experiment plan.
-
----
-
-# Scientific scope
-
-The project currently treats explicit intention as a **semantic control variable** rather than as an estimate of a person's hidden mental state.
-
-The strongest downstream claim will require evidence that:
-
-1. Oracle semantic intention is useful under a matched protocol.
-2. The gain is not reproduced by null, shuffled, phase-only, or random conditioning.
-3. A predicted intention representation preserves enough of that utility to improve robot behavior.
-4. The effect is strongest in conditions where observation and language are genuinely ambiguous.
-
----
+------------------------------------------------------------------------
 
 ## License
 
-This project is released under the [MIT License](LICENSE).
-
----
-
-<div align="center">
-
-**VLIA-UET — from seeing actions to reasoning about intent, then acting with it.**
-
-</div>
+This repository is intended for academic/research use. Add the final
+project-specific license before public release.
