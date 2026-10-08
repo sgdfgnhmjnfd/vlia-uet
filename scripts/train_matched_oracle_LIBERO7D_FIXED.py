@@ -21,6 +21,10 @@ import torch
 from torch.utils.data import DataLoader
 
 from lerobot.configs import PreTrainedConfig
+from lerobot.configs.types import (
+    PolicyFeature,
+    FeatureType,
+)
 
 from lerobot.datasets.dataset_metadata import (
 
@@ -363,31 +367,66 @@ def build_base_config():
     # config also includes one synthetic empty camera. Copy only
     # this dataset-specific schema; weights still come from
     # PRETRAINED when the policy is constructed below.
-    libero_cfg = (
-        PreTrainedConfig
-        .from_pretrained(
-            pretrained_name_or_path=(
-                LIBERO_SCHEMA_SOURCE
-            ),
-        )
+    #
+    # IMPORTANT: the current LeRobot PreTrainedConfig.from_pretrained()
+    # path is routed through Hugging Face Hub validation and therefore
+    # treats an absolute local path as a repo id. Load the local
+    # config.json explicitly instead.
+    libero_config_path = (
+        Path(LIBERO_SCHEMA_SOURCE) / "config.json"
     )
 
-    if not isinstance(
-        libero_cfg,
-        SmolVLAConfig,
-    ):
-        raise TypeError(
-            "Expected LIBERO SmolVLAConfig, "
-            f"got {type(libero_cfg)}"
+    if not libero_config_path.is_file():
+        raise FileNotFoundError(
+            "LIBERO schema config not found: "
+            f"{libero_config_path}"
         )
 
-    cfg.input_features = copy.deepcopy(
-        libero_cfg.input_features
+    with libero_config_path.open(
+        "r",
+        encoding="utf-8",
+    ) as f:
+        libero_config_dict = json.load(f)
+
+    # The JSON config stores feature specs as plain dictionaries, but
+    # SmolVLAConfig expects PolicyFeature objects. Reconstruct the
+    # exact LeRobot feature objects before assigning them.
+    def parse_policy_features(feature_dict):
+        return {
+            name: PolicyFeature(
+                type=FeatureType(spec["type"]),
+                shape=tuple(spec["shape"]),
+            )
+            for name, spec in feature_dict.items()
+        }
+
+    libero_input_features = parse_policy_features(
+        libero_config_dict["input_features"]
     )
-    cfg.output_features = copy.deepcopy(
-        libero_cfg.output_features
+    libero_output_features = parse_policy_features(
+        libero_config_dict["output_features"]
     )
-    cfg.empty_cameras = libero_cfg.empty_cameras
+    libero_empty_cameras = libero_config_dict.get(
+        "empty_cameras",
+        0,
+    )
+
+    # IMPORTANT:
+    # Keep the existing cfg.input_features / cfg.output_features
+    # dictionaries created by SmolVLAConfig. Updating them in-place
+    # preserves the PolicyFeature objects expected by LeRobot.
+
+    cfg.input_features.clear()
+    cfg.input_features.update(
+        copy.deepcopy(libero_input_features)
+    )
+
+    cfg.output_features.clear()
+    cfg.output_features.update(
+        copy.deepcopy(libero_output_features)
+    )
+
+    cfg.empty_cameras = libero_empty_cameras
     cfg.push_to_hub = False
 
     # Frozen matched experiment protocol.
