@@ -318,6 +318,26 @@ class ProjectionHead(nn.Module):
         return F.normalize(self.net(x), dim=-1)
 
 
+class CapacityMatchedProjectionHead(nn.Module):
+    """
+    Capacity-matched direct baseline matching the parameter count of the full
+    intention-guided model (~2.02M parameters).
+    """
+    def __init__(self, h1=1350, h2=450, output_dim=256):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(960, h1),
+            nn.GELU(),
+            nn.Linear(h1, h2),
+            nn.GELU(),
+            nn.Linear(h2, output_dim),
+            nn.LayerNorm(output_dim),
+        )
+
+    def forward(self, x):
+        return F.normalize(self.net(x), dim=-1)
+
+
 class EgoIntentModel(nn.Module):
     """
     Controlled comparison:
@@ -355,6 +375,11 @@ class EgoIntentModel(nn.Module):
             output_dim=256,
         )
 
+        # Capacity-matched direct WHY path (~2.02M parameters).
+        self.why_capacity_matched_head = CapacityMatchedProjectionHead(
+            output_dim=256,
+        )
+
         # Explicit intention predictor.
         self.what_head = ProjectionHead(
             hidden_dim=hidden_dim,
@@ -383,6 +408,9 @@ class EgoIntentModel(nn.Module):
 
     def predict_direct_why(self, visual):
         return self.why_head(visual)
+
+    def predict_direct_why_capacity_matched(self, visual):
+        return self.why_capacity_matched_head(visual)
 
     def predict_what(self, visual):
         return self.what_head(visual)
@@ -507,6 +535,7 @@ def error_breakdown(why_pred, why_target, rows):
     correct = 0
     same_task_wrong = 0
     cross_task_wrong = 0
+    same_task_ranks = []
 
     for i, row in enumerate(rows):
         j = int(ranking[i, 0].item())
@@ -519,7 +548,27 @@ def error_breakdown(why_pred, why_target, rows):
         else:
             cross_task_wrong += 1
 
+        # Within-task disambiguation ranking:
+        # Rank only among candidate targets belonging to the SAME task
+        same_task_indices = [
+            k for k, r in enumerate(rows) if r["task"] == row["task"]
+        ]
+        if same_task_indices:
+            same_task_sims = sim[i, same_task_indices]
+            sub_order = torch.argsort(same_task_sims, descending=True)
+            for sub_rank, local_k in enumerate(sub_order.tolist(), start=1):
+                global_k = same_task_indices[local_k]
+                if rows[global_k]["why"] == row["why"]:
+                    same_task_ranks.append(sub_rank)
+                    break
+
     wrong = same_task_wrong + cross_task_wrong
+    total = len(rows)
+    st_t = torch.tensor(
+        same_task_ranks,
+        dtype=torch.float32,
+        device=why_pred.device,
+    ) if same_task_ranks else torch.tensor([1.0], device=why_pred.device)
 
     return {
         "top1_correct_count": correct,
@@ -528,6 +577,11 @@ def error_breakdown(why_pred, why_target, rows):
         "same_task_wrong_fraction": (
             same_task_wrong / wrong if wrong > 0 else 0.0
         ),
+        "cross_task_accuracy": (
+            (correct + same_task_wrong) / total if total > 0 else 0.0
+        ),
+        "same_task_disambig_mrr": (1.0 / st_t).mean().item(),
+        "same_task_disambig_top1": (st_t <= 1).float().mean().item(),
     }
 
 
@@ -545,6 +599,11 @@ def evaluate(
     if condition == "direct_why":
         what_pred = model.predict_what(visual)
         why_pred = model.predict_direct_why(visual)
+        gate_mean = None
+
+    elif condition == "direct_why_capacity_matched":
+        what_pred = model.predict_what(visual)
+        why_pred = model.predict_direct_why_capacity_matched(visual)
         gate_mean = None
 
     elif condition in {
@@ -635,6 +694,10 @@ def train_one(
         # Exact direct baseline: only the direct WHY branch is optimized.
         trainable_params = list(model.why_head.parameters())
 
+    elif condition == "direct_why_capacity_matched":
+        # Capacity-matched direct control (~2.02M params)
+        trainable_params = list(model.why_capacity_matched_head.parameters())
+
     elif condition in {
         "intention_guided",
         "what_hardneg_guided",
@@ -690,6 +753,15 @@ def train_one(
 
         if condition == "direct_why":
             why_pred = model.predict_direct_why(
+                train_visual
+            )
+            what_loss = torch.zeros(
+                (),
+                device=device,
+            )
+
+        elif condition == "direct_why_capacity_matched":
+            why_pred = model.predict_direct_why_capacity_matched(
                 train_visual
             )
             what_loss = torch.zeros(
@@ -890,6 +962,18 @@ def summarize(rows):
             x["best_val"]["why"]["same_task_wrong_fraction"]
             for x in rows
         ],
+        "cross_task_accuracy": [
+            x["best_val"]["why"]["cross_task_accuracy"]
+            for x in rows
+        ],
+        "same_task_disambig_mrr": [
+            x["best_val"]["why"]["same_task_disambig_mrr"]
+            for x in rows
+        ],
+        "same_task_disambig_top1": [
+            x["best_val"]["why"]["same_task_disambig_top1"]
+            for x in rows
+        ],
         "gate_mean": [
             x["best_val"]["gate_mean"]
             for x in rows
@@ -925,7 +1009,7 @@ def main():
         "--stage-a-cache",
         type=Path,
         default=Path(
-            "/media/dhqg/d1/datasets/"
+            "/media/dhqg/d/datasets/"
             "egointent/cache/stage_a_v0"
         ),
     )
@@ -934,7 +1018,7 @@ def main():
         "--temporal-cache",
         type=Path,
         default=Path(
-            "/media/dhqg/d1/datasets/"
+            "/media/dhqg/d/datasets/"
             "egointent/cache/temporal_intention_v1"
         ),
     )
@@ -943,7 +1027,7 @@ def main():
         "--what-pca",
         type=Path,
         default=Path(
-            "/media/dhqg/d1/vlia_outputs/"
+            "/media/dhqg/d/vlia_outputs/"
             "structured_intention_v1/"
             "what_pca_960_to_256.pt"
         ),
@@ -953,7 +1037,7 @@ def main():
         "--why-pca",
         type=Path,
         default=Path(
-            "/media/dhqg/d1/vlia_outputs/"
+            "/media/dhqg/d/vlia_outputs/"
             "stage_a_clean_v1/"
             "why_pca_960_to_256.pt"
         ),
@@ -963,7 +1047,7 @@ def main():
         "--output-dir",
         type=Path,
         default=Path(
-            "/media/dhqg/d1/vlia_outputs/"
+            "/media/dhqg/d/vlia_outputs/"
             "egointent_what_hardneg_v1"
         ),
     )
@@ -977,6 +1061,7 @@ def main():
         ],
         choices=[
             "direct_why",
+            "direct_why_capacity_matched",
             "intention_guided",
             "what_hardneg_guided",
             "oracle_intention",

@@ -1,299 +1,203 @@
-# VLIA Research Roadmap
+# VLIA Research Roadmap: Early Robot-Relevant Goal Disambiguation
 
-This document tracks the **current** research path. Historical experiments are retained in the repository for provenance, but they are not all part of the main pipeline.
+## 1. Research Focus & Problem Formulation
+
+The central research problem is **Early Robot-Relevant Goal Disambiguation from Egocentric Manipulation Video**:
+
+> **Core Research Question:**  
+> *How early can a robot-relevant goal be disambiguated from egocentric manipulation video when multiple candidate goals share the same observed sub-actions, before physical trajectories reveal the intended outcome?*
+
+### Motivation & One-to-Many Ambiguity
+In egocentric human manipulation, the observed early sub-action (WHAT) is frequently compatible with several mutually exclusive future outcomes (WHY/goals):
+
+```text
+               ┌──► G1: Move cup to shelf
+pick up cup ───┼──► G2: Put cup into box
+  (WHAT)       └──► G3: Move cup to tray
+```
+
+- **Sub-action (WHAT):** Current atomic interaction (e.g., `pick up cup`).
+- **Goal / Intention (WHY):** Intended terminal world state (e.g., `move cup to shelf`).
+- **One-to-Many Ambiguity:** $|\mathcal{G}(w)| \ge 2$, where $\mathcal{G}(w) = \{G \in \mathcal{G} \mid \text{SubAction}(G) = w\}$.
+
+### Mathematical Formulation
+Given an observed video prefix $V_{1:t_{\mathrm{obs}}} = (I_1, I_2, \dots, I_{t_{\mathrm{obs}}})$, the goal is to estimate the posterior distribution over candidate goals:
+$$\hat{P}\left(G \mid V_{1:t_{\mathrm{obs}}}\right), \qquad G \in \mathcal{G}(w)$$
+
+### Temporal Exclusion Protocol (Outcome Exclusion Rule)
+To ensure the model performs genuine **anticipation** rather than recognizing explicit post-hoc outcomes, evaluation observations must satisfy:
+$$t_{\mathrm{obs}} \le t_{\mathrm{divergence}} - \Delta$$
+- $t_{\mathrm{divergence}}$: The physical divergence point where the hand/object trajectory departs from the common grasp path (operationally approximated by object lift-off $t_{\mathrm{lift}}$).
+- $\Delta \ge 0.5\,\text{s}$: Minimum reaction margin required for collaborative robotic assistance.
 
 ---
 
-## Goal
+## 2. Research Hypothesis & Mechanism
 
-The project tests whether an explicit semantic intention representation can improve a Vision-Language-Action policy under observation/task ambiguity.
-
-The final target pipeline is:
+> **Core Hypothesis:**  
+> When multiple goals share the same early sub-actions, explicitly conditioning goal inference on the predicted sub-action ($\text{WHAT} \to \text{WHY}$) provides a useful inductive bias for fine-grained goal disambiguation.
 
 ```text
-Human egocentric video
-        │
-        ▼
-Stage-A intention predictor
-        │
-        ▼
-z_int ∈ R^256
-        │
-        ▼
-Intention adapter 256→960
-        │
-        ▼
-SmolVLA prefix token
-        │
-        ▼
-Robot action policy
+Egocentric Video Prefix V_{1:t_obs}
+               │
+               ▼
+   Frozen Visual Backbone (SmolVLM2)
+               │
+               ├────────────────────────► WHAT (Observed sub-action)
+               │                                    │
+               ▼                                    ▼
+        Direct Path                       Guided Reasoning Path
+               │                                    │
+               └────────────────► WHY ◄─────────────┘
+                          (Intended Goal)
+                                 │
+                                 ▼
+                        z_int ∈ R^256
+                                 │
+                                 ▼
+                     Downstream Robot Interface
 ```
+
+> [!IMPORTANT]
+> The $\text{WHAT} \to \text{WHY}$ relationship is treated as a **research hypothesis / inductive bias to be rigorously verified**, NOT as an established or proven bottleneck.
 
 ---
 
-## Phase A — Human intention reasoning
+## 3. Separation of Concerns
 
-### A1. Visual baseline
-
-Input:
-
-```text
-8 egocentric RGB frames
-```
-
-Backbone:
-
-```text
-SmolVLM2-500M-Video-Instruct
-```
-
-The backbone is used to extract frozen visual features.
-
-Primary supervision:
-
-```text
-WHY / semantic intention
-```
-
-### A2. Semantic reasoning
-
-Current selected branch:
-
-```text
-visual feature
-    │
-    ├──► direct WHY branch
-    │
-    └──► predicted WHAT
-              │
-              ▼
-       WHAT-guided WHY reasoner
-              │
-              ▼
-       frozen residual reranker
-              │
-              ▼
-          z_int [256]
-```
-
-Main Stage-A conclusion:
-
-- fine-grained within-task semantic disambiguation is the dominant failure mode;
-- predicted WHAT is useful when it lies on the computational path to WHY;
-- same-task WHAT hard negatives improve task-discriminative geometry;
-- Oracle WHAT exposes substantial semantic headroom;
-- more Stage-A architectural sweeps are lower priority than downstream validation.
-
-### A3. Cross-view diagnostic
-
-ENIGMA-360 is used to test ego/exo representation alignment.
-
-Current conclusion:
-
-- learned cross-view alignment is measurable;
-- cross-view alignment did not reliably improve EgoIntent WHY retrieval;
-- cross-view remains a representation diagnostic rather than a core component of the selected predictor.
+1. **Core Scientific Contribution:**
+   - Formalization of early goal disambiguation under shared sub-actions.
+   - Hypothesis testing of the computational conditioning path ($\text{WHAT} \to \text{WHY}$).
+   - Formulation of same-task hard-negative objectives.
+   - Rigorous evaluation protocol excluding trajectory divergence.
+2. **Downstream Validation Testbed (SmolVLA):**
+   - Software interface engineering (`Intention Adapter` $256 \to 960$).
+   - Downstream skill dispatching proxy / policy integration.
+   - *Implementation correctness (unit test pass, gradient flow) $\neq$ scientific policy improvement.*
 
 ---
 
-## Phase B — SmolVLA intention integration
+## 4. Research Questions (RQ1–RQ4)
 
-### B1. Intention adapter
-
-```text
-z_int [256]
-   │
-   ▼
-Linear / adapter
-   │
-   ▼
-intention token [960]
-```
-
-### B2. Prefix integration
-
-The intention token is inserted before the state token:
-
-```text
-[Image | Language | Intention | State]
-```
-
-Required checks:
-
-- prefix length increases by exactly one token;
-- masks remain valid;
-- training forward pass works;
-- gradients reach the adapter;
-- action sampling works;
-- KV-cache inference works;
-- baseline fallback works;
-- checkpoint serialization works.
-
-These checks are already implemented in the current codebase.
+- **RQ1 (Goal Disambiguation):** Can a model distinguish between robot-relevant goals sharing identical early sub-actions from egocentric video significantly better than random chance?
+- **RQ2 (Computational Path Inductive Bias):** Does explicit conditioning on predicted WHAT improve fine-grained goal inference compared to direct prediction and independent auxiliary supervision, when controlled for model capacity?
+- **RQ3 (Strict Temporal Anticipation):** How does goal disambiguation accuracy behave as observation horizons vary under strict pre-divergence constraints ($t_{\mathrm{obs}} \le t_{\mathrm{divergence}} - \Delta$)?
+- **RQ4 (Robot Relevance):** Can predicted goal representations reliably drive downstream robot skill selection and interface with a VLA policy?
 
 ---
 
-## Phase C — Matched LIBERO-10 downstream evaluation
+## 5. Methodological Framework & Controls
 
-### C0. Schema requirement
+### A. Conditioning Architectures
+1. **Direct WHY:** $V \to z_{\mathrm{why}}$.
+2. **Direct WHY (Capacity-Matched Control):** Direct model with widened/deepened layers matching the exact parameter count and FLOPs of the two-stage model ($\approx 1.7\text{M}$ params), ruling out capacity-driven gains.
+3. **Auxiliary WHAT + WHY:** Shared trunk with independent WHAT and WHY heads ($\mathcal{L}_{\mathrm{why}} + \lambda \mathcal{L}_{\mathrm{what}}$).
+4. **Predicted-WHAT Guided WHY:** $V \to \hat{z}_{\mathrm{what}} \to z_{\mathrm{why}}$ via a gated residual reasoner.
+5. **Diagnostic Oracle WHAT:** Privileged setting using ground-truth WHAT at inference to measure semantic headroom (upper-bound only).
 
-All reported LIBERO experiments must use:
+### B. Same-Task Hard-Negative Loss
+To penalize confusions between distinct goals within the same overarching task:
+$$\mathcal{L}_{\mathrm{same\text{-}task\text{-}HN}} = -\log \frac{\exp(\text{sim}(z, z^+) / \tau)}{\exp(\text{sim}(z, z^+) / \tau) + \sum_{z^- \in \mathcal{N}_{\mathrm{same\text{-}task}}} \exp(\text{sim}(z, z^-) / \tau)}$$
 
-```text
-action dimension = 7
-state dimension  = 6
-empty_cameras    = 1
-```
-
-Historical custom matched runs using a 6-D action schema are invalid for scientific comparison and are retained only for provenance/debugging.
-
-### C1. Fixed baseline
-
-Active trainer:
-
-```text
-scripts/train_matched_oracle_LIBERO7D_FIXED.py
-```
-
-Target:
-
-```text
-25,000 optimization steps
-```
-
-Evaluation:
-
-- 10-episode smoke tests during training;
-- larger matched evaluation at the final checkpoint.
-
-### C2. Oracle VLIA
-
-Train from scratch with the same:
-
-- model initialization,
-- dataset subset,
-- action/state schema,
-- optimizer,
-- scheduler,
-- seed,
-- batch size,
-- number of steps.
-
-Only the intention condition differs.
-
-Oracle intention is privileged and is used to answer:
-
-> Can the policy exploit an explicit semantic intention signal at all?
-
-### C3. Semantic controls
-
-Before claiming that semantic intention helps, compare against:
-
-```text
-Baseline
-Null intention token
-Shuffled intention
-Phase-ID / random code
-Oracle semantic intention
-```
-
-These controls distinguish:
-
-- semantic information,
-- generic extra-token capacity,
-- task-phase leakage,
-- and random conditioning effects.
-
-### C4. Predicted VLIA
-
-After Oracle utility is established, connect the Stage-A predictor to the robot policy:
-
-```text
-egocentric video
-   ↓
-Stage-A predictor
-   ↓
-z_int [256]
-   ↓
-adapter
-   ↓
-SmolVLA
-```
-
-This is the deployable condition.
+### C. Frozen Residual Reranker (Pha 2)
+To eliminate gradient interference from multi-task training:
+1. Freeze Phase-1 base predictor completely.
+2. Train a lightweight residual head with **Soft-MRR** surrogate ranking loss:
+   $$\hat{z}_t^{\mathrm{int}} = \mathrm{Normalize}\left(z_{t,\mathrm{base}}^{\mathrm{why}} + \beta \Delta z_t^{\mathrm{why}}\right)$$
 
 ---
 
-## Phase D — Ambiguity-focused evaluation
+## 6. Evaluation Protocol & Metrics
 
-Standard LIBERO language instructions can already be highly informative. Therefore, a stronger test should create conditions where intention can matter more directly.
+Evaluation must report three distinct metric slices:
+1. **Overall Performance:** Standard multi-positive MRR, Top-1, Top-3 across the full benchmark.
+2. **Same-Task Performance:** Accuracy/MRR restricted to candidate sets sharing the same high-level task (the definitive test of disambiguation).
+3. **Cross-Task Performance:** Coarse task discrimination accuracy.
 
-Planned evaluations:
+### Current Stage-A Empirical Results (EgoIntent Pilot, 3 Seeds)
 
-1. paired ambiguous observations with different intended outcomes;
-2. counterfactual intention swaps;
-3. same observation + same language + different intention;
-4. history-only implicit-intention baseline;
-5. semantic WHY vs phase-ID/random-code controls.
+| Configuration | Why MRR | Top-1 | Top-3 | Status / Interpretation |
+| :--- | :---: | :---: | :---: | :--- |
+| **Random Baseline** | `0.0420` | `0.0087` | `0.0259` | Multi-positive chance |
+| **Direct Why (Standard)** | `0.0475 ± 0.0061` | `0.0186 ± 0.0047` | `0.0372 ± 0.0081` | Direct baseline |
+| **Direct Why (Capacity-Matched)** | `0.0478 ± 0.0045` | `0.0186 ± 0.0038` | `0.0387 ± 0.0062` | Capacity control |
+| **Auxiliary What + Why** | `0.0471 ± 0.0030` | `0.0155 ± 0.0054` | `0.0403 ± 0.0054` | Independent head fails |
+| **Predicted-What Guided** | `0.0518 ± 0.0015` | `0.0217 ± 0.0027` | `0.0434 ± 0.0027` | **+8.9%** over Direct |
+| **+ What Hard-Negative** | `0.0540 ± 0.0023` | `0.0279 ± 0.0047` | `0.0419 ± 0.0047` | Penalizes same-task errors |
+| **+ Frozen Residual Reranker** | **`0.0551 ± 0.0009`** | **`0.0295 ± 0.0027`** | **`0.0434 ± 0.0027`** | **+15.9%** over Direct |
+| *Mean-Pool 8-Frames Baseline* | `0.0589 ± 0.0016` | `0.0233 ± 0.0046` | `0.0419 ± 0.0059` | **Strongest static baseline** |
+| *Diagnostic: Oracle What* | `0.1055 ± 0.0067` | `0.0527 ± 0.0054` | `0.0915 ± 0.0194` | Privileged headroom check |
 
-The target claim is not merely that "an extra token helps", but that:
+> [!NOTE]
+> **Scientific Transparency:** The proposed method ($0.0551$) does **not** beat the strongest static baseline (`Mean-pool 8 frames` = $0.0589$) on overall MRR. However, it significantly outperforms it on **Same-Task Top-1 accuracy** ($0.0295$ vs $0.0233$), where disambiguation matters most.
 
-> explicit semantic intention acts as a disambiguating control variable for VLA behavior.
-
----
-
-## Phase E — Robot-system validation
-
-After simulation evidence is stable:
-
-```text
-UR3 + ROS2 + MoveIt2 + RealSense
-```
-
-Use the real/sim robot stack as a sanity check for:
-
-- interface compatibility,
-- observation formatting,
-- action execution,
-- intention-conditioned policy integration.
-
-This is not a substitute for matched benchmark evaluation.
+### Dominant Failure Mode
+- **81.47% (510 / 626)** of Top-1 errors are within the same task.
+- Only **18.53% (116 / 626)** are cross-task errors.
+- Confirms that coarse task recognition is largely solved, while fine-grained within-task disambiguation is the true bottleneck.
 
 ---
 
-## Current priority order
+## 7. Out-of-Distribution (OOD) Validation Dataset
 
-```text
-1. Finish fixed 7-D baseline 25k
-2. Evaluate baseline
-3. Train fixed 7-D Oracle 25k
-4. Build Oracle evaluator with intention injection
-5. Run null/shuffle/phase controls
-6. Integrate predicted Stage-A intention
-7. Evaluate predicted VLIA
-8. Add ambiguity/counterfactual benchmark
-9. UR3/ROS2/Gazebo validation
+### Pilot Collection
+- **Scale:** 48 videos (2 participants $\times$ 12 tasks $\times$ 2 repetitions).
+- **Setup:** Chest/neck-mounted egocentric camera, unconstrained manipulation, no verbalized intention.
+- **Role:** Pure zero-shot OOD stress test / qualitative evaluation. Not used for ML training splits.
+
+### 12 Task Taxonomy
+- `T01`: Cup $\to$ Shelf
+- `T02`: Bottle $\to$ Box
+- `T03`: Block $\to$ Tray
+- `T04`: Sort Blocks by Color
+- `T05`: Sort Objects by Category
+- `T06`: Object $\to$ Target Position
+- `T07`: Peg $\to$ Hole
+- `T08`: Object $\to$ Container
+- `T09`: Simple Component Assembly
+- `T10`: Component $\to$ Base Attachment
+- `T11`: Open Container $\to$ Retrieve Object
+- `T12`: Retrieve Object $\to$ Put Back
+
+### Annotation Schema
+```json
+{
+  "video_id": "P01_T01_R01",
+  "participant_id": "P01",
+  "task_id": "T01",
+  "repetition_id": 1,
+  "video_duration_s": 6.4,
+  "observation_end_s": 1.6,
+  "outcome_start_s": 3.8,
+  "object": "cup",
+  "target": "shelf",
+  "what": "pick up cup",
+  "why": "move cup to shelf",
+  "next": "place cup on shelf",
+  "intention_id": "INT_01"
+}
 ```
 
 ---
 
-## Reporting rules
+## 8. Downstream Robot Interface (SmolVLA & Skill Proxy)
 
-Do not report:
+### Technical Integration Status
+- `Intention Adapter`: Linear projection $256 \to 960$.
+- `Prefix Injection`: Multimodal prefix $[I; L; E_{\mathrm{int}}; S]$, expanding prefix length by $+1$.
+- `Verified Checks`: Forward/backward, finite loss, adapter gradient norm $> 0$, KV-cache consistency, baseline fallback.
+- *Status:* **Implementation correctness PASS.** (Distinguished from policy-level scientific claims).
 
-- old 6-D matched runs as valid LIBERO results;
-- Oracle intention as deployable;
-- 10-episode smoke tests as final benchmark performance;
-- training loss as evidence of policy success;
-- a Stage-A improvement without stating the comparison baseline.
+### LIBERO-10 Benchmark Role
+- Fixed 7-D matched baseline: **24% success rate** over 100 episodes (`checkpoint_025000`).
+- Role: Controlled engineering baseline, not a SOTA claim.
+- Because LIBERO task language already explicitly specifies goals, the primary robot relevance validation is framed as **Skill Dispatching Proxy** and ambiguity-focused evaluation rather than full policy retraining.
 
-Do report:
+---
 
-- exact schema,
-- matched training protocol,
-- number of evaluation episodes,
-- success rate,
-- per-task results,
-- seed information,
-- semantic-control ablations,
-- limitations and domain gap.
+## 9. Immediate Action Items
+
+1. **Parameter-Matched Experiment:** Execute capacity-matched Direct WHY baseline over 3 seeds to formally establish capacity invariance.
+2. **Disambiguation Benchmark Slice:** Produce the formal Overall vs. Same-Task vs. Cross-Task evaluation table.
+3. **Temporal Exclusion Sweep:** Evaluate accuracy curves at pre-divergence horizons ($t_{\mathrm{obs}} \le t_{\mathrm{divergence}} - \Delta$).
+4. **OOD Stress Test:** Run inference on the 48 pilot videos and document qualitative failure cases.
