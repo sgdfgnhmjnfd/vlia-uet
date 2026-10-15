@@ -20,6 +20,22 @@
 
 </div>
 
+## 🔬 Recent experimental status (updated)
+
+Tính đến thời điểm hiện tại, dự án đã có các artifact thực nghiệm sau:
+
+- Prefix-length ablation theo quan sát sớm từ 2, 4, 6, 8 khung hình được lưu trong [results/prefix_length_ablation_v1/prefix_length_summary.md](results/prefix_length_ablation_v1/prefix_length_summary.md).
+- Phân tích kiểu quyết định predict-vs-defer cơ bản (confidence, margin, entropy) được lưu trong [results/selective_decision_v1/selective_decision_summary.md](results/selective_decision_v1/selective_decision_summary.md).
+
+Kết luận thực tế, không vượt quá mức có thể khẳng định:
+
+- MRR tăng dần khi thời lượng quan sát tăng từ 2 → 8 khung hình, nhưng sự cải thiện khá chậm ở giai đoạn đầu và bắt đầu bão hòa ở các prefix tương đối dài.
+- Baseline đơn giản `mean_pool` 8 frames vẫn là điểm tham chiếu mạnh nhất trong phạm vi hiện có: `MRR ≈ 0.0589 ± 0.0016`.
+- Các baseline quyết định “predict vs defer” hiện chỉ là công cụ hỗ trợ quyết định đơn giản, không phải bằng chứng rằng mô hình đã hiểu được khi nào dữ liệu quan sát đủ để xác nhận ý định.
+- Các lỗi còn lại chủ yếu tập trung ở “same-task confusion”, điều này phù hợp với giả thuyết năng lực phân biệt mục tiêu còn yếu khi các mục tiêu chia sẻ hành vi khởi đầu.
+
+> Lưu ý: Không suy diễn tính hiệu quả thống kê vượt trội hoặc khẳng định novel method dựa trên các kết quả pilot này. Mục tiêu hiện tại là xây dựng một pipeline đánh giá sạch, có thể tái lặp và công khai dữ liệu so sánh prefix-length.
+
 ## 📌 Mục lục / Table of Contents
 
 - [1. Giới thiệu & Đặt bài toán (Research Problem)](#1-giới-thiệu--đặt-bài-toán)
