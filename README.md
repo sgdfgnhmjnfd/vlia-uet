@@ -24,13 +24,13 @@
 
 Tính đến thời điểm hiện tại, dự án đã có các artifact thực nghiệm sau:
 
-- Prefix-length ablation theo quan sát sớm từ 2, 4, 6, 8 khung hình được lưu trong [results/prefix_length_ablation_v1/prefix_length_summary.md](results/prefix_length_ablation_v1/prefix_length_summary.md).
+- Prefix-length ablation theo quan sát sớm từ 2, 4, 6, 8 khung hình với train@k/eval@k và 3 seed được lưu trong [results/prefix_length_ablation_v2/summary.md](results/prefix_length_ablation_v2/summary.md).
 - Phân tích kiểu quyết định predict-vs-defer cơ bản (confidence, margin, entropy) được lưu trong [results/selective_decision_v1/selective_decision_summary.md](results/selective_decision_v1/selective_decision_summary.md).
 
 Kết luận thực tế, không vượt quá mức có thể khẳng định:
 
-- MRR tăng dần khi thời lượng quan sát tăng từ 2 → 8 khung hình, nhưng không đủ dữ liệu để khẳng định vùng bão hòa; các chuyển đổi còn có độ lớn tương đương với độ lệch chuẩn giữa các seed.
-- Baseline đơn giản `mean_pool` 8 frames vẫn là điểm tham chiếu mạnh nhất trong phạm vi hiện có: `MRR ≈ 0.0589 ± 0.0016`.
+- Trong pipeline chuẩn hóa mới (train@k/eval@k), `MRR` ở 2/4/6/8 khung hình dao động xung quanh `0.055–0.060` với độ lệch chuẩn trên seed ~`0.003–0.007`; không có xu hướng tăng đều thống nhất trên toàn bộ phạm vi, nên chưa thể kết luận rằng 6 hoặc 8 khung hình đã bão hòa.
+- Baseline `mean_pool` 8 frames vẫn là điểm tham chiếu mạnh nhất trong phạm vi hiện có: `MRR ≈ 0.0589 ± 0.0016` khi chọn epoch tối ưu theo val. Nhưng điểm đáng chú ý là `train_k_eval_k` ở 6 frames đạt `MRR ≈ 0.0604 ± 0.0047`, gần như tương đương với 8 frames, và các khoảng tin cậy chồng lấn đáng kể.
 - Các baseline quyết định “predict vs defer” hiện chỉ là công cụ hỗ trợ quyết định đơn giản, không phải bằng chứng rằng mô hình đã hiểu được khi nào dữ liệu quan sát đủ để xác nhận ý định.
 - Các lỗi còn lại chủ yếu tập trung ở “same-task confusion”, điều này phù hợp với giả thuyết năng lực phân biệt mục tiêu còn yếu khi các mục tiêu chia sẻ hành vi khởi đầu.
 

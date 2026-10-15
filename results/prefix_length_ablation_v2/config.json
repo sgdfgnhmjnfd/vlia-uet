@@ -1,0 +1,50 @@
+{
+  "script": "scripts/run_prefix_length_ablation.py",
+  "git_commit": "34571c46e5b82300adf92ebfd94549fbc6007d05",
+  "args": {
+    "temporal_cache": "/media/dhqg/d3/datasets/egointent/cache/temporal_intention_v1",
+    "stage_a_cache": "/media/dhqg/d3/datasets/egointent/cache/stage_a_v0",
+    "why_pca": "/media/dhqg/d3/vlia_outputs/stage_a_clean_v1/why_pca_960_to_256.pt",
+    "output_dir": "/home/dhqg/vlia-uet/results/prefix_length_ablation_v2",
+    "prefixes": "[2, 4, 6, 8]",
+    "seeds": "[0, 1, 2]",
+    "epochs": "100",
+    "lr": "0.001",
+    "weight_decay": "0.0001",
+    "temperature": "0.07",
+    "cosine_weight": "0.1",
+    "hidden_dim": "512",
+    "dropout": "0.0",
+    "grad_clip": "1.0",
+    "device": "cuda",
+    "smoke": "False",
+    "selftest": "False",
+    "overwrite": "False",
+    "rerun": "False"
+  },
+  "torch": "2.11.0+cu128",
+  "numpy": "2.2.6",
+  "n_train": 556,
+  "n_val": 215,
+  "train_videos": [
+    "3ae7ab6b-793e-4a77-9749-010c94b1b0ee",
+    "6269fa52-58af-46d3-9a4b-7aca66c3b622",
+    "8301a3fc-aac5-466d-bb02-d0ac7a81ccc6",
+    "8bef8b33-a1ee-43e7-a2d0-8cf68653cb0c",
+    "cd8590b6-4c27-4932-9ccf-501380d35b14",
+    "ce3ef2da-c918-42c8-9d22-533f776366bd"
+  ],
+  "val_videos": [
+    "02d1f024-1470-4ce6-acde-b938f7847eb6",
+    "cc883eb4-7772-4ef8-bd85-2c9cb5c6565d"
+  ],
+  "frames_per_sample": 8,
+  "task_metadata_available": true,
+  "chance": {
+    "MRR": 0.04220487522450658,
+    "Top1": 0.008804759329367261,
+    "Top3": 0.026126726036073664
+  },
+  "crosscheck_max_abs_diff": 3.9733093204485925e-09,
+  "frame_sampling_note": "cached frames are np.linspace over the whole clip; prefix k = first k of 8 frames (~[25, 50, 75, 100]% of the sampled grid), not an absolute time"
+}
