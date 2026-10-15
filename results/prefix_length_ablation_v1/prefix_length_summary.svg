@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420">
+<rect width="100%" height="100%" fill="white"/>
+<line x1="60" y1="340" x2="700" y2="340" stroke="black"/>
+<line x1="60" y1="30" x2="60" y2="340" stroke="black"/>
+<line x1="60" y1="340.0" x2="700" y2="340.0" stroke="#ddd"/>
+<text x="10" y="344.0" font-size="11">0.038</text>
+<line x1="60" y1="262.5" x2="700" y2="262.5" stroke="#ddd"/>
+<text x="10" y="266.5" font-size="11">0.042</text>
+<line x1="60" y1="184.99999999999994" x2="700" y2="184.99999999999994" stroke="#ddd"/>
+<text x="10" y="188.99999999999994" font-size="11">0.046</text>
+<line x1="60" y1="107.49999999999997" x2="700" y2="107.49999999999997" stroke="#ddd"/>
+<text x="10" y="111.49999999999997" font-size="11">0.051</text>
+<line x1="60" y1="30.0" x2="700" y2="30.0" stroke="#ddd"/>
+<text x="10" y="34.0" font-size="11">0.055</text>
+<line x1="273.3333333333333" y1="340" x2="273.3333333333333" y2="346" stroke="black"/>
+<text x="265.3333333333333" y="358" font-size="11">2</text>
+<line x1="486.66666666666663" y1="340" x2="486.66666666666663" y2="346" stroke="black"/>
+<text x="478.66666666666663" y="358" font-size="11">4</text>
+<line x1="700.0" y1="340" x2="700.0" y2="346" stroke="black"/>
+<text x="692.0" y="358" font-size="11">6</text>
+<line x1="913.3333333333333" y1="340" x2="913.3333333333333" y2="346" stroke="black"/>
+<text x="905.3333333333333" y="358" font-size="11">8</text>
+<text x="335.0" y="412" font-size="12">Observed frames</text>
+<text x="15" y="90" font-size="12" transform="rotate(-90 15 60)">MRR</text>
+<polyline fill="none" stroke="#1f77b4" stroke-width="2" points="273.3,305.1 486.7,228.4 700.0,180.0 913.3,82.9"/>
+<text x="918.3333333333333" y="74.87511822476495" font-size="11" fill="#1f77b4">gru_final</text>
+<polyline fill="none" stroke="#ff7f0e" stroke-width="2" points="273.3,296.4 486.7,212.3 700.0,166.7 913.3,76.3"/>
+<text x="918.3333333333333" y="68.34296610959251" font-size="11" fill="#ff7f0e">gru_progression</text>
+</svg>
