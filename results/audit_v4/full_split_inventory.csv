@@ -1,0 +1,4 @@
+split,samples,video_uids,scenes,settings,pilot_train_overlap,pilot_val_overlap,stale_path_rows,resolved_video_paths,missing_video_paths,duplicate_sample_ids,cross_split_sample_ids,cache_files_found,cache_files_missing
+train,2091,23,"['art_studio', 'bedroom', 'clothing_closet', 'deck', 'garage', 'hallway', 'kitchen', 'laundry_room', 'space', 'workshop', 'yard']","['indoor', 'outdoor']","['3ae7ab6b-793e-4a77-9749-010c94b1b0ee', '6269fa52-58af-46d3-9a4b-7aca66c3b622', '8301a3fc-aac5-466d-bb02-d0ac7a81ccc6', '8bef8b33-a1ee-43e7-a2d0-8cf68653cb0c', 'cd8590b6-4c27-4932-9ccf-501380d35b14', 'ce3ef2da-c918-42c8-9d22-533f776366bd']",[],2091,2091,0,0,0,2091,0
+val,412,4,"['farm', 'living_room']","['indoor', 'outdoor']",[],['02d1f024-1470-4ce6-acde-b938f7847eb6'],412,412,0,0,0,412,0
+test,511,5,"['garden', 'study_room']","['indoor', 'outdoor']",[],['cc883eb4-7772-4ef8-bd85-2c9cb5c6565d'],511,511,0,0,0,511,0

@@ -26,11 +26,15 @@ Tính đến thời điểm hiện tại, dự án đã có các artifact thực
 
 - Prefix-length ablation theo quan sát sớm từ 2, 4, 6, 8 khung hình với train@k/eval@k và 3 seed được lưu trong [results/prefix_length_ablation_v2/summary.md](results/prefix_length_ablation_v2/summary.md).
 - Phân tích kiểu quyết định predict-vs-defer cơ bản (confidence, margin, entropy) được lưu trong [results/selective_decision_v1/selective_decision_summary.md](results/selective_decision_v1/selective_decision_summary.md).
+- Audit các artifact pilot và split full EgoIntent được lưu trong [results/audit_v4/audit_report.md](results/audit_v4/audit_report.md).
+- Prefix-length train@k/eval@k trên full train/validation split (3 seed, 412 mẫu validation) được lưu trong [results/prefix_length_full_v1/analysis.md](results/prefix_length_full_v1/analysis.md).
+- Candidate test 407 mẫu / 4 video UID đã được khóa protocol trước khi đánh giá; kết quả một lần chạy được lưu trong [results/locked_test_full_v1/summary.md](results/locked_test_full_v1/summary.md), protocol tại [results/test_protocol_full_v1/README.md](results/test_protocol_full_v1/README.md).
 
 Kết luận thực tế, không vượt quá mức có thể khẳng định:
 
-- Trong pipeline chuẩn hóa mới (train@k/eval@k), `MRR` ở 2/4/6/8 khung hình dao động xung quanh `0.055–0.060` với độ lệch chuẩn trên seed ~`0.003–0.007`; không có xu hướng tăng đều thống nhất trên toàn bộ phạm vi, nên chưa thể kết luận rằng 6 hoặc 8 khung hình đã bão hòa.
-- Baseline `mean_pool` 8 frames vẫn là điểm tham chiếu mạnh nhất trong phạm vi hiện có: `MRR ≈ 0.0589 ± 0.0016` khi chọn epoch tối ưu theo val. Nhưng điểm đáng chú ý là `train_k_eval_k` ở 6 frames đạt `MRR ≈ 0.0604 ± 0.0047`, gần như tương đương với 8 frames, và các khoảng tin cậy chồng lấn đáng kể.
+- Kết quả pilot trước đây (771 mẫu, 2 video validation) đạt `MRR 0.0551–0.0604`; kết quả mới trên full validation (412 mẫu, 4 video) đạt `MRR 0.0429–0.0474`. Đây là các split/gallery khác nhau, nên không so sánh trực tiếp các trị số.
+- Trên full validation, 6 frames có MRR trung bình cao nhất (`0.0474 ± 0.0010`), còn trên candidate test 8 frames cao nhất (`0.0314 ± 0.0035`). Chance MRR trên candidate-test gallery là `0.0318`; vì vậy điểm cao nhất xấp xỉ chance và chưa chứng minh lợi ích rõ ràng của quan sát thêm.
+- Candidate test chỉ gồm 4 video UID / 407 mẫu sau khi loại một UID đã dùng trong pilot validation. Nó không scene-disjoint (có scene garden từng xuất hiện ở pilot validation), và không thể loại trừ việc sử dụng ngoài các artifact local đã kiểm tra. Không xem đây là benchmark pristine hay bằng chứng khái quát hóa.
 - Các baseline quyết định “predict vs defer” hiện chỉ là công cụ hỗ trợ quyết định đơn giản, không phải bằng chứng rằng mô hình đã hiểu được khi nào dữ liệu quan sát đủ để xác nhận ý định.
 - Các lỗi còn lại chủ yếu tập trung ở “same-task confusion”, điều này phù hợp với giả thuyết năng lực phân biệt mục tiêu còn yếu khi các mục tiêu chia sẻ hành vi khởi đầu.
 

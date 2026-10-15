@@ -1,0 +1,3393 @@
+{
+  "protocol_id": "egointent_full_candidate_test_v1",
+  "status": "locked_before_candidate_test_feature_access",
+  "created_utc": "2026-10-15",
+  "dataset_root": "/media/dhqg/d3/datasets/egointent_full",
+  "split_root": "/media/dhqg/d3/datasets/egointent_full_split_v1",
+  "split_counts": {
+    "train": {
+      "samples": 2091,
+      "video_uids": 23
+    },
+    "val": {
+      "samples": 412,
+      "video_uids": 4
+    },
+    "test": {
+      "samples": 511,
+      "video_uids": 5
+    }
+  },
+  "train_video_uids": [
+    "2927605b-bdb2-4b36-8181-12f9e898bf2d",
+    "3ae7ab6b-793e-4a77-9749-010c94b1b0ee",
+    "6269fa52-58af-46d3-9a4b-7aca66c3b622",
+    "6644d6c3-357a-4f98-9c90-9888a0c03635",
+    "68351df0-e47f-47d6-95fd-b1d2ffb0daaa",
+    "6d738e16-abe9-4e7f-870b-1c60ea2cd257",
+    "8301a3fc-aac5-466d-bb02-d0ac7a81ccc6",
+    "8762cf76-5526-43a2-b825-a0c396494c87",
+    "8bef8b33-a1ee-43e7-a2d0-8cf68653cb0c",
+    "93232ea0-b8eb-4df8-85b8-e8ff189b41f2",
+    "93357145-49fb-4128-b5da-25bc9602daf0",
+    "97c1c805-291f-4b2f-bef9-0495d9d2fc92",
+    "9a473135-6125-4081-9327-6c4afb4348af",
+    "9c07f3a2-5033-4f78-a377-a4cf5a7d7add",
+    "b2cdc6c2-5ecc-4236-aae2-947cbf54fe49",
+    "ca6e9ec9-46ac-4a02-8034-7c31157dc52c",
+    "cd8590b6-4c27-4932-9ccf-501380d35b14",
+    "ce3ef2da-c918-42c8-9d22-533f776366bd",
+    "e2c38cc3-fe4a-4247-93a2-b40e9f715661",
+    "edf2c742-f89c-402b-9228-11fda87201f1",
+    "ee05e77f-d52f-48d7-b19f-6b14411a7849",
+    "f6fea609-23c4-431c-8ac2-484f334a3a83",
+    "f8945922-b433-4f9a-a652-b9e4e1499add"
+  ],
+  "validation_video_uids": [
+    "02d1f024-1470-4ce6-acde-b938f7847eb6",
+    "1fd2bbfe-80e2-4543-a9fd-3a68bf6fdfd7",
+    "c2e6d807-d903-4b64-98e1-2c07ca700c78",
+    "d5c69ab1-ba30-4601-bfd7-fc8a48692558"
+  ],
+  "excluded_test_video_uids": [
+    "cc883eb4-7772-4ef8-bd85-2c9cb5c6565d"
+  ],
+  "candidate_test_video_uids": [
+    "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+    "19db1542-5537-46cd-82d1-7f72e356a2a9",
+    "cf279625-1654-43e7-8b96-9139132b1b47",
+    "ea183f27-9dbd-4fe6-827d-9d02882863f9"
+  ],
+  "candidate_test_sample_count": 407,
+  "candidate_test_sample_manifest": [
+    {
+      "sample_id": "indoor/study_room/sort_books/step1",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "searching for a book"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step2",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "retrieving a book for sorting"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step3",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "positioning self to sort books"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step4",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step5",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "locating books to sort"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step6",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "retrieving books for sorting"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step7",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step8",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "locating books to sort"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step9",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "selecting books to sort"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step10",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step11",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "select a book to handle"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step12",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "locating books to sort"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step13",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "locate books for sorting"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step14",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "finishing access to the shelf"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step15",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "locating a napkin to use"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step16",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "ensure clear view before handling objects"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step17",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "retrieve book from stack"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step18",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "preparing to clean the book"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step19",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning book before stacking"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step20",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organize books on floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step21",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "select a book for cleaning"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step22",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "prepare to store the book"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step23",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "retrieve the book for cleaning"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step24",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning the book before stacking"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step25",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "forming a pile of books on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step26",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organize books on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step27",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "select next book to clean"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step28",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "prepare the book for stacking"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step29",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organizing books"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step30",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "retrieving a book from the floor stack for organization"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step31",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "grouping books into piles on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step32",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books into piles on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step33",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organizing books from floor piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step34",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books into piles on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step35",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "selecting a book to organize"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step36",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "selecting a book to clean"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step37",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning book before stacking"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step38",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organizing books into piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step39",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organizing books on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step40",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "preparing to clean the book"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step41",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organizing the books"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step42",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organizing books"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step43",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "select a book from the floor pile for organization"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step44",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "preparing view for book handling"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step45",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "select a book from the source pile for processing"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step46",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "select a book to clean"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step47",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "clean the current book"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step48",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning and organizing books"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step49",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sort books into separate stacks"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step50",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "select a book to clean"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step51",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "check book condition"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step52",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning books before organizing them"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step53",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books into piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step54",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "select a book for cleaning"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step55",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning books before stacking"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step56",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "add the cleaned book to the organized stack"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step57",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sort books into separate piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step58",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sort books into separate piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step59",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books into piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step60",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "selecting a book from the stack for sorting"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step61",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting the books"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step62",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "prepare the book for cleaning"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step63",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "clean book before stacking"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step64",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "clean and organize the books"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step65",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sort books into separate piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step66",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "retrieve book for cleaning"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step67",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning the book"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step68",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "add the cleaned book to the pile on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step69",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sort books on floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step70",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "consolidating book stacks on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step71",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books into piles on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step72",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organizing books into stacks"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step73",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books into separate piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step74",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting the books on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step75",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "retrieve a book for cleaning"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step76",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "inspecting the book condition"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step77",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning the current book"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step78",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sort books into piles on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step79",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "prepare the book for cleaning"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step80",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "prepare to clean the book"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step81",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning the book before stacking"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step82",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning a book before stacking"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step83",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organizing books on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step84",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sort books into separate piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step85",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books into piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step86",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "selecting a book from the pile"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step87",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "retrieve a book for cleaning"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step88",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "prepare book for stacking"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step89",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning the book"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step90",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "select a book for cleaning"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step91",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "select a book to clean"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step92",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning the book before organizing"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step93",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning the book before organizing"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step94",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organize books into stacks on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step95",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books into separate piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step96",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "select a book for cleaning"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step97",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "clean the diary"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step98",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning the book cover"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step99",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "organizing books on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step100",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sorting books on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step101",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sort books on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step102",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "sort books into organized piles"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step103",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "inspect the book condition before cleaning"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step104",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "clean the book before stacking"
+    },
+    {
+      "sample_id": "indoor/study_room/sort_books/step105",
+      "video_uid": "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "scene": "study_room",
+      "event": "sort_books",
+      "setting": "indoor",
+      "why": "cleaning and organizing books on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step1",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "position wall decor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step2",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "locating the document frames"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step3",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "retrieving picture frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step4",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "approach wall workspace"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step5",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "inspecting the document frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step6",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organizing desk paperwork"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step7",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "planning wall arrangement"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step8",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arrange the picture frames"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step9",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging the frames"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step10",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "framing a photograph"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step11",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arrange framed items"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step12",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging wall decorations"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step13",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "approaching the location to place the frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step14",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging frames on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step15",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arrange frames"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step16",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging items on mantel"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step17",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "sorting through items on floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step18",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "examine photograph"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step19",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging picture frames on cabinet"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step20",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "stabilize posture"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step21",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "prepare to place document frame on cabinet"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step22",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging photo frames on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step23",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "clear clutter from the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step24",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "sorting items on floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step25",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "sort through clutter"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step26",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging framed items on floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step27",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "clearing clutter from floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step28",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging framed items on surface"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step29",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organizing layout of framed pictures"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step30",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "planning layout for wall display"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step31",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "approaching the workspace"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step32",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "reveal underlying item"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step33",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "relocate document frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step34",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging photos on the shelf"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step35",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "planning wall arrangement"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step36",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "aligning the document for hanging"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step37",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organizing workspace"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step38",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "positioning to retrieve items from the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step39",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organizing the scattered frames on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step40",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging frames on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step41",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "positioning to place the document frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step42",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging frames on the floor for layout planning"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step43",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organizing framed documents on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step44",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging frames on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step45",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging the framed photos"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step46",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "select photo frames"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step47",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "positioning to hang picture frames"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step48",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging decor on the bookshelf"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step49",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging items on the desk"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step50",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging items on the desk"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step51",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging items on the workspace"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step52",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "planning wall layout"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step53",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "hang the picture frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step54",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "remove the frame from the wall"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step55",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "assessing the area for hanging pictures"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step56",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "leaning on furniture"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step57",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "prepare to hang the frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step58",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "verifies the portrait frame placement"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step59",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "prepare to place picture frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step60",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging shelf display"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step61",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organizing desk surface"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step62",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "searching for object"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step63",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "reposition the board"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step64",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arrange the wall display"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step65",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "finish inspecting the wall photos"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step66",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "stabilize posture"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step67",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "locating a specific photo frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step68",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organize photo frames"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step69",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging picture frames on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step70",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "selecting a picture frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step71",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging shelf decor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step72",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arrange the picture frame for display"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step73",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "determining the placement for the picture frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step74",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "navigate the workspace"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step75",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organizing the frames"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step76",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "retrieve the frame for hanging"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step77",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arrange frames for hanging"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step78",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging picture frames"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step79",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "prepare to retrieve frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step80",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organize scattered frames"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step81",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "position to place frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step82",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arrange frames against cabinet"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step83",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organizing items on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step84",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "storing the picture frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step85",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organizing items on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step86",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "planning arrangement for wall hanging"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step87",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "hanging a picture frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step88",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arranging photo gallery layout"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step89",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "approaching spot to place frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step90",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "arrange frames on the floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step91",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "sort through frames on floor"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step92",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organizing photo frames"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step93",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organize scattered photos"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step94",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "selecting a frame to organize"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step95",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "approach placement area"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step96",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "storing the document frame"
+    },
+    {
+      "sample_id": "indoor/study_room/tidy_up/step97",
+      "video_uid": "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "scene": "study_room",
+      "event": "tidy_up",
+      "setting": "indoor",
+      "why": "organizing shelf decorations"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step1",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "securing chainsaw to safety harness"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step2",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "securing safety gear in bucket lift"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step3",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "release chainsaw safety tether"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step4",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "retrieve chainsaw for operation"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step5",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "retrieve the chainsaw from the bucket"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step6",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "covering the chainsaw bar"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step7",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare the chainsaw for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step8",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "secure two-handed grip on chainsaw"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step9",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "free the right hand to operate the bucket lift"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step10",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "positioning the bucket lift"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step11",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare to operate the chainsaw"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step12",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare chainsaw for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step13",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare to start the chainsaw"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step14",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare chainsaw for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step15",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "start the chainsaw engine"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step16",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "preparing chainsaw for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step17",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "position the chainsaw for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step18",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare the chainsaw for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step19",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "trimming the tree canopy"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step20",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "reposition the bucket to the next cutting location"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step21",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "positioning to cut tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step22",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "stabilize the branch for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step23",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step24",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step25",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning upper tree canopy"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step26",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "stabilize branch for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step27",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "severing a branch from the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step28",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "clearing cut debris to free hand for chainsaw"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step29",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare for next cut"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step30",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "repositioning the bucket lift"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step31",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "reposition the bucket lift to access tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step32",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "reposition the bucket for the next cut"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step33",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "preparing to cut tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step34",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "stabilize body for one-handed chainsaw use"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step35",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step36",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "removing the cut branch"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step37",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare to cut branch"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step38",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step39",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning branches from the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step40",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "clearing branches near the roof"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step41",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "removing the branch"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step42",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "clearing cut branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step43",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare chainsaw for next cut"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step44",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "stabilize branch for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step45",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "removing specific branches from the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step46",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "removing a branch from the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step47",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "stabilize the chainsaw for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step48",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "stabilize the branch for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step49",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "removing tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step50",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare for two-handed chainsaw operation"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step51",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "removing a branch"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step52",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare to reposition the bucket lift"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step53",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare the chainsaw for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step54",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step55",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "repositioning the bucket lift to access the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step56",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "position the saw for cutting a branch"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step57",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "trimming tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step58",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare to transfer chainsaw support to right hand"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step59",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "stabilize body for one-handed chainsaw operation"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step60",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step61",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step62",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "repositioning the bucket lift"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step63",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare chainsaw for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step64",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step65",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "reset chainsaw position"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step66",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning tree canopy"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step67",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "stabilizing chainsaw for operation"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step68",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "free right hand to operate lift controls"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step69",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "positioning the bucket to access tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step70",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "secure the branch for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step71",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning branches from the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step72",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "repositioning the lift to access target branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step73",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "cutting the branch"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step74",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "repositioning the aerial lift platform"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step75",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "reposition the bucket lift"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step76",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "position the bucket lift near the target branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step77",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "trimming the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step78",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "repositioning the bucket lift to access branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step79",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "remove tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step80",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "positioning the bucket for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step81",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "clear obstruction from cutting path"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step82",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "stabilize body and secure equipment before cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step83",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning branches from the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step84",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step85",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "prepare to cut a tree branch"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step86",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "trimming the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step87",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "trimming tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step88",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "positioning the aerial lift for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step89",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "clearing cut branches from the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step90",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "positioning bucket for cutting access"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step91",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning the tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step92",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "removing cut branches from the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step93",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "clearing cut branches from the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step94",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "removing the targeted branch"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step95",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "removing the branch"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step96",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "clear the cut branch from the tree"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step97",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "stabilize the branch for cutting"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step98",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "pruning tree branches"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step99",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "free right hand for boom lift operation"
+    },
+    {
+      "sample_id": "outdoor/garden/cut_trees/step100",
+      "video_uid": "ea183f27-9dbd-4fe6-827d-9d02882863f9",
+      "scene": "garden",
+      "event": "cut_trees",
+      "setting": "outdoor",
+      "why": "position bucket for tree trimming"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step1",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare for task"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step2",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to wear gloves"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step3",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "assess work area"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step4",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to wear protective gear"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step5",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "putting on gloves"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step6",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare wood surface for refinishing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step7",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "put on protective gloves"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step8",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to paint railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step9",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step10",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare brush for painting"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step11",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "protecting the ground from paint spills"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step12",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "painting the wooden post"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step13",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "reload brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step14",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step15",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "coat the railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step16",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "paint wooden railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step17",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to paint timber"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step18",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step19",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "coat the wooden railing structure"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step20",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to paint timber"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step21",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step22",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step23",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step24",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step25",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "coating the railing structure"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step26",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "reload brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step27",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to paint timber"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step28",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "coat the wood surface with finish"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step29",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "reload brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step30",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step31",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "coating the railing structure"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step32",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "apply stain to the wooden railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step33",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "coating the wood surface"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step34",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "staining the outdoor wooden railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step35",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step36",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step37",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "preparing to paint railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step38",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "coating the outdoor timber structure"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step39",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step40",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step41",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "painting the deck railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step42",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "covering the top rail section"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step43",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step44",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint for application"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step45",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to paint railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step46",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "cleaning the wood surface"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step47",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to paint railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step48",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "coating the railing surface"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step49",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to reload brush"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step50",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load the brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step51",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step52",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "coating the wooden railing structure"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step53",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to paint the stair rail"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step54",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "applying stain to the stair railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step55",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "reload brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step56",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step57",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "painting the stair railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step58",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step59",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "applying finish to the staircase structure"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step60",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step61",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare brush for painting"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step62",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to apply coating to wood"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step63",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "applying finish to wood surface"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step64",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "preparing to paint the railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step65",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "preparing to paint the railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step66",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "assess surface condition before painting"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step67",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "staining the outdoor railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step68",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "repositioning to access lower railing section"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step69",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "maintaining the deck structure"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step70",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "staining the stair railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step71",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "prepare to paint railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step72",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "position paint supply"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step73",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "stabilize container for dipping"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step74",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load the brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step75",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step76",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "refinishing the outdoor deck railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step77",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "applying coating to the handrail"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step78",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "coating the stair railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step79",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "applying protective coating to wood"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step80",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "staining the top rail section"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step81",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint for railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step82",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load paintbrush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step83",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load paintbrush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step84",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "coat the wood surface"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step85",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint for railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step86",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step87",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "refinishing the deck railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step88",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "reload brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step89",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load paintbrush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step90",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "painting the railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step91",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "reload brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step92",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step93",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "finish the current section of railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step94",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step95",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "reload paint brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step96",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "staining the deck railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step97",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "reload brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step98",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step99",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "refinishing the deck railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step100",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step101",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "load brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step102",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "painting the wooden railing"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step103",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "reload brush with paint"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step104",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "applying finish to the wood"
+    },
+    {
+      "sample_id": "outdoor/garden/paint_timber/step105",
+      "video_uid": "cf279625-1654-43e7-8b96-9139132b1b47",
+      "scene": "garden",
+      "event": "paint_timber",
+      "setting": "outdoor",
+      "why": "verify coating evenness"
+    }
+  ],
+  "pilot_uid_overlap": {
+    "train": [
+      "3ae7ab6b-793e-4a77-9749-010c94b1b0ee",
+      "6269fa52-58af-46d3-9a4b-7aca66c3b622",
+      "8301a3fc-aac5-466d-bb02-d0ac7a81ccc6",
+      "8bef8b33-a1ee-43e7-a2d0-8cf68653cb0c",
+      "cd8590b6-4c27-4932-9ccf-501380d35b14",
+      "ce3ef2da-c918-42c8-9d22-533f776366bd"
+    ],
+    "validation": [
+      "02d1f024-1470-4ce6-acde-b938f7847eb6"
+    ],
+    "excluded_from_candidate_test": [
+      "cc883eb4-7772-4ef8-bd85-2c9cb5c6565d"
+    ]
+  },
+  "protocol": {
+    "unit_of_split": "video_uid",
+    "training_split": "existing full train split",
+    "checkpoint_selection": "highest validation MRR at the model's own prefix length; strict greater-than tie handling",
+    "validation_split": "existing full validation split; used for checkpoint selection only",
+    "test_queries": "all samples from the four candidate UIDs only",
+    "test_gallery": "all candidate test samples from those same four UIDs, using exact WHY text as multi-positive relevance",
+    "prefixes": [
+      2,
+      4,
+      6,
+      8
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "epochs": 100,
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "temperature": 0.07,
+    "cosine_weight": 0.1,
+    "hidden_dim": 512,
+    "dropout": 0.0,
+    "grad_clip": 1.0,
+    "model": "MeanPoolBaseline, trained and evaluated at the same prefix length",
+    "text_target_transform": "existing frozen 960-to-256 WHY PCA fit on pilot train UIDs (a subset of full train); fixed before candidate test evaluation",
+    "metrics": [
+      "MRR",
+      "Top1",
+      "Top3",
+      "Top5",
+      "n_examples",
+      "same_task_errors",
+      "cross_task_errors"
+    ],
+    "test_usage": "one evaluation run after locking; no threshold or model selection from candidate test results"
+  },
+  "limitations": [
+    "Candidate set is video-UID-disjoint from pilot training and validation, but not scene-disjoint: garden appeared in pilot validation.",
+    "Candidate UIDs had no exact reference in inspected local result files, but unrecorded external use cannot be excluded.",
+    "This is a candidate video-level test, not a pristine or scene-independent test benchmark.",
+    "The text target PCA was fit on pilot train, not refit on all full-train UIDs."
+  ],
+  "input_sha256": {
+    "train_jsonl": "4b7f45573f7e551a3153cfdc4b1d69d125e54d36571ee217c1e9088042f3b17e",
+    "val_jsonl": "4193d226a125b5ed82f22d9dd4e1773f3c7d743d38a9b3389e28076f153e9f2e",
+    "test_jsonl": "b02024c8e8b55d926fa14bfa0fc39f2a9f85b4d5eaa82763508a6cfddace2f2a",
+    "pilot_split_json": "b9d4457e39f441e92cd967290aa7325d5e253d4b94486d9731212c84606be3af",
+    "full_validation_experiment_config": "ff77d773fc22df8658d2b65aca2b273be1923c7ef9223f2e6543616dc809b4ac",
+    "why_pca": "5ddcd0b5375740fe0a01c3d0b768c382cf2b655c72adf3d96ccda1b125cd8959",
+    "prefix_training_script": "0fa0d6e7eb451a607ffa37aa94507524ea658ef84b763009fc49fefb3f8cb283",
+    "locked_test_evaluation_script": "8c7e23990edb12b10341b7900234be4a7cb2027898bc494a87c5fdbbc417f5ab",
+    "protocol_lock_script": "5266dd9f41efa68e4bc049c9d4c182639496a370dc2fd33dab1407b600b8cafd"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "protocol": "results/test_protocol_full_v1/locked_protocol.json",
+  "protocol_sha256": "51e2ff8f4e1951192bee291db146bdcd79640418eb5206ced4322eaf76df9794",
+  "test_metric_evaluation_count": 1,
+  "failed_initialization_attempts": 3,
+  "test_tensor_load_scope": {
+    "video_uids": [
+      "062f1e55-67d8-4cdc-89c6-7fb361a9b0f9",
+      "19db1542-5537-46cd-82d1-7f72e356a2a9",
+      "cf279625-1654-43e7-8b96-9139132b1b47",
+      "ea183f27-9dbd-4fe6-827d-9d02882863f9"
+    ],
+    "samples": 407
+  },
+  "test_gallery": "same 407 candidate samples for every prefix and seed; exact WHY text is positive",
+  "pca_sha256": "5ddcd0b5375740fe0a01c3d0b768c382cf2b655c72adf3d96ccda1b125cd8959",
+  "device": "cpu"
+}

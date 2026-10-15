@@ -1,0 +1,25 @@
+{
+  "protocol_id": "egointent_full_candidate_test_v1",
+  "locked_protocol_sha256": "51e2ff8f4e1951192bee291db146bdcd79640418eb5206ced4322eaf76df9794",
+  "original_evaluator_sha256": "8c7e23990edb12b10341b7900234be4a7cb2027898bc494a87c5fdbbc417f5ab",
+  "corrected_evaluator_sha256": "4bf3765f18e459cc2a0fd40be37440fd37d4311ec3be7bcca5456ee622ea8b99",
+  "no_test_metrics_produced": true,
+  "test_features_accessed_during_failed_initialization": true,
+  "reason_for_addendum": "Implementation-only fixes after failed initialization; the locked data split, candidate UIDs, model, training configuration, checkpoint rule, gallery, and metrics are unchanged.",
+  "failed_attempts": [
+    {
+      "failure": "ModuleNotFoundError: No module named 'models'",
+      "stage": "after candidate tensors were loaded; before target encoding and metric computation"
+    },
+    {
+      "failure": "RuntimeError: test prediction and PCA-transformed target tensors were on different devices",
+      "stage": "after target encoding and model prediction; before similarity scores or metrics were computed"
+    },
+    {
+      "failure": "AttributeError: run_one argument object had no prefixes field",
+      "stage": "after candidate tensors and text targets were loaded; before model training/test metrics"
+    }
+  ],
+  "corrective_change": "Add required prefixes to the runner argument object and execute CPU-only so the existing PCA transform's CPU output and model predictions share a device.",
+  "selection_or_tuning_from_test": false
+}

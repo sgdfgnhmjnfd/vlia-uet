@@ -1,0 +1,408 @@
+sample_id,video_uid,scene,event,setting,why
+indoor/study_room/sort_books/step1,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,searching for a book
+indoor/study_room/sort_books/step2,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,retrieving a book for sorting
+indoor/study_room/sort_books/step3,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,positioning self to sort books
+indoor/study_room/sort_books/step4,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books
+indoor/study_room/sort_books/step5,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,locating books to sort
+indoor/study_room/sort_books/step6,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,retrieving books for sorting
+indoor/study_room/sort_books/step7,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books
+indoor/study_room/sort_books/step8,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,locating books to sort
+indoor/study_room/sort_books/step9,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,selecting books to sort
+indoor/study_room/sort_books/step10,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books
+indoor/study_room/sort_books/step11,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,select a book to handle
+indoor/study_room/sort_books/step12,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,locating books to sort
+indoor/study_room/sort_books/step13,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,locate books for sorting
+indoor/study_room/sort_books/step14,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,finishing access to the shelf
+indoor/study_room/sort_books/step15,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,locating a napkin to use
+indoor/study_room/sort_books/step16,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,ensure clear view before handling objects
+indoor/study_room/sort_books/step17,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,retrieve book from stack
+indoor/study_room/sort_books/step18,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,preparing to clean the book
+indoor/study_room/sort_books/step19,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning book before stacking
+indoor/study_room/sort_books/step20,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organize books on floor
+indoor/study_room/sort_books/step21,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,select a book for cleaning
+indoor/study_room/sort_books/step22,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,prepare to store the book
+indoor/study_room/sort_books/step23,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,retrieve the book for cleaning
+indoor/study_room/sort_books/step24,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning the book before stacking
+indoor/study_room/sort_books/step25,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,forming a pile of books on the floor
+indoor/study_room/sort_books/step26,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organize books on the floor
+indoor/study_room/sort_books/step27,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,select next book to clean
+indoor/study_room/sort_books/step28,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,prepare the book for stacking
+indoor/study_room/sort_books/step29,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organizing books
+indoor/study_room/sort_books/step30,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,retrieving a book from the floor stack for organization
+indoor/study_room/sort_books/step31,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,grouping books into piles on the floor
+indoor/study_room/sort_books/step32,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books into piles on the floor
+indoor/study_room/sort_books/step33,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organizing books from floor piles
+indoor/study_room/sort_books/step34,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books into piles on the floor
+indoor/study_room/sort_books/step35,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,selecting a book to organize
+indoor/study_room/sort_books/step36,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,selecting a book to clean
+indoor/study_room/sort_books/step37,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning book before stacking
+indoor/study_room/sort_books/step38,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organizing books into piles
+indoor/study_room/sort_books/step39,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organizing books on the floor
+indoor/study_room/sort_books/step40,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,preparing to clean the book
+indoor/study_room/sort_books/step41,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organizing the books
+indoor/study_room/sort_books/step42,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organizing books
+indoor/study_room/sort_books/step43,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,select a book from the floor pile for organization
+indoor/study_room/sort_books/step44,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,preparing view for book handling
+indoor/study_room/sort_books/step45,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,select a book from the source pile for processing
+indoor/study_room/sort_books/step46,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,select a book to clean
+indoor/study_room/sort_books/step47,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,clean the current book
+indoor/study_room/sort_books/step48,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning and organizing books
+indoor/study_room/sort_books/step49,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sort books into separate stacks
+indoor/study_room/sort_books/step50,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,select a book to clean
+indoor/study_room/sort_books/step51,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,check book condition
+indoor/study_room/sort_books/step52,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning books before organizing them
+indoor/study_room/sort_books/step53,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books into piles
+indoor/study_room/sort_books/step54,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,select a book for cleaning
+indoor/study_room/sort_books/step55,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning books before stacking
+indoor/study_room/sort_books/step56,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,add the cleaned book to the organized stack
+indoor/study_room/sort_books/step57,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sort books into separate piles
+indoor/study_room/sort_books/step58,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sort books into separate piles
+indoor/study_room/sort_books/step59,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books into piles
+indoor/study_room/sort_books/step60,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,selecting a book from the stack for sorting
+indoor/study_room/sort_books/step61,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting the books
+indoor/study_room/sort_books/step62,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,prepare the book for cleaning
+indoor/study_room/sort_books/step63,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,clean book before stacking
+indoor/study_room/sort_books/step64,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,clean and organize the books
+indoor/study_room/sort_books/step65,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sort books into separate piles
+indoor/study_room/sort_books/step66,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,retrieve book for cleaning
+indoor/study_room/sort_books/step67,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning the book
+indoor/study_room/sort_books/step68,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,add the cleaned book to the pile on the floor
+indoor/study_room/sort_books/step69,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sort books on floor
+indoor/study_room/sort_books/step70,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,consolidating book stacks on the floor
+indoor/study_room/sort_books/step71,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books into piles on the floor
+indoor/study_room/sort_books/step72,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organizing books into stacks
+indoor/study_room/sort_books/step73,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books into separate piles
+indoor/study_room/sort_books/step74,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting the books on the floor
+indoor/study_room/sort_books/step75,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,retrieve a book for cleaning
+indoor/study_room/sort_books/step76,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,inspecting the book condition
+indoor/study_room/sort_books/step77,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning the current book
+indoor/study_room/sort_books/step78,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sort books into piles on the floor
+indoor/study_room/sort_books/step79,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,prepare the book for cleaning
+indoor/study_room/sort_books/step80,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,prepare to clean the book
+indoor/study_room/sort_books/step81,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning the book before stacking
+indoor/study_room/sort_books/step82,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning a book before stacking
+indoor/study_room/sort_books/step83,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organizing books on the floor
+indoor/study_room/sort_books/step84,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sort books into separate piles
+indoor/study_room/sort_books/step85,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books into piles
+indoor/study_room/sort_books/step86,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,selecting a book from the pile
+indoor/study_room/sort_books/step87,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,retrieve a book for cleaning
+indoor/study_room/sort_books/step88,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,prepare book for stacking
+indoor/study_room/sort_books/step89,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning the book
+indoor/study_room/sort_books/step90,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,select a book for cleaning
+indoor/study_room/sort_books/step91,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,select a book to clean
+indoor/study_room/sort_books/step92,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning the book before organizing
+indoor/study_room/sort_books/step93,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning the book before organizing
+indoor/study_room/sort_books/step94,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organize books into stacks on the floor
+indoor/study_room/sort_books/step95,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books into separate piles
+indoor/study_room/sort_books/step96,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,select a book for cleaning
+indoor/study_room/sort_books/step97,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,clean the diary
+indoor/study_room/sort_books/step98,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning the book cover
+indoor/study_room/sort_books/step99,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,organizing books on the floor
+indoor/study_room/sort_books/step100,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sorting books on the floor
+indoor/study_room/sort_books/step101,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sort books on the floor
+indoor/study_room/sort_books/step102,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,sort books into organized piles
+indoor/study_room/sort_books/step103,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,inspect the book condition before cleaning
+indoor/study_room/sort_books/step104,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,clean the book before stacking
+indoor/study_room/sort_books/step105,19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,cleaning and organizing books on the floor
+indoor/study_room/tidy_up/step1,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,position wall decor
+indoor/study_room/tidy_up/step2,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,locating the document frames
+indoor/study_room/tidy_up/step3,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,retrieving picture frame
+indoor/study_room/tidy_up/step4,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,approach wall workspace
+indoor/study_room/tidy_up/step5,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,inspecting the document frame
+indoor/study_room/tidy_up/step6,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organizing desk paperwork
+indoor/study_room/tidy_up/step7,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,planning wall arrangement
+indoor/study_room/tidy_up/step8,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arrange the picture frames
+indoor/study_room/tidy_up/step9,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging the frames
+indoor/study_room/tidy_up/step10,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,framing a photograph
+indoor/study_room/tidy_up/step11,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arrange framed items
+indoor/study_room/tidy_up/step12,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging wall decorations
+indoor/study_room/tidy_up/step13,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,approaching the location to place the frame
+indoor/study_room/tidy_up/step14,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging frames on the floor
+indoor/study_room/tidy_up/step15,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arrange frames
+indoor/study_room/tidy_up/step16,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging items on mantel
+indoor/study_room/tidy_up/step17,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,sorting through items on floor
+indoor/study_room/tidy_up/step18,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,examine photograph
+indoor/study_room/tidy_up/step19,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging picture frames on cabinet
+indoor/study_room/tidy_up/step20,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,stabilize posture
+indoor/study_room/tidy_up/step21,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,prepare to place document frame on cabinet
+indoor/study_room/tidy_up/step22,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging photo frames on the floor
+indoor/study_room/tidy_up/step23,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,clear clutter from the floor
+indoor/study_room/tidy_up/step24,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,sorting items on floor
+indoor/study_room/tidy_up/step25,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,sort through clutter
+indoor/study_room/tidy_up/step26,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging framed items on floor
+indoor/study_room/tidy_up/step27,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,clearing clutter from floor
+indoor/study_room/tidy_up/step28,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging framed items on surface
+indoor/study_room/tidy_up/step29,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organizing layout of framed pictures
+indoor/study_room/tidy_up/step30,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,planning layout for wall display
+indoor/study_room/tidy_up/step31,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,approaching the workspace
+indoor/study_room/tidy_up/step32,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,reveal underlying item
+indoor/study_room/tidy_up/step33,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,relocate document frame
+indoor/study_room/tidy_up/step34,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging photos on the shelf
+indoor/study_room/tidy_up/step35,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,planning wall arrangement
+indoor/study_room/tidy_up/step36,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,aligning the document for hanging
+indoor/study_room/tidy_up/step37,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organizing workspace
+indoor/study_room/tidy_up/step38,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,positioning to retrieve items from the floor
+indoor/study_room/tidy_up/step39,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organizing the scattered frames on the floor
+indoor/study_room/tidy_up/step40,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging frames on the floor
+indoor/study_room/tidy_up/step41,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,positioning to place the document frame
+indoor/study_room/tidy_up/step42,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging frames on the floor for layout planning
+indoor/study_room/tidy_up/step43,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organizing framed documents on the floor
+indoor/study_room/tidy_up/step44,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging frames on the floor
+indoor/study_room/tidy_up/step45,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging the framed photos
+indoor/study_room/tidy_up/step46,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,select photo frames
+indoor/study_room/tidy_up/step47,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,positioning to hang picture frames
+indoor/study_room/tidy_up/step48,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging decor on the bookshelf
+indoor/study_room/tidy_up/step49,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging items on the desk
+indoor/study_room/tidy_up/step50,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging items on the desk
+indoor/study_room/tidy_up/step51,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging items on the workspace
+indoor/study_room/tidy_up/step52,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,planning wall layout
+indoor/study_room/tidy_up/step53,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,hang the picture frame
+indoor/study_room/tidy_up/step54,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,remove the frame from the wall
+indoor/study_room/tidy_up/step55,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,assessing the area for hanging pictures
+indoor/study_room/tidy_up/step56,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,leaning on furniture
+indoor/study_room/tidy_up/step57,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,prepare to hang the frame
+indoor/study_room/tidy_up/step58,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,verifies the portrait frame placement
+indoor/study_room/tidy_up/step59,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,prepare to place picture frame
+indoor/study_room/tidy_up/step60,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging shelf display
+indoor/study_room/tidy_up/step61,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organizing desk surface
+indoor/study_room/tidy_up/step62,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,searching for object
+indoor/study_room/tidy_up/step63,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,reposition the board
+indoor/study_room/tidy_up/step64,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arrange the wall display
+indoor/study_room/tidy_up/step65,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,finish inspecting the wall photos
+indoor/study_room/tidy_up/step66,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,stabilize posture
+indoor/study_room/tidy_up/step67,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,locating a specific photo frame
+indoor/study_room/tidy_up/step68,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organize photo frames
+indoor/study_room/tidy_up/step69,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging picture frames on the floor
+indoor/study_room/tidy_up/step70,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,selecting a picture frame
+indoor/study_room/tidy_up/step71,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging shelf decor
+indoor/study_room/tidy_up/step72,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arrange the picture frame for display
+indoor/study_room/tidy_up/step73,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,determining the placement for the picture frame
+indoor/study_room/tidy_up/step74,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,navigate the workspace
+indoor/study_room/tidy_up/step75,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organizing the frames
+indoor/study_room/tidy_up/step76,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,retrieve the frame for hanging
+indoor/study_room/tidy_up/step77,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arrange frames for hanging
+indoor/study_room/tidy_up/step78,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging picture frames
+indoor/study_room/tidy_up/step79,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,prepare to retrieve frame
+indoor/study_room/tidy_up/step80,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organize scattered frames
+indoor/study_room/tidy_up/step81,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,position to place frame
+indoor/study_room/tidy_up/step82,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arrange frames against cabinet
+indoor/study_room/tidy_up/step83,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organizing items on the floor
+indoor/study_room/tidy_up/step84,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,storing the picture frame
+indoor/study_room/tidy_up/step85,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organizing items on the floor
+indoor/study_room/tidy_up/step86,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,planning arrangement for wall hanging
+indoor/study_room/tidy_up/step87,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,hanging a picture frame
+indoor/study_room/tidy_up/step88,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arranging photo gallery layout
+indoor/study_room/tidy_up/step89,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,approaching spot to place frame
+indoor/study_room/tidy_up/step90,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,arrange frames on the floor
+indoor/study_room/tidy_up/step91,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,sort through frames on floor
+indoor/study_room/tidy_up/step92,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organizing photo frames
+indoor/study_room/tidy_up/step93,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organize scattered photos
+indoor/study_room/tidy_up/step94,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,selecting a frame to organize
+indoor/study_room/tidy_up/step95,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,approach placement area
+indoor/study_room/tidy_up/step96,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,storing the document frame
+indoor/study_room/tidy_up/step97,062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,organizing shelf decorations
+outdoor/garden/cut_trees/step1,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,securing chainsaw to safety harness
+outdoor/garden/cut_trees/step2,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,securing safety gear in bucket lift
+outdoor/garden/cut_trees/step3,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,release chainsaw safety tether
+outdoor/garden/cut_trees/step4,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,retrieve chainsaw for operation
+outdoor/garden/cut_trees/step5,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,retrieve the chainsaw from the bucket
+outdoor/garden/cut_trees/step6,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,covering the chainsaw bar
+outdoor/garden/cut_trees/step7,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare the chainsaw for cutting
+outdoor/garden/cut_trees/step8,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,secure two-handed grip on chainsaw
+outdoor/garden/cut_trees/step9,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,free the right hand to operate the bucket lift
+outdoor/garden/cut_trees/step10,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,positioning the bucket lift
+outdoor/garden/cut_trees/step11,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare to operate the chainsaw
+outdoor/garden/cut_trees/step12,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare chainsaw for cutting
+outdoor/garden/cut_trees/step13,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare to start the chainsaw
+outdoor/garden/cut_trees/step14,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare chainsaw for cutting
+outdoor/garden/cut_trees/step15,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,start the chainsaw engine
+outdoor/garden/cut_trees/step16,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,preparing chainsaw for cutting
+outdoor/garden/cut_trees/step17,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,position the chainsaw for cutting
+outdoor/garden/cut_trees/step18,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare the chainsaw for cutting
+outdoor/garden/cut_trees/step19,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,trimming the tree canopy
+outdoor/garden/cut_trees/step20,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,reposition the bucket to the next cutting location
+outdoor/garden/cut_trees/step21,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,positioning to cut tree branches
+outdoor/garden/cut_trees/step22,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,stabilize the branch for cutting
+outdoor/garden/cut_trees/step23,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning tree branches
+outdoor/garden/cut_trees/step24,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning the tree
+outdoor/garden/cut_trees/step25,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning upper tree canopy
+outdoor/garden/cut_trees/step26,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,stabilize branch for cutting
+outdoor/garden/cut_trees/step27,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,severing a branch from the tree
+outdoor/garden/cut_trees/step28,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,clearing cut debris to free hand for chainsaw
+outdoor/garden/cut_trees/step29,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare for next cut
+outdoor/garden/cut_trees/step30,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,repositioning the bucket lift
+outdoor/garden/cut_trees/step31,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,reposition the bucket lift to access tree branches
+outdoor/garden/cut_trees/step32,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,reposition the bucket for the next cut
+outdoor/garden/cut_trees/step33,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,preparing to cut tree branches
+outdoor/garden/cut_trees/step34,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,stabilize body for one-handed chainsaw use
+outdoor/garden/cut_trees/step35,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning the tree
+outdoor/garden/cut_trees/step36,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,removing the cut branch
+outdoor/garden/cut_trees/step37,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare to cut branch
+outdoor/garden/cut_trees/step38,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning tree branches
+outdoor/garden/cut_trees/step39,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning branches from the tree
+outdoor/garden/cut_trees/step40,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,clearing branches near the roof
+outdoor/garden/cut_trees/step41,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,removing the branch
+outdoor/garden/cut_trees/step42,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,clearing cut branches
+outdoor/garden/cut_trees/step43,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare chainsaw for next cut
+outdoor/garden/cut_trees/step44,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,stabilize branch for cutting
+outdoor/garden/cut_trees/step45,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,removing specific branches from the tree
+outdoor/garden/cut_trees/step46,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,removing a branch from the tree
+outdoor/garden/cut_trees/step47,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,stabilize the chainsaw for cutting
+outdoor/garden/cut_trees/step48,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,stabilize the branch for cutting
+outdoor/garden/cut_trees/step49,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,removing tree branches
+outdoor/garden/cut_trees/step50,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare for two-handed chainsaw operation
+outdoor/garden/cut_trees/step51,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,removing a branch
+outdoor/garden/cut_trees/step52,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare to reposition the bucket lift
+outdoor/garden/cut_trees/step53,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare the chainsaw for cutting
+outdoor/garden/cut_trees/step54,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning tree branches
+outdoor/garden/cut_trees/step55,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,repositioning the bucket lift to access the tree
+outdoor/garden/cut_trees/step56,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,position the saw for cutting a branch
+outdoor/garden/cut_trees/step57,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,trimming tree branches
+outdoor/garden/cut_trees/step58,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare to transfer chainsaw support to right hand
+outdoor/garden/cut_trees/step59,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,stabilize body for one-handed chainsaw operation
+outdoor/garden/cut_trees/step60,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning the tree
+outdoor/garden/cut_trees/step61,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning tree branches
+outdoor/garden/cut_trees/step62,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,repositioning the bucket lift
+outdoor/garden/cut_trees/step63,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare chainsaw for cutting
+outdoor/garden/cut_trees/step64,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning tree branches
+outdoor/garden/cut_trees/step65,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,reset chainsaw position
+outdoor/garden/cut_trees/step66,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning tree canopy
+outdoor/garden/cut_trees/step67,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,stabilizing chainsaw for operation
+outdoor/garden/cut_trees/step68,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,free right hand to operate lift controls
+outdoor/garden/cut_trees/step69,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,positioning the bucket to access tree branches
+outdoor/garden/cut_trees/step70,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,secure the branch for cutting
+outdoor/garden/cut_trees/step71,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning branches from the tree
+outdoor/garden/cut_trees/step72,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,repositioning the lift to access target branches
+outdoor/garden/cut_trees/step73,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,cutting the branch
+outdoor/garden/cut_trees/step74,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,repositioning the aerial lift platform
+outdoor/garden/cut_trees/step75,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,reposition the bucket lift
+outdoor/garden/cut_trees/step76,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,position the bucket lift near the target branches
+outdoor/garden/cut_trees/step77,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,trimming the tree
+outdoor/garden/cut_trees/step78,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,repositioning the bucket lift to access branches
+outdoor/garden/cut_trees/step79,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,remove tree branches
+outdoor/garden/cut_trees/step80,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,positioning the bucket for cutting
+outdoor/garden/cut_trees/step81,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,clear obstruction from cutting path
+outdoor/garden/cut_trees/step82,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,stabilize body and secure equipment before cutting
+outdoor/garden/cut_trees/step83,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning branches from the tree
+outdoor/garden/cut_trees/step84,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning tree branches
+outdoor/garden/cut_trees/step85,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,prepare to cut a tree branch
+outdoor/garden/cut_trees/step86,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,trimming the tree
+outdoor/garden/cut_trees/step87,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,trimming tree branches
+outdoor/garden/cut_trees/step88,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,positioning the aerial lift for cutting
+outdoor/garden/cut_trees/step89,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,clearing cut branches from the tree
+outdoor/garden/cut_trees/step90,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,positioning bucket for cutting access
+outdoor/garden/cut_trees/step91,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning the tree branches
+outdoor/garden/cut_trees/step92,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,removing cut branches from the tree
+outdoor/garden/cut_trees/step93,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,clearing cut branches from the tree
+outdoor/garden/cut_trees/step94,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,removing the targeted branch
+outdoor/garden/cut_trees/step95,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,removing the branch
+outdoor/garden/cut_trees/step96,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,clear the cut branch from the tree
+outdoor/garden/cut_trees/step97,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,stabilize the branch for cutting
+outdoor/garden/cut_trees/step98,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,pruning tree branches
+outdoor/garden/cut_trees/step99,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,free right hand for boom lift operation
+outdoor/garden/cut_trees/step100,ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,position bucket for tree trimming
+outdoor/garden/paint_timber/step1,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare for task
+outdoor/garden/paint_timber/step2,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to wear gloves
+outdoor/garden/paint_timber/step3,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,assess work area
+outdoor/garden/paint_timber/step4,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to wear protective gear
+outdoor/garden/paint_timber/step5,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,putting on gloves
+outdoor/garden/paint_timber/step6,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare wood surface for refinishing
+outdoor/garden/paint_timber/step7,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,put on protective gloves
+outdoor/garden/paint_timber/step8,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to paint railing
+outdoor/garden/paint_timber/step9,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step10,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare brush for painting
+outdoor/garden/paint_timber/step11,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,protecting the ground from paint spills
+outdoor/garden/paint_timber/step12,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,painting the wooden post
+outdoor/garden/paint_timber/step13,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,reload brush with paint
+outdoor/garden/paint_timber/step14,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step15,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,coat the railing
+outdoor/garden/paint_timber/step16,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,paint wooden railing
+outdoor/garden/paint_timber/step17,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to paint timber
+outdoor/garden/paint_timber/step18,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to paint
+outdoor/garden/paint_timber/step19,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,coat the wooden railing structure
+outdoor/garden/paint_timber/step20,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to paint timber
+outdoor/garden/paint_timber/step21,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step22,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step23,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step24,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step25,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,coating the railing structure
+outdoor/garden/paint_timber/step26,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,reload brush with paint
+outdoor/garden/paint_timber/step27,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to paint timber
+outdoor/garden/paint_timber/step28,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,coat the wood surface with finish
+outdoor/garden/paint_timber/step29,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,reload brush with paint
+outdoor/garden/paint_timber/step30,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step31,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,coating the railing structure
+outdoor/garden/paint_timber/step32,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,apply stain to the wooden railing
+outdoor/garden/paint_timber/step33,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,coating the wood surface
+outdoor/garden/paint_timber/step34,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,staining the outdoor wooden railing
+outdoor/garden/paint_timber/step35,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step36,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step37,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,preparing to paint railing
+outdoor/garden/paint_timber/step38,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,coating the outdoor timber structure
+outdoor/garden/paint_timber/step39,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step40,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step41,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,painting the deck railing
+outdoor/garden/paint_timber/step42,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,covering the top rail section
+outdoor/garden/paint_timber/step43,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step44,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint for application
+outdoor/garden/paint_timber/step45,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to paint railing
+outdoor/garden/paint_timber/step46,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,cleaning the wood surface
+outdoor/garden/paint_timber/step47,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to paint railing
+outdoor/garden/paint_timber/step48,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,coating the railing surface
+outdoor/garden/paint_timber/step49,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to reload brush
+outdoor/garden/paint_timber/step50,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load the brush with paint
+outdoor/garden/paint_timber/step51,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step52,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,coating the wooden railing structure
+outdoor/garden/paint_timber/step53,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to paint the stair rail
+outdoor/garden/paint_timber/step54,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,applying stain to the stair railing
+outdoor/garden/paint_timber/step55,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,reload brush with paint
+outdoor/garden/paint_timber/step56,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step57,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,painting the stair railing
+outdoor/garden/paint_timber/step58,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step59,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,applying finish to the staircase structure
+outdoor/garden/paint_timber/step60,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step61,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare brush for painting
+outdoor/garden/paint_timber/step62,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to apply coating to wood
+outdoor/garden/paint_timber/step63,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,applying finish to wood surface
+outdoor/garden/paint_timber/step64,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,preparing to paint the railing
+outdoor/garden/paint_timber/step65,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,preparing to paint the railing
+outdoor/garden/paint_timber/step66,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,assess surface condition before painting
+outdoor/garden/paint_timber/step67,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,staining the outdoor railing
+outdoor/garden/paint_timber/step68,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,repositioning to access lower railing section
+outdoor/garden/paint_timber/step69,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,maintaining the deck structure
+outdoor/garden/paint_timber/step70,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,staining the stair railing
+outdoor/garden/paint_timber/step71,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,prepare to paint railing
+outdoor/garden/paint_timber/step72,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,position paint supply
+outdoor/garden/paint_timber/step73,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,stabilize container for dipping
+outdoor/garden/paint_timber/step74,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load the brush with paint
+outdoor/garden/paint_timber/step75,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step76,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,refinishing the outdoor deck railing
+outdoor/garden/paint_timber/step77,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,applying coating to the handrail
+outdoor/garden/paint_timber/step78,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,coating the stair railing
+outdoor/garden/paint_timber/step79,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,applying protective coating to wood
+outdoor/garden/paint_timber/step80,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,staining the top rail section
+outdoor/garden/paint_timber/step81,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint for railing
+outdoor/garden/paint_timber/step82,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load paintbrush with paint
+outdoor/garden/paint_timber/step83,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load paintbrush with paint
+outdoor/garden/paint_timber/step84,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,coat the wood surface
+outdoor/garden/paint_timber/step85,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint for railing
+outdoor/garden/paint_timber/step86,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step87,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,refinishing the deck railing
+outdoor/garden/paint_timber/step88,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,reload brush with paint
+outdoor/garden/paint_timber/step89,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load paintbrush with paint
+outdoor/garden/paint_timber/step90,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,painting the railing
+outdoor/garden/paint_timber/step91,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,reload brush with paint
+outdoor/garden/paint_timber/step92,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step93,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,finish the current section of railing
+outdoor/garden/paint_timber/step94,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step95,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,reload paint brush with paint
+outdoor/garden/paint_timber/step96,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,staining the deck railing
+outdoor/garden/paint_timber/step97,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,reload brush with paint
+outdoor/garden/paint_timber/step98,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step99,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,refinishing the deck railing
+outdoor/garden/paint_timber/step100,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step101,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,load brush with paint
+outdoor/garden/paint_timber/step102,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,painting the wooden railing
+outdoor/garden/paint_timber/step103,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,reload brush with paint
+outdoor/garden/paint_timber/step104,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,applying finish to the wood
+outdoor/garden/paint_timber/step105,cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,verify coating evenness

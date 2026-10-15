@@ -1,0 +1,40 @@
+{
+  "n_test_examples": 407,
+  "n_test_video_uids": 4,
+  "chance": {
+    "MRR": 0.03178658305006801,
+    "Top1": 0.007129532928058724,
+    "Top3": 0.020823379850745744
+  },
+  "error_breakdown": [
+    {
+      "prefix_frames": 2,
+      "seed_example_errors": 1214,
+      "same_task_errors": 553,
+      "cross_task_errors": 661,
+      "same_task_fraction_of_errors": 0.45551894563426687
+    },
+    {
+      "prefix_frames": 4,
+      "seed_example_errors": 1211,
+      "same_task_errors": 563,
+      "cross_task_errors": 648,
+      "same_task_fraction_of_errors": 0.4649050371593724
+    },
+    {
+      "prefix_frames": 6,
+      "seed_example_errors": 1210,
+      "same_task_errors": 605,
+      "cross_task_errors": 605,
+      "same_task_fraction_of_errors": 0.5
+    },
+    {
+      "prefix_frames": 8,
+      "seed_example_errors": 1209,
+      "same_task_errors": 640,
+      "cross_task_errors": 569,
+      "same_task_fraction_of_errors": 0.5293631100082713
+    }
+  ],
+  "test_metric_scope": "post-hoc descriptive analysis of the single locked evaluation; no tuning"
+}

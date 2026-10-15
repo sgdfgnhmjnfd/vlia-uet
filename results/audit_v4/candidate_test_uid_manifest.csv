@@ -1,0 +1,5 @@
+video_uid,scene,event,setting,samples,status
+062f1e55-67d8-4cdc-89c6-7fb361a9b0f9,study_room,tidy_up,indoor,97,candidate_only_not_locked_or_evaluated
+19db1542-5537-46cd-82d1-7f72e356a2a9,study_room,sort_books,indoor,105,candidate_only_not_locked_or_evaluated
+cf279625-1654-43e7-8b96-9139132b1b47,garden,paint_timber,outdoor,105,candidate_only_not_locked_or_evaluated
+ea183f27-9dbd-4fe6-827d-9d02882863f9,garden,cut_trees,outdoor,100,candidate_only_not_locked_or_evaluated

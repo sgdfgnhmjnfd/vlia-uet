@@ -10,18 +10,19 @@ gallery = all validation WHY targets, positives = rows with identical WHY text):
 
   setting "train_k_eval_k"    (main): model trained on frames[:, :k], evaluated
                                       on frames[:, :k].
-  setting "train_full_eval_k" (diagnostic, train/test length mismatch): model
+  setting "train_full_eval_k" (diagnostic, training/evaluation length mismatch): model
                                       trained on all frames, evaluated on
                                       frames[:, :k].  This is what the previously
                                       saved mean_pool checkpoints did.
 
-Two checkpoint-selection rules are reported side by side because the pilot
-protocol picks the best epoch on the *same* validation set it reports on:
+Two checkpoint-selection rules are reported side by side because
+"best_val_epoch" picks the best epoch on the *same* validation set it reports on:
   "best_val_epoch" : pilot protocol (optimistic),
   "last_epoch"     : no validation-based selection.
 
-Nothing here touches a test set (none exists).  Validation = 2 outdoor videos,
-so every number is descriptive only.
+This script loads train and validation caches only; it does not load or score a
+test split. Validation results are descriptive, and best-epoch metrics are
+optimistic because checkpoint selection uses the same validation set.
 
 Usage (see --help).  Cache/PCA paths are required on purpose: they are not
 guessed.  `--selftest` runs the numpy-only checks and needs no data/torch.
@@ -338,7 +339,7 @@ def run_one(T, torch, seed, train_len, data, args):
         "best_val_mrr_at_train_len": best_mrr, "val_mrr_history": hist,
         "evals": {s: {str(k): v for k, v in d.items()} for s, d in evals.items()},
         "crosscheck_vs_project_retrieval_metrics": crosscheck,
-    }, model
+    }, model, best_state
 
 
 def run(args):
@@ -400,7 +401,7 @@ def run(args):
     print(f"prefixes={args.prefixes} seeds={args.seeds} epochs={args.epochs} device={device}")
     print("chance (exact, multi-positive): "
           + " ".join(f"{k}={v:.4f}" for k, v in chance.items())
-          + "   (pilot README reports MRR 0.0420 / Top1 0.0087 / Top3 0.0259)")
+          + "   (computed from this validation gallery)")
     print("=" * 78)
 
     # ---------------- train/evaluate (cached per run) ----------------
@@ -414,7 +415,7 @@ def run(args):
                 print(f"[cached] train_len={L} seed={seed}")
                 continue
             t0 = time.time()
-            res, model = run_one(T, torch, seed, L, data, args)
+            res, model, _ = run_one(T, torch, seed, L, data, args)
             write_json(p, res)
             run_results[(L, seed)] = res
             cc = res["crosscheck_vs_project_retrieval_metrics"]
@@ -526,17 +527,39 @@ def run(args):
     summary = {"config_ref": "config.json", "chance": chance, "summary": summary_rows,
                "paired_differences": paired_rows}
     write_json(out / "summary.json", summary)
-    write_markdown(out / "summary.md", summary_rows, paired_rows, chance, args, task_ok)
+    write_markdown(
+        out / "summary.md",
+        summary_rows,
+        paired_rows,
+        chance,
+        args,
+        task_ok,
+        n_val_examples=len(val_rows),
+        n_val_videos=len(va_vid),
+    )
     plot(out, summary_rows, chance, args.prefixes)
     print(f"\nDONE. Outputs in {out}")
 
 
-def write_markdown(path, summary_rows, paired_rows, chance, args, task_ok):
+def write_markdown(
+    path,
+    summary_rows,
+    paired_rows,
+    chance,
+    args,
+    task_ok,
+    n_val_examples,
+    n_val_videos,
+):
     L = ["# Prefix-length goal-disambiguation ablation (validation only)", ""]
     L.append(f"Seeds: {args.seeds}; epochs: {args.epochs}; gallery = all validation WHY targets; "
              "positives = rows with identical WHY text. Values are mean ± sample std over seeds. "
              f"Chance (exact, multi-positive): MRR {chance['MRR']:.4f}, Top-1 {chance['Top1']:.4f}, "
              f"Top-3 {chance['Top3']:.4f}.")
+    L.append(
+        f"Validation contains {n_val_examples} examples from {n_val_videos} source-video UIDs. "
+        "No test features were loaded and no test score is reported."
+    )
     L.append("")
     for setting in SETTINGS:
         for sel in SELECTIONS:
@@ -565,11 +588,11 @@ def write_markdown(path, summary_rows, paired_rows, chance, args, task_ok):
                  f"{r['delta_MRR_mean']:+.4f} [{r['delta_MRR_ci95_lo']:+.4f}, {r['delta_MRR_ci95_hi']:+.4f}] | "
                  f"{r['seeds_with_positive_delta']}/{r['n_seeds']} | {r['top1_gains']} / {r['top1_losses']} |")
     L += ["", "## Limitations", "",
-          "- Validation-only on a small pilot split (no untouched test set); no significance or generalisation claim.",
+          "- Validation-only; no significance or generalisation claim. Best-epoch selection and reporting use the same validation split.",
           "- `best_val_epoch` selects on the same validation set it reports on (optimistic); `last_epoch` does not.",
           "- Prefix k = first k of the 8 cached frames, sampled uniformly over the whole clip; its share of "
           "wall-clock time depends on clip length.",
-          "- `train_full_eval_k` is a train/test length-mismatch diagnostic, not the main comparison.",
+          "- `train_full_eval_k` is a training/evaluation length-mismatch diagnostic, not the main comparison.",
           "- Confidence/margin/entropy decision analysis is a separate step."]
     path.write_text("\n".join(L) + "\n", encoding="utf-8")
 
