@@ -56,7 +56,7 @@ def main():
                     'top1_std': float('nan'),
                     'top3_mean': float('nan'),
                     'top3_std': float('nan'),
-                    'n_examples': len(vals),
+                    'n_seeds': len(vals),
                 })
         else:
             rows.append({
@@ -68,7 +68,7 @@ def main():
                 'top1_std': stats.get('top1_sample_std', float('nan')),
                 'top3_mean': stats.get('top3_mean', float('nan')),
                 'top3_std': stats.get('top3_sample_std', float('nan')),
-                'n_examples': len(stats.get('mrr_values', [])),
+                'n_seeds': len(stats.get('mrr_values', [])),
             })
 
     # Full summary JSON in repo
@@ -92,7 +92,7 @@ def main():
         }, f, indent=2)
 
     CSV_PATH = out_dir / 'prefix_length_summary.csv'
-    fieldnames = ['condition', 'prefix_frames', 'mrr_mean', 'mrr_std', 'top1_mean', 'top1_std', 'top3_mean', 'top3_std', 'n_examples']
+    fieldnames = ['condition', 'prefix_frames', 'mrr_mean', 'mrr_std', 'top1_mean', 'top1_std', 'top3_mean', 'top3_std', 'n_seeds']
     with open(CSV_PATH, 'w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -113,14 +113,16 @@ def main():
         '',
         'Source: ' + str(summary_path),
         '',
-        '| Condition | Prefix frames | MRR mean | MRR std | Top-1 mean | Top-3 mean | Eval examples |',
+        'Important: `n_seeds` is the number of random seeds aggregated, not the number of evaluated validation examples. The validation set size is fixed by the source-video split and is reported separately in the raw summary artifact.',
+        '',
+        '| Condition | Prefix frames | MRR mean | MRR std | Top-1 mean | Top-3 mean | Seeds |',
         '| --- | ---: | ---: | ---: | ---: | ---: | ---: |',
     ]
     for row in rows:
         pf = row['prefix_frames']
         md_lines.append(
             f"| {row['condition']} | {pf} | {human_value(row['mrr_mean'])} | {human_value(row['mrr_std'])} | "
-            f"{human_value(row['top1_mean'])} | {human_value(row['top3_mean'])} | {row['n_examples']} |"
+            f"{human_value(row['top1_mean'])} | {human_value(row['top3_mean'])} | {row['n_seeds']} |"
         )
     md_lines.extend([
         '',

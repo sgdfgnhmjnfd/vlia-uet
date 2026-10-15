@@ -2,7 +2,9 @@
 
 Source: /media/dhqg/d3/vlia_outputs/temporal_progression_v1/summary.json
 
-| Condition | Prefix frames | MRR mean | MRR std | Top-1 mean | Top-3 mean | Eval examples |
+Important: `n_seeds` is the number of random seeds aggregated, not the number of evaluated validation examples. The validation set size is fixed by the source-video split and is reported separately in the raw summary artifact.
+
+| Condition | Prefix frames | MRR mean | MRR std | Top-1 mean | Top-3 mean | Seeds |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | gru_final | 2 | 0.039537 | 0.006215 | NA | NA | 3 |
 | gru_final | 4 | 0.043881 | 0.006837 | NA | NA | 3 |

@@ -10,7 +10,7 @@
       "top1_std": NaN,
       "top3_mean": NaN,
       "top3_std": NaN,
-      "n_examples": 3
+      "n_seeds": 3
     },
     {
       "condition": "gru_final",
@@ -21,7 +21,7 @@
       "top1_std": NaN,
       "top3_mean": NaN,
       "top3_std": NaN,
-      "n_examples": 3
+      "n_seeds": 3
     },
     {
       "condition": "gru_final",
@@ -32,7 +32,7 @@
       "top1_std": NaN,
       "top3_mean": NaN,
       "top3_std": NaN,
-      "n_examples": 3
+      "n_seeds": 3
     },
     {
       "condition": "gru_final",
@@ -43,7 +43,7 @@
       "top1_std": NaN,
       "top3_mean": NaN,
       "top3_std": NaN,
-      "n_examples": 3
+      "n_seeds": 3
     },
     {
       "condition": "gru_progression",
@@ -54,7 +54,7 @@
       "top1_std": NaN,
       "top3_mean": NaN,
       "top3_std": NaN,
-      "n_examples": 3
+      "n_seeds": 3
     },
     {
       "condition": "gru_progression",
@@ -65,7 +65,7 @@
       "top1_std": NaN,
       "top3_mean": NaN,
       "top3_std": NaN,
-      "n_examples": 3
+      "n_seeds": 3
     },
     {
       "condition": "gru_progression",
@@ -76,7 +76,7 @@
       "top1_std": NaN,
       "top3_mean": NaN,
       "top3_std": NaN,
-      "n_examples": 3
+      "n_seeds": 3
     },
     {
       "condition": "gru_progression",
@@ -87,7 +87,7 @@
       "top1_std": NaN,
       "top3_mean": NaN,
       "top3_std": NaN,
-      "n_examples": 3
+      "n_seeds": 3
     },
     {
       "condition": "mean_pool",
@@ -98,7 +98,7 @@
       "top1_std": 0.007104768492844055,
       "top3_mean": 0.041860464960336685,
       "top3_std": 0.004651162773370743,
-      "n_examples": 3
+      "n_seeds": 3
     }
   ],
   "final_metrics_by_condition": {
