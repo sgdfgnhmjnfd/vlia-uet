@@ -29,7 +29,7 @@ Tính đến thời điểm hiện tại, dự án đã có các artifact thực
 
 Kết luận thực tế, không vượt quá mức có thể khẳng định:
 
-- MRR tăng dần khi thời lượng quan sát tăng từ 2 → 8 khung hình, nhưng sự cải thiện khá chậm ở giai đoạn đầu và bắt đầu bão hòa ở các prefix tương đối dài.
+- MRR tăng dần khi thời lượng quan sát tăng từ 2 → 8 khung hình, nhưng không đủ dữ liệu để khẳng định vùng bão hòa; các chuyển đổi còn có độ lớn tương đương với độ lệch chuẩn giữa các seed.
 - Baseline đơn giản `mean_pool` 8 frames vẫn là điểm tham chiếu mạnh nhất trong phạm vi hiện có: `MRR ≈ 0.0589 ± 0.0016`.
 - Các baseline quyết định “predict vs defer” hiện chỉ là công cụ hỗ trợ quyết định đơn giản, không phải bằng chứng rằng mô hình đã hiểu được khi nào dữ liệu quan sát đủ để xác nhận ý định.
 - Các lỗi còn lại chủ yếu tập trung ở “same-task confusion”, điều này phù hợp với giả thuyết năng lực phân biệt mục tiêu còn yếu khi các mục tiêu chia sẻ hành vi khởi đầu.
@@ -137,7 +137,7 @@ Thực nghiệm được thực hiện trên benchmark **EgoIntent** (split cố
 | **Predicted-What Guided** | `0.0518 ± 0.0015` | `0.0217 ± 0.0027` | `0.0434 ± 0.0027` | **+8.9%** so với Direct Why |
 | **+ What Hard-Negative** | `0.0540 ± 0.0023` | `0.0279 ± 0.0047` | `0.0419 ± 0.0047` | Phân tách không gian nội tác vụ |
 | **+ Frozen Residual Reranker** | **`0.0551 ± 0.0009`** | **`0.0295 ± 0.0027`** | **`0.0434 ± 0.0027`** | **+15.9%** so với Direct Why |
-| *Baseline tĩnh: Mean-pool 8 frames* | `0.0589 ± 0.0016` | `0.0233 ± 0.0046` | `0.0419 ± 0.0059` | Baseline không cấu trúc |
+| *Baseline tĩnh: Mean-pool 8 frames* | `0.0589 ± 0.0016` | `0.0295 ± 0.0071` | `0.0419 ± 0.0059` | Baseline không cấu trúc |
 | *Diagnostic: Oracle What (Privileged)* | `0.1055 ± 0.0067` | `0.0527 ± 0.0054` | `0.0915 ± 0.0194` | Cận trên lý thuyết (chẩn đoán) |
 
 > [!NOTE]

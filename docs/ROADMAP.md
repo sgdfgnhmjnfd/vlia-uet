@@ -125,11 +125,11 @@ Evaluation must report three distinct metric slices:
 | **Predicted-What Guided** | `0.0518 ± 0.0015` | `0.0217 ± 0.0027` | `0.0434 ± 0.0027` | **+8.9%** over Direct |
 | **+ What Hard-Negative** | `0.0540 ± 0.0023` | `0.0279 ± 0.0047` | `0.0419 ± 0.0047` | Penalizes same-task errors |
 | **+ Frozen Residual Reranker** | **`0.0551 ± 0.0009`** | **`0.0295 ± 0.0027`** | **`0.0434 ± 0.0027`** | **+15.9%** over Direct |
-| *Mean-Pool 8-Frames Baseline* | `0.0589 ± 0.0016` | `0.0233 ± 0.0046` | `0.0419 ± 0.0059` | **Strongest static baseline** |
+| *Mean-Pool 8-Frames Baseline* | `0.0589 ± 0.0016` | `0.0295 ± 0.0071` | `0.0419 ± 0.0059` | **Strongest static baseline** |
 | *Diagnostic: Oracle What* | `0.1055 ± 0.0067` | `0.0527 ± 0.0054` | `0.0915 ± 0.0194` | Privileged headroom check |
 
 > [!NOTE]
-> **Scientific Transparency:** The proposed method ($0.0551$) does **not** beat the strongest static baseline (`Mean-pool 8 frames` = $0.0589$) on overall MRR. However, it significantly outperforms it on **Same-Task Top-1 accuracy** ($0.0295$ vs $0.0233$), where disambiguation matters most.
+> **Scientific Transparency:** The proposed method ($0.0551$) does **not** beat the strongest static baseline (`Mean-pool 8 frames` = $0.0589$) on overall MRR. On the current validation summary, the mean-pool 8-frame baseline and the proposed model have comparable Top-1 values, and the relevant scientific statement is that same-task confusion remains the dominant residual failure mode rather than a clear win in overall Top-1 accuracy.
 
 ### Dominant Failure Mode
 - **81.47% (510 / 626)** of Top-1 errors are within the same task.

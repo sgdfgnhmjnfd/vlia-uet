@@ -115,19 +115,61 @@ def aggregate_threshold_metrics(correct, score, threshold, accept_gt):
     n = len(correct)
     total_accepted = int(accepted.sum())
     if total_accepted == 0:
-        return {"threshold": float(threshold), "coverage": 0.0, "error_rate": 1.0, "accepted": 0, "errors": 0, "correct": 0}
+        return {
+            "threshold": float(threshold),
+            "coverage": 0.0,
+            "error_rate": 1.0,
+            "accepted": 0,
+            "errors": 0,
+            "correct": 0,
+            "risk": 1.0,
+            "risk_ci_low": 1.0,
+            "risk_ci_high": 1.0,
+            "coverage_ci_low": 0.0,
+            "coverage_ci_high": 0.0,
+        }
     errors = int((accepted & (~correct)).sum())
     accepted_correct = int((accepted & correct).sum())
-    coverage = accepted.mean().item()
-    error_rate = errors / total_accepted
+    coverage = float(accepted.mean())
+    error_rate = float(errors / total_accepted)
     return {
         "threshold": float(threshold),
-        "coverage": float(coverage),
-        "error_rate": float(error_rate),
+        "coverage": coverage,
+        "error_rate": error_rate,
+        "risk": error_rate,
         "accepted": total_accepted,
         "errors": errors,
         "correct": accepted_correct,
     }
+
+
+def bootstrap_threshold_metrics(correct, score, threshold, accept_gt, n_boot=400, seed=0):
+    accepted = (score >= threshold) if accept_gt else (score <= threshold)
+    ok = np.asarray(correct, dtype=bool)
+    accepted = np.asarray(accepted, dtype=bool)
+    n = accepted.shape[0]
+    rng = np.random.default_rng(seed)
+    risks = []
+    coverages = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, n, size=n)
+        mask = accepted[idx]
+        if not mask.any():
+            risks.append(1.0)
+            coverages.append(0.0)
+            continue
+        risk = float((~ok[idx][mask]).mean())
+        coverage = float(mask.mean())
+        risks.append(risk)
+        coverages.append(coverage)
+    risks = np.asarray(risks)
+    coverages = np.asarray(coverages)
+    base = aggregate_threshold_metrics(ok, score, threshold, accept_gt)
+    base["risk_ci_low"] = float(np.quantile(risks, 0.025))
+    base["risk_ci_high"] = float(np.quantile(risks, 0.975))
+    base["coverage_ci_low"] = float(np.quantile(coverages, 0.025))
+    base["coverage_ci_high"] = float(np.quantile(coverages, 0.975))
+    return base
 
 
 def evaluate_policy(results, policy: str, thresholds: list[float]):
@@ -139,7 +181,7 @@ def evaluate_policy(results, policy: str, thresholds: list[float]):
     else:
         accept_gt = True
     for th in thresholds:
-        metrics.append(aggregate_threshold_metrics(correct, score, th, accept_gt))
+        metrics.append(bootstrap_threshold_metrics(correct, score, th, accept_gt))
     return metrics
 
 
@@ -200,15 +242,15 @@ def main():
                 metrics = compute_prefix_prediction(model, val_frames, val_why_target, val_why_texts, condition, prefix_len, device)
                 for policy_name, policy_code in [('confidence', metrics['top1_prob']), ('margin', metrics['margin']), ('entropy', metrics['entropy'])]:
                     if policy_name == 'confidence':
-                        thresholds = np.linspace(0.0, 0.95, 40)
+                        thresholds = np.unique(np.concatenate(([0.0], np.linspace(0.0, 0.95, 40), np.sort(metrics['top1_prob'].astype(float)))))
                         score = metrics['top1_prob']
                         accept_gt = True
                     elif policy_name == 'margin':
-                        thresholds = np.linspace(-1.0, 1.0, 60)
+                        thresholds = np.unique(np.concatenate(([-1.0], np.linspace(-1.0, 1.0, 60), np.sort(metrics['margin'].astype(float)))))
                         score = metrics['margin']
                         accept_gt = True
                     else:
-                        thresholds = np.linspace(0.0, 1.0, 60)
+                        thresholds = np.unique(np.concatenate(([1.0], np.linspace(0.0, 1.0, 60), np.sort(metrics['entropy'].astype(float)))))
                         score = metrics['entropy']
                         accept_gt = False
                     results = evaluate_policy({
@@ -226,6 +268,10 @@ def main():
                             'threshold': row['threshold'],
                             'coverage': row['coverage'],
                             'error_rate': row['error_rate'],
+                            'risk_ci_low': row.get('risk_ci_low', row['error_rate']),
+                            'risk_ci_high': row.get('risk_ci_high', row['error_rate']),
+                            'coverage_ci_low': row.get('coverage_ci_low', row['coverage']),
+                            'coverage_ci_high': row.get('coverage_ci_high', row['coverage']),
                             'accepted': row['accepted'],
                             'errors': row['errors'],
                             'correct': row['correct'],
@@ -243,16 +289,19 @@ def main():
     json_path = args.output_dir / 'selective_decision_thresholds.json'
     json_path.write_text(json.dumps(all_rows, indent=2), encoding='utf-8')
 
-    # Compact summary: by condition + prefix + policy, choose best threshold under risk <= 0.2 and maximum coverage.
+    # Compact summary: by condition + prefix + policy, choose the best threshold
+    # under a conservative risk constraint. If no threshold meets the target, choose
+    # the threshold with the lowest observed risk rather than accept-all defaults.
     summary = []
     groups = defaultdict(list)
     for row in all_rows:
         groups[(row['condition'], row['prefix_frames'], row['policy'])].append(row)
     for key, rows in sorted(groups.items()):
+        rows = sorted(rows, key=lambda r: r['threshold'])
         candidates = [r for r in rows if r['coverage'] > 0 and r['error_rate'] <= 0.25]
         if not candidates:
             candidates = rows
-        best = max(candidates, key=lambda r: (r['coverage'], -r['error_rate']))
+        best = min(candidates, key=lambda r: (r['error_rate'], -r['coverage']))
         summary.append({
             'condition': key[0],
             'prefix_frames': key[1],
@@ -261,6 +310,8 @@ def main():
             'coverage': best['coverage'],
             'error_rate': best['error_rate'],
             'accepted': best['accepted'],
+            'risk_ci_low': best.get('risk_ci_low', best['error_rate']),
+            'risk_ci_high': best.get('risk_ci_high', best['error_rate']),
         })
 
     md_path = args.output_dir / 'selective_decision_summary.md'
@@ -268,6 +319,7 @@ def main():
         '# Selective prediction summary',
         '',
         'Validation-only decision baselines using the saved temporal progression checkpoints.',
+        'These curves are reported as risk-vs-coverage summaries, not as validated semantic-evidence claims.',
         '',
         '| Condition | Prefix | Policy | Threshold | Coverage | Error rate | Accepted |',
         '| --- | ---: | --- | ---: | ---: | ---: | ---: |',
@@ -276,8 +328,8 @@ def main():
         lines.append(f"| {row['condition']} | {row['prefix_frames']} | {row['policy']} | {row['threshold']:.4f} | {row['coverage']:.4f} | {row['error_rate']:.4f} | {row['accepted']} |")
     lines.extend([
         '',
-        'Interpretation: confidence and margin-based filtering are simple predict-vs-defer baselines, not validated semantic-evidence claims.',
-        'The policy should be interpreted as a decision support mechanism, not as proof that the model understands when the observation is semantically sufficient.',
+        'Interpretation: the risk-vs-coverage curve is the relevant object here. A policy only counts as useful if it reduces coverage while keeping risk below the accepted baseline; the current validation-level score distributions do not support a strong defer signal.',
+        'The results should therefore be read as a negative baseline for selective decision-making, not as evidence that the model understands semantic sufficiency of early evidence.',
     ])
     md_path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
