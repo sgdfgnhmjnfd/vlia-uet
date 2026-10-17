@@ -1,0 +1,2764 @@
+{
+  "samples": [
+    {
+      "sample_id": "outdoor/farm/pick_fruits/step1",
+      "video_uid": "02d1f024-1470-4ce6-acde-b938f7847eb6",
+      "scene": "farm",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "positioning the harvest container",
+              "cosine": 0.07931124418973923
+            },
+            {
+              "text": "collecting the harvested fruit",
+              "cosine": 0.07604073733091354
+            },
+            {
+              "text": "relocating buckets",
+              "cosine": 0.07413773238658905
+            },
+            {
+              "text": "prepare to transfer lemons",
+              "cosine": 0.06609860062599182
+            },
+            {
+              "text": "positioning to continue harvesting lemons",
+              "cosine": 0.05872279405593872
+            }
+          ],
+          "confidence": 0.22440195265302088,
+          "margin": 0.0032705068588256836,
+          "normalized_entropy": 0.9966085388035648
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "positioning the harvest container",
+              "cosine": 0.08057540655136108
+            },
+            {
+              "text": "collecting the harvested fruit",
+              "cosine": 0.0762152373790741
+            },
+            {
+              "text": "relocating buckets",
+              "cosine": 0.07526085525751114
+            },
+            {
+              "text": "prepare to transfer lemons",
+              "cosine": 0.06618724018335342
+            },
+            {
+              "text": "positioning to continue harvesting lemons",
+              "cosine": 0.05988972261548042
+            }
+          ],
+          "confidence": 0.2259960613452546,
+          "margin": 0.004360169172286987,
+          "normalized_entropy": 0.9965512449269326
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "positioning the harvest container",
+              "cosine": 0.08001375198364258
+            },
+            {
+              "text": "relocating buckets",
+              "cosine": 0.07804977893829346
+            },
+            {
+              "text": "collecting the harvested fruit",
+              "cosine": 0.07482924312353134
+            },
+            {
+              "text": "prepare to transfer lemons",
+              "cosine": 0.06255495548248291
+            },
+            {
+              "text": "positioning to continue harvesting lemons",
+              "cosine": 0.0535707101225853
+            }
+          ],
+          "confidence": 0.22906353995779222,
+          "margin": 0.001963973045349121,
+          "normalized_entropy": 0.9938791416338707
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "positioning the harvest container",
+              "cosine": 0.08361873775720596
+            },
+            {
+              "text": "collecting the harvested fruit",
+              "cosine": 0.07946720719337463
+            },
+            {
+              "text": "relocating buckets",
+              "cosine": 0.07587834447622299
+            },
+            {
+              "text": "prepare to transfer lemons",
+              "cosine": 0.06325579434633255
+            },
+            {
+              "text": "positioning to continue harvesting lemons",
+              "cosine": 0.055986449122428894
+            }
+          ],
+          "confidence": 0.2347872117636581,
+          "margin": 0.004151530563831329,
+          "normalized_entropy": 0.9934874217448401
+        }
+      }
+    },
+    {
+      "sample_id": "outdoor/farm/pick_fruits/step10",
+      "video_uid": "02d1f024-1470-4ce6-acde-b938f7847eb6",
+      "scene": "farm",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "move yellow bucket",
+              "cosine": 0.0932912826538086
+            },
+            {
+              "text": "position for harvesting",
+              "cosine": 0.07912230491638184
+            },
+            {
+              "text": "detaching ripe lemons from the tree",
+              "cosine": 0.038228392601013184
+            },
+            {
+              "text": "stabilizing the fruit for cutting",
+              "cosine": 0.033200375735759735
+            },
+            {
+              "text": "prepare to detach lemon from branch",
+              "cosine": 0.030915485695004463
+            }
+          ],
+          "confidence": 0.32193937688979773,
+          "margin": 0.014168977737426758,
+          "normalized_entropy": 0.9548350006227002
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "move yellow bucket",
+              "cosine": 0.11045133322477341
+            },
+            {
+              "text": "position for harvesting",
+              "cosine": 0.08466164767742157
+            },
+            {
+              "text": "detaching ripe lemons from the tree",
+              "cosine": 0.048567645251750946
+            },
+            {
+              "text": "stabilizing the fruit for cutting",
+              "cosine": 0.038427963852882385
+            },
+            {
+              "text": "prepare to detach lemon from branch",
+              "cosine": 0.038334086537361145
+            }
+          ],
+          "confidence": 0.35470475976371324,
+          "margin": 0.025789685547351837,
+          "normalized_entropy": 0.9427416007358539
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "move yellow bucket",
+              "cosine": 0.11141952872276306
+            },
+            {
+              "text": "position for harvesting",
+              "cosine": 0.08295007050037384
+            },
+            {
+              "text": "detaching ripe lemons from the tree",
+              "cosine": 0.05807707831263542
+            },
+            {
+              "text": "prepare to detach lemon from branch",
+              "cosine": 0.048801250755786896
+            },
+            {
+              "text": "stabilizing the fruit for cutting",
+              "cosine": 0.043248921632766724
+            }
+          ],
+          "confidence": 0.3425867783367705,
+          "margin": 0.02846945822238922,
+          "normalized_entropy": 0.9550607206111128
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "move yellow bucket",
+              "cosine": 0.09127108007669449
+            },
+            {
+              "text": "position for harvesting",
+              "cosine": 0.08003191649913788
+            },
+            {
+              "text": "detaching ripe lemons from the tree",
+              "cosine": 0.07339806854724884
+            },
+            {
+              "text": "prepare to detach lemon from branch",
+              "cosine": 0.06648032367229462
+            },
+            {
+              "text": "stabilizing the fruit for cutting",
+              "cosine": 0.05159482732415199
+            }
+          ],
+          "confidence": 0.2567109336590597,
+          "margin": 0.01123916357755661,
+          "normalized_entropy": 0.9891870230355139
+        }
+      }
+    },
+    {
+      "sample_id": "outdoor/farm/pick_fruits/step100",
+      "video_uid": "02d1f024-1470-4ce6-acde-b938f7847eb6",
+      "scene": "farm",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "detaching the lemon from the branch",
+              "cosine": 0.14684456586837769
+            },
+            {
+              "text": "detaching ripe lemon from tree",
+              "cosine": 0.14600642025470734
+            },
+            {
+              "text": "positioning to continue harvesting lemons",
+              "cosine": 0.14389942586421967
+            },
+            {
+              "text": "locating next fruit to harvest",
+              "cosine": 0.11591565608978271
+            },
+            {
+              "text": "relocating buckets",
+              "cosine": -0.01273863110691309
+            }
+          ],
+          "confidence": 0.2708516862931246,
+          "margin": 0.0008381456136703491,
+          "normalized_entropy": 0.9074100183285955
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "detaching ripe lemon from tree",
+              "cosine": 0.1546306610107422
+            },
+            {
+              "text": "detaching the lemon from the branch",
+              "cosine": 0.15267030894756317
+            },
+            {
+              "text": "positioning to continue harvesting lemons",
+              "cosine": 0.14871397614479065
+            },
+            {
+              "text": "locating next fruit to harvest",
+              "cosine": 0.11472870409488678
+            },
+            {
+              "text": "relocating buckets",
+              "cosine": -0.012887323275208473
+            }
+          ],
+          "confidence": 0.2818340406195659,
+          "margin": 0.001960352063179016,
+          "normalized_entropy": 0.8999801412913649
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "detaching the lemon from the branch",
+              "cosine": 0.14524881541728973
+            },
+            {
+              "text": "detaching ripe lemon from tree",
+              "cosine": 0.1449722945690155
+            },
+            {
+              "text": "positioning to continue harvesting lemons",
+              "cosine": 0.1423243135213852
+            },
+            {
+              "text": "locating next fruit to harvest",
+              "cosine": 0.11253805458545685
+            },
+            {
+              "text": "relocating buckets",
+              "cosine": -0.01202639564871788
+            }
+          ],
+          "confidence": 0.2711811440286766,
+          "margin": 0.00027652084827423096,
+          "normalized_entropy": 0.9076101104938382
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "positioning to continue harvesting lemons",
+              "cosine": 0.13653863966464996
+            },
+            {
+              "text": "detaching the lemon from the branch",
+              "cosine": 0.13615918159484863
+            },
+            {
+              "text": "detaching ripe lemon from tree",
+              "cosine": 0.13332168757915497
+            },
+            {
+              "text": "locating next fruit to harvest",
+              "cosine": 0.1101689264178276
+            },
+            {
+              "text": "relocating buckets",
+              "cosine": -0.012235753238201141
+            }
+          ],
+          "confidence": 0.26629856187564666,
+          "margin": 0.00037945806980133057,
+          "normalized_entropy": 0.9150172336441464
+        }
+      }
+    },
+    {
+      "sample_id": "outdoor/farm/pick_fruits/step101",
+      "video_uid": "02d1f024-1470-4ce6-acde-b938f7847eb6",
+      "scene": "farm",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "locating next lemon to harvest",
+              "cosine": 0.12027936428785324
+            },
+            {
+              "text": "prepare to detach lemon from branch",
+              "cosine": 0.10884026437997818
+            },
+            {
+              "text": "preparing to deposit harvested lemon",
+              "cosine": 0.10826067626476288
+            },
+            {
+              "text": "detach lemon from branch",
+              "cosine": 0.1065923273563385
+            },
+            {
+              "text": "collecting the harvested fruit",
+              "cosine": 0.07840972393751144
+            }
+          ],
+          "confidence": 0.24608069273313074,
+          "margin": 0.011439099907875061,
+          "normalized_entropy": 0.9893718640717052
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "locating next lemon to harvest",
+              "cosine": 0.12217424809932709
+            },
+            {
+              "text": "prepare to detach lemon from branch",
+              "cosine": 0.10967995226383209
+            },
+            {
+              "text": "detach lemon from branch",
+              "cosine": 0.10802701115608215
+            },
+            {
+              "text": "preparing to deposit harvested lemon",
+              "cosine": 0.10709036886692047
+            },
+            {
+              "text": "collecting the harvested fruit",
+              "cosine": 0.07588937878608704
+            }
+          ],
+          "confidence": 0.25151416682401456,
+          "margin": 0.012494295835494995,
+          "normalized_entropy": 0.9872279003856156
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "locating next lemon to harvest",
+              "cosine": 0.12933821976184845
+            },
+            {
+              "text": "prepare to detach lemon from branch",
+              "cosine": 0.11390358954668045
+            },
+            {
+              "text": "detach lemon from branch",
+              "cosine": 0.11266586184501648
+            },
+            {
+              "text": "preparing to deposit harvested lemon",
+              "cosine": 0.11089196801185608
+            },
+            {
+              "text": "collecting the harvested fruit",
+              "cosine": 0.07861664146184921
+            }
+          ],
+          "confidence": 0.260209951000592,
+          "margin": 0.015434630215168,
+          "normalized_entropy": 0.9849210257041383
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "locating next lemon to harvest",
+              "cosine": 0.14109554886817932
+            },
+            {
+              "text": "preparing to deposit harvested lemon",
+              "cosine": 0.12177038192749023
+            },
+            {
+              "text": "prepare to detach lemon from branch",
+              "cosine": 0.11370965838432312
+            },
+            {
+              "text": "detach lemon from branch",
+              "cosine": 0.11201626062393188
+            },
+            {
+              "text": "collecting the harvested fruit",
+              "cosine": 0.09007617831230164
+            }
+          ],
+          "confidence": 0.2795238703034236,
+          "margin": 0.019325166940689087,
+          "normalized_entropy": 0.9830198921970699
+        }
+      }
+    },
+    {
+      "sample_id": "outdoor/space/draw_flowers/step1",
+      "video_uid": "2927605b-bdb2-4b36-8181-12f9e898bf2d",
+      "scene": "space",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "continue the rangoli design",
+              "cosine": 0.1495213806629181
+            },
+            {
+              "text": "replenish powder to continue the flower outline",
+              "cosine": 0.11812549829483032
+            },
+            {
+              "text": "complete the outer layer of the flower design",
+              "cosine": 0.11352609097957611
+            },
+            {
+              "text": "forming the flower outline",
+              "cosine": 0.10864031314849854
+            },
+            {
+              "text": "load hand with powder for drawing",
+              "cosine": 0.08148134499788284
+            }
+          ],
+          "confidence": 0.3152063210720673,
+          "margin": 0.03139588236808777,
+          "normalized_entropy": 0.9694659734081064
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "continue the rangoli design",
+              "cosine": 0.1495213806629181
+            },
+            {
+              "text": "replenish powder to continue the flower outline",
+              "cosine": 0.11812549829483032
+            },
+            {
+              "text": "complete the outer layer of the flower design",
+              "cosine": 0.11352609097957611
+            },
+            {
+              "text": "forming the flower outline",
+              "cosine": 0.10864031314849854
+            },
+            {
+              "text": "load hand with powder for drawing",
+              "cosine": 0.08148134499788284
+            }
+          ],
+          "confidence": 0.3152063210720673,
+          "margin": 0.03139588236808777,
+          "normalized_entropy": 0.9694659734081064
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "continue the rangoli design",
+              "cosine": 0.1495213806629181
+            },
+            {
+              "text": "replenish powder to continue the flower outline",
+              "cosine": 0.11812549829483032
+            },
+            {
+              "text": "complete the outer layer of the flower design",
+              "cosine": 0.11352608352899551
+            },
+            {
+              "text": "forming the flower outline",
+              "cosine": 0.10864031314849854
+            },
+            {
+              "text": "load hand with powder for drawing",
+              "cosine": 0.08148134499788284
+            }
+          ],
+          "confidence": 0.3152063273955986,
+          "margin": 0.03139588236808777,
+          "normalized_entropy": 0.9694659720562696
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "continue the rangoli design",
+              "cosine": 0.1495213806629181
+            },
+            {
+              "text": "replenish powder to continue the flower outline",
+              "cosine": 0.11812549084424973
+            },
+            {
+              "text": "complete the outer layer of the flower design",
+              "cosine": 0.11352608352899551
+            },
+            {
+              "text": "forming the flower outline",
+              "cosine": 0.10864031314849854
+            },
+            {
+              "text": "load hand with powder for drawing",
+              "cosine": 0.08148134499788284
+            }
+          ],
+          "confidence": 0.31520633414857707,
+          "margin": 0.031395889818668365,
+          "normalized_entropy": 0.9694659714872677
+        }
+      }
+    },
+    {
+      "sample_id": "outdoor/space/draw_flowers/step10",
+      "video_uid": "2927605b-bdb2-4b36-8181-12f9e898bf2d",
+      "scene": "space",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "outline the petals of the rangoli design",
+              "cosine": 0.15552788972854614
+            },
+            {
+              "text": "prepare to fill the flower design with pink powder",
+              "cosine": 0.12374161183834076
+            },
+            {
+              "text": "replenish powder to continue the flower outline",
+              "cosine": 0.11216160655021667
+            },
+            {
+              "text": "filling the center of the flower pattern",
+              "cosine": 0.0972527489066124
+            },
+            {
+              "text": "refill hand to continue drawing",
+              "cosine": 0.04516556113958359
+            }
+          ],
+          "confidence": 0.3552568650684263,
+          "margin": 0.03178627789020538,
+          "normalized_entropy": 0.9321309998939551
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "outline the petals of the rangoli design",
+              "cosine": 0.15839597582817078
+            },
+            {
+              "text": "prepare to fill the flower design with pink powder",
+              "cosine": 0.128402441740036
+            },
+            {
+              "text": "replenish powder to continue the flower outline",
+              "cosine": 0.11879967153072357
+            },
+            {
+              "text": "filling the center of the flower pattern",
+              "cosine": 0.1013263463973999
+            },
+            {
+              "text": "refill hand to continue drawing",
+              "cosine": 0.05007009208202362
+            }
+          ],
+          "confidence": 0.347853270168637,
+          "margin": 0.029993534088134766,
+          "normalized_entropy": 0.9350316348442828
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "outline the petals of the rangoli design",
+              "cosine": 0.15591508150100708
+            },
+            {
+              "text": "prepare to fill the flower design with pink powder",
+              "cosine": 0.12789808213710785
+            },
+            {
+              "text": "replenish powder to continue the flower outline",
+              "cosine": 0.11756891757249832
+            },
+            {
+              "text": "filling the center of the flower pattern",
+              "cosine": 0.09954112768173218
+            },
+            {
+              "text": "refill hand to continue drawing",
+              "cosine": 0.047905921936035156
+            }
+          ],
+          "confidence": 0.34375449473809644,
+          "margin": 0.02801699936389923,
+          "normalized_entropy": 0.935739976116087
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "outline the petals of the rangoli design",
+              "cosine": 0.1538119912147522
+            },
+            {
+              "text": "prepare to fill the flower design with pink powder",
+              "cosine": 0.12849870324134827
+            },
+            {
+              "text": "replenish powder to continue the flower outline",
+              "cosine": 0.11743226647377014
+            },
+            {
+              "text": "filling the center of the flower pattern",
+              "cosine": 0.09840329736471176
+            },
+            {
+              "text": "refill hand to continue drawing",
+              "cosine": 0.0477990098297596
+            }
+          ],
+          "confidence": 0.33734709148569747,
+          "margin": 0.02531328797340393,
+          "normalized_entropy": 0.9377434455119532
+        }
+      }
+    },
+    {
+      "sample_id": "outdoor/space/draw_flowers/step100",
+      "video_uid": "2927605b-bdb2-4b36-8181-12f9e898bf2d",
+      "scene": "space",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "continue coloring the flower pattern",
+              "cosine": 0.10438419878482819
+            },
+            {
+              "text": "complete the center detail of the flower design",
+              "cosine": 0.09949775040149689
+            },
+            {
+              "text": "complete the pink petal outlines",
+              "cosine": 0.0913526713848114
+            },
+            {
+              "text": "fill flower petal centers with powder",
+              "cosine": 0.09003764390945435
+            },
+            {
+              "text": "color the flower center",
+              "cosine": 0.06768234074115753
+            }
+          ],
+          "confidence": 0.23984490807515582,
+          "margin": 0.004886448383331299,
+          "normalized_entropy": 0.9909865144103529
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "continue coloring the flower pattern",
+              "cosine": 0.10220741480588913
+            },
+            {
+              "text": "complete the center detail of the flower design",
+              "cosine": 0.0977678894996643
+            },
+            {
+              "text": "complete the pink petal outlines",
+              "cosine": 0.08861396461725235
+            },
+            {
+              "text": "fill flower petal centers with powder",
+              "cosine": 0.08818434178829193
+            },
+            {
+              "text": "color the flower center",
+              "cosine": 0.0656992495059967
+            }
+          ],
+          "confidence": 0.23957198820319978,
+          "margin": 0.004439525306224823,
+          "normalized_entropy": 0.990981565056116
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "continue coloring the flower pattern",
+              "cosine": 0.0980430543422699
+            },
+            {
+              "text": "complete the center detail of the flower design",
+              "cosine": 0.09329776465892792
+            },
+            {
+              "text": "fill flower petal centers with powder",
+              "cosine": 0.08800581097602844
+            },
+            {
+              "text": "complete the pink petal outlines",
+              "cosine": 0.08365228772163391
+            },
+            {
+              "text": "color the flower center",
+              "cosine": 0.06344874203205109
+            }
+          ],
+          "confidence": 0.23668063817881307,
+          "margin": 0.00474528968334198,
+          "normalized_entropy": 0.9919074197833736
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "continue coloring the flower pattern",
+              "cosine": 0.09599515795707703
+            },
+            {
+              "text": "complete the center detail of the flower design",
+              "cosine": 0.08936384320259094
+            },
+            {
+              "text": "fill flower petal centers with powder",
+              "cosine": 0.08495858311653137
+            },
+            {
+              "text": "complete the pink petal outlines",
+              "cosine": 0.0803566500544548
+            },
+            {
+              "text": "color the flower center",
+              "cosine": 0.06217455118894577
+            }
+          ],
+          "confidence": 0.23921289265006399,
+          "margin": 0.006631314754486084,
+          "normalized_entropy": 0.9924349841450978
+        }
+      }
+    },
+    {
+      "sample_id": "outdoor/space/draw_flowers/step101",
+      "video_uid": "2927605b-bdb2-4b36-8181-12f9e898bf2d",
+      "scene": "space",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "complete the central detail of the rangoli",
+              "cosine": 0.12326575070619583
+            },
+            {
+              "text": "coloring the rangoli design pattern",
+              "cosine": 0.11770812422037125
+            },
+            {
+              "text": "replenish powder to continue the flower design",
+              "cosine": 0.09333305060863495
+            },
+            {
+              "text": "complete the white detailing of the flower",
+              "cosine": 0.06731613725423813
+            },
+            {
+              "text": "fill in the floor pattern design",
+              "cosine": 0.02904903143644333
+            }
+          ],
+          "confidence": 0.30435053976510246,
+          "margin": 0.005557626485824585,
+          "normalized_entropy": 0.9399343393948381
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "complete the central detail of the rangoli",
+              "cosine": 0.1251320093870163
+            },
+            {
+              "text": "coloring the rangoli design pattern",
+              "cosine": 0.11874724924564362
+            },
+            {
+              "text": "replenish powder to continue the flower design",
+              "cosine": 0.09689497947692871
+            },
+            {
+              "text": "complete the white detailing of the flower",
+              "cosine": 0.0697798803448677
+            },
+            {
+              "text": "fill in the floor pattern design",
+              "cosine": 0.032070957124233246
+            }
+          ],
+          "confidence": 0.30312117525827736,
+          "margin": 0.006384760141372681,
+          "normalized_entropy": 0.9418737848206304
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "complete the central detail of the rangoli",
+              "cosine": 0.12529438734054565
+            },
+            {
+              "text": "coloring the rangoli design pattern",
+              "cosine": 0.11993435025215149
+            },
+            {
+              "text": "replenish powder to continue the flower design",
+              "cosine": 0.09611576795578003
+            },
+            {
+              "text": "complete the white detailing of the flower",
+              "cosine": 0.07350283861160278
+            },
+            {
+              "text": "fill in the floor pattern design",
+              "cosine": 0.032799702137708664
+            }
+          ],
+          "confidence": 0.30035802143076484,
+          "margin": 0.005360037088394165,
+          "normalized_entropy": 0.9435127240850495
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "complete the central detail of the rangoli",
+              "cosine": 0.12425549328327179
+            },
+            {
+              "text": "coloring the rangoli design pattern",
+              "cosine": 0.12148477882146835
+            },
+            {
+              "text": "replenish powder to continue the flower design",
+              "cosine": 0.09578492492437363
+            },
+            {
+              "text": "complete the white detailing of the flower",
+              "cosine": 0.07545754313468933
+            },
+            {
+              "text": "fill in the floor pattern design",
+              "cosine": 0.03075787052512169
+            }
+          ],
+          "confidence": 0.29515760765432514,
+          "margin": 0.0027707144618034363,
+          "normalized_entropy": 0.9429093183460383
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/workshop/assemble_wood/step1",
+      "video_uid": "3ae7ab6b-793e-4a77-9749-010c94b1b0ee",
+      "scene": "workshop",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "selecting a piece of wood for assembly",
+              "cosine": 0.1112583801150322
+            },
+            {
+              "text": "spacing wood slats",
+              "cosine": 0.09423955529928207
+            },
+            {
+              "text": "prepare to attach slat",
+              "cosine": 0.0932464450597763
+            },
+            {
+              "text": "complete the fastening of the wood assembly",
+              "cosine": 0.08905911445617676
+            },
+            {
+              "text": "secure the cross-brace",
+              "cosine": 0.046188339591026306
+            }
+          ],
+          "confidence": 0.2717202631598509,
+          "margin": 0.017018824815750122,
+          "normalized_entropy": 0.9763002222852918
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "selecting a piece of wood for assembly",
+              "cosine": 0.11673028767108917
+            },
+            {
+              "text": "spacing wood slats",
+              "cosine": 0.09444549679756165
+            },
+            {
+              "text": "prepare to attach slat",
+              "cosine": 0.09272444993257523
+            },
+            {
+              "text": "complete the fastening of the wood assembly",
+              "cosine": 0.08554427325725555
+            },
+            {
+              "text": "secure the cross-brace",
+              "cosine": 0.04742277413606644
+            }
+          ],
+          "confidence": 0.28993431867402725,
+          "margin": 0.022284790873527527,
+          "normalized_entropy": 0.9725060445572377
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "selecting a piece of wood for assembly",
+              "cosine": 0.11792674660682678
+            },
+            {
+              "text": "spacing wood slats",
+              "cosine": 0.09434527158737183
+            },
+            {
+              "text": "prepare to attach slat",
+              "cosine": 0.09030614793300629
+            },
+            {
+              "text": "complete the fastening of the wood assembly",
+              "cosine": 0.08233439922332764
+            },
+            {
+              "text": "secure the cross-brace",
+              "cosine": 0.04788164049386978
+            }
+          ],
+          "confidence": 0.29788314407215044,
+          "margin": 0.023581475019454956,
+          "normalized_entropy": 0.9708967037067757
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "selecting a piece of wood for assembly",
+              "cosine": 0.11920956522226334
+            },
+            {
+              "text": "spacing wood slats",
+              "cosine": 0.09608563780784607
+            },
+            {
+              "text": "prepare to attach slat",
+              "cosine": 0.09039725363254547
+            },
+            {
+              "text": "complete the fastening of the wood assembly",
+              "cosine": 0.08095510303974152
+            },
+            {
+              "text": "secure the cross-brace",
+              "cosine": 0.05014246702194214
+            }
+          ],
+          "confidence": 0.30002491604105447,
+          "margin": 0.023123927414417267,
+          "normalized_entropy": 0.9706713598635798
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/workshop/assemble_wood/step10",
+      "video_uid": "3ae7ab6b-793e-4a77-9749-010c94b1b0ee",
+      "scene": "workshop",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "spacing the wooden slats",
+              "cosine": 0.1160765290260315
+            },
+            {
+              "text": "prepare wood piece for assembly",
+              "cosine": 0.10213623940944672
+            },
+            {
+              "text": "prepare layout for assembly",
+              "cosine": 0.0813157856464386
+            },
+            {
+              "text": "attach the support block",
+              "cosine": 0.07569565623998642
+            },
+            {
+              "text": "secure the cross-brace",
+              "cosine": 0.06283943355083466
+            }
+          ],
+          "confidence": 0.2892590141072086,
+          "margin": 0.013940289616584778,
+          "normalized_entropy": 0.976492844078971
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "spacing the wooden slats",
+              "cosine": 0.1142224594950676
+            },
+            {
+              "text": "prepare wood piece for assembly",
+              "cosine": 0.10223180055618286
+            },
+            {
+              "text": "prepare layout for assembly",
+              "cosine": 0.0837523564696312
+            },
+            {
+              "text": "attach the support block",
+              "cosine": 0.07282005250453949
+            },
+            {
+              "text": "secure the cross-brace",
+              "cosine": 0.06232821196317673
+            }
+          ],
+          "confidence": 0.28411992128658015,
+          "margin": 0.011990658938884735,
+          "normalized_entropy": 0.9772160814366112
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "spacing the wooden slats",
+              "cosine": 0.1133648008108139
+            },
+            {
+              "text": "prepare wood piece for assembly",
+              "cosine": 0.10106159746646881
+            },
+            {
+              "text": "prepare layout for assembly",
+              "cosine": 0.0814170390367508
+            },
+            {
+              "text": "attach the support block",
+              "cosine": 0.07093515247106552
+            },
+            {
+              "text": "secure the cross-brace",
+              "cosine": 0.061354704201221466
+            }
+          ],
+          "confidence": 0.28624430757036406,
+          "margin": 0.012303203344345093,
+          "normalized_entropy": 0.976543786675444
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "spacing the wooden slats",
+              "cosine": 0.11288513243198395
+            },
+            {
+              "text": "prepare wood piece for assembly",
+              "cosine": 0.10117438435554504
+            },
+            {
+              "text": "prepare layout for assembly",
+              "cosine": 0.08122134208679199
+            },
+            {
+              "text": "attach the support block",
+              "cosine": 0.07159335911273956
+            },
+            {
+              "text": "secure the cross-brace",
+              "cosine": 0.06266263872385025
+            }
+          ],
+          "confidence": 0.2837308181012534,
+          "margin": 0.011710748076438904,
+          "normalized_entropy": 0.9777658231421539
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/workshop/assemble_wood/step11",
+      "video_uid": "3ae7ab6b-793e-4a77-9749-010c94b1b0ee",
+      "scene": "workshop",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "arranging slats for assembly",
+              "cosine": 0.12362559884786606
+            },
+            {
+              "text": "arranging wood layout",
+              "cosine": 0.11546500027179718
+            },
+            {
+              "text": "preparing wood assembly for fastening",
+              "cosine": 0.09685809910297394
+            },
+            {
+              "text": "assembling a wooden frame",
+              "cosine": 0.09330208599567413
+            },
+            {
+              "text": "assemble the wooden pallet",
+              "cosine": 0.08486352115869522
+            }
+          ],
+          "confidence": 0.2634758008917066,
+          "margin": 0.008160598576068878,
+          "normalized_entropy": 0.9865158681914091
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "arranging slats for assembly",
+              "cosine": 0.12552791833877563
+            },
+            {
+              "text": "arranging wood layout",
+              "cosine": 0.11620058119297028
+            },
+            {
+              "text": "preparing wood assembly for fastening",
+              "cosine": 0.09984132647514343
+            },
+            {
+              "text": "assembling a wooden frame",
+              "cosine": 0.09750624746084213
+            },
+            {
+              "text": "assemble the wooden pallet",
+              "cosine": 0.09210406243801117
+            }
+          ],
+          "confidence": 0.25916493720971046,
+          "margin": 0.009327337145805359,
+          "normalized_entropy": 0.9895957126867603
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "arranging slats for assembly",
+              "cosine": 0.12759341299533844
+            },
+            {
+              "text": "arranging wood layout",
+              "cosine": 0.11742427200078964
+            },
+            {
+              "text": "assembling a wooden frame",
+              "cosine": 0.10164914280176163
+            },
+            {
+              "text": "preparing wood assembly for fastening",
+              "cosine": 0.10155150294303894
+            },
+            {
+              "text": "assemble the wooden pallet",
+              "cosine": 0.09302220493555069
+            }
+          ],
+          "confidence": 0.2594251574369551,
+          "margin": 0.010169140994548798,
+          "normalized_entropy": 0.9897679492682252
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "arranging slats for assembly",
+              "cosine": 0.1268128752708435
+            },
+            {
+              "text": "arranging wood layout",
+              "cosine": 0.11705989390611649
+            },
+            {
+              "text": "assembling a wooden frame",
+              "cosine": 0.10127581655979156
+            },
+            {
+              "text": "preparing wood assembly for fastening",
+              "cosine": 0.10119561851024628
+            },
+            {
+              "text": "assemble the wooden pallet",
+              "cosine": 0.09450725466012955
+            }
+          ],
+          "confidence": 0.25719309953862424,
+          "margin": 0.00975298136472702,
+          "normalized_entropy": 0.9906217663131699
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/workshop/assemble_wood/step12",
+      "video_uid": "3ae7ab6b-793e-4a77-9749-010c94b1b0ee",
+      "scene": "workshop",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "arranging wood layout",
+              "cosine": 0.11539819836616516
+            },
+            {
+              "text": "spacing wood slats",
+              "cosine": 0.09929545223712921
+            },
+            {
+              "text": "assemble the wooden pallet",
+              "cosine": 0.09794894605875015
+            },
+            {
+              "text": "preparing assembly layout for fastening",
+              "cosine": 0.09406089037656784
+            },
+            {
+              "text": "positioning components for assembly",
+              "cosine": 0.06258584558963776
+            }
+          ],
+          "confidence": 0.2644531216721708,
+          "margin": 0.01610274612903595,
+          "normalized_entropy": 0.9836097922956899
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "arranging wood layout",
+              "cosine": 0.1209106594324112
+            },
+            {
+              "text": "spacing wood slats",
+              "cosine": 0.09996186941862106
+            },
+            {
+              "text": "preparing assembly layout for fastening",
+              "cosine": 0.09929495304822922
+            },
+            {
+              "text": "assemble the wooden pallet",
+              "cosine": 0.09927615523338318
+            },
+            {
+              "text": "positioning components for assembly",
+              "cosine": 0.06553327292203903
+            }
+          ],
+          "confidence": 0.2729877564957481,
+          "margin": 0.02094879001379013,
+          "normalized_entropy": 0.9821078452742268
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "arranging wood layout",
+              "cosine": 0.1228569895029068
+            },
+            {
+              "text": "spacing wood slats",
+              "cosine": 0.10245893150568008
+            },
+            {
+              "text": "assemble the wooden pallet",
+              "cosine": 0.10038406401872635
+            },
+            {
+              "text": "preparing assembly layout for fastening",
+              "cosine": 0.09933064877986908
+            },
+            {
+              "text": "positioning components for assembly",
+              "cosine": 0.06490546464920044
+            }
+          ],
+          "confidence": 0.27592733364689176,
+          "margin": 0.020398057997226715,
+          "normalized_entropy": 0.9804927516975915
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "arranging wood layout",
+              "cosine": 0.12211266160011292
+            },
+            {
+              "text": "spacing wood slats",
+              "cosine": 0.10248491168022156
+            },
+            {
+              "text": "assemble the wooden pallet",
+              "cosine": 0.09921610355377197
+            },
+            {
+              "text": "preparing assembly layout for fastening",
+              "cosine": 0.0978691503405571
+            },
+            {
+              "text": "positioning components for assembly",
+              "cosine": 0.06451050937175751
+            }
+          ],
+          "confidence": 0.27601916455695213,
+          "margin": 0.019627749919891357,
+          "normalized_entropy": 0.9805982660333759
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/garage/repair_bicycle/step1",
+      "video_uid": "6269fa52-58af-46d3-9a4b-7aca66c3b622",
+      "scene": "garage",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "assemble the bicycle wheel",
+              "cosine": 0.06269509345293045
+            },
+            {
+              "text": "installing bike components",
+              "cosine": 0.060401566326618195
+            },
+            {
+              "text": "selecting a tool for repair",
+              "cosine": 0.027339791879057884
+            },
+            {
+              "text": "switch tools",
+              "cosine": -0.002500917762517929
+            },
+            {
+              "text": "reference information for computer task",
+              "cosine": -0.04309491068124771
+            }
+          ],
+          "confidence": 0.31388647777912304,
+          "margin": 0.002293527126312256,
+          "normalized_entropy": 0.9221814178631617
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "assemble the bicycle wheel",
+              "cosine": 0.06269509345293045
+            },
+            {
+              "text": "installing bike components",
+              "cosine": 0.060401566326618195
+            },
+            {
+              "text": "selecting a tool for repair",
+              "cosine": 0.027339791879057884
+            },
+            {
+              "text": "switch tools",
+              "cosine": -0.002500917762517929
+            },
+            {
+              "text": "reference information for computer task",
+              "cosine": -0.04309491068124771
+            }
+          ],
+          "confidence": 0.31388647777912304,
+          "margin": 0.002293527126312256,
+          "normalized_entropy": 0.9221814178631617
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "assemble the bicycle wheel",
+              "cosine": 0.06269509345293045
+            },
+            {
+              "text": "installing bike components",
+              "cosine": 0.060401562601327896
+            },
+            {
+              "text": "selecting a tool for repair",
+              "cosine": 0.027339790016412735
+            },
+            {
+              "text": "switch tools",
+              "cosine": -0.00250091589987278
+            },
+            {
+              "text": "reference information for computer task",
+              "cosine": -0.04309491440653801
+            }
+          ],
+          "confidence": 0.31388648455935786,
+          "margin": 0.0022935308516025543,
+          "normalized_entropy": 0.9221814187643004
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "assemble the bicycle wheel",
+              "cosine": 0.06269509345293045
+            },
+            {
+              "text": "installing bike components",
+              "cosine": 0.0604015588760376
+            },
+            {
+              "text": "selecting a tool for repair",
+              "cosine": 0.027339788153767586
+            },
+            {
+              "text": "switch tools",
+              "cosine": -0.0025009168311953545
+            },
+            {
+              "text": "reference information for computer task",
+              "cosine": -0.04309491068124771
+            }
+          ],
+          "confidence": 0.3138864905754161,
+          "margin": 0.002293534576892853,
+          "normalized_entropy": 0.9221814232378699
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/garage/repair_bicycle/step10",
+      "video_uid": "6269fa52-58af-46d3-9a4b-7aca66c3b622",
+      "scene": "garage",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "prepare for bicycle repair",
+              "cosine": 0.10842236131429672
+            },
+            {
+              "text": "prepare to lubricate or clean bicycle",
+              "cosine": 0.10199025273323059
+            },
+            {
+              "text": "relocate the wheel for maintenance",
+              "cosine": 0.0842522606253624
+            },
+            {
+              "text": "navigating workshop",
+              "cosine": -0.023050861433148384
+            },
+            {
+              "text": "reference information for computer task",
+              "cosine": -0.025708824396133423
+            }
+          ],
+          "confidence": 0.342434939646568,
+          "margin": 0.006432108581066132,
+          "normalized_entropy": 0.8568062851399009
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "prepare for bicycle repair",
+              "cosine": 0.10629422962665558
+            },
+            {
+              "text": "prepare to lubricate or clean bicycle",
+              "cosine": 0.10252639651298523
+            },
+            {
+              "text": "relocate the wheel for maintenance",
+              "cosine": 0.0809149295091629
+            },
+            {
+              "text": "reference information for computer task",
+              "cosine": -0.028309039771556854
+            },
+            {
+              "text": "navigating workshop",
+              "cosine": -0.02945731393992901
+            }
+          ],
+          "confidence": 0.3408927811565209,
+          "margin": 0.003767833113670349,
+          "normalized_entropy": 0.8515232514418514
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "prepare for bicycle repair",
+              "cosine": 0.10676727443933487
+            },
+            {
+              "text": "prepare to lubricate or clean bicycle",
+              "cosine": 0.10378867387771606
+            },
+            {
+              "text": "relocate the wheel for maintenance",
+              "cosine": 0.08121778815984726
+            },
+            {
+              "text": "navigating workshop",
+              "cosine": -0.0243793074041605
+            },
+            {
+              "text": "reference information for computer task",
+              "cosine": -0.030418192967772484
+            }
+          ],
+          "confidence": 0.3393267158173355,
+          "margin": 0.002978600561618805,
+          "normalized_entropy": 0.8524320560319016
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "prepare for bicycle repair",
+              "cosine": 0.10712017118930817
+            },
+            {
+              "text": "prepare to lubricate or clean bicycle",
+              "cosine": 0.10526188462972641
+            },
+            {
+              "text": "relocate the wheel for maintenance",
+              "cosine": 0.08416375517845154
+            },
+            {
+              "text": "navigating workshop",
+              "cosine": -0.02469358965754509
+            },
+            {
+              "text": "reference information for computer task",
+              "cosine": -0.03120495192706585
+            }
+          ],
+          "confidence": 0.3350151598731313,
+          "margin": 0.0018582865595817566,
+          "normalized_entropy": 0.8506824338428013
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/garage/repair_bicycle/step100",
+      "video_uid": "6269fa52-58af-46d3-9a4b-7aca66c3b622",
+      "scene": "garage",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "position bicycle for underside maintenance",
+              "cosine": 0.13313961029052734
+            },
+            {
+              "text": "stabilizing bicycle",
+              "cosine": 0.09650416672229767
+            },
+            {
+              "text": "access rear bicycle components",
+              "cosine": 0.07567165791988373
+            },
+            {
+              "text": "repositioning within workshop",
+              "cosine": 0.008300667628645897
+            },
+            {
+              "text": "switch tools",
+              "cosine": -0.01689276285469532
+            }
+          ],
+          "confidence": 0.43143300547503316,
+          "margin": 0.036635443568229675,
+          "normalized_entropy": 0.8500025722831946
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "position bicycle for underside maintenance",
+              "cosine": 0.13349133729934692
+            },
+            {
+              "text": "stabilizing bicycle",
+              "cosine": 0.09770455211400986
+            },
+            {
+              "text": "access rear bicycle components",
+              "cosine": 0.06992324441671371
+            },
+            {
+              "text": "repositioning within workshop",
+              "cosine": 0.013201497495174408
+            },
+            {
+              "text": "switch tools",
+              "cosine": -0.0067528728395700455
+            }
+          ],
+          "confidence": 0.43154654768851736,
+          "margin": 0.03578678518533707,
+          "normalized_entropy": 0.8576585288370728
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "position bicycle for underside maintenance",
+              "cosine": 0.1312848925590515
+            },
+            {
+              "text": "stabilizing bicycle",
+              "cosine": 0.09585481882095337
+            },
+            {
+              "text": "access rear bicycle components",
+              "cosine": 0.07019694894552231
+            },
+            {
+              "text": "repositioning within workshop",
+              "cosine": 0.01684088446199894
+            },
+            {
+              "text": "switch tools",
+              "cosine": -0.0010738074779510498
+            }
+          ],
+          "confidence": 0.42255460199599626,
+          "margin": 0.035430073738098145,
+          "normalized_entropy": 0.8697042827727076
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "position bicycle for underside maintenance",
+              "cosine": 0.13136552274227142
+            },
+            {
+              "text": "stabilizing bicycle",
+              "cosine": 0.09381349384784698
+            },
+            {
+              "text": "access rear bicycle components",
+              "cosine": 0.06917605549097061
+            },
+            {
+              "text": "repositioning within workshop",
+              "cosine": 0.02023657038807869
+            },
+            {
+              "text": "switch tools",
+              "cosine": 0.005300849210470915
+            }
+          ],
+          "confidence": 0.4227093439848089,
+          "margin": 0.03755202889442444,
+          "normalized_entropy": 0.8767373039229244
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/garage/repair_bicycle/step101",
+      "video_uid": "6269fa52-58af-46d3-9a4b-7aca66c3b622",
+      "scene": "garage",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "prepare bicycle for maintenance",
+              "cosine": 0.09677845239639282
+            },
+            {
+              "text": "test the drivetrain",
+              "cosine": 0.0873209685087204
+            },
+            {
+              "text": "positioning handlebar components",
+              "cosine": 0.07353609055280685
+            },
+            {
+              "text": "staging components for repair",
+              "cosine": 0.0019821664318442345
+            },
+            {
+              "text": "clearing sweat from face",
+              "cosine": -0.0029064081609249115
+            }
+          ],
+          "confidence": 0.32362843916065787,
+          "margin": 0.009457483887672424,
+          "normalized_entropy": 0.9118315871646541
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "prepare bicycle for maintenance",
+              "cosine": 0.09059391915798187
+            },
+            {
+              "text": "test the drivetrain",
+              "cosine": 0.07910649478435516
+            },
+            {
+              "text": "positioning handlebar components",
+              "cosine": 0.05799442529678345
+            },
+            {
+              "text": "staging components for repair",
+              "cosine": 0.0051721190102398396
+            },
+            {
+              "text": "clearing sweat from face",
+              "cosine": 0.0013082241639494896
+            }
+          ],
+          "confidence": 0.32778611116191103,
+          "margin": 0.011487424373626709,
+          "normalized_entropy": 0.9268375625196531
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "prepare bicycle for maintenance",
+              "cosine": 0.07748912274837494
+            },
+            {
+              "text": "test the drivetrain",
+              "cosine": 0.07430481910705566
+            },
+            {
+              "text": "positioning handlebar components",
+              "cosine": 0.05341574549674988
+            },
+            {
+              "text": "staging components for repair",
+              "cosine": 0.010712195187807083
+            },
+            {
+              "text": "clearing sweat from face",
+              "cosine": -0.0013856468722224236
+            }
+          ],
+          "confidence": 0.29640049904093363,
+          "margin": 0.003184303641319275,
+          "normalized_entropy": 0.9434053886368501
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "prepare bicycle for maintenance",
+              "cosine": 0.07640542089939117
+            },
+            {
+              "text": "test the drivetrain",
+              "cosine": 0.07225523889064789
+            },
+            {
+              "text": "positioning handlebar components",
+              "cosine": 0.055048685520887375
+            },
+            {
+              "text": "staging components for repair",
+              "cosine": 0.007405679207295179
+            },
+            {
+              "text": "clearing sweat from face",
+              "cosine": -0.0003387201577425003
+            }
+          ],
+          "confidence": 0.29526820149482763,
+          "margin": 0.004150182008743286,
+          "normalized_entropy": 0.9441364746326806
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/laundry_room/wash_clothes/step1",
+      "video_uid": "6644d6c3-357a-4f98-9c90-9888a0c03635",
+      "scene": "laundry_room",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "navigate through rooms",
+              "cosine": 0.08736399561166763
+            },
+            {
+              "text": "starting the wash cycle",
+              "cosine": 0.033256493508815765
+            },
+            {
+              "text": "enter garage",
+              "cosine": 0.03223663195967674
+            },
+            {
+              "text": "retrieve plastic bag from trunk",
+              "cosine": 0.016187159344553947
+            },
+            {
+              "text": "secure the trunk",
+              "cosine": 0.013978540897369385
+            }
+          ],
+          "confidence": 0.38039226088489986,
+          "margin": 0.05410750210285187,
+          "normalized_entropy": 0.9433620496636049
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "navigate through rooms",
+              "cosine": 0.08794121444225311
+            },
+            {
+              "text": "enter garage",
+              "cosine": 0.039718106389045715
+            },
+            {
+              "text": "starting the wash cycle",
+              "cosine": 0.033024996519088745
+            },
+            {
+              "text": "secure the trunk",
+              "cosine": 0.02390408143401146
+            },
+            {
+              "text": "retrieve plastic bag from trunk",
+              "cosine": 0.023075811564922333
+            }
+          ],
+          "confidence": 0.3629848791061586,
+          "margin": 0.0482231080532074,
+          "normalized_entropy": 0.9538029417024884
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "navigate through rooms",
+              "cosine": 0.07485220581293106
+            },
+            {
+              "text": "starting the wash cycle",
+              "cosine": 0.033812545239925385
+            },
+            {
+              "text": "enter garage",
+              "cosine": 0.032399922609329224
+            },
+            {
+              "text": "secure the trunk",
+              "cosine": 0.024918019771575928
+            },
+            {
+              "text": "retrieve plastic bag from trunk",
+              "cosine": 0.02375318855047226
+            }
+          ],
+          "confidence": 0.325352678202515,
+          "margin": 0.041039660573005676,
+          "normalized_entropy": 0.9722322607638906
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "navigate through rooms",
+              "cosine": 0.07464717328548431
+            },
+            {
+              "text": "starting the wash cycle",
+              "cosine": 0.036292627453804016
+            },
+            {
+              "text": "enter garage",
+              "cosine": 0.027961138635873795
+            },
+            {
+              "text": "retrieve plastic bag from trunk",
+              "cosine": 0.025930019095540047
+            },
+            {
+              "text": "secure the trunk",
+              "cosine": 0.023677488788962364
+            }
+          ],
+          "confidence": 0.32543313393761664,
+          "margin": 0.0383545458316803,
+          "normalized_entropy": 0.9720322585519
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/laundry_room/wash_clothes/step10",
+      "video_uid": "6644d6c3-357a-4f98-9c90-9888a0c03635",
+      "scene": "laundry_room",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "loading clothes into the washer",
+              "cosine": 0.09288252145051956
+            },
+            {
+              "text": "transferring clothes into the washing machine",
+              "cosine": 0.09261084347963333
+            },
+            {
+              "text": "loading laundry into the washer",
+              "cosine": 0.08850012719631195
+            },
+            {
+              "text": "loading laundry into washing machine",
+              "cosine": 0.07296052575111389
+            },
+            {
+              "text": "approach laundry room",
+              "cosine": 0.032495222985744476
+            }
+          ],
+          "confidence": 0.24332162707744984,
+          "margin": 0.00027167797088623047,
+          "normalized_entropy": 0.9750644045308404
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "loading clothes into the washer",
+              "cosine": 0.11153942346572876
+            },
+            {
+              "text": "transferring clothes into the washing machine",
+              "cosine": 0.11069653928279877
+            },
+            {
+              "text": "loading laundry into the washer",
+              "cosine": 0.1084337905049324
+            },
+            {
+              "text": "loading laundry into washing machine",
+              "cosine": 0.09278556704521179
+            },
+            {
+              "text": "approach laundry room",
+              "cosine": 0.04957744479179382
+            }
+          ],
+          "confidence": 0.2425857855965941,
+          "margin": 0.0008428841829299927,
+          "normalized_entropy": 0.9741944172530265
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "transferring clothes into the washing machine",
+              "cosine": 0.10779976099729538
+            },
+            {
+              "text": "loading clothes into the washer",
+              "cosine": 0.10407701134681702
+            },
+            {
+              "text": "loading laundry into the washer",
+              "cosine": 0.10081794857978821
+            },
+            {
+              "text": "loading laundry into washing machine",
+              "cosine": 0.08712758123874664
+            },
+            {
+              "text": "approach laundry room",
+              "cosine": 0.04533729702234268
+            }
+          ],
+          "confidence": 0.24954586915173946,
+          "margin": 0.003722749650478363,
+          "normalized_entropy": 0.9750642178835289
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "transferring clothes into the washing machine",
+              "cosine": 0.10128070414066315
+            },
+            {
+              "text": "loading clothes into the washer",
+              "cosine": 0.09548360854387283
+            },
+            {
+              "text": "loading laundry into the washer",
+              "cosine": 0.09242193400859833
+            },
+            {
+              "text": "loading laundry into washing machine",
+              "cosine": 0.08048735558986664
+            },
+            {
+              "text": "approach laundry room",
+              "cosine": 0.04337737336754799
+            }
+          ],
+          "confidence": 0.2511343673872338,
+          "margin": 0.005797095596790314,
+          "normalized_entropy": 0.9787153574520593
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/laundry_room/wash_clothes/step11",
+      "video_uid": "6644d6c3-357a-4f98-9c90-9888a0c03635",
+      "scene": "laundry_room",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "loading clothes into the washer",
+              "cosine": 0.07845505326986313
+            },
+            {
+              "text": "access the detergent compartment",
+              "cosine": 0.0732874870300293
+            },
+            {
+              "text": "prepare to add detergent",
+              "cosine": 0.06459156423807144
+            },
+            {
+              "text": "loading laundry into washing machine",
+              "cosine": 0.063253253698349
+            },
+            {
+              "text": "transport laundry to lower floor",
+              "cosine": 0.045336514711380005
+            }
+          ],
+          "confidence": 0.2394054704679472,
+          "margin": 0.005167566239833832,
+          "normalized_entropy": 0.9924720127896224
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "loading clothes into the washer",
+              "cosine": 0.06839317083358765
+            },
+            {
+              "text": "access the detergent compartment",
+              "cosine": 0.06270956248044968
+            },
+            {
+              "text": "prepare to add detergent",
+              "cosine": 0.053457390516996384
+            },
+            {
+              "text": "loading laundry into washing machine",
+              "cosine": 0.050021566450595856
+            },
+            {
+              "text": "transport laundry to lower floor",
+              "cosine": 0.03495964780449867
+            }
+          ],
+          "confidence": 0.24276007992631574,
+          "margin": 0.00568360835313797,
+          "normalized_entropy": 0.9920375825996265
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "loading clothes into the washer",
+              "cosine": 0.08491699397563934
+            },
+            {
+              "text": "access the detergent compartment",
+              "cosine": 0.08357486873865128
+            },
+            {
+              "text": "loading laundry into washing machine",
+              "cosine": 0.07122094929218292
+            },
+            {
+              "text": "prepare to add detergent",
+              "cosine": 0.06421913206577301
+            },
+            {
+              "text": "transport laundry to lower floor",
+              "cosine": 0.048723526298999786
+            }
+          ],
+          "confidence": 0.24133586431303872,
+          "margin": 0.0013421252369880676,
+          "normalized_entropy": 0.9894329398847196
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "loading clothes into the washer",
+              "cosine": 0.09544889628887177
+            },
+            {
+              "text": "access the detergent compartment",
+              "cosine": 0.09527963399887085
+            },
+            {
+              "text": "loading laundry into washing machine",
+              "cosine": 0.08325167000293732
+            },
+            {
+              "text": "prepare to add detergent",
+              "cosine": 0.07390204071998596
+            },
+            {
+              "text": "transport laundry to lower floor",
+              "cosine": 0.0566110834479332
+            }
+          ],
+          "confidence": 0.2411439538270469,
+          "margin": 0.00016926229000091553,
+          "normalized_entropy": 0.987688392005402
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/laundry_room/wash_clothes/step12",
+      "video_uid": "6644d6c3-357a-4f98-9c90-9888a0c03635",
+      "scene": "laundry_room",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "loading the washing machine",
+              "cosine": 0.1027611494064331
+            },
+            {
+              "text": "loading laundry into the washer",
+              "cosine": 0.10181401669979095
+            },
+            {
+              "text": "load clothes into the washing machine",
+              "cosine": 0.07935741543769836
+            },
+            {
+              "text": "transporting the bag to the refrigerator",
+              "cosine": 0.043254315853118896
+            },
+            {
+              "text": "going upstairs",
+              "cosine": 0.027322877198457718
+            }
+          ],
+          "confidence": 0.28817397901551345,
+          "margin": 0.0009471327066421509,
+          "normalized_entropy": 0.9490332415378739
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "loading the washing machine",
+              "cosine": 0.09015863388776779
+            },
+            {
+              "text": "loading laundry into the washer",
+              "cosine": 0.08560290932655334
+            },
+            {
+              "text": "load clothes into the washing machine",
+              "cosine": 0.07214045524597168
+            },
+            {
+              "text": "transporting the bag to the refrigerator",
+              "cosine": 0.04984300956130028
+            },
+            {
+              "text": "going upstairs",
+              "cosine": 0.03191239759325981
+            }
+          ],
+          "confidence": 0.269733379410453,
+          "margin": 0.004555724561214447,
+          "normalized_entropy": 0.9726631604630571
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "loading the washing machine",
+              "cosine": 0.08064159750938416
+            },
+            {
+              "text": "loading laundry into the washer",
+              "cosine": 0.07476024329662323
+            },
+            {
+              "text": "load clothes into the washing machine",
+              "cosine": 0.06430809199810028
+            },
+            {
+              "text": "transporting the bag to the refrigerator",
+              "cosine": 0.05234527587890625
+            },
+            {
+              "text": "going upstairs",
+              "cosine": 0.03369230777025223
+            }
+          ],
+          "confidence": 0.25706029297451366,
+          "margin": 0.005881354212760925,
+          "normalized_entropy": 0.9837740168080085
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "loading the washing machine",
+              "cosine": 0.08697724342346191
+            },
+            {
+              "text": "loading laundry into the washer",
+              "cosine": 0.08599217236042023
+            },
+            {
+              "text": "load clothes into the washing machine",
+              "cosine": 0.0752236545085907
+            },
+            {
+              "text": "transporting the bag to the refrigerator",
+              "cosine": 0.06109759211540222
+            },
+            {
+              "text": "going upstairs",
+              "cosine": 0.04363281652331352
+            }
+          ],
+          "confidence": 0.2462590657810062,
+          "margin": 0.000985071063041687,
+          "normalized_entropy": 0.9846576106045216
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/kitchen/knead_dough/step1",
+      "video_uid": "6d738e16-abe9-4e7f-870b-1c60ea2cd257",
+      "scene": "kitchen",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "prepare to pour water into flour",
+              "cosine": 0.08978929370641708
+            },
+            {
+              "text": "prepare to mix ingredients",
+              "cosine": 0.06717900931835175
+            },
+            {
+              "text": "hydrate flour for mixing",
+              "cosine": 0.05773850530385971
+            },
+            {
+              "text": "hydrating dough mixture",
+              "cosine": 0.05623427405953407
+            },
+            {
+              "text": "develop gluten",
+              "cosine": -0.019022392109036446
+            }
+          ],
+          "confidence": 0.3137660679044253,
+          "margin": 0.022610284388065338,
+          "normalized_entropy": 0.9441530539106516
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "prepare to pour water into flour",
+              "cosine": 0.08388078212738037
+            },
+            {
+              "text": "prepare to mix ingredients",
+              "cosine": 0.05806727707386017
+            },
+            {
+              "text": "hydrate flour for mixing",
+              "cosine": 0.05191251263022423
+            },
+            {
+              "text": "hydrating dough mixture",
+              "cosine": 0.04767204076051712
+            },
+            {
+              "text": "develop gluten",
+              "cosine": -0.022972799837589264
+            }
+          ],
+          "confidence": 0.31863250876290733,
+          "margin": 0.025813505053520203,
+          "normalized_entropy": 0.9451079557465054
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "prepare to pour water into flour",
+              "cosine": 0.08091393858194351
+            },
+            {
+              "text": "prepare to mix ingredients",
+              "cosine": 0.05254121869802475
+            },
+            {
+              "text": "hydrate flour for mixing",
+              "cosine": 0.04874328896403313
+            },
+            {
+              "text": "hydrating dough mixture",
+              "cosine": 0.0430607832968235
+            },
+            {
+              "text": "develop gluten",
+              "cosine": -0.02649141475558281
+            }
+          ],
+          "confidence": 0.32297573650922246,
+          "margin": 0.028372719883918762,
+          "normalized_entropy": 0.9442720688951999
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "prepare to pour water into flour",
+              "cosine": 0.07959520816802979
+            },
+            {
+              "text": "prepare to mix ingredients",
+              "cosine": 0.04940313845872879
+            },
+            {
+              "text": "hydrate flour for mixing",
+              "cosine": 0.04707842320203781
+            },
+            {
+              "text": "hydrating dough mixture",
+              "cosine": 0.04143171012401581
+            },
+            {
+              "text": "develop gluten",
+              "cosine": -0.02880665846168995
+            }
+          ],
+          "confidence": 0.32569438872657525,
+          "margin": 0.030192069709300995,
+          "normalized_entropy": 0.943358602711171
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/kitchen/knead_dough/step10",
+      "video_uid": "6d738e16-abe9-4e7f-870b-1c60ea2cd257",
+      "scene": "kitchen",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "prepare to knead dough",
+              "cosine": 0.09970162808895111
+            },
+            {
+              "text": "developing dough consistency",
+              "cosine": 0.08322928845882416
+            },
+            {
+              "text": "forming cohesive dough",
+              "cosine": 0.07629241794347763
+            },
+            {
+              "text": "cleaning the table surface",
+              "cosine": 0.06642671674489975
+            },
+            {
+              "text": "positioning basin",
+              "cosine": 0.018370822072029114
+            }
+          ],
+          "confidence": 0.29064374104990437,
+          "margin": 0.016472339630126953,
+          "normalized_entropy": 0.9635854022665615
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "prepare to knead dough",
+              "cosine": 0.10348905622959137
+            },
+            {
+              "text": "developing dough consistency",
+              "cosine": 0.08503521233797073
+            },
+            {
+              "text": "forming cohesive dough",
+              "cosine": 0.07364712655544281
+            },
+            {
+              "text": "cleaning the table surface",
+              "cosine": 0.06090104952454567
+            },
+            {
+              "text": "positioning basin",
+              "cosine": 0.015375308692455292
+            }
+          ],
+          "confidence": 0.30774941207960804,
+          "margin": 0.018453843891620636,
+          "normalized_entropy": 0.9558464007026024
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "prepare to knead dough",
+              "cosine": 0.10217054933309555
+            },
+            {
+              "text": "developing dough consistency",
+              "cosine": 0.08431977033615112
+            },
+            {
+              "text": "forming cohesive dough",
+              "cosine": 0.072226881980896
+            },
+            {
+              "text": "cleaning the table surface",
+              "cosine": 0.057767946273088455
+            },
+            {
+              "text": "positioning basin",
+              "cosine": 0.017427150160074234
+            }
+          ],
+          "confidence": 0.30720283655002567,
+          "margin": 0.017850778996944427,
+          "normalized_entropy": 0.9573513376991536
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "prepare to knead dough",
+              "cosine": 0.10107405483722687
+            },
+            {
+              "text": "developing dough consistency",
+              "cosine": 0.08467186987400055
+            },
+            {
+              "text": "forming cohesive dough",
+              "cosine": 0.07242847979068756
+            },
+            {
+              "text": "cleaning the table surface",
+              "cosine": 0.056444257497787476
+            },
+            {
+              "text": "positioning basin",
+              "cosine": 0.019456036388874054
+            }
+          ],
+          "confidence": 0.3034465504442444,
+          "margin": 0.01640218496322632,
+          "normalized_entropy": 0.9592112415307011
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/kitchen/knead_dough/step100",
+      "video_uid": "6d738e16-abe9-4e7f-870b-1c60ea2cd257",
+      "scene": "kitchen",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "remove dough residue from hands",
+              "cosine": 0.10032106190919876
+            },
+            {
+              "text": "clean hands after kneading",
+              "cosine": 0.10005051642656326
+            },
+            {
+              "text": "steady container for kneading",
+              "cosine": 0.09597546607255936
+            },
+            {
+              "text": "adjust dough hydration",
+              "cosine": 0.09363898634910583
+            },
+            {
+              "text": "clear table surface",
+              "cosine": 0.028834957629442215
+            }
+          ],
+          "confidence": 0.237808832865275,
+          "margin": 0.00027054548263549805,
+          "normalized_entropy": 0.9687716598143714
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "clean hands after kneading",
+              "cosine": 0.10907609015703201
+            },
+            {
+              "text": "remove dough residue from hands",
+              "cosine": 0.10486192256212234
+            },
+            {
+              "text": "steady container for kneading",
+              "cosine": 0.09920819848775864
+            },
+            {
+              "text": "adjust dough hydration",
+              "cosine": 0.09444168210029602
+            },
+            {
+              "text": "clear table surface",
+              "cosine": 0.03164120018482208
+            }
+          ],
+          "confidence": 0.2530208783294724,
+          "margin": 0.004214167594909668,
+          "normalized_entropy": 0.9662466853978663
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "clean hands after kneading",
+              "cosine": 0.10743354260921478
+            },
+            {
+              "text": "remove dough residue from hands",
+              "cosine": 0.10276765376329422
+            },
+            {
+              "text": "steady container for kneading",
+              "cosine": 0.10118313878774643
+            },
+            {
+              "text": "adjust dough hydration",
+              "cosine": 0.09423176944255829
+            },
+            {
+              "text": "clear table surface",
+              "cosine": 0.033447302877902985
+            }
+          ],
+          "confidence": 0.24840202312101511,
+          "margin": 0.004665888845920563,
+          "normalized_entropy": 0.9683610530615187
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "clean hands after kneading",
+              "cosine": 0.10679828375577927
+            },
+            {
+              "text": "remove dough residue from hands",
+              "cosine": 0.10291142761707306
+            },
+            {
+              "text": "steady container for kneading",
+              "cosine": 0.10038045048713684
+            },
+            {
+              "text": "adjust dough hydration",
+              "cosine": 0.09222441911697388
+            },
+            {
+              "text": "clear table surface",
+              "cosine": 0.040450967848300934
+            }
+          ],
+          "confidence": 0.24642604276883412,
+          "margin": 0.0038868561387062073,
+          "normalized_entropy": 0.9732845062368901
+        }
+      }
+    },
+    {
+      "sample_id": "indoor/kitchen/knead_dough/step101",
+      "video_uid": "6d738e16-abe9-4e7f-870b-1c60ea2cd257",
+      "scene": "kitchen",
+      "scores_by_k": {
+        "2": {
+          "candidates": [
+            {
+              "text": "clean the table surface",
+              "cosine": 0.11704280227422714
+            },
+            {
+              "text": "store kitchen towel",
+              "cosine": 0.07818172872066498
+            },
+            {
+              "text": "add water to dough",
+              "cosine": 0.07287010550498962
+            },
+            {
+              "text": "preparing dough",
+              "cosine": 0.06690365076065063
+            },
+            {
+              "text": "adjust dough hydration",
+              "cosine": 0.05256129801273346
+            }
+          ],
+          "confidence": 0.33415254110095166,
+          "margin": 0.038861073553562164,
+          "normalized_entropy": 0.9657313268012004
+        },
+        "4": {
+          "candidates": [
+            {
+              "text": "clean the table surface",
+              "cosine": 0.13132916390895844
+            },
+            {
+              "text": "store kitchen towel",
+              "cosine": 0.07983583211898804
+            },
+            {
+              "text": "add water to dough",
+              "cosine": 0.058305203914642334
+            },
+            {
+              "text": "preparing dough",
+              "cosine": 0.05481991171836853
+            },
+            {
+              "text": "adjust dough hydration",
+              "cosine": 0.034861788153648376
+            }
+          ],
+          "confidence": 0.4134276417610031,
+          "margin": 0.0514933317899704,
+          "normalized_entropy": 0.91711964511145
+        },
+        "6": {
+          "candidates": [
+            {
+              "text": "clean the table surface",
+              "cosine": 0.13447727262973785
+            },
+            {
+              "text": "store kitchen towel",
+              "cosine": 0.08139945566654205
+            },
+            {
+              "text": "add water to dough",
+              "cosine": 0.05398581922054291
+            },
+            {
+              "text": "preparing dough",
+              "cosine": 0.04771411418914795
+            },
+            {
+              "text": "adjust dough hydration",
+              "cosine": 0.0322214812040329
+            }
+          ],
+          "confidence": 0.43351097316667636,
+          "margin": 0.0530778169631958,
+          "normalized_entropy": 0.9010716083158383
+        },
+        "8": {
+          "candidates": [
+            {
+              "text": "clean the table surface",
+              "cosine": 0.13368892669677734
+            },
+            {
+              "text": "store kitchen towel",
+              "cosine": 0.08294945955276489
+            },
+            {
+              "text": "add water to dough",
+              "cosine": 0.05238655209541321
+            },
+            {
+              "text": "preparing dough",
+              "cosine": 0.047490935772657394
+            },
+            {
+              "text": "adjust dough hydration",
+              "cosine": 0.03216954320669174
+            }
+          ],
+          "confidence": 0.4303269418285576,
+          "margin": 0.05073946714401245,
+          "normalized_entropy": 0.9020429900074766
+        }
+      }
+    }
+  ]
+}

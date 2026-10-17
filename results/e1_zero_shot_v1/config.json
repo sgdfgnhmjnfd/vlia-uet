@@ -1,0 +1,68 @@
+{
+  "args": {
+    "manifest": "/media/dhqg/d3/vlia-uet/results/hoi_detection_v1/manifest.jsonl",
+    "detections": "/media/dhqg/d3/vlia-uet/results/hoi_detection_v1/detections.jsonl",
+    "output_dir": "results/e1_zero_shot_v1",
+    "embedding_cache": "/media/dhqg/d3/vlia_outputs/e1",
+    "hand_model": "None",
+    "device": "None",
+    "batch_size": "32",
+    "smoke": "False",
+    "selftest": "False"
+  },
+  "git_commit": "375436a3256146c1904c02297ccb18bba42ce241",
+  "model": "google/siglip-base-patch16-224",
+  "text_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "transformers": "5.5.4",
+    "model": "google/siglip-base-patch16-224",
+    "mediapipe": "1.1.1"
+  },
+  "n_samples": 2503,
+  "n_videos": 27,
+  "n_scenes": 13,
+  "splits_used": [
+    "train",
+    "val"
+  ],
+  "branches": [
+    "full"
+  ],
+  "gate": {
+    "pass": false,
+    "overall_rate": 0.5819017179384738,
+    "scene_rates": {
+      "art_studio": 0.6180555555555556,
+      "bedroom": 0.6721204188481675,
+      "clothing_closet": 0.8882211538461539,
+      "garage": 0.618380062305296,
+      "hallway": 0.8452970297029703,
+      "kitchen": 0.7155934343434344,
+      "laundry_room": 0.15330188679245282,
+      "workshop": 0.7619825708061002,
+      "deck": 0.10259433962264151,
+      "space": 0.24778761061946902,
+      "yard": 0.15865384615384615,
+      "living_room": 0.6193181818181818,
+      "farm": 0.32184579439252337
+    },
+    "fallback_frames": {
+      "hand": 0.41809828206152616,
+      "center": 0.41809828206152616
+    },
+    "total_frames": 20024
+  },
+  "fallback_rates": {},
+  "siglip_unique_why_truncated": 0,
+  "siglip_frame_embedding_cache": "/media/dhqg/d3/vlia_outputs/e1/siglip_frame_embeddings_e1_v1.npz",
+  "selected_viz_videos": [
+    "02d1f024-1470-4ce6-acde-b938f7847eb6",
+    "2927605b-bdb2-4b36-8181-12f9e898bf2d",
+    "3ae7ab6b-793e-4a77-9749-010c94b1b0ee",
+    "6269fa52-58af-46d3-9a4b-7aca66c3b622",
+    "6644d6c3-357a-4f98-9c90-9888a0c03635",
+    "6d738e16-abe9-4e7f-870b-1c60ea2cd257"
+  ],
+  "viz_samples": 24
+}
