@@ -73,3 +73,7 @@ tmp/
 # Keep source and lightweight result summaries
 !results/**/*.md
 !docs/**/*.md
+
+# Scene-grouped CV resumable cache (regenerable and not needed in Git)
+results/scene_cv_v1/runs/
+results/scene_cv_v1/text_embeddings.pt
