@@ -14,6 +14,8 @@ PREFIX_RESULTS = {
     "prefix_length_ablation_v2": ROOT / "results/prefix_length_ablation_v2/summary.csv",
     "prefix_length_full_v1": ROOT / "results/prefix_length_full_v1/summary.csv",
 }
+E1_RESULTS = ROOT / "results/e1_zero_shot_v1"
+LOCKED_TEST_SUMMARY = ROOT / "results/locked_test_full_v1/summary.csv"
 NUMERIC = re.compile(r"(?<![A-Za-z])[-+]?(?:\d+\.\d+|\d+)")
 
 
@@ -51,6 +53,16 @@ def read_csv(path: Path) -> list[dict[str, str]]:
 
 def metric(value: str) -> str:
     return f"{float(value):.4f}"
+
+
+def tex_escape(value: str) -> str:
+    return (
+        value.replace("\\", r"\textbackslash{}")
+        .replace("_", r"\_")
+        .replace("%", r"\%")
+        .replace("&", r"\&")
+        .replace("#", r"\#")
+    )
 
 
 def format_prefix_table(name: str, path: Path) -> tuple[str, list[str]]:
@@ -106,8 +118,7 @@ def format_scene_cv(path: Path) -> tuple[str, list[str]]:
     rows = read_csv(path)
     if not rows:
         return ("% scene_cv_v1 summary.csv is empty.\n", [])
-    # The CV run has not been produced in this checkout. Avoid guessing its
-    # schema or silently translating unrecognized columns into thesis values.
+    # Require the exact scene-CV summary schema rather than guessing mappings.
     required = {
         "target",
         "prefix_frames",
@@ -143,7 +154,7 @@ def format_scene_cv(path: Path) -> tuple[str, list[str]]:
     ]
     tokens: list[str] = []
     for row in selected:
-        target = row["target"].replace("_", r"\_")
+        target = tex_escape(row["target"])
         mrr = f"{metric(row['MRR_mean'])} $\\pm$ {metric(row['MRR_sd_seeds'])}"
         mrr_lift = (
             f"{float(row['MRR_lift']):.2f} "
@@ -192,6 +203,129 @@ def format_scene_cv(path: Path) -> tuple[str, list[str]]:
     return "".join(lines), tokens
 
 
+def format_e1_tables(summary_path: Path, paired_path: Path) -> tuple[str, list[str]]:
+    if not summary_path.is_file() or not paired_path.is_file():
+        missing = [
+            str(path) for path in (summary_path, paired_path) if not path.is_file()
+        ]
+        return ("% E1 inputs missing: " + "; ".join(missing) + "\n", [])
+    summary_rows = read_csv(summary_path)
+    paired_rows = read_csv(paired_path)
+    required = {
+        "branch",
+        "prefix_frames",
+        "MRR",
+        "MRR_chance",
+        "MRR_lift_boot",
+        "MRR_lift_ci_lo",
+        "MRR_lift_ci_hi",
+        "Top1",
+        "Top3",
+        "5way_acc",
+        "5way_lift_boot",
+        "5way_lift_ci_lo",
+        "5way_lift_ci_hi",
+        "10way_acc",
+    }
+    if not summary_rows or not required.issubset(summary_rows[0]):
+        columns = ", ".join(summary_rows[0].keys()) if summary_rows else "(empty)"
+        return f"% E1 summary schema needs review; columns: {columns}\n", []
+
+    tokens: list[str] = []
+    lines = [
+        "% E1 zero-shot SigLIP alignment; train/validation only.\n",
+        "\\begin{tabular}{lrrrrrrrr}\n",
+        "Branch & $k$ & MRR & Chance & MRR lift [95\\% CI] & Top-1 & Top-3 & 5-way & 10-way \\\\\n",
+        "\\hline\n",
+    ]
+    for row in sorted(
+        summary_rows, key=lambda item: (item["branch"], int(item["prefix_frames"]))
+    ):
+        values = [
+            row["branch"].replace("_", r"\_"),
+            row["prefix_frames"],
+            metric(row["MRR"]),
+            f"{float(row['MRR_chance']):.5f}",
+            f"{float(row['MRR_lift_boot']):.2f} "
+            f"[{float(row['MRR_lift_ci_lo']):.2f}, {float(row['MRR_lift_ci_hi']):.2f}]",
+            metric(row["Top1"]),
+            metric(row["Top3"]),
+            metric(row["5way_acc"]),
+            metric(row["10way_acc"]),
+        ]
+        tokens.extend(
+            token
+            for cell in values
+            for token in NUMERIC.findall(cell.replace("\\pm", " "))
+        )
+        lines.append(" & ".join(tex_escape(value) for value in values) + " \\\\\n")
+    lines.extend(
+        [
+            "\\end{tabular}\n",
+            "",
+            "% Paired differences; video-bootstrap 95% intervals.\n",
+            "\\begin{tabular}{llrrrrr}\n",
+            "Comparison & Metric & A & B & $\\Delta$ & CI low & CI high \\\\\n",
+            "\\hline\n",
+        ]
+    )
+    for row in paired_rows:
+        values = [
+            row["comparison"],
+            row["metric"],
+            f"{row['branch_a']}@{row['from_k']}",
+            f"{row['branch_b']}@{row['to_k']}",
+            f"{float(row['delta']):+.5f}",
+            f"{float(row['ci95_lo']):+.5f}",
+            f"{float(row['ci95_hi']):+.5f}",
+        ]
+        tokens.extend(
+            token
+            for cell in values
+            for token in NUMERIC.findall(cell.replace("\\pm", " "))
+        )
+        lines.append(" & ".join(tex_escape(value) for value in values) + " \\\\\n")
+    lines.append("\\end{tabular}\n")
+    return "".join(lines), tokens
+
+
+def format_locked_test(path: Path) -> tuple[str, list[str]]:
+    if not path.is_file():
+        return (f"% Previously reported locked test summary missing: {path}\n", [])
+    rows = read_csv(path)
+    if not rows:
+        return ("% Previously reported locked test summary is empty.\n", [])
+    fields = list(rows[0])
+    numeric_fields = []
+    for field in fields:
+        try:
+            for row in rows:
+                float(row.get(field, ""))
+        except (TypeError, ValueError):
+            continue
+        numeric_fields.append(field)
+    label_fields = [field for field in fields if field not in numeric_fields][:2]
+    values = label_fields + numeric_fields
+    if not values:
+        return ("% No numeric fields in previously reported locked test summary.\n", [])
+    columns = "l" * len(label_fields) + "r" * len(numeric_fields)
+    lines = [
+        "% locked candidate test, evaluated once, already reported.\n",
+        f"\\begin{{tabular}}{{{columns}}}\n",
+        " & ".join(tex_escape(value) for value in values) + " \\\\\n",
+        "\\hline\n",
+    ]
+    tokens: list[str] = []
+    for row in rows:
+        cells = [tex_escape(row.get(field, "")) for field in values]
+        lines.append(" & ".join(cells) + " \\\\\n")
+        tokens.extend(
+            token for cell in cells for token in NUMERIC.findall(cell)
+        )
+    lines.append("\\end{tabular}\n")
+    return "".join(lines), tokens
+
+
 def main() -> int:
     args = parse_args()
     output_dir = args.output_dir
@@ -216,9 +350,11 @@ def main() -> int:
                 [],
             )
     generated["scene_cv_v1.tex"] = format_scene_cv(scene_summary)
-    generated["locked_test_full_v1.tex"] = (
-        "% Omitted by the active instruction not to read or use test metrics.\n",
-        [],
+    generated["e1_zero_shot_v1.tex"] = format_e1_tables(
+        E1_RESULTS / "summary.csv", E1_RESULTS / "paired_differences.csv"
+    )
+    generated["locked_test_full_v1.tex"] = format_locked_test(
+        LOCKED_TEST_SUMMARY
     )
 
     if args.scene_output is not None and args.scene_output.exists():
@@ -237,10 +373,7 @@ def main() -> int:
     print(f"Wrote {len(generated)} snippets to {output_dir}")
     for path in missing:
         print(f"Missing input: {path}")
-    print(
-        "Excluded locked_test_full_v1 metrics: the active run instruction "
-        "prohibits reading or using test metrics."
-    )
+    print("Locked-test snippet copies only the previously reported summary CSV.")
 
     if args.check is not None:
         if not args.check.is_file():

@@ -1,0 +1,8 @@
+{
+  "mediapipe_version": "1.1.1",
+  "api": "tasks.HandLandmarker",
+  "running_mode": "IMAGE",
+  "max_hands": 2,
+  "min_detection_confidence": 0.5,
+  "max_detection_side": 960
+}

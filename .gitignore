@@ -77,3 +77,7 @@ tmp/
 # Scene-grouped CV resumable cache (regenerable and not needed in Git)
 results/scene_cv_v1/runs/
 results/scene_cv_v1/text_embeddings.pt
+
+# Per-frame MediaPipe output (regenerable, many thousands of JSON records)
+results/hoi_detection_v1/detections.jsonl
+results/hoi_detection_v1/viewer_smoke/
