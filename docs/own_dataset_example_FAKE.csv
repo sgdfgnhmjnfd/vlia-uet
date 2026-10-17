@@ -1,0 +1,4 @@
+video_id,participant_id,task_id,rep_id,duration,observation_end,outcome_start,object,target,what,why,next
+FAKE_p001_sort_books_r01,FAKE_p001,sort_books,1,12.0,2.0,4.0,book,blue_shelf,pick up a book,move the selected book to the blue shelf,carry book toward shelf
+FAKE_p001_sort_books_r02,FAKE_p001,sort_books,2,11.5,2.2,4.1,book,donation_box,pick up a book,place the selected book in the donation box,carry book toward box
+FAKE_p002_pack_mug_r01,FAKE_p002,pack_mug,1,9.0,1.5,3.0,mug,shipping_box,pick up a mug,pack the mug for shipping,move mug toward box
