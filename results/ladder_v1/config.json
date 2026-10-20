@@ -1,7 +1,11 @@
 {
   "status": "blocked_before_encoder_extraction",
   "reason": "The preregistered SigLIP baseline reproduction gate failed for k=2 and k=4; Stage 2 requires an exact match within 1e-9 and says to stop on mismatch.",
-  "preregistration_sha256": "a8fbc132843e3bd9214b7ba8a298dc522798830cbf8f54a084e5a2990a30892e",
+  "preregistration_sha256": {
+    "results/prereg_daily_v1.md": "7f8d3c0b877d0fbda04a8888a90b816cc71de1ff7aaa48d7834985080e65a7be",
+    "results/prereg_daily_v1_addendum.md": "69ee7ad41789f9235f4b8a90a77cbb3799ac777197c3ba2764c2ed3827e0d909",
+    "results/prereg_ladder_v1.md": "a8fbc132843e3bd9214b7ba8a298dc522798830cbf8f54a084e5a2990a30892e"
+  },
   "baseline_cache": "/media/dhqg/d3/vlia_outputs/e1/siglip_frame_embeddings_e1_v1.npz",
   "baseline_cache_dtype": "float16",
   "new_encoder_extraction_started": false,

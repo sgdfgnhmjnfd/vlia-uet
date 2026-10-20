@@ -2,7 +2,11 @@
   "status": "blocked",
   "reason": "The preregistered exact E1 K=5 baseline assertion failed for prefixes 2 and 4; selective metrics and verdict S1 were not computed.",
   "git_commit": "b7780d0",
-  "preregistration_sha256": "7f8d3c0b877d0fbda04a8888a90b816cc71de1ff7aaa48d7834985080e65a7be",
+  "preregistration_sha256": {
+    "results/prereg_daily_v1.md": "7f8d3c0b877d0fbda04a8888a90b816cc71de1ff7aaa48d7834985080e65a7be",
+    "results/prereg_daily_v1_addendum.md": "69ee7ad41789f9235f4b8a90a77cbb3799ac777197c3ba2764c2ed3827e0d909",
+    "results/prereg_ladder_v1.md": "a8fbc132843e3bd9214b7ba8a298dc522798830cbf8f54a084e5a2990a30892e"
+  },
   "manifest": "results/hoi_detection_v1/manifest.jsonl",
   "splits_used": [
     "train",

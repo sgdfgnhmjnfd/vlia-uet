@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import os
 import sys
@@ -41,6 +42,14 @@ def parse_args() -> argparse.Namespace:
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
     with path.open("r", encoding="utf-8") as handle:
         return [json.loads(line) for line in handle if line.strip()]
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def resolve_model_dir(model_id: str, hf_home: Path) -> str | None:
@@ -265,12 +274,21 @@ def main() -> int:
             "score_output": str(args.score_output),
             "smoke": args.smoke,
             "max_queries": args.max_queries,
+            "resume": args.resume,
         },
         "model_id": MODEL_ID,
         "model_path": meta["model_path"],
         "n_rows": meta["n_rows"],
         "prefixes": list(prefixes),
         "git_commit": __import__("subprocess").check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip(),
+        "preregistration_sha256": {
+            str(path.relative_to(ROOT)): sha256_file(path)
+            for path in (
+                ROOT / "results/prereg_daily_v1.md",
+                ROOT / "results/prereg_daily_v1_addendum.md",
+                ROOT / "results/prereg_ladder_v1.md",
+            )
+        },
         "versions": {
             "torch": torch.__version__,
             "transformers": __import__("transformers").__version__,
