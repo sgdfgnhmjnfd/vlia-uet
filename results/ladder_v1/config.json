@@ -1,0 +1,39 @@
+{
+  "status": "blocked_before_encoder_extraction",
+  "reason": "The preregistered SigLIP baseline reproduction gate failed for k=2 and k=4; Stage 2 requires an exact match within 1e-9 and says to stop on mismatch.",
+  "preregistration_sha256": "a8fbc132843e3bd9214b7ba8a298dc522798830cbf8f54a084e5a2990a30892e",
+  "baseline_cache": "/media/dhqg/d3/vlia_outputs/e1/siglip_frame_embeddings_e1_v1.npz",
+  "baseline_cache_dtype": "float16",
+  "new_encoder_extraction_started": false,
+  "test_split_read": false,
+  "baseline": [
+    {
+      "k": 2,
+      "expected_kway5_accuracy": 0.27726727926488215,
+      "observed_kway5_accuracy": 0.27686775868957253,
+      "n_hits": 693,
+      "n_queries": 2503
+    },
+    {
+      "k": 4,
+      "expected_kway5_accuracy": 0.275269676388334,
+      "observed_kway5_accuracy": 0.2756691969636436,
+      "n_hits": 690,
+      "n_queries": 2503
+    },
+    {
+      "k": 6,
+      "expected_kway5_accuracy": 0.2808629644426688,
+      "observed_kway5_accuracy": 0.2808629644426688,
+      "n_hits": 703,
+      "n_queries": 2503
+    },
+    {
+      "k": 8,
+      "expected_kway5_accuracy": 0.2884538553735517,
+      "observed_kway5_accuracy": 0.2884538553735517,
+      "n_hits": 722,
+      "n_queries": 2503
+    }
+  ]
+}

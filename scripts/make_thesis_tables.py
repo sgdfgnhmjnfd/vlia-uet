@@ -16,6 +16,33 @@ PREFIX_RESULTS = {
 }
 E1_RESULTS = ROOT / "results/e1_zero_shot_v1"
 LOCKED_TEST_SUMMARY = ROOT / "results/locked_test_full_v1/summary.csv"
+DAILY_TABLES = {
+    "e1b_smolvlm2_v1.tex": (
+        "E1b SmolVLM2",
+        ROOT / "results/e1b_smolvlm2_v1/summary.csv",
+        ("prefix_frames", "n_queries", "accuracy", "chance", "lift", "acc_minus_chance"),
+    ),
+    "selective_e1_v1.tex": (
+        "Selective prediction",
+        ROOT / "results/selective_e1_v1/summary.csv",
+        ("k", "score", "coverage", "selective_accuracy", "risk", "n_accepted"),
+    ),
+    "ladder_v1.tex": (
+        "Nested pipeline ladder",
+        ROOT / "results/ladder_v1/summary.csv",
+        ("prefix_frames", "baseline_mrr", "nested_mrr", "baseline_kway5", "nested_kway5"),
+    ),
+    "ead_v1.tex": (
+        "Evidence-accumulation early decision",
+        ROOT / "results/ead_v1/summary.csv",
+        ("budget", "realized_mean_frames", "early_accuracy", "fixed_interpolated_accuracy", "delta"),
+    ),
+    "knn_cache_v1.tex": (
+        "Cache-kNN correction",
+        ROOT / "results/knn_cache_v1/summary.csv",
+        ("prefix_frames", "baseline_mrr", "knn_mrr", "baseline_kway5", "knn_kway5"),
+    ),
+}
 NUMERIC = re.compile(r"(?<![A-Za-z])[-+]?(?:\d+\.\d+|\d+)")
 
 
@@ -43,12 +70,60 @@ def parse_args() -> argparse.Namespace:
         metavar="MAIN_TEX",
         help="Report generated numeric table values absent from this LaTeX file.",
     )
+    parser.add_argument(
+        "--daily-only",
+        action="store_true",
+        help="Generate only the E1b, selective, ladder, early-decision, and kNN tables.",
+    )
     return parser.parse_args()
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
     with path.open(newline="", encoding="utf-8-sig") as handle:
         return list(csv.DictReader(handle))
+
+
+def format_daily_table(
+    title: str, path: Path, columns: tuple[str, ...]
+) -> tuple[str, list[str]]:
+    if not path.is_file():
+        try:
+            source_label = path.relative_to(ROOT)
+        except ValueError:
+            source_label = path
+        return f"% {title} unavailable: {source_label} not found.\n", []
+    rows = read_csv(path)
+    if not rows:
+        return f"% {title} unavailable: summary is empty.\n", []
+    missing = [column for column in columns if column not in rows[0]]
+    if missing:
+        return (
+            f"% {title} schema requires review; missing columns: "
+            + ", ".join(missing)
+            + "\n",
+            [],
+        )
+    try:
+        source_label = path.relative_to(ROOT)
+    except ValueError:
+        source_label = path
+    lines = [
+        f"% Generated from {source_label}; validation/train-val evidence only.\n",
+        f"\\begin{{tabular}}{{{'l' + 'r' * (len(columns) - 1)}}}\n",
+        " & ".join(tex_escape(column.replace("_", " ")) for column in columns)
+        + " \\\\\n",
+        "\\hline\n",
+    ]
+    tokens: list[str] = []
+    for row in rows:
+        values = [row[column] for column in columns]
+        escaped = [tex_escape(value) for value in values]
+        lines.append(" & ".join(escaped) + " \\\\\n")
+        tokens.extend(
+            token for value in escaped for token in NUMERIC.findall(value)
+        )
+    lines.append("\\end{tabular}\n")
+    return "".join(lines), tokens
 
 
 def metric(value: str) -> str:
@@ -337,25 +412,28 @@ def main() -> int:
         )
         return 2
 
-    scene_summary = ROOT / "results/scene_cv_v1/summary.csv"
     generated: dict[str, tuple[str, list[str]]] = {}
     missing: list[str] = []
-    for name, path in PREFIX_RESULTS.items():
-        if path.is_file():
-            generated[f"{name}.tex"] = format_prefix_table(name, path)
-        else:
-            missing.append(str(path))
-            generated[f"{name}.tex"] = (
-                f"% Source summary missing: {path}\n",
-                [],
-            )
-    generated["scene_cv_v1.tex"] = format_scene_cv(scene_summary)
-    generated["e1_zero_shot_v1.tex"] = format_e1_tables(
-        E1_RESULTS / "summary.csv", E1_RESULTS / "paired_differences.csv"
-    )
-    generated["locked_test_full_v1.tex"] = format_locked_test(
-        LOCKED_TEST_SUMMARY
-    )
+    if not args.daily_only:
+        scene_summary = ROOT / "results/scene_cv_v1/summary.csv"
+        for name, path in PREFIX_RESULTS.items():
+            if path.is_file():
+                generated[f"{name}.tex"] = format_prefix_table(name, path)
+            else:
+                missing.append(str(path))
+                generated[f"{name}.tex"] = (
+                    f"% Source summary missing: {path}\n",
+                    [],
+                )
+        generated["scene_cv_v1.tex"] = format_scene_cv(scene_summary)
+        generated["e1_zero_shot_v1.tex"] = format_e1_tables(
+            E1_RESULTS / "summary.csv", E1_RESULTS / "paired_differences.csv"
+        )
+        generated["locked_test_full_v1.tex"] = format_locked_test(
+            LOCKED_TEST_SUMMARY
+        )
+    for filename, (title, path, columns) in DAILY_TABLES.items():
+        generated[filename] = format_daily_table(title, path, columns)
 
     if args.scene_output is not None and args.scene_output.exists():
         print(f"Refusing to overwrite scene table: {args.scene_output}", file=sys.stderr)
@@ -373,7 +451,8 @@ def main() -> int:
     print(f"Wrote {len(generated)} snippets to {output_dir}")
     for path in missing:
         print(f"Missing input: {path}")
-    print("Locked-test snippet copies only the previously reported summary CSV.")
+    if not args.daily_only:
+        print("Locked-test snippet copies only the previously reported summary CSV.")
 
     if args.check is not None:
         if not args.check.is_file():

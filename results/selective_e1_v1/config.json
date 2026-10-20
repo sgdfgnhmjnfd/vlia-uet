@@ -1,0 +1,56 @@
+{
+  "status": "blocked",
+  "reason": "The preregistered exact E1 K=5 baseline assertion failed for prefixes 2 and 4; selective metrics and verdict S1 were not computed.",
+  "git_commit": "b7780d0",
+  "preregistration_sha256": "7f8d3c0b877d0fbda04a8888a90b816cc71de1ff7aaa48d7834985080e65a7be",
+  "manifest": "results/hoi_detection_v1/manifest.jsonl",
+  "splits_used": [
+    "train",
+    "val"
+  ],
+  "n_queries": 2503,
+  "frame_embedding_cache": "/media/dhqg/d3/vlia_outputs/e1/siglip_frame_embeddings_e1_v1.npz",
+  "frame_embedding_dtype_on_disk": "float16",
+  "text_model": "google/siglip-base-patch16-224",
+  "text_tokenization": {
+    "padding": "max_length",
+    "max_length": 64,
+    "truncation": true
+  },
+  "baseline_comparison": [
+    {
+      "k": 2,
+      "expected": 0.27726727926488215,
+      "observed": 0.27686775868957253,
+      "observed_hits": 693,
+      "n_queries": 2503,
+      "exact_match": false
+    },
+    {
+      "k": 4,
+      "expected": 0.275269676388334,
+      "observed": 0.2756691969636436,
+      "observed_hits": 690,
+      "n_queries": 2503,
+      "exact_match": false
+    },
+    {
+      "k": 6,
+      "expected": 0.2808629644426688,
+      "observed": 0.2808629644426688,
+      "observed_hits": 703,
+      "n_queries": 2503,
+      "exact_match": true
+    },
+    {
+      "k": 8,
+      "expected": 0.2884538553735517,
+      "observed": 0.2884538553735517,
+      "observed_hits": 722,
+      "n_queries": 2503,
+      "exact_match": true
+    }
+  ],
+  "kway_comparator": "positive candidate score must be strictly greater than all four distractor scores",
+  "test_split_read": false
+}
