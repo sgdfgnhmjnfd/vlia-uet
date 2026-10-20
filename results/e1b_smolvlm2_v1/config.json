@@ -1,0 +1,22 @@
+{
+  "args": {
+    "manifest": "/media/dhqg/d3/vlia-uet/results/hoi_detection_v1/manifest.jsonl",
+    "max_queries": null,
+    "output_dir": "/media/dhqg/d3/vlia-uet/results/e1b_smolvlm2_v1",
+    "score_output": "/media/dhqg/d3/vlia_outputs/e1b/scores.jsonl",
+    "smoke": true
+  },
+  "git_commit": "7275ae4089386604e0ec6c1894bda3e4280fa614",
+  "model_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+  "model_path": "/home/dhqg/.cache/huggingface/hub/models--HuggingFaceTB--SmolVLM2-500M-Video-Instruct/snapshots/7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+  "n_rows": 20,
+  "prefixes": [
+    2,
+    8
+  ],
+  "versions": {
+    "pillow": "12.2.0",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.5.4"
+  }
+}

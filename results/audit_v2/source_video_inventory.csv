@@ -1,0 +1,9 @@
+video_uid,scene,event,steps,pilot_role
+8bef8b33-a1ee-43e7-a2d0-8cf68653cb0c,art_studio,draw,90,train
+ce3ef2da-c918-42c8-9d22-533f776366bd,bedroom,sort_clothes,93,train
+6269fa52-58af-46d3-9a4b-7aca66c3b622,garage,repair_bicycle,125,train
+8301a3fc-aac5-466d-bb02-d0ac7a81ccc6,kitchen,boil_noodles,57,train
+cd8590b6-4c27-4932-9ccf-501380d35b14,kitchen,wash_dishes,112,train
+3ae7ab6b-793e-4a77-9749-010c94b1b0ee,workshop,assemble_wood,79,train
+02d1f024-1470-4ce6-acde-b938f7847eb6,farm,pick_fruits,111,validation
+cc883eb4-7772-4ef8-bd85-2c9cb5c6565d,garden,cut_branches,104,validation
