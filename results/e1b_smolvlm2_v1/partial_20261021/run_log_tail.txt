@@ -1,0 +1,48 @@
+Loading weights:   0%|          | 0/489 [00:00<?, ?it/s]Loading weights: 100%|██████████| 489/489 [00:00<00:00, 27033.28it/s]
+Traceback (most recent call last):
+  File "/media/dhqg/d3/vlia-uet/scripts/run_e1b_smolvlm2.py", line 262, in <module>
+    rows,
+          
+  File "/media/dhqg/d3/vlia-uet/scripts/run_e1b_smolvlm2.py", line 235, in main
+    "prefix_frames": prefix,
+               ^^^^^^^^^^^^^^
+  File "/media/dhqg/d3/vlia-uet/scripts/run_e1b_smolvlm2.py", line 154, in compute_scores
+    if prefix > record["num_frames"]:
+                        ^^^^^^^^^^^^^^
+  File "/media/dhqg/d3/vlia-uet/scripts/run_e1b_smolvlm2.py", line 112, in average_logp_pmi
+    else:
+          
+  File "/media/dhqg/d3/vlia-uet/scripts/run_e1b_smolvlm2.py", line 94, in score_candidate
+    def score_candidate(model: Any, processor: Any, device: torch.device, question: str, candidate: str, frames_k: list[np.ndarray] | None, k: int) -> tuple[float, float, int]:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dhqg/anaconda3/envs/lerobot/lib/python3.12/site-packages/transformers/models/smolvlm/processing_smolvlm.py", line 247, in __call__
+    vision_inputs = self.image_processor(images, **output_kwargs["images_kwargs"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dhqg/anaconda3/envs/lerobot/lib/python3.12/site-packages/transformers/image_processing_utils.py", line 217, in __call__
+    return self.preprocess(images, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dhqg/anaconda3/envs/lerobot/lib/python3.12/site-packages/transformers/models/smolvlm/image_processing_pil_smolvlm.py", line 211, in preprocess
+    return super().preprocess(images, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dhqg/anaconda3/envs/lerobot/lib/python3.12/site-packages/transformers/image_processing_utils.py", line 400, in preprocess
+    return self._preprocess_image_like_inputs(images, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dhqg/anaconda3/envs/lerobot/lib/python3.12/site-packages/transformers/image_processing_utils.py", line 312, in _preprocess_image_like_inputs
+    return self._preprocess(images, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dhqg/anaconda3/envs/lerobot/lib/python3.12/site-packages/transformers/models/smolvlm/image_processing_pil_smolvlm.py", line 342, in _preprocess
+    [self.resize(image=img, size=size, resample=resample) for img in batch_images]
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dhqg/anaconda3/envs/lerobot/lib/python3.12/site-packages/transformers/models/smolvlm/image_processing_pil_smolvlm.py", line 230, in resize
+    return super().resize(image, SizeDict(height=new_size[0], width=new_size[1]), resample=resample, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dhqg/anaconda3/envs/lerobot/lib/python3.12/site-packages/transformers/image_processing_backends.py", line 570, in resize
+    return np_resize(
+           ^^^^^^^^^^
+  File "/home/dhqg/anaconda3/envs/lerobot/lib/python3.12/site-packages/transformers/image_transforms.py", line 367, in resize
+    resized_image = image.resize((width, height), resample=resample, reducing_gap=reducing_gap)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dhqg/anaconda3/envs/lerobot/lib/python3.12/site-packages/PIL/Image.py", line 2437, in resize
+    im = self.im.resize(size, resample, box)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
