@@ -126,10 +126,10 @@ class Scorer:
         kwargs = {"input_ids": ids.to(self.device), "attention_mask": att.to(self.device)}
         if "pixel_values" in prefix_inputs:
             pv = prefix_inputs["pixel_values"].to(self.device, dtype=self.model.dtype)
-            kwargs["pixel_values"] = pv.expand(b, *pv.shape[1:])
+            kwargs["pixel_values"] = pv.expand(b, *pv.shape[1:]).contiguous()
             if "pixel_attention_mask" in prefix_inputs:
                 pam = prefix_inputs["pixel_attention_mask"].to(self.device)
-                kwargs["pixel_attention_mask"] = pam.expand(b, *pam.shape[1:])
+                kwargs["pixel_attention_mask"] = pam.expand(b, *pam.shape[1:]).contiguous()
         with torch.inference_mode():
             logits = self.model(**kwargs).logits
             # logits at position t predict token t+1: candidate tokens sit at lp..lp+n-1

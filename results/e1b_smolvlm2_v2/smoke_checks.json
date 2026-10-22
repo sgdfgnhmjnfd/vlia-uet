@@ -1,0 +1,73 @@
+{
+  "model_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+  "model_dir": "/home/dhqg/.cache/huggingface/hub/models--HuggingFaceTB--SmolVLM2-500M-Video-Instruct/snapshots/7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+  "dtype": "torch.bfloat16",
+  "n_queries": 20,
+  "stride": 1,
+  "prefixes": [
+    2,
+    8
+  ],
+  "n_control": 0,
+  "elapsed_s": 34.98405075073242,
+  "seconds_per_query": 1.7492025375366211,
+  "checks": {
+    "image_passes": 40,
+    "null_passes": 40,
+    "expanded_gt_unexpanded": 40,
+    "last_prefix_len": {
+      "expanded": 571,
+      "unexpanded": 43
+    }
+  },
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "transformers": "5.5.4"
+  },
+  "git_commit": "927fbacd5cb52a0ce5bc5ab762910ca22163d2be",
+  "preregistration_sha256": {
+    "results/prereg_daily_v1.md": "7f8d3c0b877d0fbda04a8888a90b816cc71de1ff7aaa48d7834985080e65a7be",
+    "results/prereg_daily_v1_addendum.md": "69ee7ad41789f9235f4b8a90a77cbb3799ac777197c3ba2764c2ed3827e0d909",
+    "results/prereg_ladder_v1.md": "a8fbc132843e3bd9214b7ba8a298dc522798830cbf8f54a084e5a2990a30892e",
+    "results/prereg_ladder_v1_amendment_1.md": "9363700e17e273ec85d58338afe90b0499fe4bb9fe35c31abe428e5ca044548d"
+  },
+  "smoke": {
+    "n_records": 40,
+    "lp_img_mean_range": [
+      -14.029729207356771,
+      -4.1278596605573386
+    ],
+    "mean_within_query_std_lp_img": 1.5733830704552805,
+    "mean_within_query_std_lp_null": 1.9658499537630696,
+    "std_ratio_null_over_img": 1.24944140475226,
+    "fraction_pmi_gt0": 0.955,
+    "credit_pmi_mean": 0.2
+  },
+  "smoke_by_k": {
+    "2": {
+      "n_records": 20,
+      "lp_img_mean_range": [
+        -13.713947296142578,
+        -4.390881674630301
+      ],
+      "mean_within_query_std_lp_img": 1.5861690897402343,
+      "mean_within_query_std_lp_null": 1.985462250948952,
+      "std_ratio_null_over_img": 1.2517342973025085,
+      "fraction_pmi_gt0": 0.95,
+      "credit_pmi_mean": 0.2
+    },
+    "8": {
+      "n_records": 20,
+      "lp_img_mean_range": [
+        -14.029729207356771,
+        -4.1278596605573386
+      ],
+      "mean_within_query_std_lp_img": 1.5605970511703267,
+      "mean_within_query_std_lp_null": 1.9462376565771877,
+      "std_ratio_null_over_img": 1.24711094072468,
+      "fraction_pmi_gt0": 0.96,
+      "credit_pmi_mean": 0.2
+    }
+  },
+  "stop": false
+}
