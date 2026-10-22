@@ -225,6 +225,109 @@ def smoke_stats(records):
     }
 
 
+def analyze(score_dir: Path, out: Path) -> int:
+    """E1b-A (5-way lift CI lower bound > 1 at both prefixes, primary score) and
+    E1b-B (descriptive SmolVLM2 minus SigLIP float32 baseline, same queries)."""
+    import csv
+
+    import run_ladder_v1 as L
+
+    recs = [json.loads(p.read_text()) for p in sorted((score_dir / "scores").glob("*.jsonl"))]
+    real = [r for r in recs if not r["control"]]
+    ctrl = [r for r in recs if r["control"]]
+    data = L.Data(encoders=(L.BASELINE_ENCODER,), minilm=False)
+    pos = {s: i for i, s in enumerate(data.sample_ids)}
+    fr = data.frames[L.BASELINE_ENCODER]
+    t0 = data.text[L.BASELINE_ENCODER]["T0"]
+    scores = ("pmi_mean", "pmi_sum", "lp_img_mean", "lp_img_sum")
+    rows, pair_rows, diag = [], [], {}
+    verdict_prefixes = []
+    for k in PREFIXES:
+        rk = sorted((r for r in real if r["k"] == k), key=lambda r: r["sample_id"])
+        idx = np.asarray([pos[r["sample_id"]] for r in rk])
+        for r in rk:  # candidate order must equal build_kway order
+            assert r["candidate_sample_ids"] == [data.sample_ids[c] for c in data.cands5[pos[r["sample_id"]]]]
+        vids = data.vids[idx]
+        cos = L.candidate_scores(fr, t0, t0, np.zeros(data.n, bool), idx, data.cands5[idx], "A0", k)
+        siglip = np.asarray([fractional_credit(c) for c in cos])
+        for name in scores:
+            credit = np.asarray([r[f"credit_{name}"] for r in rk])
+            pt, lo, hi = CV.video_bootstrap(vids, credit, np.full(len(credit), 0.2))
+            rows.append({"k": k, "score": name, "role": "primary" if name == "pmi_mean" else "secondary",
+                         "n_queries": len(rk), "n_videos": int(len(np.unique(vids))),
+                         "5way_acc": float(credit.mean()), "chance": 0.2, "acc_minus_chance": float(credit.mean() - 0.2),
+                         "5way_lift": pt, "5way_lift_ci_lo": lo, "5way_lift_ci_hi": hi})
+            if name == "pmi_mean" and lo > 1:
+                verdict_prefixes.append(k)
+            d, dlo, dhi = CV.video_bootstrap(vids, credit - siglip, np.ones(len(credit)))
+            pair_rows.append({"k": k, "smolvlm2_score": name, "smolvlm2_acc": float(credit.mean()),
+                              "siglip_acc": float(siglip.mean()), "delta": d, "ci95_lo": dlo, "ci95_hi": dhi,
+                              "n_queries": len(rk)})
+        img = np.asarray([r["lp_img_mean"] for r in rk])
+        null = np.asarray([r["lp_null_mean"] for r in rk])
+        pmi = np.asarray([r["pmi_mean"] for r in rk])
+        diag[k] = {
+            "lp_img_mean_range": [float(img.min()), float(img.max())],
+            "mean_within_query_std_lp_img": float(img.std(axis=1).mean()),
+            "mean_within_query_std_lp_null": float(null.std(axis=1).mean()),
+            "std_ratio_null_over_img": float(null.std(axis=1).mean() / img.std(axis=1).mean()),
+            "fraction_pmi_gt0": float((pmi > 0).mean()),
+            "queries_with_tied_max_pmi_mean": int(sum(fractional_credit(p) not in (0.0, 1.0) for p in pmi)),
+        }
+    ctrl_rows = []
+    if ctrl:
+        by_id = {r["sample_id"]: r for r in real if r["k"] == CONTROL_K}
+        cr = sorted(ctrl, key=lambda r: r["sample_id"])
+        cv = data.vids[[pos[r["sample_id"]] for r in cr]]
+        for name in scores:
+            c_credit = np.asarray([r[f"credit_{name}"] for r in cr])
+            r_credit = np.asarray([by_id[r["sample_id"]][f"credit_{name}"] for r in cr])
+            pt, lo, hi = CV.video_bootstrap(cv, c_credit, np.full(len(cr), 0.2))
+            ctrl_rows.append({"k": CONTROL_K, "score": name, "n_control_queries": len(cr),
+                              "real_5way_acc": float(r_credit.mean()), "control_5way_acc": float(c_credit.mean()),
+                              "control_lift": pt, "control_lift_ci_lo": lo, "control_lift_ci_hi": hi})
+    e1b_a = len(verdict_prefixes) == len(PREFIXES)
+    verdict = {"E1b-A": {"pass": e1b_a, "prefixes_lift_ci_lo_gt1": verdict_prefixes, "prefixes_evaluated": list(PREFIXES),
+                         "rule": "primary per-token-mean PMI, fractional tie credit: 5-way lift CI lower bound > 1 "
+                                 "(video bootstrap B=10000, seed 0) at BOTH evaluated prefixes"},
+               "E1b-B": "descriptive only (paired_vs_siglip.csv)"}
+    out.mkdir(parents=True, exist_ok=True)
+    for name, table in (("summary.csv", rows), ("paired_vs_siglip.csv", pair_rows), ("control.csv", ctrl_rows)):
+        if table:
+            with (out / name).open("w", newline="") as h:
+                w = csv.DictWriter(h, fieldnames=list(table[0]))
+                w.writeheader()
+                w.writerows(table)
+    lines = ["# E1b v2: SmolVLM2-500M zero-shot K=5 goal scoring", "",
+             "Fractional tie credit; lift CI = video bootstrap B=10000, seed 0. Train/val only.", "",
+             "| k | score | n | 5-way acc | lift [95% CI] |", "|---:|---|---:|---:|---|"]
+    for r in rows:
+        lines.append(f"| {r['k']} | {r['score']} | {r['n_queries']} | {r['5way_acc']:.4f} | "
+                     f"{r['5way_lift']:.3f} [{r['5way_lift_ci_lo']:.3f}, {r['5way_lift_ci_hi']:.3f}] |")
+    lines += ["", "## E1b-B (descriptive): SmolVLM2 minus SigLIP float32 baseline, identical queries", "",
+              "| k | SmolVLM2 score | SmolVLM2 acc | SigLIP acc | delta [95% CI] |", "|---:|---|---:|---:|---|"]
+    for r in pair_rows:
+        lines.append(f"| {r['k']} | {r['smolvlm2_score']} | {r['smolvlm2_acc']:.4f} | {r['siglip_acc']:.4f} | "
+                     f"{r['delta']:+.4f} [{r['ci95_lo']:+.4f}, {r['ci95_hi']:+.4f}] |")
+    if ctrl_rows:
+        lines += ["", f"## Mismatched-video control (every 8th query, k={CONTROL_K})", "",
+                  "| score | n | real acc | control acc | control lift [95% CI] |", "|---|---:|---:|---:|---|"]
+        for r in ctrl_rows:
+            lines.append(f"| {r['score']} | {r['n_control_queries']} | {r['real_5way_acc']:.4f} | {r['control_5way_acc']:.4f} | "
+                         f"{r['control_lift']:.3f} [{r['control_lift_ci_lo']:.3f}, {r['control_lift_ci_hi']:.3f}] |")
+    lines += ["", "## Scorer diagnostics", "", "```", json.dumps(diag, indent=2), "```", "",
+              "## Verdict", "", "```", json.dumps(verdict, indent=2), "```", ""]
+    (out / "summary.md").write_text("\n".join(lines))
+    (out / "analysis_config.json").write_text(json.dumps({
+        "score_dir": str(score_dir), "n_records": len(recs), "n_real": len(real), "n_control": len(ctrl),
+        "diagnostics": diag, "verdicts": verdict, "tie_rule": "fractional credit",
+        "siglip_reference": f"{L.BASELINE_ENCODER}|A0|C0|T0 float32, fractional credit",
+        "git_commit": L.git_commit(),
+    }, indent=2))
+    print(json.dumps(verdict, indent=2))
+    return 0
+
+
 def parse_args():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--manifest", type=Path, default=ROOT / "results/hoi_detection_v1/manifest.jsonl")
@@ -234,6 +337,7 @@ def parse_args():
     p.add_argument("--stride", type=int, default=1, help="use every n-th query in sorted sample_id order")
     p.add_argument("--probe", type=int, default=0, help="throughput probe: score only the first N queries")
     p.add_argument("--selftest", action="store_true")
+    p.add_argument("--analyze", action="store_true", help="CPU analysis of the saved scores")
     return p.parse_args()
 
 
@@ -242,6 +346,8 @@ def main() -> int:
     if args.selftest:
         selftest()
         return 0
+    if args.analyze:
+        return analyze(args.score_dir, args.output_dir)
     import torch
     import transformers
 
