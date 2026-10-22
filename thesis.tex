@@ -7,6 +7,7 @@
 \usepackage{booktabs}
 \usepackage{caption}
 \usepackage{graphicx}
+\usepackage{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
 \usepackage{setspace}
@@ -19,18 +20,40 @@
 \setstretch{1.25}
 \setlength{\parindent}{1.25cm}
 \setlength{\parskip}{0.15em}
+\graphicspath{{./}{results/}}
+
+% Tên tham chiếu tiếng Việt cho cleveref
+\crefname{chapter}{Chương}{Chương}
+\Crefname{chapter}{Chương}{Chương}
+\crefname{section}{Mục}{Mục}
+\Crefname{section}{Mục}{Mục}
+\crefname{subsection}{Mục}{Mục}
+\Crefname{subsection}{Mục}{Mục}
+\crefname{figure}{Hình}{Hình}
+\Crefname{figure}{Hình}{Hình}
+\crefname{table}{Bảng}{Bảng}
+\Crefname{table}{Bảng}{Bảng}
+\crefname{equation}{công thức}{công thức}
+\Crefname{equation}{Công thức}{Công thức}
+
+% Đánh dấu phần còn thiếu (chữ đỏ). Tìm "TODO" và xóa hết trước khi nộp.
+\newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+% Chèn hình nếu file tồn tại; nếu không thì hiện khung báo thiếu (không làm hỏng biên dịch).
+\newcommand{\figfile}[2]{%
+  \IfFileExists{#1}{\includegraphics[width=#2]{#1}}%
+  {\fbox{\parbox{0.85\linewidth}{\centering\textcolor{red}{[THIẾU HÌNH: \detokenize{#1}]}}}}}
 
 % -----------------------------------------------------------------
 % Thông tin bìa
 % -----------------------------------------------------------------
 \newcommand{\UniversityName}{ĐẠI HỌC QUỐC GIA HÀ NỘI}
 \newcommand{\SchoolName}{TRƯỜNG ĐẠI HỌC CÔNG NGHỆ}
-\newcommand{\ThesisTitle}{TĂNG CƯỜNG KHẢ NĂNG HIỂU Ý ĐỊNH NGƯỜI DÙNG\\ CHO ROBOT CỘNG TÁC DỰA TRÊN MÔ HÌNH VLA}
+\newcommand{\ThesisTitle}{TĂNG CƯỜNG KHẢ NĂNG HIỂU Ý ĐỊNH NGƯỜI DÙNG CHO ROBOT CỘNG TÁC DỰA TRÊN MÔ HÌNH VLA}
 \newcommand{\ThesisTitleEN}{ENHANCING USER INTENTION UNDERSTANDING FOR COLLABORATIVE ROBOTS BASED ON VLA MODELS}
-\newcommand{\StudentName}{........................................................}
-\newcommand{\StudentID}{........................................................}
-\newcommand{\SupervisorName}{........................................................}
-\newcommand{\MajorName}{........................................................}
+\newcommand{\StudentName}{Vũ Thị Thu Trang}
+\newcommand{\StudentID}{22027515}
+\newcommand{\SupervisorName}{PGS.TS Hoàng Văn Xiêm}
+\newcommand{\MajorName}{Kỹ thuật Robot}
 \newcommand{\ThesisYear}{2026}
 
 \begin{document}
@@ -60,15 +83,79 @@
         Ngành/Chương trình: & \MajorName \\[0.35cm]
         Giảng viên hướng dẫn: & \SupervisorName \\
     \end{tabular}
+    
 
     \vfill
     {\bfseries Hà Nội -- \ThesisYear\par}
 \end{titlepage}
 
 \pagenumbering{roman}
+
+% ============================================================
+% Lời cam đoan, lời cảm ơn, tóm tắt
+% ============================================================
+\chapter*{Lời cam đoan}
+\addcontentsline{toc}{chapter}{Lời cam đoan}
+
+Tôi xin cam đoan đồ án tốt nghiệp ``\ThesisTitle'' là công trình nghiên cứu của riêng tôi, được thực hiện dưới sự hướng dẫn của \SupervisorName. Các số liệu, kết quả thực nghiệm nêu trong đồ án là trung thực và được sinh ra từ mã nguồn, cấu hình và tệp kết quả được lưu trong kho mã nguồn của đề tài (xem \cref{sec:reproducibility}). Các nội dung tham khảo từ công trình khác đều được trích dẫn rõ ràng.
+
+\vspace{1cm}
+\begin{flushright}
+Hà Nội, ngày \ldots{} tháng 11 năm \ThesisYear\\[0.2cm]
+\textbf{\StudentName}
+\end{flushright}
+
+\chapter*{Lời cảm ơn}
+\addcontentsline{toc}{chapter}{Lời cảm ơn}
+
+\TODO{viết lời cảm ơn thầy hướng dẫn, người hướng dẫn nghiên cứu, phòng thí nghiệm, bạn bè và gia đình}
+
+\chapter*{Tóm tắt}
+\addcontentsline{toc}{chapter}{Tóm tắt}
+
+Đồ án nghiên cứu bài toán \textbf{phân định sớm mục tiêu thao tác của con người từ video góc nhìn thứ nhất}: khi chỉ quan sát một tiền tố ngắn của video, mô hình cần xếp hạng đúng mục tiêu (WHY) trong số nhiều mục tiêu cạnh tranh, phục vụ robot cộng tác phản ứng sớm. Đồ án xây dựng giao thức đánh giá chống rò rỉ (chia theo video nguồn, tiền tố nhân quả, mức ngẫu nhiên tính chính xác, tập kiểm thử khóa), thử nghiệm các đầu đọc trên đặc trưng SmolVLM2 đóng băng gồm suy luận có hướng dẫn $\text{WHAT}\to\text{WHY}$, hard-negative cùng tác vụ và bộ xếp hạng lại residual, đồng thời hiện thực mô-đun Intention Adapter cho SmolVLA.
+
+Trên tập pilot 771 mẫu (8 video), các cấu hình đạt MRR từ $0{,}047$ đến $0{,}055$, đều thấp hơn baseline mean-pool 8 khung hình ($0{,}0589$); chênh lệch giữa các cấu hình nằm trong độ lệch chuẩn giữa các seed. Phân tích độ dài tiền tố (2/4/6/8 khung hình) không cho thấy cải thiện đơn điệu. Trên tập kiểm thử khóa gồm 4 video chưa thấy, MRR đạt $0{,}029$--$0{,}031$, xấp xỉ mức ngẫu nhiên ($0{,}0318$). Các điểm số quyết định (confidence, margin, entropy) chưa cho tín hiệu đủ tin cậy để hỗ trợ cơ chế dự đoán/hoãn. Phần hạ tầng tích hợp SmolVLA mới được xác nhận ở mức đúng đắn kỹ thuật, chưa có bằng chứng về cải thiện hành vi của robot. Đồ án vì vậy đóng góp chủ yếu ở giao thức đánh giá và phân tích kết quả; không khẳng định tính mới hay tính vượt trội của phương pháp.
+
+\TODO{cập nhật tóm tắt sau khi có kết quả CV theo scene (Mục \ref{sec:scene_cv}) và tập dữ liệu tự thu}
+
+\textbf{Từ khóa:} phân định mục tiêu, dự đoán ý định, video egocentric, VLA, SmolVLA, EgoIntent.
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This thesis studies \textbf{early goal disambiguation from egocentric manipulation video}: given only a short prefix of a video, rank the intended goal (WHY) among competing candidates so that a collaborative robot can react early. We build a leakage-aware evaluation protocol (video-disjoint splits, causal prefixes, exact chance levels, a locked test set), evaluate heads over frozen SmolVLM2 features (WHAT$\to$WHY guided reasoning, same-task hard negatives, a residual reranker), and implement an Intention Adapter for SmolVLA.
+
+On a 771-sample pilot (8 videos), all configurations reach MRR 0.047--0.055, below a mean-pooling baseline (0.0589), and differences are within seed standard deviation. Prefix-length analysis (2/4/6/8 frames) shows no monotonic improvement. On a locked test set of 4 unseen videos, MRR is 0.029--0.031, about the random-ranking level (0.0318). Confidence, margin and entropy scores do not yet give a reliable predict/defer signal. The SmolVLA integration is verified for implementation correctness only. The contribution is therefore mainly the evaluation protocol and an honest empirical analysis; no novelty or superiority is claimed.
+
+\TODO{update the abstract after the scene-grouped cross-validation and the self-collected dataset are finished}
+
+\textbf{Keywords:} goal disambiguation, intention prediction, egocentric video, VLA, SmolVLA, EgoIntent.
+
 \tableofcontents
 \listoftables
 \listoffigures
+
+\chapter*{Danh mục ký hiệu và chữ viết tắt}
+\addcontentsline{toc}{chapter}{Danh mục ký hiệu và chữ viết tắt}
+
+\begin{tabular}{@{}p{3.2cm}p{11.5cm}@{}}
+    \toprule
+    \textbf{Viết tắt} & \textbf{Ý nghĩa} \\
+    \midrule
+    VLA & Vision--Language--Action \\
+    VLIA & Vision--Language--Intention--Action (kiến trúc đề xuất trong đồ án) \\
+    HRI & Human--Robot Interaction \\
+    HOI & Human--Object Interaction (tương tác tay--vật) \\
+    LTA & Long-Term Action Anticipation \\
+    WHAT / WHY & Hành động con hiện tại / Mục tiêu (ý định) phía sau hành động \\
+    MRR & Mean Reciprocal Rank \\
+    InfoNCE & Hàm mất mát tương phản dựa trên ước lượng nhiễu--đối chiếu \\
+    CV & Cross-Validation (kiểm chứng chéo) \\
+    PCA & Principal Component Analysis \\
+    \bottomrule
+\end{tabular}
+
 \clearpage
 \pagenumbering{arabic}
 
@@ -80,87 +167,111 @@
 
 Trong kỷ nguyên phát triển của robot thông minh và robot cộng tác (Collaborative Robots -- Cobots), các mô hình Vision--Language--Action (VLA) như RT-1 \citep{brohan2022rt1}, RT-2 \citep{zitkovich2023rt2} và gần đây là SmolVLA \citep{shukor2025smolvla} đã định hình một hướng tiếp cận thống nhất trong học điều khiển thao tác. Bằng cách kết hợp quan sát thị giác, chỉ dẫn ngôn ngữ và trạng thái khớp robot vào cùng một kiến trúc Transformer hoặc Flow Matching, VLA cho phép robot thực hiện linh hoạt nhiều kỹ năng thao tác dựa trên câu lệnh tự nhiên.
 
-Tuy nhiên, trong các tình huống cộng tác thực tế giữa người và robot (Human--Robot Interaction -- HRI), việc chỉ dựa vào một câu lệnh tĩnh và quan sát quan trắc thụ động bộc lộ những hạn chế cố hữu:
+Tuy nhiên, trong các tình huống cộng tác thực tế giữa người và robot (Human--Robot Interaction -- HRI), việc chỉ dựa vào một câu lệnh tĩnh và quan sát thụ động bộc lộ những hạn chế:
 \begin{enumerate}
-    \item \textbf{Độ trễ phối hợp}: Robot thường phải chờ người hoàn thành toàn bộ hành động hoặc phát khẩu lệnh tường minh mới bắt đầu phản ứng, gây ra thời gian nhàn rỗi (idle time) đáng kể.
-    \item \textbf{Tính nhập nhằng cao trong giai đoạn sớm (Early Ambiguity)}: Trong các tác vụ thao tác tay của con người, một hành vi vật lý tức thời (sub-action -- WHAT) thường tương thích với nhiều mục đích tương lai hoàn toàn khác nhau (goals/intentions -- WHY). Ví dụ, cùng hành vi ``nhấc chiếc cốc'', người dùng có thể muốn ``đặt cốc lên giá đựng'', ``bỏ cốc vào hộp'' hoặc ``mang cốc sang khay phân loại''. Nếu robot không thể phân định được đích đến thực sự trước khi quỹ đạo tay bộc lộ rõ ràng, robot có nguy cơ xung đột không gian làm việc (workspace collision) hoặc kích hoạt kỹ năng hỗ trợ sai lầm.
+    \item \textbf{Độ trễ phối hợp}: robot thường phải chờ người hoàn thành toàn bộ hành động hoặc phát khẩu lệnh tường minh mới bắt đầu phản ứng, gây ra thời gian nhàn rỗi (idle time).
+    \item \textbf{Tính nhập nhằng trong giai đoạn sớm (early ambiguity)}: một hành vi vật lý tức thời (sub-action -- WHAT) thường tương thích với nhiều mục đích khác nhau (goal/intention -- WHY). Ví dụ, cùng hành vi ``nhấc chiếc cốc'', người dùng có thể muốn ``đặt cốc lên giá'', ``bỏ cốc vào hộp'' hoặc ``mang cốc sang khay phân loại''. Nếu robot không phân định được đích đến trước khi quỹ đạo tay bộc lộ rõ ràng, nó có nguy cơ xung đột không gian làm việc hoặc kích hoạt sai kỹ năng hỗ trợ.
 \end{enumerate}
 
-Xuất phát từ vấn đề thực tiễn trên, đồ án xác lập trọng tâm nghiên cứu cốt lõi vào bài toán: \textbf{``Phân định sớm mục tiêu thao tác của con người từ video góc nhìn thứ nhất (Early Robot-Relevant Goal Disambiguation from Egocentric Manipulation Video)''}.
+Từ vấn đề trên, đồ án xác lập trọng tâm nghiên cứu là bài toán \textbf{``Phân định sớm mục tiêu thao tác của con người từ video góc nhìn thứ nhất (Early Goal Disambiguation from Egocentric Manipulation Video)''}.
 
-Để đảm bảo tính khả thi và chiều sâu khoa học trong khuôn khổ đồ án tốt nghiệp đại học, đề tài phân tách rạch ròi hai cấu phần:
+Trong khuôn khổ một đồ án tốt nghiệp, đề tài tách rạch ròi hai cấu phần:
 \begin{itemize}
-    \item \textbf{Đóng góp khoa học chính (Core Scientific Contribution)}: Đề xuất phương pháp luận và cơ chế học biểu diễn giải quyết bài toán phân định mục tiêu nhập nhằng nội tác vụ (within-task goal disambiguation) dưới các hành động con mở đầu trùng lặp, xây dựng quy thức kiểm soát rò rỉ quỹ đạo vật lý nghiêm ngặt.
-    \item \textbf{Kiểm chứng hạ tầng tích hợp (Downstream Validation Testbed)}: Thiết kế kiến trúc \textbf{VLIA} (Vision--Language--Intention--Action) mở rộng SmolVLA với một \textit{Intention Adapter}, kiểm chứng tính đúng đắn về mặt kỹ thuật phần mềm/đồ thị tính toán và đề xuất cơ chế giao tiếp proxy cho robot cộng tác. Phần kiểm chứng trên robot policy đóng vai trò testbed tiếp nhận, không phải đóng góp khoa học chính của đồ án.
+    \item \textbf{Cấu phần nghiên cứu}: xây dựng giao thức đánh giá nghiêm ngặt cho bài toán phân định sớm mục tiêu và đánh giá, một cách có đối chứng và có hiệu chỉnh theo mức ngẫu nhiên, các đầu đọc ý định đơn giản trên đặc trưng thị giác đóng băng.
+    \item \textbf{Cấu phần kỹ thuật (testbed)}: thiết kế kiến trúc \textbf{VLIA} (Vision--Language--Intention--Action) mở rộng SmolVLA bằng một \textit{Intention Adapter}, kiểm tra tính đúng đắn của cài đặt và đề xuất giao diện điều phối kỹ năng. Cấu phần này chưa được đánh giá về mặt hành vi robot và không phải đóng góp khoa học chính.
 \end{itemize}
 
 \section{Hình thức hóa bài toán nghiên cứu}
 
 \subsection{Không gian bài toán Goal Disambiguation}
 
-Xét kịch bản thao tác của người được ghi lại qua video góc nhìn thứ nhất (egocentric video). Tại thời điểm quan sát, mô hình chỉ nhận được chuỗi khung hình tiền tố:
+Xét thao tác của người được ghi lại qua video góc nhìn thứ nhất (egocentric video). Tại thời điểm quan sát, mô hình chỉ nhận được chuỗi khung hình tiền tố:
 \begin{equation}
     V_{1:t_{\mathrm{obs}}} = \left(I_1, I_2, \dots, I_{t_{\mathrm{obs}}}\right).
 \end{equation}
 
-Giả sử hành vi quan sát được ở giai đoạn đầu tương ứng với một hành động con (sub-action) nguyên tử $w \in \mathcal{W}$ (ví dụ: $w = \text{``pick up cup''}$). Không gian các mục tiêu tiềm năng tương thích với hành động con này được định nghĩa là tập hợp $\mathcal{G}(w) = \{G^{(1)}, G^{(2)}, \dots, G^{(K)}\}$ với $K \ge 2$, trong đó các mục tiêu là loại trừ lẫn nhau (mutually exclusive) và dẫn tới các trạng thái kết thúc môi trường khác nhau.
-
-Mục tiêu của mô-đun nhận thức ý định là ước lượng phân bố xác suất trên không gian mục tiêu:
+Giả sử hành vi quan sát được ở giai đoạn đầu tương ứng với một hành động con nguyên tử $w \in \mathcal{W}$ (ví dụ $w = \text{``pick up cup''}$). Tập các mục tiêu tiềm năng tương thích với hành động con này là $\mathcal{G}(w) = \{G^{(1)}, \dots, G^{(K)}\}$ với $K \ge 2$, trong đó các mục tiêu loại trừ lẫn nhau và dẫn tới các trạng thái kết thúc khác nhau. Mô-đun nhận thức ý định ước lượng phân bố
 \begin{equation}
     \label{eq:goal_disambiguation_formulation}
     \hat{P}\left(G \mid V_{1:t_{\mathrm{obs}}}\right), \qquad G \in \mathcal{G}(w).
 \end{equation}
 
-\subsection{Quy tắc loại trừ kết cục (Temporal Exclusion Protocol)}
+Trong các thực nghiệm trên EgoIntent, tập ứng viên không phải là một tập $K$ mục tiêu loại trừ được gán nhãn sẵn, mà là tập các câu mô tả WHY của các mẫu trong cùng tập đánh giá (xem \cref{sec:protocols}); điều này khiến bài toán thực nghiệm khó hơn và nhiễu hơn so với công thức lý tưởng ở trên.
 
-Để bảo đảm mô hình thực sự thực hiện \textbf{dự đoán sớm (early anticipation)} thay vì nhận diện hành vi khi kết quả đã bộc lộ rõ ràng, toàn bộ cửa sổ quan sát phải tuân thủ điều kiện biên nghiêm ngặt:
+\subsection{Hai giao thức đánh giá}
+\label{sec:protocols}
+
+\textbf{Giao thức G (truy hồi trên toàn gallery).} Với mỗi truy vấn $i$ (một tiền tố video), mô hình sinh vector $z_i$ và so khớp bằng độ tương tự cosine với vector mục tiêu $y_j$ của mọi mẫu $j$ trong gallery (toàn bộ mẫu của tập/fold đang đánh giá). Tập dương $\mathcal{P}(i)$ gồm các mẫu có \emph{cùng câu WHY} với $i$ (khớp văn bản chính xác). Gọi $r_i$ là thứ hạng nhỏ nhất của một phần tử dương, khi đó
 \begin{equation}
-    \label{eq:temporal_exclusion_rule}
-    t_{\mathrm{obs}} \le t_{\mathrm{divergence}} - \Delta,
+    \mathrm{MRR} = \frac{1}{N}\sum_{i=1}^{N}\frac{1}{r_i}, \qquad \mathrm{Top}\text{-}k = \frac{1}{N}\sum_{i=1}^{N}\mathbb{1}[r_i \le k].
 \end{equation}
-trong đó:
+Vì gallery rất lớn so với số mẫu dương, các độ đo này có mức ngẫu nhiên đáng kể. Với gallery $n$ phần tử và $m$ phần tử dương, nếu xếp hạng hoàn toàn ngẫu nhiên thì
+\begin{equation}
+    \label{eq:chance}
+    \Pr(r=\rho) = \frac{m}{n-\rho+1}\prod_{s=0}^{\rho-2}\frac{n-m-s}{n-s}, \qquad
+    \mathbb{E}\!\left[\tfrac{1}{r}\right]=\sum_{\rho=1}^{n-m+1}\frac{1}{\rho}\Pr(r=\rho),
+\end{equation}
+và $\Pr(r=1)=m/n$. Đồ án báo cáo mọi độ đo kèm \emph{mức ngẫu nhiên chính xác} trung bình theo mẫu và \emph{hệ số lift} (độ đo chia cho mức ngẫu nhiên; $1{,}0$ nghĩa là ngang ngẫu nhiên).
+
+\textbf{Giao thức K (chọn trong $K$ ứng viên).} Với mỗi truy vấn, tập ứng viên gồm mục tiêu đúng và $K-1$ mục tiêu gây nhiễu lấy từ \emph{cùng video} nhưng khác câu WHY, được cố định một lần theo từng truy vấn (độc lập với mô hình, độ dài tiền tố và seed). Độ chính xác được so với mức ngẫu nhiên $1/K$. Giao thức này khớp trực tiếp với câu hỏi ``phân định mục tiêu trong các ứng viên cạnh tranh''; việc triển khai được trình bày ở \cref{sec:scene_cv}.
+
+\subsection{Nguyên tắc quan sát nhân quả}
+\label{sec:causal_principle}
+
+Để bảo đảm mô hình thực hiện \emph{dự đoán sớm} thay vì nhận diện khi kết quả đã bộc lộ, đồ án áp dụng nguyên tắc nhân quả: biểu diễn tại thời điểm $t_{\mathrm{obs}}$ chỉ được tính từ các khung hình $I_1,\dots,I_{t_{\mathrm{obs}}}$; không dùng khung hình tương lai, nhãn kết cục hay đặc trưng tính từ toàn bộ quỹ đạo. Nguyên tắc này được hiện thực khác nhau theo từng tập dữ liệu:
 \begin{itemize}
-    \item $t_{\mathrm{divergence}}$ là thời điểm vật lý mà quỹ đạo chuyển động của bàn tay hoặc vật thể bắt đầu phân kỳ (diverge) rõ rệt hướng về đích đến cụ thể (về mặt tác nghiệp, $t_{\mathrm{divergence}}$ được xác định xấp xỉ bằng thời điểm nhấc vật thể rời khỏi mặt bàn $t_{\mathrm{lift}}$).
-    \item $\Delta \ge 0.5\,\text{s}$ là biên an toàn thời gian tối thiểu nhằm đảm bảo robot có đủ thời gian phản ứng trước khi con người hoàn tất thao tác.
+    \item \textbf{EgoIntent}: mỗi mẫu là một clip vi bước (micro-step) tiền kết cục theo định nghĩa của benchmark. Từ mỗi clip, 8 khung hình được lấy cách đều theo thời gian (\texttt{numpy.linspace} trên toàn clip); tiền tố độ dài $k$ gồm $k$ khung hình đầu trong 8 khung hình này, và biểu diễn tiền tố chỉ gộp (mean-pool) các đặc trưng của $k$ khung hình đó. Do lưới khung hình trải đều trên clip, phần trăm thời gian thực tế mà tiền tố bao phủ phụ thuộc độ dài clip; đồ án \emph{không} khẳng định một biên an toàn tuyệt đối theo giây cho tập này.
+    \item \textbf{Tập dữ liệu tự thu thập (dự kiến, \cref{sec:own_dataset})}: mỗi video được gán nhãn thời điểm kết thúc quan sát và bắt đầu kết cục, và việc loại trừ kết cục được thực thi bằng ràng buộc
+    \begin{equation}
+        \label{eq:temporal_exclusion_rule}
+        t_{\mathrm{obs}} \le t_{\mathrm{outcome}} - \Delta, \qquad \Delta \ge 0{,}5\,\text{s},
+    \end{equation}
+    trong đó $t_{\mathrm{outcome}}$ là thời điểm bắt đầu kết cục (về mặt tác nghiệp xấp xỉ thời điểm vật bị nhấc/đổi trạng thái) và $\Delta$ là biên an toàn để robot kịp phản ứng.
 \end{itemize}
 
-Đầu ra của bộ suy luận là biểu diễn ý định ngữ nghĩa $z_t^{\mathrm{int}} \in \mathbb{R}^{d_{\mathrm{int}}}$, sau đó được chuyển giao sang VLA policy để điều khiển robot:
+Đầu ra của bộ suy luận là biểu diễn ý định $z_t^{\mathrm{int}} \in \mathbb{R}^{d_{\mathrm{int}}}$, có thể được chuyển giao cho VLA policy:
 \begin{equation}
     \label{eq:policy_general}
     \hat{A}_t = \pi_{\theta}\left(I_t^{\mathrm{robot}}, L, S_t, z_t^{\mathrm{int}}\right),
 \end{equation}
-trong đó $I_t^{\mathrm{robot}}$ là quan sát từ camera robot, $L$ là chỉ dẫn ngôn ngữ, $S_t$ là trạng thái cảm giác bản thể (proprioception), và $\hat{A}_t$ là chuỗi hành động điều khiển dự đoán.
+với $I_t^{\mathrm{robot}}$ là quan sát từ camera robot, $L$ là chỉ dẫn ngôn ngữ, $S_t$ là trạng thái bản thể và $\hat{A}_t$ là chuỗi hành động dự đoán.
 
-\section{Các câu hỏi nghiên cứu (Research Questions)}
+\section{Các câu hỏi nghiên cứu}
 
-Đồ án được thiết kế xoay quanh bốn câu hỏi nghiên cứu cụ thể:
+Đồ án xoay quanh bốn câu hỏi nghiên cứu:
 \begin{enumerate}
-    \item \textbf{RQ1 (Goal Disambiguation)}: Mô hình có thể phân định chính xác các mục tiêu khác nhau khi chúng cùng chia sẻ một hành vi khởi đầu tương tự nhau từ video egocentric hay không?
-    \item \textbf{RQ2 (Inductive Bias of WHAT $\to$ WHY)}: Việc điều kiện hóa tường minh quá trình suy luận đích đến (Why) qua hành động con dự đoán (What) có tạo ra một inductive bias hữu ích hơn so với dự đoán trực tiếp (Direct) hoặc dùng auxiliary loss độc lập không, hay cải thiện chỉ đến từ việc tăng số lượng tham số?
-    \item \textbf{RQ3 (Strict Temporal Anticipation)}: Năng lực phân định mục tiêu duy trì được độ chính xác tới mức nào khi quan sát bị giới hạn nghiêm ngặt trước thời điểm rẽ nhánh quỹ đạo ($t_{\mathrm{obs}} \le t_{\mathrm{divergence}} - \Delta$)?
-    \item \textbf{RQ4 (Robot Relevance)}: Biểu diễn ý định dự đoán sớm có thể ánh xạ đáng tin cậy sang các quyết định điều phối kỹ năng robot (skill selection) và được tích hợp thành công vào kiến trúc SmolVLA hay không?
+    \item \textbf{RQ1 (Kỹ năng phân định so với ngẫu nhiên)}: trên các video (và scene) chưa thấy, các đầu đọc trên đặc trưng thị giác đóng băng xếp hạng mục tiêu tốt hơn mức ngẫu nhiên đến đâu?
+    \item \textbf{RQ2 (Thiên kiến quy nạp $\text{WHAT}\to\text{WHY}$)}: điều kiện hóa suy luận WHY qua WHAT dự đoán có hữu ích hơn dự đoán trực tiếp hoặc dùng hàm mất mát phụ độc lập, và có khác biệt với việc chỉ tăng dung lượng tham số không? (câu hỏi thăm dò, do kích thước mẫu nhỏ)
+    \item \textbf{RQ3 (Lượng bằng chứng quan sát)}: xếp hạng mục tiêu thay đổi thế nào khi tiền tố tăng từ 2 đến 8 khung hình, và có dấu hiệu bão hòa không?
+    \item \textbf{RQ4 (Dự đoán hay hoãn)}: các điểm số quyết định đơn giản (confidence, margin, entropy) có hỗ trợ việc quyết định khi nào nên dự đoán, khi nào nên chờ thêm quan sát không?
 \end{enumerate}
+Ngoài ra, mục tiêu kỹ thuật (không phải câu hỏi nghiên cứu) là hiện thực hóa giao diện tích hợp ý định vào SmolVLA và kiểm tra tính đúng đắn của cài đặt.
 
 \section{Định nghĩa ý định và phân biệt khái niệm}
 \label{sec:intention_definition}
 
-Nhằm đảm bảo tính chặt chẽ về mặt phương pháp luận, đồ án phân định rõ ràng các khái niệm:
 \begin{itemize}
-    \item \textbf{Task (Tác vụ tổng thể)}: Mục tiêu vĩ mô tĩnh của toàn bộ phiên làm việc (ví dụ: ``dọn dẹp bàn ăn'').
-    \item \textbf{Sub-action / WHAT (Hành động con)}: Thao tác vật lý tức thời đang diễn ra trong cửa sổ quan sát (ví dụ: ``nhấc cốc lên'').
-    \item \textbf{Intended Goal / WHY (Ý định / Đích đến)}: Trạng thái kết thúc mong muốn của môi trường hoặc mục đích sau cùng của hành vi (ví dụ: ``đặt cốc lên giá đựng'').
-    \item \textbf{Action Anticipation vs. Goal Disambiguation}: Action Anticipation thông thường dự đoán hành động kế tiếp $a_{t+1}$ hoặc chuỗi $a_{t:t+K}$ từ quá khứ; trong khi Goal Disambiguation giải quyết bài toán \textbf{phân nhánh 1-nhiều} (từ một WHAT suy ra đúng một trong nhiều WHY loại trừ nhau).
-    \item \textbf{Low-level Action}: Tín hiệu điều khiển động học cụ thể (vận tốc/tư thế 7 chiều) do robot thực thi.
+    \item \textbf{Task / event (tác vụ tổng thể)}: mục tiêu vĩ mô của cả phiên làm việc. Trong EgoIntent, mỗi video nguồn thuộc một event nên ``cùng tác vụ'' (same-task) thực chất tương đương ``cùng video''.
+    \item \textbf{Sub-action / WHAT (hành động con)}: thao tác vật lý tức thời trong cửa sổ quan sát (ví dụ ``nhấc cốc lên'').
+    \item \textbf{Intended Goal / WHY (ý định, đích đến)}: mục đích hoặc trạng thái kết thúc mong muốn của hành vi (ví dụ ``đặt cốc lên giá'').
+    \item \textbf{Action Anticipation và Goal Disambiguation}: Action Anticipation dự đoán hành động kế tiếp $a_{t+1}$ hoặc chuỗi $a_{t:t+K}$ từ quá khứ; Goal Disambiguation giải quyết bài toán phân nhánh một-nhiều (từ một WHAT suy ra đúng một trong nhiều WHY).
+    \item \textbf{Low-level action}: tín hiệu điều khiển động học (vận tốc/tư thế 7 chiều) do robot thực thi.
 \end{itemize}
 
-\section{Mục tiêu và tuyên bố đóng góp}
+\section{Mục tiêu và đóng góp}
 
-Đồ án tập trung vào ba đóng góp chính:
+Đồ án có ba đóng góp, được tuyên bố ở đúng mức bằng chứng hiện có:
 \begin{enumerate}
-    \item \textbf{Về định vị bài toán}: Định nghĩa hình thức và xây dựng quy thức thực nghiệm cho bài toán phân định sớm mục tiêu thao tác (Goal Disambiguation) từ video egocentric, thiết lập quy tắc loại trừ kết cục không rò rỉ quỹ đạo vật lý.
-    \item \textbf{Về phương pháp luận}: Đề xuất cơ chế suy luận hai pha: Pha 1 kiểm chứng giả thuyết điều kiện hóa $\text{WHAT} \to \text{WHY}$ kết hợp với cùng tác vụ hard-negative loss; Pha 2 áp dụng frozen residual reranker với hàm mất mát Soft-MRR giúp tinh chỉnh thứ hạng mục tiêu.
-    \item \textbf{Về hạ tầng tích hợp robot}: Hiện thực hóa và kiểm chứng thành công module \textit{Intention Adapter} trên SmolVLA, vượt qua toàn bộ các bài kiểm tra toàn vẹn kỹ thuật phần mềm, thiết lập cơ chế proxy điều phối kỹ năng robot phục vụ kịch bản cộng tác.
+    \item \textbf{Định vị bài toán và giao thức đánh giá}: hình thức hóa bài toán phân định sớm mục tiêu và xây dựng giao thức đánh giá chống rò rỉ: chia theo video nguồn, tiền tố nhân quả, mức ngẫu nhiên chính xác và hệ số lift, kiểm định cụm theo video, tập kiểm thử khóa và báo cáo kiểm toán (audit) các kết quả.
+    \item \textbf{Phân tích thực nghiệm có đối chứng}: đánh giá suy luận có hướng dẫn $\text{WHAT}\to\text{WHY}$, hard-negative cùng tác vụ, bộ xếp hạng lại residual, độ dài tiền tố và điểm số dự đoán/hoãn trên EgoIntent (pilot, tập đầy đủ, tập kiểm thử khóa), kèm kết luận trung thực rằng kết quả trên video chưa thấy hiện ở mức xấp xỉ ngẫu nhiên.
+    \item \textbf{Hạ tầng kỹ thuật}: cài đặt Intention Adapter và tiền tố mở rộng cho SmolVLA, công cụ trực quan hóa HOI và trạng thái WHAT/WHY, cùng quy trình thu thập một tập dữ liệu nhỏ phục vụ minh họa định tính (\TODO{cập nhật mức độ hoàn thành của hai hạng mục sau cùng}).
 \end{enumerate}
+
+\textbf{Phạm vi tuyên bố.} Đồ án không khẳng định tính mới, tính tổng quát hóa hay tính vượt trội của phương pháp so với EgoIntent, INSIGHT, các phương pháp dự đoán hành động dài hạn có điều kiện ý định hay HINT; việc đối chiếu với các công trình này chỉ ở mức định tính trong \cref{chap:related_work}.
+
+\section{Bố cục đồ án}
+
+\Cref{chap:related_work} trình bày cơ sở lý thuyết và công trình liên quan. \Cref{chap:method} mô tả phương pháp, kiến trúc VLIA và công cụ quan sát. \Cref{chap:experiments} trình bày dữ liệu, giao thức, kết quả và phân tích. \Cref{chap:conclusion} kết luận, nêu hạn chế và hướng phát triển.
 
 % ============================================================
 \chapter{Cơ sở lý thuyết và các nghiên cứu liên quan}
@@ -168,46 +279,56 @@ Nhằm đảm bảo tính chặt chẽ về mặt phương pháp luận, đồ �
 
 \section{Mô hình Vision--Language--Action (VLA) trong thao tác robot}
 
-Các mô hình nền tảng trong robot learning gần đây đã chuyển dịch từ các chính sách chuyên biệt sang các mô hình tổng quát học từ lượng lớn dữ liệu đa phương thức. RT-1 \citep{brohan2022rt1} và RT-2 \citep{zitkovich2023rt2} chứng minh rằng kiến trúc Transformer kết hợp biểu diễn thị giác--ngôn ngữ cho phép robot khái quát hóa nhiều tác vụ thao tác phức tạp. Open X-Embodiment \citep{openx2024} tiếp tục củng cố khả năng chuyển giao chính sách giữa các phần cứng khác nhau.
+Các mô hình nền tảng trong robot learning gần đây đã chuyển dịch từ các chính sách chuyên biệt sang các mô hình tổng quát học từ lượng lớn dữ liệu đa phương thức. RT-1 \citep{brohan2022rt1} và RT-2 \citep{zitkovich2023rt2} cho thấy kiến trúc Transformer kết hợp biểu diễn thị giác--ngôn ngữ giúp robot khái quát hóa nhiều tác vụ thao tác. Open X-Embodiment \citep{openx2024} tiếp tục củng cố khả năng chuyển giao chính sách giữa các phần cứng khác nhau.
 
-Tuy nhiên, các mô hình VLA hiện hành hầu như chỉ dựa vào câu lệnh tĩnh được cung cấp từ đầu. Trong môi trường làm việc chung với con người, robot cần khả năng chủ động nắm bắt ý định chưa bộc lộ của đối tác để phối hợp an toàn và hiệu quả.
+Tuy nhiên, các mô hình VLA hiện hành chủ yếu dựa vào câu lệnh tĩnh cung cấp từ đầu. Trong môi trường làm việc chung với con người, robot cần khả năng chủ động nắm bắt ý định chưa bộc lộ của đối tác để phối hợp an toàn và hiệu quả.
 
 \section{SmolVLA, LeRobot và Flow Matching}
 
-SmolVLA \citep{shukor2025smolvla} là một mô hình VLA mã nguồn mở được phát triển trên nền tảng thư viện LeRobot \citep{cadene2026lerobot}. SmolVLA tích hợp mô hình ngôn ngữ thị giác nhỏ gọn kết hợp với bộ sinh hành động dựa trên Flow Matching \citep{lipman2023flow}. Kiến trúc này sử dụng cơ chế chunking hành động, cho phép dự đoán chuỗi hành động liên tục với chi phí tính toán vừa phải.
+SmolVLA \citep{shukor2025smolvla} là một mô hình VLA mã nguồn mở phát triển trên thư viện LeRobot \citep{cadene2026lerobot}. SmolVLA kết hợp một mô hình ngôn ngữ--thị giác nhỏ gọn với bộ sinh hành động dựa trên Flow Matching \citep{lipman2023flow} và cơ chế chunking hành động để dự đoán chuỗi hành động liên tục với chi phí tính toán vừa phải.
 
-Mô hình SmolVLM2-500M-Video-Instruct \citep{marafioti2025smolvlm,huggingface2025smolvlm2} được đồ án sử dụng làm visual backbone cố định (frozen) để trích xuất đặc trưng khung hình egocentric, đảm bảo tách bạch hoàn toàn bài toán học biểu diễn ý định khỏi việc fine-tune mô hình thị giác lớn.
+Mô hình SmolVLM2-500M-Video-Instruct \citep{marafioti2025smolvlm,huggingface2025smolvlm2} được dùng làm visual backbone đóng băng để trích xuất đặc trưng khung hình egocentric (vector 960 chiều cho mỗi khung hình), nhờ đó tách bài toán học biểu diễn ý định khỏi việc tinh chỉnh một mô hình thị giác lớn.
 
 \section{Egocentric Video và Action Anticipation}
 
-Tập dữ liệu Ego4D \citep{grauman2022ego4d} cung cấp kho dữ liệu khổng lồ phục vụ nghiên cứu thị giác góc nhìn thứ nhất. Bài toán dự đoán hành động dài hạn (Long-Term Action Anticipation -- LTA) được nghiên cứu rộng rãi:
+Ego4D \citep{grauman2022ego4d} cung cấp kho dữ liệu lớn cho thị giác góc nhìn thứ nhất. Bài toán dự đoán hành động dài hạn (LTA) được nghiên cứu rộng rãi:
 \begin{itemize}
-    \item \citet{mascaro2023intention} sử dụng I-CVAE và H3M để mô hình hóa ý định như một biến tiềm ẩn điều kiện hóa chuỗi hành động tương lai.
+    \item \citet{mascaro2023intention} dùng I-CVAE và H3M để mô hình hóa ý định như biến tiềm ẩn điều kiện hóa chuỗi hành động tương lai.
     \item AntGPT \citep{zhao2024antgpt} khai thác tri thức của mô hình ngôn ngữ lớn để suy luận mục tiêu và kế hoạch hành động.
-    \item INSIGHT \citep{chu2026insight} đề xuất mô hình nhận thức suy luận ý định cho LTA.
+    \item INSIGHT \citep{chu2026insight} đề xuất mô hình suy luận nhận thức có hướng dẫn bởi ý định cho LTA.
+    \item \TODO{bổ sung HINT: tên bài, tác giả, nơi công bố và một câu so sánh định tính}
 \end{itemize}
 
-Khác với các công trình trên vốn tập trung dự đoán chuỗi nhãn hành động kế tiếp, đồ án này giải quyết bài toán \textbf{phân định mục tiêu trừu tượng (Goal Disambiguation)} trước khi quỹ đạo vật lý rẽ hướng rõ ràng.
+Khác với các công trình trên vốn tập trung dự đoán chuỗi nhãn hành động kế tiếp, đồ án xét bài toán \emph{phân định mục tiêu} từ một tiền tố ngắn; tuy nhiên đồ án không so sánh định lượng trực tiếp với các phương pháp này.
 
 \section{EgoIntent và tính phân rã What--Why--Next}
 
-EgoIntent \citep{egointent2026} là một benchmark chuyên biệt được xây dựng từ video Ego4D ở mức vi bước trước kết cục (pre-outcome micro-steps). Cấu trúc của EgoIntent phân biệt ba tầng thông tin:
+EgoIntent \citep{egointent2026} là benchmark xây dựng từ video Ego4D ở mức vi bước trước kết cục (pre-outcome micro-steps). Cấu trúc của EgoIntent phân biệt ba tầng thông tin:
 \begin{equation}
     \text{Local Intent (WHAT)} \longrightarrow \text{Procedural Intent (WHY)} \longrightarrow \text{Next-Plan (NEXT)}.
 \end{equation}
-Đây là nền tảng dữ liệu phù hợp để kiểm chứng mối quan hệ phụ thuộc giữa hành động quan sát được và mục đích tương lai mà không bị rò rỉ thông tin kết cục.
+Đây là nền tảng phù hợp để khảo sát quan hệ giữa hành động quan sát được và mục đích phía sau mà không để lộ thông tin kết cục.
 
 \section{Bất biến góc nhìn và tập dữ liệu ENIGMA-360}
 
-Nhiều nghiên cứu khảo sát tính tương quan giữa góc nhìn thứ nhất (ego) và góc nhìn thứ ba (exo) như Charades-Ego \citep{sigurdsson2018charadesego}, HOMAGE \citep{rai2021homage}, Ego-Exo4D \citep{grauman2024egoexo4d} và ENIGMA-360 \citep{ragusa2026enigma360}. Đồ án khai thác ENIGMA-360 như một công cụ chẩn đoán biểu diễn để kiểm tra xem tính bất biến góc nhìn có tự động chuyển giao thành năng lực phân biệt ý định hay không.
+Nhiều nghiên cứu khảo sát tương quan giữa góc nhìn thứ nhất (ego) và thứ ba (exo) như Charades-Ego \citep{sigurdsson2018charadesego}, HOMAGE \citep{rai2021homage}, Ego-Exo4D \citep{grauman2024egoexo4d} và ENIGMA-360 \citep{ragusa2026enigma360}. Đồ án dùng ENIGMA-360 như một công cụ chẩn đoán biểu diễn: kiểm tra liệu tính bất biến góc nhìn có tự động chuyển thành năng lực phân biệt ý định hay không.
+
+\section{Học tương phản và truy hồi đa dương}
+
+Các đầu đọc trong đồ án được huấn luyện bằng hàm mất mát tương phản dạng InfoNCE \citep{oord2018infonce}, mở rộng cho trường hợp nhiều mẫu dương (nhiều mẫu cùng chia sẻ một câu mô tả). Việc đánh giá bằng truy hồi trên gallery lớn với nhiều mẫu âm gần nghĩa khiến các độ đo (MRR, Top-$k$) có mức ngẫu nhiên đáng kể, vì vậy đồ án luôn báo cáo kèm mức ngẫu nhiên chính xác (\cref{eq:chance}).
+
+\section{Phát hiện tương tác tay--vật (HOI)}
+\label{sec:hoi_related}
+
+Tương tác tay--vật là tín hiệu thị giác trực quan nhất về ý định thao tác. Shan và cộng sự \citep{shan2020100doh} xây dựng tập 100DOH và bộ phát hiện bàn tay kèm trạng thái tiếp xúc và vật đang được tiếp xúc; MediaPipe Hands \citep{zhang2020mediapipe} cung cấp theo dõi bàn tay thời gian thực trên thiết bị. Trong đồ án này, thông tin HOI \emph{chỉ phục vụ quan sát định tính} (\cref{sec:viz_tool}); các mô hình ở \cref{chap:method} chưa nhận vùng HOI làm đầu vào mà dùng đặc trưng toàn khung hình đóng băng. Việc đưa vùng HOI vào mô hình được xếp vào hướng phát triển.
 
 % ============================================================
-\chapter{Phương pháp đề xuất}
+\chapter{Phương pháp}
 \label{chap:method}
 
 \section{Kiến trúc tổng thể hệ thống VLIA}
 
-Hệ thống VLIA tích hợp luồng suy luận ý định hai pha từ video egocentric của con người vào chính sách thao tác robot SmolVLA (\cref{fig:overall_vlia_architecture}).
+Hệ thống VLIA đưa luồng suy luận ý định từ video egocentric của con người vào chính sách thao tác robot SmolVLA (\cref{fig:overall_vlia_architecture}). Giai đoạn A (suy luận ý định) được đánh giá thực nghiệm ở \cref{chap:experiments}; giai đoạn B (tích hợp SmolVLA) mới được kiểm tra ở mức đúng đắn kỹ thuật.
 
 \begin{figure}[ht]
     \centering
@@ -244,83 +365,104 @@ Hệ thống VLIA tích hợp luồng suy luận ý định hai pha từ video e
         \draw[->] (prefix) -- (smolvla);
         \draw[->] (smolvla) -- (action);
     \end{tikzpicture}
-    \caption{Kiến trúc tổng thể VLIA: Luồng suy luận ý định (Stage A) từ video egocentric qua nút thắt WHAT $\to$ WHY và giao diện tích hợp SmolVLA (Stage B).}
+    \caption{Kiến trúc tổng thể VLIA: luồng suy luận ý định (giai đoạn A) từ video egocentric qua nút thắt $\text{WHAT}\to\text{WHY}$ và giao diện tích hợp SmolVLA (giai đoạn B).}
     \label{fig:overall_vlia_architecture}
 \end{figure}
 
-\section{Giả thuyết cơ chế: Nút thắt tính toán WHAT $\to$ WHY}
+\section{Đặc trưng và không gian mục tiêu}
 
-Thay vì mặc định coi quan hệ WHAT $\to$ WHY là một chân lý đã được chứng minh, đồ án thiết lập đây là một \textbf{giả thuyết cơ chế (inductive bias hypothesis)} cần được kiểm chứng thông qua thực nghiệm đối chứng:
+Mỗi mẫu gồm 8 vector đặc trưng khung hình $f_1,\dots,f_8 \in \mathbb{R}^{960}$ từ SmolVLM2 đóng băng. Mục tiêu WHY là đặc trưng văn bản 960 chiều của câu WHY, chiếu bằng PCA xuống $256$ chiều rồi chuẩn hóa $L_2$ để được $y \in \mathbb{R}^{256}$; WHAT dùng một PCA riêng. Các PCA được fit trên dữ liệu huấn luyện của tập pilot. (\TODO{xác nhận lại với mã nguồn: PCA của bản đầy đủ có fit chỉ trên train hay không; kiểm toán nêu cần ``training-only-fitted WHY PCA'' cho lần xác nhận tiếp theo}). Một không gian mục tiêu thay thế dùng bộ mã hóa câu đóng băng \citep{reimers2019sbert} đang được đánh giá ở \cref{sec:scene_cv}.
+
+\section{Mô hình nền theo tiền tố (mean-pool)}
+\label{sec:meanpool}
+
+Với tiền tố $k$ khung hình, biểu diễn gộp là
+\begin{equation}
+    e_k = \frac{1}{k}\sum_{t=1}^{k} f_t \in \mathbb{R}^{960},
+\end{equation}
+sau đó đi qua một MLP (lớp ẩn 512, GELU, LayerNorm) và chuẩn hóa $L_2$ để được $z \in \mathbb{R}^{256}$. Hàm mất mát là InfoNCE đa dương cộng căn chỉnh cosine:
+\begin{equation}
+    \mathcal{L}_{\mathrm{why}} = -\frac{1}{B}\sum_{i}\frac{1}{|\mathcal{P}(i)|}\sum_{j\in\mathcal{P}(i)}\log\frac{\exp(s_{ij}/\tau)}{\sum_{l}\exp(s_{il}/\tau)} + \lambda_{\cos}\,\frac{1}{B}\sum_i \bigl(1-\langle z_i,y_i\rangle\bigr),
+\end{equation}
+với $s_{ij}=\langle z_i,y_j\rangle$, $\tau=0{,}07$ và $\lambda_{\cos}=0{,}1$. Tối ưu bằng AdamW (tốc độ học $10^{-3}$, weight decay $10^{-4}$, cắt gradient 1,0), huấn luyện toàn bộ batch trong 100 epoch.
+
+\section{\texorpdfstring{Giả thuyết cơ chế: nút thắt $\text{WHAT}\to\text{WHY}$}{Giả thuyết cơ chế: nút thắt WHAT -> WHY}}
+
+Đồ án coi quan hệ $\text{WHAT}\to\text{WHY}$ là một \textbf{giả thuyết thăm dò} về thiên kiến quy nạp, không phải chân lý đã được chứng minh:
 \begin{quote}
-\textit{Việc điều kiện hóa quá trình dự đoán đích đến (WHY) đi qua biểu diễn hành động con tức thời (WHAT) trên đồ thị tính toán trực tiếp sẽ giúp mô hình tập trung vào tương tác bàn tay--vật thể và giảm sự nhầm lẫn giữa các mục tiêu trong cùng tác vụ.}
+\textit{Điều kiện hóa suy luận đích đến (WHY) qua biểu diễn hành động con (WHAT) trên đồ thị tính toán có thể giúp giảm nhầm lẫn giữa các mục tiêu trong cùng tác vụ.}
 \end{quote}
 
-\subsection{Pha 1: Suy luận có hướng dẫn kết hợp Same-Task Hard-Negatives}
+\subsection{Pha 1: suy luận có hướng dẫn kết hợp same-task hard-negative}
 
-Từ đặc trưng thị giác trung bình $e_t^{\mathrm{vis}} \in \mathbb{R}^{960}$, mạng học nhánh dự đoán hành động con hiện tại:
+Từ đặc trưng trung bình $e_t\in\mathbb{R}^{960}$, nhánh WHAT dự đoán $\hat{z}_t^{\mathrm{what}}=f_{\mathrm{what}}(e_t)\in\mathbb{R}^{256}$. Nhánh WHY kết hợp trạng thái thị giác $h_t=\mathrm{LN}(\mathrm{GELU}(W_v e_t))\in\mathbb{R}^{256}$ với WHAT dự đoán để tạo phần thặng dư có cổng:
+\begin{align}
+    r_t &= \mathrm{Normalize}\bigl(f_{\mathrm{reason}}([\,h_t;\hat{z}_t^{\mathrm{what}}\,])\bigr),\\
+    g_t &= \sigma\bigl(W_g[\,h_t;\hat{z}_t^{\mathrm{what}}\,]+b_g\bigr)\in(0,1)^{256},\\
+    z_{t,\mathrm{base}}^{\mathrm{why}} &= \mathrm{Normalize}\bigl(z_{t,\mathrm{direct}}^{\mathrm{why}} + g_t\odot r_t\bigr),
+\end{align}
+trong đó $g_t$ là cổng theo từng chiều (vector 256 chiều) và $z_{t,\mathrm{direct}}^{\mathrm{why}}$ là đầu ra của nhánh WHY trực tiếp.
+
+Nhánh WHAT được huấn luyện bằng InfoNCE đa dương, căn chỉnh cosine và một hàm \emph{hard-negative dạng biên (margin)} chỉ xét các mẫu âm cùng tác vụ nhưng khác WHAT:
 \begin{equation}
-    \hat{z}_t^{\mathrm{what}} = f_{\mathrm{what}}\left(e_t^{\mathrm{vis}}\right) \in \mathbb{R}^{256}.
+    \mathcal{L}_{\mathrm{hn}} = \frac{1}{|\mathcal{V}|}\sum_{i\in\mathcal{V}}\max\Bigl(0,\; m + \max_{j\in\mathcal{N}_{\mathrm{task}}(i)}s_{ij} - \max_{j\in\mathcal{P}_{\mathrm{what}}(i)}s_{ij}\Bigr), \quad m=0{,}10,
+\end{equation}
+với $\mathcal{N}_{\mathrm{task}}(i)$ là các mẫu cùng tác vụ khác WHAT, $\mathcal{P}_{\mathrm{what}}(i)$ là các mẫu cùng WHAT và $\mathcal{V}$ là tập truy vấn có đủ cả hai loại. Tổng hàm mất mát là
+\begin{equation}
+    \mathcal{L} = \mathcal{L}_{\mathrm{why}} + \lambda_{\mathrm{what}}\Bigl(\mathcal{L}_{\mathrm{what}}^{\mathrm{NCE}} + \lambda_{\cos}\mathcal{L}_{\mathrm{what}}^{\cos} + \lambda_{\mathrm{hn}}\mathcal{L}_{\mathrm{hn}}\Bigr), \quad \lambda_{\mathrm{what}}=\lambda_{\mathrm{hn}}=0{,}3.
 \end{equation}
 
-Nhánh suy luận đích đến kết hợp đặc trưng thị giác với hành động con ước lượng để tạo thành phần thặng dư có cổng đóng mở (gated residual):
-\begin{equation}
-    r_t^{\mathrm{why}} = f_{\mathrm{reason}}\left(\left[\,h_t^{\mathrm{vis}} ; \hat{z}_t^{\mathrm{what}}\,\right]\right),
-\end{equation}
-\begin{equation}
-    z_{t,\mathrm{base}}^{\mathrm{why}} = \mathrm{Normalize}\left(z_{t,\mathrm{direct}}^{\mathrm{why}} + g_t \odot r_t^{\mathrm{why}}\right),
-\end{equation}
-trong đó $g_t = \sigma(W_g [h_t^{\mathrm{vis}} ; \hat{z}_t^{\mathrm{what}}])$ là scalar gate học được.
+\subsection{Pha 2: bộ xếp hạng lại residual đóng băng}
 
-Nhánh WHAT được tối ưu hóa bằng hàm mất mát tương phản đa mẫu dương kết hợp với mẫu âm nội tác vụ (Same-task Hard Negative):
+Sau pha 1, toàn bộ mô hình cơ sở được đóng băng. Một bộ hiệu chỉnh nhỏ $f_{\mathrm{rerank}}$ (MLP $512\to256\to256$ với GELU và LayerNorm, lớp cuối khởi tạo bằng 0 để mô hình ban đầu trùng hoàn toàn với baseline) học phần hiệu chỉnh:
 \begin{equation}
-    \mathcal{L}_{\mathrm{what}} = \mathcal{L}_{\mathrm{MP\text{-}InfoNCE}} + \lambda_{\mathrm{hn}} \mathcal{L}_{\mathrm{same\text{-}task\text{-}HN}},
+    \hat{z}_t^{\mathrm{int}} = \mathrm{Normalize}\bigl(z_{t,\mathrm{base}}^{\mathrm{why}} + \beta\,\Delta z_t\bigr), \quad \Delta z_t=f_{\mathrm{rerank}}([\,z_{t,\mathrm{base}}^{\mathrm{why}};\hat{z}_t^{\mathrm{what}}\,]),\quad \beta=0{,}20.
 \end{equation}
-trong đó:
-\begin{equation}
-    \mathcal{L}_{\mathrm{same\text{-}task\text{-}HN}} = -\log \frac{\exp\left(\text{sim}(z, z^+) / \tau\right)}{\exp\left(\text{sim}(z, z^+) / \tau\right) + \sum_{z^- \in \mathcal{N}_{\mathrm{same\text{-}task}}} \exp\left(\text{sim}(z, z^-) / \tau\right)}.
-\end{equation}
-Thành phần này trực tiếp phạt nặng sự nhầm lẫn giữa các mục tiêu có cùng ngữ cảnh tác vụ lớn nhưng khác nhau về đích đến chi tiết.
+Huấn luyện bằng hàm mất mát Soft-MRR (xấp xỉ khả vi của MRR, nhiệt độ xếp hạng $0{,}05$) cộng điều chuẩn $10^{-3}\lVert\Delta z\rVert^2$. \TODO{chép lại công thức Soft-MRR đúng như hàm \texttt{soft\_mrr\_ranking\_loss} trong mã nguồn}
 
-\subsection{Pha 2: Frozen Residual Reranker với Soft-MRR}
+\section{Đối chứng dung lượng tham số}
 
-Để tránh hiện tượng xung đột gradient khi tối ưu đồng thời nhiều hàm mất mát, sau khi Pha 1 hoàn thành, toàn bộ mô hình cơ sở được \textbf{đóng băng hoàn toàn}.
+Để kiểm tra liệu cải thiện (nếu có) chỉ do tăng số tham số, đồ án dùng cấu hình Direct WHY ngang dung lượng (\textbf{Capacity-Matched Direct WHY}): một MLP $\mathbb{R}^{960}\to\mathbb{R}^{256}$ có lớp ẩn mở rộng sao cho số tham số học được xấp xỉ $2{,}02$ triệu, tương đương tổ hợp nhánh WHAT, Reasoner và Gate. Cấu hình này chỉ khớp xấp xỉ, không khớp tuyệt đối về tham số hay FLOPs.
 
-Một mạng hiệu chỉnh nhỏ (residual reranker) được thêm vào để tinh chỉnh thứ hạng Why:
-\begin{equation}
-    \hat{z}_t^{\mathrm{int}} = \mathrm{Normalize}\left(z_{t,\mathrm{base}}^{\mathrm{why}} + \beta \Delta z_t^{\mathrm{why}}\right),
-\end{equation}
-trong đó $\Delta z_t^{\mathrm{why}} = f_{\mathrm{rerank}}([z_{t,\mathrm{base}}^{\mathrm{why}} ; \hat{z}_t^{\mathrm{what}}])$ và $\beta$ là hệ số tỉ lệ. Reranker được huấn luyện bằng hàm mục tiêu Soft-MRR (xấp xỉ khả vi của độ đo xếp hạng MRR) nhằm tối ưu trực tiếp thứ hạng truy vấn.
+\section{Điểm số quyết định cho dự đoán/hoãn}
+\label{sec:decision_scores}
 
-\section{Kiểm soát dung lượng tham số (Parameter-Matched Control)}
+Với gallery $n$ phần tử, đặt $p_{ij}=\mathrm{softmax}_j(s_{ij}/0{,}07)$ và định nghĩa ba điểm số cho truy vấn $i$: độ tin cậy $c_i=\max_j p_{ij}$; biên $\mathrm{margin}_i = s_{i,(1)}-s_{i,(2)}$ (chênh cosine giữa hạng 1 và hạng 2); entropy chuẩn hóa $H_i=-\sum_j p_{ij}\log p_{ij}/\log n$. Quy tắc \emph{dự đoán} khi $c_i$ (hoặc margin) vượt ngưỡng, hoặc $H_i$ dưới ngưỡng; ngược lại \emph{hoãn}. Cần nhấn mạnh rằng các điểm số này chỉ là baseline quyết định theo điểm số, \emph{không} chứng minh bằng chứng thị giác đã đủ phân biệt mục tiêu về mặt ngữ nghĩa.
 
-Để loại trừ giả thuyết rằng sự vượt trội của cấu trúc $\text{WHAT} \to \text{WHY}$ chỉ đơn thuần đến từ việc tăng số lượng tham số hay độ sâu mạng, đồ án thiết kế một cấu hình đối chứng ngang dung lượng (\textbf{Parameter-Matched Direct WHY}):
-\begin{equation}
-    f_{\mathrm{direct\text{-}matched}}: \mathbb{R}^{960} \longrightarrow \mathbb{R}^{256},
-\end{equation}
-trong đó các lớp ẩn của MLP được mở rộng để tổng số tham số học được và chi phí FLOPs bằng chính xác tổng tham số của tổ hợp nhánh WHAT, nhánh Reasoner và cổng Gate.
+\section{Công cụ quan sát HOI và trạng thái WHAT/WHY}
+\label{sec:viz_tool}
+
+Để quan sát hành vi của mô hình trong lúc huấn luyện và suy luận, đồ án xây dựng một công cụ hiển thị lên màn hình (\TODO{ghi trạng thái hiện thực: đã/chưa xong}):
+\begin{enumerate}
+    \item \textbf{Luồng vào}: video đã quay hoặc luồng camera; lấy mẫu khung hình theo cùng quy tắc tiền tố nhân quả (\cref{sec:causal_principle}).
+    \item \textbf{Trích xuất HOI}: phát hiện bàn tay, trạng thái tiếp xúc và vùng vật thể đang tương tác (ví dụ dựa trên \citep{shan2020100doh,zhang2020mediapipe}); vẽ hộp/vùng HOI lên khung hình. \TODO{chốt bộ phát hiện thực tế đã dùng}
+    \item \textbf{Bảng trạng thái mô hình}: độ dài tiền tố $k$ hiện tại; top-3 ứng viên WHAT và WHY kèm điểm; confidence, margin, entropy; cờ ``dự đoán/hoãn''; nhãn đúng (khi có) để so sánh.
+    \item \textbf{Ghi nhật ký}: lưu video minh họa và tệp JSONL cho từng bước, để đưa vào báo cáo.
+\end{enumerate}
+Vùng HOI hiển thị \emph{không} là đầu vào của các mô hình đã đánh giá ở \cref{chap:experiments}; công cụ này phục vụ quan sát và phân tích lỗi định tính.
 
 \section{Hạ tầng tích hợp SmolVLA và Intention Adapter}
 
 \subsection{Intention Adapter}
-Intention Adapter thực hiện chiếu tuyến tính vector ý định vào không gian ẩn của SmolVLA ($d_{\mathrm{VLM}} = 960$):
+Intention Adapter chiếu tuyến tính vector ý định vào không gian ẩn của SmolVLA ($d_{\mathrm{VLM}}=960$):
 \begin{equation}
-    E_t^{\mathrm{int}} = W_{\mathrm{adapter}} \hat{z}_t^{\mathrm{int}} + b_{\mathrm{adapter}} \in \mathbb{R}^{1 \times 960}.
+    E_t^{\mathrm{int}} = W_{\mathrm{adapter}}\hat{z}_t^{\mathrm{int}} + b_{\mathrm{adapter}} \in \mathbb{R}^{1\times 960}.
 \end{equation}
 
-\subsection{Tiền tố đa phương thức và KV Cache}
+\subsection{Tiền tố đa phương thức và KV cache}
 Tiền tố của SmolVLA được mở rộng bằng cách chèn token ý định ngay trước token trạng thái robot:
 \begin{equation}
-    P_{\mathrm{VLIA}} = \left[ E_{\mathrm{image}} ; E_{\mathrm{language}} ; E_t^{\mathrm{int}} ; E_{\mathrm{state}} \right] \in \mathbb{R}^{(L+1) \times 960}.
+    P_{\mathrm{VLIA}} = \left[ E_{\mathrm{image}} ; E_{\mathrm{language}} ; E_t^{\mathrm{int}} ; E_{\mathrm{state}} \right] \in \mathbb{R}^{(L+1)\times 960}.
 \end{equation}
-Token ý định được đưa vào bộ nhớ đệm KV Cache trong quá trình sinh hành động tuần tự, đảm bảo policy khai thác thông tin ý định mà không phát sinh thêm chi phí tính toán qua từng bước flow matching.
+Token ý định được đưa vào KV cache trong quá trình sinh hành động, nên không phát sinh thêm chi phí tính toán qua từng bước flow matching.
 
-\section{Giao diện điều phối kỹ năng robot (Skill Dispatching Proxy)}
+\section{Giao diện điều phối kỹ năng (Skill Dispatching Proxy)}
 
-Để duy trì mối liên kết trực tiếp với kịch bản robot cộng tác mà không đòi hỏi chi phí huấn luyện lại toàn bộ policy ở mức thấp, đồ án thiết lập giao diện điều phối kỹ năng:
+Giao diện điều phối kỹ năng ánh xạ ý định dự đoán sang kỹ năng robot:
 \begin{equation}
-    \hat{\mathcal{S}}_k = \arg\max_{k} \left\langle \hat{z}_t^{\mathrm{int}}, W_{\mathrm{skill}}^{(k)} \right\rangle,
+    \hat{k} = \arg\max_{k} \left\langle \hat{z}_t^{\mathrm{int}}, W_{\mathrm{skill}}^{(k)} \right\rangle,
 \end{equation}
-trong đó $\hat{\mathcal{S}}_k$ là kỹ năng thao tác tương ứng (ví dụ: \textit{ShelfPlacementSkill}, \textit{BoxPlacementSkill}) được kích hoạt đón đầu từ ý định dự đoán.
+với $\hat{k}$ là kỹ năng được kích hoạt đón đầu (ví dụ \textit{ShelfPlacementSkill}, \textit{BoxPlacementSkill}). Thành phần này mới ở mức đề xuất thiết kế; đồ án \emph{chưa} đánh giá độ chính xác ánh xạ ý định sang kỹ năng. \TODO{nếu đã có thực nghiệm thì bổ sung, nếu chưa thì giữ nguyên là đề xuất}
 
 % ============================================================
 \chapter{Dữ liệu, thực nghiệm và đánh giá}
@@ -330,135 +472,212 @@ trong đó $\hat{\mathcal{S}}_k$ là kỹ năng thao tác tương ứng (ví d�
 
 \subsection{Tập dữ liệu}
 \begin{itemize}
-    \item \textbf{EgoIntent Benchmark}: Gồm 771 micro-step tiền kết cục từ Ego4D, chia theo \texttt{video\_uid} nghiêm ngặt: Tập huấn luyện gồm 556 mẫu (6 video indoor), tập kiểm định gồm 215 mẫu (2 video outdoor).
-    \item \textbf{ENIGMA-360}: Gồm 433 cặp video thao tác công nghiệp đồng bộ ego--exo, phục vụ chẩn đoán biểu diễn bất biến góc nhìn.
-    \item \textbf{Tập dữ liệu OOD tự thu thập}: 48 video thao tác bàn tay từ camera đeo ngực/cổ (2 người tham gia, 12 tác vụ thao tác, 2 lần lặp). Tập dữ liệu này phục vụ kiểm định chuyển giao không đổi trọng số (zero-shot transfer) và stress-test tính bền vững của mô hình.
+    \item \textbf{EgoIntent pilot}: 771 micro-step tiền kết cục từ 8 video nguồn, chia theo \texttt{video\_uid}: huấn luyện 556 mẫu (6 video trong nhà), kiểm định 215 mẫu (2 video ngoài trời), không giao nhau về video nguồn. Tập kiểm định chỉ có 2 tác vụ (mỗi video một event).
+    \item \textbf{EgoIntent đầy đủ}: 32 video nguồn thuộc 15 scene. Phân chia sẵn có gồm huấn luyện 2091 mẫu (23 video), kiểm định 412 mẫu (4 video) và kiểm thử 511 mẫu. Một video của phần kiểm thử trùng với tập kiểm định của pilot nên bị loại; \emph{tập kiểm thử ứng viên} còn lại gồm 407 mẫu từ 4 video. Tập này chưa phải là holdout tách rời hoàn toàn theo scene (một scene vườn có mặt ở nhiều tập).
+    \item \textbf{ENIGMA-360}: 433 cặp video thao tác công nghiệp ego--exo đồng bộ, dùng để chẩn đoán biểu diễn bất biến góc nhìn.
+    \item \textbf{Tập dữ liệu tự thu thập}: xem \cref{sec:own_dataset}.
 \end{itemize}
 
-\subsection{Giao thức gán nhãn tập dữ liệu OOD 48 video}
-Mỗi mẫu trong tập 48 video được gán nhãn theo lược đồ chuẩn:
-\begin{verbatim}
-video_id, participant_id, task_id, rep_id, duration,
-observation_end, outcome_start, object, target, what, why, next
-\end{verbatim}
-12 tác vụ bao gồm: T01 (Cup $\to$ Shelf), T02 (Bottle $\to$ Box), T03 (Block $\to$ Tray), T04 (Sort Blocks), T05 (Sort Objects), T06 (Object $\to$ Target), T07 (Peg $\to$ Hole), T08 (Object $\to$ Container), T09 (Simple Assembly), T10 (Component $\to$ Base), T11 (Open $\to$ Retrieve), T12 (Retrieve $\to$ Put Back).
+\subsection{Độ đo và mức ngẫu nhiên}
+Đồ án báo cáo MRR, Top-1, Top-3 theo Giao thức G (\cref{sec:protocols}) kèm mức ngẫu nhiên chính xác. Mức ngẫu nhiên phụ thuộc kích thước gallery và số mẫu dương: $\mathrm{MRR}/\mathrm{Top}\text{-}1/\mathrm{Top}\text{-}3 = 0{,}0422/0{,}0088/0{,}0261$ cho gallery pilot (215 mẫu), $0{,}0249/0{,}0047/0{,}0140$ cho tập kiểm định đầy đủ (412 mẫu) và $0{,}0318/0{,}0071/0{,}0208$ cho tập kiểm thử ứng viên (407 mẫu). Giá trị trung bình $\pm$ độ lệch chuẩn mẫu được tính trên 3 seed; \emph{độ lệch chuẩn giữa các seed không phản ánh sự bất định do chọn video}.
 
-\subsection{Hệ thống độ đo}
-Đồ án báo cáo độ đo Mean Reciprocal Rank (MRR) đa nhãn đúng cùng Top-1, Top-3, Top-5 Accuracy, và đặc biệt phân rã thành:
-\begin{itemize}
-    \item \textbf{Overall MRR}: Hiệu năng tổng thể trên toàn bộ tập kiểm định.
-    \item \textbf{Same-task MRR / Accuracy}: Hiệu năng chỉ xét trên các ứng viên thuộc cùng tác vụ lớn (thước đo thực chất cho bài toán Goal Disambiguation).
-    \item \textbf{Cross-task MRR / Accuracy}: Hiệu năng phân biệt giữa các tác vụ khác nhau.
-\end{itemize}
+\textbf{Phân rã lỗi.} Mỗi dự đoán Top-1 sai được phân loại là \emph{cùng tác vụ} (mẫu được chọn thuộc cùng video với truy vấn) hoặc \emph{khác tác vụ}. Vì tác vụ ở đây tương đương video, tỷ lệ lỗi cùng tác vụ chỉ có nghĩa khi so với mức ngẫu nhiên của nó: nếu dự đoán sai hoàn toàn ngẫu nhiên thì xác suất rơi vào cùng video là $49{,}6\%$ trên gallery pilot và $24{,}7\%$ trên tập kiểm định đầy đủ (tính từ các tệp \texttt{per\_example\_ranks.csv}).
 
-\section{Kết quả thực nghiệm trên EgoIntent}
+\section{Kết quả trên EgoIntent pilot}
 
-\subsection{Kiểm chứng giả thuyết cơ chế và đối chứng dung lượng}
+\subsection{Đối chứng cơ chế và dung lượng}
 
-Bảng \ref{tab:core_hypothesis_results} tổng hợp toàn bộ các kết quả thực nghiệm Stage A trên 3 seed ngẫu nhiên (Mean $\pm$ Std):
+\Cref{tab:core_hypothesis_results} tổng hợp kết quả Stage A trên tập kiểm định pilot (215 mẫu), 3 seed.
 
 \begin{table}[ht]
     \centering
     \small
-    \caption{Kết quả kiểm chứng giả thuyết suy luận ý định trên EgoIntent (3 seed).}
+    \caption{Kết quả pilot trên EgoIntent (3 seed, trung bình $\pm$ độ lệch chuẩn mẫu). Lift là MRR chia cho mức ngẫu nhiên $0{,}0422$.}
     \label{tab:core_hypothesis_results}
+    \resizebox{\textwidth}{!}{%
     \begin{tabular}{lcccc}
         \toprule
-        \textbf{Cấu hình mô hình} & \textbf{Why MRR} & \textbf{Top-1} & \textbf{Top-3} & \textbf{Same-Task Err} \\
+        \textbf{Cấu hình} & \textbf{MRR} & \textbf{Top-1} & \textbf{Top-3} & \textbf{Lift MRR} \\
         \midrule
-        Direct Why (chuẩn, 0.62M params) & 0.0475 $\pm$ 0.0061 & 0.0186 $\pm$ 0.0047 & 0.0372 $\pm$ 0.0081 & 71.5\% \\
-        Direct Why (Capacity-matched, 2.02M params) & 0.0512 $\pm$ 0.0030 & 0.0233 $\pm$ 0.0000 & 0.0388 $\pm$ 0.0071 & 69.4\% \\
-        Auxiliary What + Why & 0.0471 $\pm$ 0.0030 & 0.0155 $\pm$ 0.0054 & 0.0403 $\pm$ 0.0054 & 61.7\% \\
-        \textbf{Predicted-What Guided} & \textbf{0.0518 $\pm$ 0.0015} & \textbf{0.0217 $\pm$ 0.0027} & \textbf{0.0434 $\pm$ 0.0027} & 69.9\% \\
+        Ngẫu nhiên (chính xác) & 0.0422 & 0.0088 & 0.0261 & 1.00 \\
         \midrule
-        + What Hard-Negative & 0.0540 $\pm$ 0.0023 & 0.0279 $\pm$ 0.0047 & 0.0419 $\pm$ 0.0047 & 64.2\% \\
-        \textbf{+ Frozen Residual Reranker} & \textbf{0.0551 $\pm$ 0.0009} & \textbf{0.0295 $\pm$ 0.0027} & \textbf{0.0434 $\pm$ 0.0027} & \textbf{59.8\%} \\
+        Direct Why (chuẩn) & 0.0475 $\pm$ 0.0061 & 0.0186 $\pm$ 0.0047 & 0.0372 $\pm$ 0.0081 & 1.13 \\
+        Direct Why (ngang dung lượng) & 0.0478 $\pm$ 0.0045 & 0.0186 $\pm$ 0.0038 & 0.0387 $\pm$ 0.0062 & 1.13 \\
+        Auxiliary What + Why & 0.0471 $\pm$ 0.0030 & 0.0155 $\pm$ 0.0054 & 0.0403 $\pm$ 0.0054 & 1.12 \\
+        Predicted-What Guided & 0.0518 $\pm$ 0.0015 & 0.0217 $\pm$ 0.0027 & 0.0434 $\pm$ 0.0027 & 1.23 \\
+        \quad + What Hard-Negative & 0.0540 $\pm$ 0.0023 & 0.0279 $\pm$ 0.0047 & 0.0419 $\pm$ 0.0047 & 1.28 \\
+        \quad + Frozen Residual Reranker & 0.0551 $\pm$ 0.0009 & 0.0295 $\pm$ 0.0027 & 0.0434 $\pm$ 0.0027 & 1.31 \\
         \midrule
-        Baseline tĩnh: Mean-pool 8 frames & 0.0589 $\pm$ 0.0016 & 0.0295 $\pm$ 0.0071 & 0.0419 $\pm$ 0.0059 & -- \\
-        Diagnostic: Oracle What & 0.1071 $\pm$ 0.0182 & 0.0543 $\pm$ 0.0176 & 0.1085 $\pm$ 0.0229 & 34.6\% \\
+        Baseline: Mean-pool 8 khung hình & \textbf{0.0589 $\pm$ 0.0016} & 0.0295 $\pm$ 0.0071 & 0.0419 $\pm$ 0.0047 & 1.40 \\
+        Chẩn đoán: Oracle What (đặc quyền) & 0.1055 $\pm$ 0.0067 & 0.0527 $\pm$ 0.0054 & 0.0915 $\pm$ 0.0194 & 2.50 \\
         \bottomrule
-    \end{tabular}
+    \end{tabular}}
 \end{table}
 
-\subsection{Phân tích kết quả thực nghiệm}
+\subsection{Phân tích}
 \begin{enumerate}
-    \item \textbf{Phân định vai trò của cấu trúc tính toán (RQ2)}: 
-    Direct Why ngang dung lượng (Capacity-matched) chỉ đạt MRR $0.0478$, gần như tương đương Direct Why ban đầu ($0.0475$). Điều này bác bỏ giả thuyết cho rằng hiệu năng tăng do dung lượng mạng. Trong khi đó, việc đưa predicted-WHAT vào computational path trực tiếp nâng MRR lên $0.0518$ (+8.9\% tương đối), khẳng định giá trị inductive bias của nút thắt $\text{WHAT} \to \text{WHY}$.
-    \item \textbf{Same-task Hard Negatives và Reranker}:
-    Việc bổ sung What Hard-Negative nâng MRR lên $0.0540$ và kết hợp Frozen Residual Reranker đạt đỉnh **$0.0551$** (+15.9\% so với Direct Why), giảm tỷ lệ lỗi cùng tác vụ từ 71.5\% xuống 59.8\%.
-    \item \textbf{Tính minh bạch khoa học đối với Baseline mạnh nhất}:
-    Đồ án ghi nhận trung thực rằng cấu hình phức hợp ($0.0551$) \textbf{chưa đánh bại} baseline tĩnh thô sơ `Mean-pool 8 frames' ($0.0589$). Trên thống kê hiện có, giá trị Top-1 của mean-pool 8 frames và mô hình đề xuất là tương đương trong sai số ngẫu nhiên, và vấn đề cốt lõi vẫn là lỗi nội tác vụ (same-task confusion) chứ không phải một lợi thế rõ ràng về Top-1 tổng thể.
-    \item \textbf{Ý nghĩa chẩn đoán của Oracle What}:
-    Cấu hình Oracle What đạt mức MRR $0.1055$, khẳng định dư địa lớn nếu độ chính xác nhận thức hành động con tiếp tục được cải thiện trong tương lai.
+    \item \textbf{Đối chứng dung lượng (RQ2).} Direct Why ngang dung lượng đạt MRR $0{,}0478$, gần bằng Direct Why chuẩn ($0{,}0475$), nên không có dấu hiệu rằng riêng dung lượng mạng làm tăng MRR. Đưa WHAT dự đoán vào đường tính toán nâng MRR trung bình lên $0{,}0518$ và các thành phần hard-negative, reranker lên $0{,}0551$. Tuy nhiên chênh lệch này (cỡ $0{,}004$--$0{,}008$) cùng bậc với độ lệch chuẩn giữa seed của Direct Why ($0{,}0061$) và chỉ dựa trên 3 seed, một tập kiểm định 215 mẫu và việc chọn epoch tốt nhất ngay trên tập này; vì vậy đồ án \emph{không} kết luận rằng nút thắt $\text{WHAT}\to\text{WHY}$ có lợi.
+    \item \textbf{Baseline mạnh nhất.} Mọi cấu hình có hướng dẫn đều thấp hơn baseline mean-pool 8 khung hình ($0{,}0589$). Về Top-1, reranker và mean-pool bằng nhau ($0{,}0295$).
+    \item \textbf{Mức so với ngẫu nhiên.} Lift của mọi cấu hình nằm trong khoảng $1{,}1$--$1{,}4$; hiệu suất tuyệt đối thấp (Top-1 dưới $3\%$ cho các mô hình khả triển khai).
+    \item \textbf{Oracle What.} Cấu hình dùng nhãn WHAT đúng làm đầu vào (chỉ để chẩn đoán, không khả triển khai) đạt MRR $0{,}1055$ (lift $2{,}5$). Ngay cả khi biết đúng WHAT, hiệu năng vẫn thấp, gợi ý rằng khó khăn nằm ở cả không gian mục tiêu/nhãn WHY và không chỉ ở nhận thức thị giác.
 \end{enumerate}
 
-\subsection{Phân tích lỗi nội tác vụ và phân rã Same-Task / Cross-Task}
+\subsection{Phân rã lỗi cùng tác vụ và khác tác vụ}
 
-Phân tích 626 lỗi Top-1 trên tập kiểm định cho thấy:
-\begin{itemize}
-    \item Lỗi trong cùng tác vụ (Same-Task Confusion): 510 mẫu (**81.47\%**).
-    \item Lỗi khác tác vụ (Cross-Task Confusion): 116 mẫu (18.53\%).
-\end{itemize}
+Với baseline mean-pool 8 khung hình (3 seed $\times$ 215 = 645 dự đoán): 19 dự đoán đúng, 510 sai cùng tác vụ và 116 sai khác tác vụ; trong 626 lỗi có $81{,}5\%$ là cùng tác vụ. Do tập kiểm định pilot chỉ có hai video, mức ngẫu nhiên của tỷ lệ này là $49{,}6\%$ (\cref{sec:protocols}), nên mô hình nhận ra video đúng với tần suất cao hơn đoán ngẫu nhiên nhưng hầu như không chọn đúng mục tiêu trong video đó. \TODO{các cột ``Same-Task Err'' và bảng phân rã Same-/Cross-Task trong bản trước chưa truy vết được tới tệp kết quả (phần ``Same-Task Acc'' trùng số với Top-1 nhưng nhân 10); nếu cần cho các cấu hình khác, hãy chạy lại phân rã lỗi và dán số mới, không dùng số cũ}
 
-Bảng \ref{tab:task_split_breakdown} phân rã chi tiết hiệu năng giữa hai nhóm:
+\section{Ảnh hưởng của độ dài tiền tố}
+\label{sec:prefix_results}
+
+\subsection{Pilot}
+
+Mỗi mô hình mean-pool được huấn luyện và đánh giá trên cùng số khung hình đầu $k\in\{2,4,6,8\}$ (cùng seed khởi tạo, cùng tập kiểm định và gallery). Do chọn epoch trên chính tập kiểm định mang lại thiên lệch lạc quan, \cref{tab:prefix_pilot} báo cáo cả epoch tốt nhất theo MRR kiểm định (giao thức pilot) và epoch cuối (không chọn theo tập kiểm định).
 
 \begin{table}[ht]
     \centering
-    \caption{Phân rã hiệu năng giữa Cross-Task và Same-Task Disambiguation.}
-    \label{tab:task_split_breakdown}
-    \begin{tabular}{lcccc}
+    \small
+    \caption{Độ dài tiền tố, pilot (215 mẫu, 3 seed). Huấn luyện và đánh giá cùng $k$.}
+    \label{tab:prefix_pilot}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{ccccc}
         \toprule
-        \textbf{Cấu hình mô hình} & \textbf{Overall MRR} & \textbf{Cross-Task Acc} & \textbf{Same-Task MRR} & \textbf{Same-Task Top-1} \\
+        \textbf{$k$} & \textbf{MRR (epoch tốt nhất)} & \textbf{MRR (epoch cuối)} & \textbf{Top-1 (tốt nhất)} & \textbf{Top-3 (tốt nhất)} \\
         \midrule
-        Direct Why (0.62M params) & 0.0475 & 71.9\% & 0.0624 & 2.17\% \\
-        Direct Why (Capacity-matched) & 0.0512 & 70.1\% & 0.0635 & 2.48\% \\
-        Predicted-What Guided & 0.0492 & 81.6\% & \textbf{0.0655} & 2.79\% \\
-        + Hard-Neg & 0.0474 & \textbf{85.4\%} & 0.0632 & 2.48\% \\
-        + Hard-Neg + Reranker & \textbf{0.0551} & 84.6\% & \textbf{0.0682} & \textbf{2.95\%} \\
+        2 & 0.0551 $\pm$ 0.0035 & 0.0360 $\pm$ 0.0042 & 0.0310 $\pm$ 0.0027 & 0.0326 $\pm$ 0.0047 \\
+        4 & 0.0545 $\pm$ 0.0039 & 0.0379 $\pm$ 0.0092 & 0.0279 $\pm$ 0.0047 & 0.0357 $\pm$ 0.0027 \\
+        6 & 0.0604 $\pm$ 0.0047 & 0.0434 $\pm$ 0.0023 & 0.0310 $\pm$ 0.0071 & 0.0481 $\pm$ 0.0027 \\
+        8 & 0.0589 $\pm$ 0.0016 & 0.0495 $\pm$ 0.0036 & 0.0295 $\pm$ 0.0071 & 0.0419 $\pm$ 0.0047 \\
         \midrule
-        Mean-pool 8 frames & 0.0589 & 85.2\% & 0.0641 & 2.33\% \\
-        Diagnostic: Oracle What & 0.1071 & 67.3\% & 0.1385 & 7.13\% \\
+        Ngẫu nhiên & 0.0422 & 0.0422 & 0.0088 & 0.0261 \\
+        \bottomrule
+    \end{tabular}}
+\end{table}
+
+Epoch tốt nhất cho đường cong không đơn điệu (cực đại ở $k=6$), còn epoch cuối tăng dần theo $k$ nhưng thấp hơn mức ngẫu nhiên ở $k=2,4$ (hiện tượng quá khớp khi huấn luyện 100 epoch). Chênh lệch ghép cặp theo từng mẫu của MRR giữa $k=2$ và $k=8$ là $+0{,}0038$ (khoảng bootstrap 95\% theo mẫu $[-0{,}0136;\,+0{,}0208]$) với epoch tốt nhất và $+0{,}0135$ ($[-0{,}0023;\,+0{,}0290]$) với epoch cuối; mọi khoảng đều chứa 0, và khoảng này còn bỏ qua việc các mẫu tập trung trong chỉ 2 video. Khi huấn luyện ở 8 khung hình rồi đánh giá ở tiền tố ngắn hơn (lệch độ dài), MRR tăng từ $0{,}0521$ ($k=2$) lên $0{,}0589$ ($k=8$); chênh lệch $+0{,}0068$ có khoảng $[+0{,}0008;\,+0{,}0136]$, nhưng đây là hiệu ứng của một mô hình duy nhất đánh giá trên hai video và bao gồm cả lệch phân phối giữa huấn luyện và kiểm tra.
+
+\subsection{Tập kiểm định đầy đủ}
+
+\begin{table}[ht]
+    \centering
+    \small
+    \caption{Độ dài tiền tố trên tập kiểm định đầy đủ (412 mẫu, 4 video, 3 seed; huấn luyện và đánh giá cùng $k$).}
+    \label{tab:prefix_full}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{ccccc}
+        \toprule
+        \textbf{$k$} & \textbf{MRR (epoch tốt nhất)} & \textbf{MRR (epoch cuối)} & \textbf{Top-1 (tốt nhất)} & \textbf{Top-3 (tốt nhất)} \\
+        \midrule
+        2 & 0.0440 $\pm$ 0.0064 & 0.0319 $\pm$ 0.0020 & 0.0162 $\pm$ 0.0037 & 0.0356 $\pm$ 0.0109 \\
+        4 & 0.0448 $\pm$ 0.0072 & 0.0279 $\pm$ 0.0042 & 0.0162 $\pm$ 0.0074 & 0.0364 $\pm$ 0.0106 \\
+        6 & 0.0474 $\pm$ 0.0010 & 0.0312 $\pm$ 0.0020 & 0.0218 $\pm$ 0.0024 & 0.0413 $\pm$ 0.0042 \\
+        8 & 0.0429 $\pm$ 0.0053 & 0.0307 $\pm$ 0.0025 & 0.0146 $\pm$ 0.0073 & 0.0380 $\pm$ 0.0056 \\
+        \midrule
+        Ngẫu nhiên & 0.0249 & 0.0249 & 0.0047 & 0.0140 \\
+        \bottomrule
+    \end{tabular}}
+\end{table}
+
+\begin{figure}[ht]
+    \centering
+    \figfile{results/prefix_length_full_v1/prefix_length_vs_ranking.png}{0.95\linewidth}
+    \caption{Hiệu năng xếp hạng theo số khung hình quan sát trên tập kiểm định đầy đủ. \TODO{kiểm tra hình đã gồm đường mức ngẫu nhiên và chú thích tiếng Việt, nếu cần vẽ lại}}
+    \label{fig:prefix_full}
+\end{figure}
+
+Trên tập đầy đủ, MRR epoch tốt nhất là $0{,}043$--$0{,}047$ (lift $1{,}7$--$1{,}9$) và cực đại ở $k=6$; MRR epoch cuối là $0{,}028$--$0{,}032$, sát mức ngẫu nhiên $0{,}0249$. Chênh lệch ghép cặp giữa các $k$ có khoảng bootstrap theo \emph{video} (4 cụm) đều chứa 0: $2\to4$: $+0{,}0008$ $[-0{,}0025;\,+0{,}0044]$; $4\to6$: $+0{,}0025$ $[-0{,}0076;\,+0{,}0122]$; $6\to8$: $-0{,}0045$ $[-0{,}0110;\,+0{,}0006]$; $2\to8$: $-0{,}0011$ $[-0{,}0032;\,+0{,}0016]$. Vì vậy \emph{không có bằng chứng} rằng thêm khung hình cải thiện xếp hạng trong thiết lập này, và cũng không thấy điểm bão hòa nào có thể xác định được (RQ3). Tỷ lệ lỗi cùng tác vụ là $42$--$47\%$, cao hơn mức ngẫu nhiên $24{,}7\%$ nhưng thấp hơn mức $81{,}5\%$ của pilot, một phần vì pilot chỉ có hai tác vụ.
+
+\section{Kiểm thử khóa trên video chưa thấy}
+\label{sec:locked_test}
+
+Giao thức được đóng băng trước khi truy cập kiểm thử (tệp giao thức có băm SHA-256 được lưu trong kho mã nguồn): chọn mô hình trên tập kiểm định, 407 mẫu từ 4 video, cùng một gallery cho mọi $k$ và seed, khớp WHY theo văn bản chính xác. Tập này được đánh giá một lần; ghi nhận có 3 lần khởi tạo thất bại (không sinh số liệu) trước lần chạy thành công.
+
+\begin{table}[ht]
+    \centering
+    \small
+    \caption{Kết quả trên tập kiểm thử khóa (407 mẫu, 4 video, 3 seed).}
+    \label{tab:locked_test}
+    \begin{tabular}{ccccc}
+        \toprule
+        \textbf{$k$} & \textbf{MRR} & \textbf{Top-1} & \textbf{Top-3} & \textbf{Lift MRR} \\
+        \midrule
+        2 & 0.0290 $\pm$ 0.0028 & 0.0057 $\pm$ 0.0014 & 0.0172 $\pm$ 0.0000 & 0.91 \\
+        4 & 0.0288 $\pm$ 0.0033 & 0.0082 $\pm$ 0.0038 & 0.0147 $\pm$ 0.0043 & 0.91 \\
+        6 & 0.0294 $\pm$ 0.0045 & 0.0090 $\pm$ 0.0051 & 0.0172 $\pm$ 0.0049 & 0.92 \\
+        8 & 0.0314 $\pm$ 0.0035 & 0.0098 $\pm$ 0.0049 & 0.0197 $\pm$ 0.0025 & 0.99 \\
+        \midrule
+        Ngẫu nhiên & 0.0318 & 0.0071 & 0.0208 & 1.00 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Kết quả khẳng định các mô hình baseline đạt MRR cao chủ yếu nhờ giải quyết tốt bài toán phân loại tác vụ thô (Cross-Task), trong khi mô hình đề xuất mang lại bước nhảy vọt thực chất ở bài toán phân rã mục tiêu nhập nhằng nội tác vụ (Same-Task Disambiguation tăng từ 18.6\% lên 29.5\%).
+Trên tập kiểm thử, MRR ở mọi $k$ bằng hoặc thấp hơn mức ngẫu nhiên, và Top-1 trung bình chỉ tương ứng khoảng $2$--$4$ dự đoán đúng trên 407 mẫu. Kết quả này cho thấy mô hình hiện tại \emph{chưa có kỹ năng có thể chứng minh} trên video chưa thấy (RQ1); mức lift $1{,}7$--$1{,}9$ trên tập kiểm định chủ yếu phản ánh việc chọn epoch trên chính tập đó và đặc thù của 4 video kiểm định.
 
-\section{Đánh giá chẩn đoán Cross-View và Temporal Dynamics}
+\section{Phân tích dự đoán/hoãn}
+\label{sec:selective}
+
+Với ba điểm số ở \cref{sec:decision_scores}, bộ quét ngưỡng gồm 5760 hàng tổng hợp. Bản tóm tắt ban đầu chọn ngưỡng với ràng buộc sai số $\le 0{,}25$; vì sai số khi luôn dự đoán đều trên $96\%$ nên không ngưỡng nào thỏa và thủ tục rơi về ``chấp nhận tất cả'' (coverage $1{,}0$), nên bảng đó không mang thông tin. Đồ án dựng lại đường rủi ro--độ phủ đầy đủ và so với việc từ chối ngẫu nhiên ở cùng độ phủ bằng diện tích dưới đường cong (nhỏ hơn là tốt hơn). Số nhóm (cấu hình $\times$ độ dài tiền tố) mà diện tích thấp hơn từ chối ngẫu nhiên là: confidence $5/12$, margin $7/12$, entropy $12/12$. Các con số này chỉ mang tính mô tả: được đo trên cùng các mẫu kiểm định, không có tập hiệu chỉnh độc lập, và với độ chính xác Top-1 chỉ vài phần trăm thì mỗi điểm trên đường cong dựa trên rất ít mẫu đúng. Vì vậy (RQ4) đồ án chỉ kết luận rằng entropy có dấu hiệu nhẹ về tín hiệu quyết định đáng được kiểm lại trên mô hình mạnh hơn, chưa đủ để đề xuất chính sách dự đoán/hoãn.
+
+\section{Kiểm chứng chéo theo scene}
+\label{sec:scene_cv}
+
+Để khắc phục độ bất định do chỉ có 4 video kiểm định và thiên lệch do chọn epoch trên tập báo cáo, đồ án triển khai kiểm chứng chéo theo nhóm scene trên các mẫu huấn luyện và kiểm định (không đọc tập kiểm thử): 8 fold, mỗi scene nằm trọn trong một fold; epoch được chọn trên một phần tách trong của các scene huấn luyện rồi mô hình được huấn luyện lại trên toàn bộ scene huấn luyện; mọi mẫu được đánh giá đúng một lần ngoài-fold. Độ đo gồm Giao thức G và Giao thức K ($K=5,10$) kèm lift và khoảng bootstrap theo video. Hai không gian mục tiêu được so sánh: mục tiêu SmolVLM--PCA cũ và mục tiêu bộ mã hóa câu đóng băng.
+
+\TODO{điền kết quả từ thư mục kết quả CV (summary.md): bảng MRR/lift, độ chính xác 5-way/10-way, chênh lệch ghép cặp giữa các $k$ và giữa hai mục tiêu; viết nhận xét theo tiêu chí đã chốt trước: ``trên ngẫu nhiên'' khi cận dưới khoảng tin cậy của lift lớn hơn 1 ở ít nhất 2 trong 4 độ dài tiền tố}
+
+\section{Tập dữ liệu nhỏ tự thu thập}
+\label{sec:own_dataset}
+
+Một tập dữ liệu nhỏ được thu thập để minh họa định tính và kiểm tra chuyển giao không đổi trọng số. Quy mô thiết kế: \TODO{ghi số video, số người tham gia, số tác vụ và số lần lặp thực tế sau khi thu xong; phiên bản trước ghi 48 video, 2 người, 12 tác vụ, 2 lần lặp nhưng dữ liệu này chưa được thu}. Mỗi video được gán nhãn theo lược đồ
+\begin{verbatim}
+video_id, participant_id, task_id, rep_id, duration,
+observation_end, outcome_start, object, target, what, why, next
+\end{verbatim}
+và ràng buộc loại trừ kết cục \cref{eq:temporal_exclusion_rule} được kiểm tra trên các nhãn thời điểm này. Với quy mô nhỏ, tập này \emph{không} được dùng để suy ra kết luận định lượng về tổng quát hóa; các con số, nếu báo cáo, kèm số mẫu và số video rõ ràng. \TODO{thêm thông tin về sự đồng ý của người tham gia và quyền riêng tư dữ liệu}
+
+\TODO{chèn hình minh họa từ công cụ quan sát HOI/WHAT/WHY (\cref{sec:viz_tool}): ví dụ 2--3 khung hình có vùng HOI, top-3 WHAT/WHY và điểm; kèm một ví dụ đúng và một ví dụ sai}
+
+\section{Chẩn đoán cross-view và mô hình hóa thời gian}
 
 \begin{itemize}
-    \item \textbf{Mô hình hóa thời gian (Temporal sweeps)}: Các kiến trúc chuỗi phức tạp như GRU ($0.0521$) và Transformer ($0.0408$) đều kém hơn phép lấy trung bình tĩnh (Mean-pool $0.0589$), cho thấy sự gia tăng tham số thời gian gây hiện tượng overfit mạnh trên tập dữ liệu nhỏ.
-    \item \textbf{Bất biến góc nhìn ENIGMA-360}: Mặc dù phép chiếu học được đạt MRR $0.0958$ trên cặp ego--exo, việc chuyển giao sang EgoIntent không mang lại cải thiện cho Why ($0.0345$ so với $0.0476$). Do đó, bất biến góc nhìn chỉ được giữ lại như một nghiên cứu chẩn đoán.
+    \item \textbf{Mô hình hóa thời gian.} Trên pilot, GRU cho MRR $0{,}0521$ ở 8 khung hình, thấp hơn mean-pool ($0{,}0589$); Transformer đạt $0{,}0408$ \TODO{kiểm tra nguồn số Transformer}. Đây là kết quả trên một tập nhỏ và gợi ý (chưa chứng minh) rằng các kiến trúc chuỗi dễ quá khớp.
+    \item \textbf{Bất biến góc nhìn ENIGMA-360.} Phép chiếu học được đạt MRR $0{,}0958$ trên cặp ego--exo nhưng chuyển sang EgoIntent không cải thiện WHY ($0{,}0345$ so với $0{,}0476$). Do đó bất biến góc nhìn chỉ giữ như một nghiên cứu chẩn đoán. \TODO{kiểm tra nguồn các số ENIGMA}
 \end{itemize}
 
-\section{Kết quả kiểm thử hạ tầng SmolVLA và Downstream Benchmark}
+\section{Kết quả kiểm thử hạ tầng SmolVLA và benchmark hạ nguồn}
 
-\subsection{Kiểm tra tính toàn vẹn kỹ thuật phần mềm}
-Mô-đun Intention Adapter và cơ chế tiền tố mở rộng trong SmolVLA đã vượt qua 100\% các bài kiểm tra kỹ thuật (\cref{tab:vlia_integration_summary}):
+\subsection{Tính đúng đắn của cài đặt}
+Mô-đun Intention Adapter và tiền tố mở rộng của SmolVLA vượt qua các kiểm thử kỹ thuật ở \cref{tab:vlia_integration_summary}.
 
 \begin{table}[ht]
     \centering
-    \caption{Tổng hợp kết quả kiểm thử kỹ thuật hạ tầng tích hợp SmolVLA.}
+    \small
+    \caption{Tổng hợp kiểm thử kỹ thuật hạ tầng tích hợp SmolVLA.}
     \label{tab:vlia_integration_summary}
+    \resizebox{\textwidth}{!}{%
     \begin{tabular}{llc}
         \toprule
-        \textbf{Thành phần kiểm thử} & \textbf{Nội dung xác minh} & \textbf{Kết quả} \\
+        \textbf{Thành phần} & \textbf{Nội dung xác minh} & \textbf{Kết quả} \\
         \midrule
-        Intention Adapter & Gradient flow truyền ngược qua adapter ($\nabla W > 0$) & PASS \\
-        Prefix Injection & Chiều dài tiền tố tăng chính xác 1 token ($L \to L+1$) & PASS \\
+        Intention Adapter & Gradient truyền ngược qua adapter ($\nabla W > 0$) & PASS \\
+        Prefix Injection & Chiều dài tiền tố tăng đúng 1 token ($L \to L+1$) & PASS \\
         Token Position & Token ý định nằm ngay trước token trạng thái & PASS \\
-        KV-Cache Path & Token ý định tồn tại hợp lệ trong KV-cache khi inference & PASS \\
-        Flow Matching Action Loss & Giá trị loss hữu hạn, hàm forward/backward nhất quán & PASS \\
-        Baseline Fallback & Khôi phục hoàn toàn SmolVLA gốc khi tắt cờ intention & PASS \\
-        Checkpoint Serialization & Lưu và tải trọng số checkpoint an toàn & PASS \\
+        KV-Cache Path & Token ý định tồn tại hợp lệ trong KV cache khi suy luận & PASS \\
+        Flow Matching Action Loss & Loss hữu hạn, forward/backward nhất quán & PASS \\
+        Baseline Fallback & Khôi phục SmolVLA gốc khi tắt cờ ý định & PASS \\
+        Checkpoint Serialization & Lưu và tải trọng số an toàn & PASS \\
         \bottomrule
-    \end{tabular}
+    \end{tabular}}
 \end{table}
 
-\textbf{Lưu ý phương pháp luận}: Đồ án nhấn mạnh rằng việc vượt qua toàn bộ các kiểm thử trên xác nhận **tính đúng đắn về mặt cài đặt kỹ thuật (implementation correctness)**, chứ không đồng nghĩa với việc khẳng định chính sách robot đã được cải thiện về mặt hành vi học máy.
+\textbf{Lưu ý phương pháp luận.} Việc vượt qua các kiểm thử trên chỉ xác nhận \textbf{tính đúng đắn của cài đặt}; nó không chứng minh rằng việc đưa ý định vào chính sách cải thiện hành vi robot. Đồ án chưa có thí nghiệm so sánh policy có/không có token ý định.
 
-\subsection{Trạng thái trên Benchmark LIBERO-10}
-Đồ án đã loại bỏ toàn bộ các run huấn luyện 25k cũ do lỗi không khớp schema (sử dụng action 6 chiều và thiếu empty camera). Pipeline sửa đổi theo chuẩn 7-D chính thức đạt **24\% success rate trên 100 episodes**. Mốc này được sử dụng thuần túy như một **engineering baseline**, không nhằm mục đích thiết lập kỷ lục SOTA trên LIBERO.
+\subsection{Trạng thái trên LIBERO-10}
+Các run huấn luyện 25k bước trước đó bị loại vì sai lược đồ (action 6 chiều, thiếu camera rỗng). Pipeline sửa theo chuẩn 7 chiều đạt tỷ lệ thành công $24\%$ trên 100 episode (checkpoint 25000); với cỡ mẫu này khoảng tin cậy Wilson 95\% xấp xỉ $[16{,}7\%;\,33{,}2\%]$. Mốc này chỉ là \emph{engineering baseline} của policy không có ý định, không dùng để so sánh với kết quả công bố.
+
+\section{Khả năng tái lập}
+\label{sec:reproducibility}
+
+Mã nguồn, cấu hình và kết quả nằm trong kho \texttt{sgdfgnhmjnfd/vlia-uet} (nhánh \texttt{main}). Các script chính: \texttt{run\_prefix\_length\_ablation.py} (độ dài tiền tố), \texttt{selective\_prediction\_analysis.py} (dự đoán/hoãn), \texttt{run\_scene\_cv.py} (kiểm chứng chéo theo scene). Kết quả và cấu hình của từng thí nghiệm nằm trong thư mục \texttt{results/}, kèm báo cáo kiểm toán. \TODO{ghi mã commit cuối cùng dùng cho mọi số liệu trong đồ án}
 
 % ============================================================
 \chapter{Kết luận và hướng phát triển}
@@ -466,26 +685,33 @@ Mô-đun Intention Adapter và cơ chế tiền tố mở rộng trong SmolVLA �
 
 \section{Kết luận}
 
-Đồ án đã tiến hành nghiên cứu bài toán \textbf{tăng cường khả năng hiểu ý định người dùng cho robot cộng tác dựa trên mô hình VLA}, với các kết quả cụ thể:
+Đồ án nghiên cứu bài toán tăng cường khả năng hiểu ý định người dùng cho robot cộng tác dựa trên mô hình VLA, tập trung vào phân định sớm mục tiêu từ video egocentric. Các kết luận được rút ra ở đúng mức bằng chứng:
 \begin{enumerate}
-    \item Đưa bài toán \textbf{Early Goal Disambiguation} thành trọng tâm nghiên cứu, chứng minh định lượng rằng 81.5\% lỗi sai xuất phát từ sự nhầm lẫn giữa các mục tiêu nội tác vụ.
-    \item Kiểm chứng bằng thực nghiệm đối chứng rằng giả thuyết điều kiện hóa $\text{WHAT} \to \text{WHY}$ mang lại inductive bias thực chất (+15.9\% MRR so với Direct Why), và cải thiện này không bắt nguồn từ việc tăng dung lượng tham số mạng.
-    \item Báo cáo kết quả trung thực, khách quan: Phương pháp đề xuất chưa vượt qua baseline tĩnh thô sơ trên thước đo tổng thể, nhưng vượt trội ở bài toán cốt lõi là phân rã mục tiêu cùng hành động ban đầu.
-    \item Tích hợp thành công giao diện Intention Adapter trên SmolVLA, thiết lập cầu nối kỹ thuật vững chắc cho các hệ thống robot cộng tác trong tương lai.
+    \item \textbf{Giao thức đánh giá.} Đồ án thiết lập quy trình đánh giá có hiệu chỉnh theo mức ngẫu nhiên, chia theo video, tiền tố nhân quả và tập kiểm thử khóa. Quy trình này làm lộ ra rằng các kết quả tưởng như tích cực trên tập kiểm định nhỏ (lift tối đa $1{,}9$) không chuyển sang video chưa thấy (lift $\approx 1{,}0$ trên kiểm thử).
+    \item \textbf{Cơ chế $\text{WHAT}\to\text{WHY}$ (RQ2).} Không có bằng chứng đủ mạnh: các cải thiện trên pilot cùng bậc với độ lệch chuẩn giữa seed và không vượt baseline mean-pool.
+    \item \textbf{Độ dài tiền tố (RQ3).} Không quan sát thấy cải thiện đơn điệu khi tăng từ 2 lên 8 khung hình; các khoảng ghép cặp đều chứa 0.
+    \item \textbf{Dự đoán/hoãn (RQ4).} Các điểm số confidence/margin/entropy chưa đủ tín hiệu để đề xuất chính sách; entropy là ứng viên đáng kiểm lại.
+    \item \textbf{Hạ tầng.} Intention Adapter và tiền tố mở rộng trên SmolVLA đã được cài đặt và kiểm tra tính đúng đắn kỹ thuật; chưa đánh giá tác động lên hành vi robot.
 \end{enumerate}
+\TODO{cập nhật kết luận với kết quả CV theo scene và tập tự thu khi hoàn tất}
 
-\section{Hạn chế và Hướng phát triển}
+\section{Hạn chế và hướng phát triển}
 
 \subsection{Hạn chế}
 \begin{itemize}
-    \item Dữ liệu EgoIntent pilot giới hạn ở 8 video nguồn với 771 mẫu quan sát.
-    \item Mốc $t_{\mathrm{divergence}}$ hiện tại được xác định thông qua nhãn giai đoạn tiếp xúc thay vì đo đạc cảm biến quỹ đạo 3D liên tục.
+    \item Kích thước dữ liệu nhỏ: pilot 8 video, tập đầy đủ 32 video; tập kiểm định và kiểm thử mỗi tập chỉ 4 video, nên mọi khoảng tin cậy theo video rất rộng.
+    \item Chọn epoch theo tập kiểm định ở các số liệu ``epoch tốt nhất'' gây thiên lệch lạc quan; tập kiểm thử ứng viên chưa tách rời hoàn toàn theo scene và đã được dùng một lần.
+    \item Khớp WHY theo văn bản chính xác coi các câu diễn đạt lại gần nghĩa là sai, làm giảm trần của mọi độ đo.
+    \item Các mô hình dùng đặc trưng toàn khung hình đóng băng, chưa dùng vùng HOI; tiền tố là $k$ trong 8 khung hình cách đều nên không tương ứng với một biên thời gian tuyệt đối.
+    \item Giao diện điều phối kỹ năng và tác động của ý định lên policy chưa được đánh giá; chưa có thử nghiệm closed-loop với người.
 \end{itemize}
 
 \subsection{Hướng phát triển}
 \begin{itemize}
-    \item Triển khai đánh giá mô hình trên tập dữ liệu thao tác egocentric mở rộng.
-    \item Thực hiện thử nghiệm tương tác người--robot hoàn chỉnh (Closed-loop HRI) với cánh tay robot UR3/Cobot trong phòng thí nghiệm.
+    \item Hoàn tất kiểm chứng chéo theo scene và so sánh các không gian mục tiêu (bộ mã hóa câu, căn chỉnh văn bản--video được tiền huấn luyện).
+    \item Bổ sung ngữ cảnh quá khứ (các bước trước của cùng video, chỉ dùng quan sát) và đặc trưng vùng HOI vào mô hình.
+    \item Dựng holdout mới tách theo scene và khóa toàn bộ giao thức trước khi truy cập kiểm thử.
+    \item Đánh giá thử nghiệm tương tác người--robot vòng kín (closed-loop HRI) với cánh tay robot UR3/Cobot trong phòng thí nghiệm.
 \end{itemize}
 
 % ============================================================
@@ -573,7 +799,7 @@ Q. Chu, H. Zhang, M. Liu, Y. Feng, H. Shi, and L. Nie,
 
 \bibitem[Sigurdsson et al.(2018)]{sigurdsson2018charadesego}
 G. A. Sigurdsson, A. Gupta, C. Schmid, A. Farhadi, and K. Alahari,
-\newblock ``Actor and Observer: Joint Modeling of First và Third-Person Videos,''
+\newblock ``Actor and Observer: Joint Modeling of First and Third-Person Videos,''
 \newblock in \emph{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, pp. 7396--7404, 2018.
 
 \bibitem[Rai et al.(2021)]{rai2021homage}
@@ -590,6 +816,26 @@ K. Grauman et al.,
 F. Ragusa, R. Leonardi, M. Mazzamuto, D. Di Mauro, C. Quattrocchi, A. Passanisi, I. D'Ambra, A. Furnari, and G. M. Farinella,
 \newblock ``ENIGMA-360: An Ego-Exo Dataset for Human Behavior Understanding in Industrial Scenarios,''
 \newblock \emph{arXiv preprint arXiv:2603.09741}, 2026.
+
+\bibitem[van den Oord et al.(2018)]{oord2018infonce}
+A. van den Oord, Y. Li, and O. Vinyals,
+\newblock ``Representation Learning with Contrastive Predictive Coding,''
+\newblock \emph{arXiv preprint arXiv:1807.03748}, 2018.
+
+\bibitem[Shan et al.(2020)]{shan2020100doh}
+D. Shan, J. Geng, M. Shu, and D. F. Fouhey,
+\newblock ``Understanding Human Hands in Contact at Internet Scale,''
+\newblock in \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 2020.
+
+\bibitem[Zhang et al.(2020)]{zhang2020mediapipe}
+F. Zhang et al.,
+\newblock ``MediaPipe Hands: On-device Real-time Hand Tracking,''
+\newblock \emph{arXiv preprint arXiv:2006.10214}, 2020.
+
+\bibitem[Reimers and Gurevych(2019)]{reimers2019sbert}
+N. Reimers and I. Gurevych,
+\newblock ``Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks,''
+\newblock in \emph{Proceedings of EMNLP-IJCNLP}, 2019.
 
 \end{thebibliography}
 

@@ -4,10 +4,13 @@ from __future__ import annotations
 
 import argparse
 import csv
+import functools
 import html
 import json
+import os
 import subprocess
 import sys
+import textwrap
 import time
 from collections import defaultdict
 from pathlib import Path
@@ -15,6 +18,7 @@ from typing import Any
 
 import cv2
 import numpy as np
+from PIL import Image, ImageDraw, ImageFont
 
 from hoi_utils import (
     HandDetector,
@@ -220,7 +224,6 @@ def run_detection(args: argparse.Namespace) -> int:
     rows = load_manifest(args.manifest)
     args.out.mkdir(parents=True, exist_ok=True)
     detector = HandDetector(args.hand_model)
-    scores = load_scores(args.scores)
     detector_api = detector.api
     frame_count = 0
     detected_count = 0
@@ -337,26 +340,96 @@ def choose_samples(rows: list[dict[str, Any]], video_arg: list[str], n_per_video
     return selected
 
 
-def draw_box_and_hoi(frame: np.ndarray, box: list[int] | None) -> np.ndarray:
-    canvas = frame.copy()
-    h, w = canvas.shape[:2]
-    if box is None:
-        return canvas
-    x1, y1, x2, y2 = (int(value) for value in box)
-    cv2.rectangle(canvas, (x1, y1), (x2, y2), (0, 255, 0), 3)
-    crop = square_crop((x1, y1, x2, y2), h, w)
-    cv2.rectangle(canvas, crop[:2], crop[2:], (0, 165, 255), 3)
-    cv2.putText(
-        canvas,
-        "HOI proxy (display only, not model input)",
-        (8, 30),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.55,
-        (0, 165, 255),
-        2,
-        cv2.LINE_AA,
-    )
-    return canvas
+HAND_COLOR = (0, 200, 0)      # RGB: detected hand box
+HOI_COLOR = (255, 150, 0)     # RGB: HOI proxy square (display only)
+FONT_ENV = "VLIA_FONT"
+
+
+@functools.lru_cache(maxsize=None)
+def get_font(size: int):
+    """A TrueType font with Vietnamese coverage (DejaVu Sans), falling back safely."""
+    paths = [os.environ.get(FONT_ENV, "")]
+    try:
+        import matplotlib
+
+        paths.append(str(Path(matplotlib.get_data_path()) / "fonts/ttf/DejaVuSans.ttf"))
+    except Exception:
+        pass
+    paths += [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+    ]
+    for path in paths:
+        if path and Path(path).is_file():
+            try:
+                return ImageFont.truetype(path, size)
+            except OSError:
+                continue
+    return ImageFont.load_default()
+
+
+class TextLayer:
+    """Collect text, then draw it once with PIL so Vietnamese diacritics render."""
+
+    def __init__(self) -> None:
+        self.items: list[tuple[str, tuple[int, int], int, tuple[int, int, int]]] = []
+
+    def add(self, text: Any, xy: tuple[int, int], size: int = 16, color: tuple[int, int, int] = (15, 15, 15)) -> None:
+        self.items.append((str(text), (int(xy[0]), int(xy[1])), size, color))
+
+    def apply(self, canvas: np.ndarray) -> np.ndarray:
+        if not self.items:
+            return canvas
+        image = Image.fromarray(canvas)
+        draw = ImageDraw.Draw(image)
+        for text, (x, y), size, color in self.items:
+            font = get_font(size)
+            try:
+                draw.text((x, y), text, font=font, fill=color, anchor="ls")
+            except (UnicodeEncodeError, ValueError):
+                safe = text.encode("ascii", "replace").decode("ascii")
+                draw.text((x, y - size), safe, font=font, fill=color)
+        return np.array(image)
+
+
+def add_wrapped(layer: TextLayer, text: str, x: int, y: int, width_chars: int, size: int = 16,
+                color: tuple[int, int, int] = (15, 15, 15), line_h: int = 22) -> int:
+    for part in textwrap.wrap(str(text), width=width_chars, break_long_words=True) or [""]:
+        layer.add(part, (x, y), size, color)
+        y += line_h
+    return y
+
+
+def pick_scores(record: dict[str, Any] | None, k: int) -> dict[str, Any] | None:
+    """Scores for prefix k from either {'scores_by_k': {...}} or a flat record."""
+    if not record:
+        return None
+    by_k = record.get("scores_by_k")
+    if by_k is not None:
+        return by_k.get(str(k))
+    return record
+
+
+def render_tile(rgb: np.ndarray, box: list[int] | None, tile_w: int, tile_h: int, grey: bool = False) -> np.ndarray:
+    """Resize first, then draw boxes with visible thickness (full-res lines vanish after downscaling)."""
+    h, w = rgb.shape[:2]
+    scale = min(tile_w / w, tile_h / h)
+    tile = cv2.resize(rgb, (max(1, int(w * scale)), max(1, int(h * scale))), interpolation=cv2.INTER_AREA)
+    if grey:
+        tile = cv2.cvtColor(cv2.cvtColor(tile, cv2.COLOR_RGB2GRAY), cv2.COLOR_GRAY2RGB)
+    if box is not None:
+        ibox = tuple(int(v) for v in box)
+        x1, y1, x2, y2 = (int(round(v * scale)) for v in ibox)
+        cv2.rectangle(tile, (x1, y1), (x2, y2), HAND_COLOR, 2)
+        cx1, cy1, cx2, cy2 = (int(round(v * scale)) for v in square_crop(ibox, h, w))
+        cv2.rectangle(tile, (cx1, cy1), (cx2, cy2), HOI_COLOR, 2)
+    return tile
+
+
+def paste(canvas: np.ndarray, tile: np.ndarray, x0: int, y0: int) -> None:
+    canvas[y0 : y0 + tile.shape[0], x0 : x0 + tile.shape[1]] = tile
+
 
 
 def load_scores(path: Path | None) -> dict[str, Any]:
@@ -384,79 +457,57 @@ def draw_sample(
         raise ValueError(f"{record['sample_id']}: viewer expected 8 sampled frames")
     tile_w, tile_h, panel_w = 320, 240, 520
     canvas = np.full((tile_h * 2, tile_w * 4 + panel_w, 3), 248, dtype=np.uint8)
-    displayed = []
+    layer = TextLayer()
+    tiles = []
     for index, rgb in enumerate(frames):
         detection = detections.get(index)
         box = detection.get("box") if detection is not None else None
-        tile = draw_box_and_hoi(rgb, box)
-        if index >= k:
-            tile = cv2.cvtColor(tile, cv2.COLOR_RGB2GRAY)
-            tile = cv2.cvtColor(tile, cv2.COLOR_GRAY2RGB)
-        h, w = tile.shape[:2]
-        scale = min(tile_w / w, tile_h / h)
-        resized = cv2.resize(tile, (int(w * scale), int(h * scale)))
+        tile = render_tile(rgb, box, tile_w, tile_h, grey=index >= k)
         slot_x, slot_y = (index % 4) * tile_w, (index // 4) * tile_h
-        canvas[slot_y : slot_y + resized.shape[0], slot_x : slot_x + resized.shape[1]] = resized
+        paste(canvas, tile, slot_x, slot_y)
         status = "hand" if box is not None else "no hand"
-        cv2.putText(
-            canvas,
-            f"frame {index + 1}: {status}" + (" | future" if index >= k else ""),
-            (slot_x + 6, slot_y + tile_h - 12),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.5,
-            (25, 25, 25),
-            1,
-            cv2.LINE_AA,
-        )
-        displayed.append(tile)
+        label = f"frame {index + 1}: {status}" + (" | after prefix" if index >= k else "")
+        layer.add(label, (slot_x + 6, slot_y + tile_h - 8), 15, (25, 25, 25))
+        tiles.append(tile)
 
-    panel_x = tile_w * 4
-    x, y = panel_x + 18, 30
-    text_lines = [
+    x, y = tile_w * 4 + 18, 28
+    for line in (
         f"sample: {record['sample_id']}",
         f"scene: {record['scene']} | prefix k={k}",
-        f"GT WHAT: {record.get('what', '')}",
-        f"GT WHY: {record.get('why', '')}",
-        "HOI proxy is display only; not model input.",
-    ]
-    if score_record:
-        score_record = score_record.get("scores_by_k", {}).get(str(k), score_record)
-        for item in score_record.get("candidates", [])[:3]:
-            text_lines.append(
-                f"WHY: {item.get('text', '')[:42]} ({float(item.get('cosine', item.get('score', 0))):.3f})"
-            )
+    ):
+        y = add_wrapped(layer, line, x, y, 54)
+    y = add_wrapped(layer, f"GT WHAT: {record.get('what', '')}", x, y, 54)
+    y = add_wrapped(layer, f"GT WHY: {record.get('why', '')}", x, y, 54)
+    y += 6
+    y = add_wrapped(layer, "Green box: detected hand. Orange square: HOI proxy.", x, y, 54, 15, (60, 60, 60), 20)
+    y = add_wrapped(layer, "Display only; not model input. Greyed frames come after the prefix.", x, y, 54, 15, (60, 60, 60), 20)
+    y += 8
+    picked = pick_scores(score_record, k)
+    if score_record is not None and picked is None:
+        y = add_wrapped(layer, f"(no scores stored for k={k})", x, y, 54)
+    if picked:
+        gt = str(record.get("why", ""))
+        for item in picked.get("candidates", [])[:3]:
+            text = str(item.get("text", ""))
+            score = float(item.get("cosine", item.get("score", 0)))
+            mark = " [GT]" if text == gt else ""
+            y = add_wrapped(layer, f"WHY: {text}{mark} ({score:.3f})", x, y, 54)
         for key in ("confidence", "margin", "normalized_entropy"):
-            if key in score_record:
-                text_lines.append(f"{key}: {float(score_record[key]):.3f}")
-        confidence = score_record.get("confidence")
-        margin = score_record.get("margin")
+            if key in picked:
+                y = add_wrapped(layer, f"{key}: {float(picked[key]):.3f}", x, y, 54)
         decisions = []
-        if args.tau_conf is not None and confidence is not None:
-            decisions.append(float(confidence) >= args.tau_conf)
-        if args.tau_margin is not None and margin is not None:
-            decisions.append(float(margin) >= args.tau_margin)
+        if args.tau_conf is not None and picked.get("confidence") is not None:
+            decisions.append(float(picked["confidence"]) >= args.tau_conf)
+        if args.tau_margin is not None and picked.get("margin") is not None:
+            decisions.append(float(picked["margin"]) >= args.tau_margin)
         if decisions:
-            text_lines.append(f"display decision: {'PREDICT' if all(decisions) else 'DEFER'}")
-    for line in text_lines:
-        wrapped = [line[i : i + 46] for i in range(0, max(1, len(line)), 46)]
-        for part in wrapped:
-            cv2.putText(
-                canvas,
-                part,
-                (x, y),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.48,
-                (15, 15, 15),
-                1,
-                cv2.LINE_AA,
-            )
-            y += 23
+            y = add_wrapped(layer, f"display decision: {'PREDICT' if all(decisions) else 'DEFER'}", x, y, 54)
+    canvas = layer.apply(canvas)
     cv2.imwrite(str(out_path), cv2.cvtColor(canvas, cv2.COLOR_RGB2BGR))
     if args.show:
-        for frame in displayed:
-            cv2.imshow("VLIA offline HOI monitor", cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
-            key = cv2.waitKey(0) & 0xFF
-            if key == ord("q"):
+        for tile in tiles:
+            cv2.imshow("VLIA offline HOI monitor", cv2.cvtColor(tile, cv2.COLOR_RGB2BGR))
+            if (cv2.waitKey(0) & 0xFF) == ord("q"):
                 break
         cv2.destroyAllWindows()
 
@@ -532,125 +583,85 @@ def run_own_dataset(args: argparse.Namespace) -> int:
         records = list(csv.DictReader(handle))
     if not records:
         raise ValueError("Own-dataset annotation CSV contains no records.")
+    scores = load_scores(args.scores)
     args.out.mkdir(parents=True, exist_ok=True)
-    existing_outputs = [
-        args.out / f"{record['video_id']}_own.png" for record in records
-    ]
+    existing_outputs = [args.out / f"{record['video_id']}_own.png" for record in records]
     if any(path.exists() for path in existing_outputs) or (args.out / "index.html").exists():
         raise FileExistsError(f"Refusing to overwrite existing viewer files under {args.out}")
     detector = HandDetector(args.hand_model)
-    index = ["<!doctype html><meta charset='utf-8'><title>Own dataset HOI monitor</title><h1>Offline own-dataset viewer</h1><ul>"]
+    index = [
+        "<!doctype html><meta charset='utf-8'><title>Own dataset HOI monitor</title>"
+        "<h1>Offline own-dataset viewer</h1><ul>"
+    ]
+    tile_w, tile_h, panel_w, bar_h = 320, 240, 560, 120
+    red, blue, orange, grey_dot = (220, 30, 30), (30, 90, 220), (255, 150, 0), (120, 120, 120)
     try:
         for record in records:
-            sample_id = record["video_id"]
-            video_path = args.video_dir / f"{sample_id}.mp4"
-            frames = sample_exact_video_frames(video_path)
-            tiles = []
-            for rgb in frames:
-                _, box = detector.detect(rgb)
-                tiles.append(draw_box_and_hoi(rgb, box))
-            tile_w, tile_h, panel_w = 320, 240, 560
-            canvas = np.full((tile_h * 2 + 90, tile_w * 4 + panel_w, 3), 248, dtype=np.uint8)
-            for frame_index, tile in enumerate(tiles):
-                h, w = tile.shape[:2]
-                scale = min(tile_w / w, tile_h / h)
-                resized = cv2.resize(tile, (int(w * scale), int(h * scale)))
-                x0, y0 = (frame_index % 4) * tile_w, (frame_index // 4) * tile_h
-                canvas[y0 : y0 + resized.shape[0], x0 : x0 + resized.shape[1]] = resized
-                cv2.putText(
-                    canvas,
-                    f"frame {frame_index + 1}",
-                    (x0 + 6, y0 + tile_h - 12),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5,
-                    (25, 25, 25),
-                    1,
-                    cv2.LINE_AA,
-                )
-            panel_x, y = tile_w * 4 + 18, 30
-            for label in ("object", "target", "what", "why", "next"):
-                text = f"{label}: {record[label]}"
-                for start in range(0, len(text), 48):
-                    cv2.putText(
-                        canvas,
-                        text[start : start + 48],
-                        (panel_x, y),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        0.48,
-                        (15, 15, 15),
-                        1,
-                        cv2.LINE_AA,
-                    )
-                    y += 23
-            score_record = scores.get(sample_id)
-            if score_record:
-                for candidate in score_record.get("candidates", [])[:3]:
-                    text = (
-                        f"WHY: {candidate.get('text', '')} "
-                        f"({float(candidate.get('cosine', candidate.get('score', 0))):.3f})"
-                    )
-                    cv2.putText(
-                        canvas,
-                        text[:62],
-                        (panel_x, y),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        0.43,
-                        (15, 15, 15),
-                        1,
-                        cv2.LINE_AA,
-                    )
-                    y += 21
-                for key in ("confidence", "margin", "normalized_entropy"):
-                    if key in score_record:
-                        cv2.putText(
-                            canvas,
-                            f"{key}: {float(score_record[key]):.3f}",
-                            (panel_x, y),
-                            cv2.FONT_HERSHEY_SIMPLEX,
-                            0.43,
-                            (15, 15, 15),
-                            1,
-                            cv2.LINE_AA,
-                        )
-                        y += 21
+            video_id = record["video_id"]
+            frames = sample_exact_video_frames(args.video_dir / f"{video_id}.mp4")
             duration = float(record["duration"])
             obs = float(record["observation_end"])
             outcome = float(record["outcome_start"])
+            if duration <= 0:
+                raise ValueError(f"{video_id}: duration must be positive")
+            n = len(frames)
+            # The sampler spreads frames over the whole clip, so frame i is at about duration*i/(n-1).
+            times = [duration * i / (n - 1) for i in range(n)]
+            canvas = np.full((tile_h * 2 + bar_h, tile_w * 4 + panel_w, 3), 248, dtype=np.uint8)
+            layer = TextLayer()
+            tiles = []
+            for i, rgb in enumerate(frames):
+                _, box = detector.detect(rgb)
+                after = times[i] > obs
+                tile = render_tile(rgb, box, tile_w, tile_h, grey=after)
+                x0, y0 = (i % 4) * tile_w, (i // 4) * tile_h
+                paste(canvas, tile, x0, y0)
+                note = "after observation_end" if after else "visible"
+                layer.add(f"frame {i + 1} (~{times[i]:.1f}s): {note}", (x0 + 6, y0 + tile_h - 8), 15, (25, 25, 25))
+                tiles.append(tile)
+            x, y = tile_w * 4 + 18, 28
+            y = add_wrapped(layer, f"{video_id} | {record.get('task_id', '')} | rep {record.get('rep_id', '')}", x, y, 56)
+            for label in ("object", "target", "what", "why", "next"):
+                y = add_wrapped(layer, f"{label}: {record.get(label, '')}", x, y, 56)
+            y += 6
+            y = add_wrapped(layer, "Green: hand. Orange square: HOI proxy (display only).", x, y, 56, 15, (60, 60, 60), 20)
+            y = add_wrapped(layer, "Greyed frames are after observation_end: the model must not see them.", x, y, 56, 15, (60, 60, 60), 20)
+            picked = pick_scores(scores.get(video_id), args.k)
+            if picked:
+                y += 6
+                for item in picked.get("candidates", [])[:3]:
+                    score = float(item.get("cosine", item.get("score", 0)))
+                    y = add_wrapped(layer, f"WHY: {item.get('text', '')} ({score:.3f})", x, y, 56)
+                for key in ("confidence", "margin", "normalized_entropy"):
+                    if key in picked:
+                        y = add_wrapped(layer, f"{key}: {float(picked[key]):.3f}", x, y, 56)
             bar_x1, bar_x2 = 24, canvas.shape[1] - 24
-            bar_y = tile_h * 2 + 42
+            bar_y = tile_h * 2 + 36
+
+            def bx(t: float) -> int:
+                return int(bar_x1 + (bar_x2 - bar_x1) * min(max(t / duration, 0.0), 1.0))
+
             cv2.line(canvas, (bar_x1, bar_y), (bar_x2, bar_y), (90, 90, 90), 8)
-            obs_x = int(bar_x1 + (bar_x2 - bar_x1) * obs / duration)
-            outcome_x = int(bar_x1 + (bar_x2 - bar_x1) * outcome / duration)
-            margin_x = int(bar_x1 + (bar_x2 - bar_x1) * (outcome - 0.5) / duration)
-            cv2.line(canvas, (obs_x, bar_y - 15), (obs_x, bar_y + 15), (0, 0, 255), 3)
-            cv2.line(canvas, (outcome_x, bar_y - 15), (outcome_x, bar_y + 15), (255, 120, 0), 3)
-            cv2.line(canvas, (margin_x, bar_y - 11), (margin_x, bar_y + 11), (0, 165, 255), 2)
-            cv2.putText(
-                canvas,
-                f"observation_end={obs:.2f}s | outcome_start={outcome:.2f}s | "
-                f"safety margin={outcome - obs:.2f}s",
-                (bar_x1, bar_y + 34),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.48,
-                (20, 20, 20),
-                1,
-                cv2.LINE_AA,
+            for t in times:
+                cv2.circle(canvas, (bx(t), bar_y), 5, grey_dot, -1)
+            cv2.line(canvas, (bx(obs), bar_y - 16), (bx(obs), bar_y + 16), red, 3)
+            cv2.line(canvas, (bx(outcome), bar_y - 16), (bx(outcome), bar_y + 16), blue, 3)
+            cv2.line(canvas, (bx(outcome - 0.5), bar_y - 11), (bx(outcome - 0.5), bar_y + 11), orange, 2)
+            layer.add(
+                f"observation_end={obs:.2f}s (red) | outcome_start={outcome:.2f}s (blue) | "
+                f"gap={outcome - obs:.2f}s (rule: >= 0.50s) | orange tick = outcome_start - 0.5s",
+                (bar_x1, bar_y + 38), 16, (20, 20, 20),
             )
-            image_name = f"{sample_id}_own.png"
-            cv2.imwrite(
-                str(args.out / image_name),
-                cv2.cvtColor(canvas, cv2.COLOR_RGB2BGR),
-            )
+            canvas = layer.apply(canvas)
+            image_name = f"{video_id}_own.png"
+            cv2.imwrite(str(args.out / image_name), cv2.cvtColor(canvas, cv2.COLOR_RGB2BGR))
             index.append(
-                f"<li><p>{html.escape(sample_id)}</p><img src='{html.escape(image_name)}' "
+                f"<li><p>{html.escape(video_id)}</p><img src='{html.escape(image_name)}' "
                 "style='max-width:100%'></li>"
             )
             if args.show:
-                for frame in tiles:
-                    cv2.imshow(
-                        "VLIA own-dataset viewer",
-                        cv2.cvtColor(frame, cv2.COLOR_RGB2BGR),
-                    )
+                for tile in tiles:
+                    cv2.imshow("VLIA own-dataset viewer", cv2.cvtColor(tile, cv2.COLOR_RGB2BGR))
                     if (cv2.waitKey(0) & 0xFF) == ord("q"):
                         break
                 cv2.destroyAllWindows()
