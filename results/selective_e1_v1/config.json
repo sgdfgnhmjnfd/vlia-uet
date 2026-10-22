@@ -1,0 +1,78 @@
+{
+  "embeddings": "/media/dhqg/d3/vlia_outputs/ladder/siglip-base-patch16-224",
+  "frame_dtype": "float32",
+  "gate": "amendment 1 (|hits - E1 hits| <= 2)",
+  "gate_rows": [
+    {
+      "k": 2,
+      "e1_hits": 694,
+      "hits": 694
+    },
+    {
+      "k": 4,
+      "e1_hits": 689,
+      "hits": 689
+    },
+    {
+      "k": 6,
+      "e1_hits": 703,
+      "hits": 703
+    },
+    {
+      "k": 8,
+      "e1_hits": 722,
+      "hits": 722
+    }
+  ],
+  "prefixes": [
+    2,
+    4,
+    6,
+    8
+  ],
+  "kway": [
+    5,
+    10
+  ],
+  "scores": [
+    "margin (primary)",
+    "confidence",
+    "entropy_neg"
+  ],
+  "temperatures": {
+    "primary": 0.07,
+    "secondary": [
+      0.02,
+      0.2
+    ]
+  },
+  "coverage_n": "round(coverage * N), at least 1",
+  "ties": "stable input (manifest) order",
+  "bootstrap": {
+    "B": 2000,
+    "seed": 0,
+    "cluster": "video_uid",
+    "resort_per_resample": true
+  },
+  "operational_thresholds": "per fold: quantile(score outside fold, 1 - target); accept score >= threshold",
+  "verdicts": {
+    "S1": {
+      "pass": true,
+      "prefixes_ci_lo_gt0": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "rule": "margin, K=5: 95% CI lower bound of acc@50% - acc@100% > 0 at >= 2 of 4 prefixes"
+    }
+  },
+  "preregistration_sha256": {
+    "results/prereg_ladder_v1.md": "a8fbc132843e3bd9214b7ba8a298dc522798830cbf8f54a084e5a2990a30892e",
+    "results/prereg_ladder_v1_amendment_1.md": "9363700e17e273ec85d58338afe90b0499fe4bb9fe35c31abe428e5ca044548d",
+    "results/prereg_daily_v1.md": "7f8d3c0b877d0fbda04a8888a90b816cc71de1ff7aaa48d7834985080e65a7be",
+    "results/prereg_daily_v1_addendum.md": "69ee7ad41789f9235f4b8a90a77cbb3799ac777197c3ba2764c2ed3827e0d909"
+  },
+  "git_commit": "fe02a6ff445dcce4ecd3a2f7248852ea2d05bb6f",
+  "test_split_read": false
+}

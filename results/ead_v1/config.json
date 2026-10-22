@@ -1,0 +1,35 @@
+{
+  "stage": "ladder_v1 Stage 4 (early decision)",
+  "pipeline": "siglip-base-patch16-224|A0|C0|T0 (float32)",
+  "budgets": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "tau_candidates": "observed training-fold margins at k=2..8",
+  "tau_tie_break": "closest training mean frames to budget; ties -> larger tau",
+  "comparator": "per-query linear interpolation of fixed-k hits at the pooled realized mean frames",
+  "bootstrap": {
+    "B": 10000,
+    "seed": 0,
+    "cluster": "video_uid"
+  },
+  "verdicts": {
+    "S2": {
+      "pass": false,
+      "budgets_ci_lo_gt0": [
+        5
+      ],
+      "rule": "early-decision minus interpolated fixed-k: CI lower bound > 0 at >= 2 of 4 budgets"
+    }
+  },
+  "preregistration_sha256": {
+    "results/prereg_ladder_v1.md": "a8fbc132843e3bd9214b7ba8a298dc522798830cbf8f54a084e5a2990a30892e",
+    "results/prereg_ladder_v1_amendment_1.md": "9363700e17e273ec85d58338afe90b0499fe4bb9fe35c31abe428e5ca044548d",
+    "results/prereg_daily_v1.md": "7f8d3c0b877d0fbda04a8888a90b816cc71de1ff7aaa48d7834985080e65a7be",
+    "results/prereg_daily_v1_addendum.md": "69ee7ad41789f9235f4b8a90a77cbb3799ac777197c3ba2764c2ed3827e0d909"
+  },
+  "git_commit": "fe02a6ff445dcce4ecd3a2f7248852ea2d05bb6f",
+  "test_split_read": false
+}
