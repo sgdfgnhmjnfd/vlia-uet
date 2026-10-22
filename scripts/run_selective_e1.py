@@ -1,308 +1,303 @@
 #!/usr/bin/env python3
-"""Selective prediction on cached SigLIP E1 scores."""
+"""Selective prediction on SigLIP baseline scores (`results/prereg_daily_v1.md`, Stage 2).
+
+Per amendment 1 (`results/prereg_ladder_v1_amendment_1.md`) the baseline
+embeddings are the float32 re-extraction in
+`/media/dhqg/d3/vlia_outputs/ladder/siglip-base-patch16-224/`, and the
+reproduction check is the amended gate (|K=5 hits - E1 hits| <= 2 per k),
+which must already have passed (`results/ladder_v1/gate_amended.json`).
+
+Scores (higher = more willing to predict): margin (PRIMARY) = top1 - top2
+cosine; confidence = max softmax(cos/T); entropy_neg = -normalized entropy of
+softmax(cos/T); T = 0.07 primary, 0.02 / 0.2 secondary. K=5 primary, K=10
+secondary. `--selftest` is numpy-only.
+"""
 from __future__ import annotations
 
 import argparse
 import csv
 import json
-import math
-import os
 import sys
-from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
-import torch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-import run_scene_cv as CV
+import run_scene_cv as CV  # noqa: E402
 
 PREFIXES = (2, 4, 6, 8)
-KWAY_K = 5
+COVERAGES = (1.0, 0.8, 0.6, 0.5, 0.4, 0.2)
+TARGET_COVERAGES = (0.8, 0.5, 0.2)
+TEMPS = (0.07, 0.02, 0.2)
+B_SELECTIVE = 2000
 
 
-def read_jsonl(path: Path) -> list[dict]:
-    with path.open("r", encoding="utf-8") as handle:
-        return [json.loads(line) for line in handle if line.strip()]
+# ======================================================================
+# numpy-only logic
+# ======================================================================
+
+def softmax(scores: np.ndarray, temp: float) -> np.ndarray:
+    z = scores / temp
+    z = z - z.max(axis=1, keepdims=True)
+    e = np.exp(z)
+    return e / e.sum(axis=1, keepdims=True)
 
 
-def load_manifest(path: Path) -> list[dict]:
-    rows = read_jsonl(path)
-    if any(r.get("split") not in ("train", "val") for r in rows):
-        raise ValueError("Manifest contains disallowed split(s).")
-    return rows
+def decision_scores(cos: np.ndarray) -> dict[str, np.ndarray]:
+    srt = np.sort(cos, axis=1)
+    out = {"margin": srt[:, -1] - srt[:, -2]}
+    for t in TEMPS:
+        p = softmax(cos, t)
+        ent = -(p * np.log(np.clip(p, 1e-15, 1.0))).sum(axis=1) / np.log(cos.shape[1])
+        suffix = "" if t == 0.07 else f"_T{t}"
+        out[f"confidence{suffix}"] = p.max(axis=1)
+        out[f"entropy_neg{suffix}"] = -ent
+    return out
 
 
-def load_cache(cache_path: Path) -> tuple[np.ndarray, np.ndarray]:
-    with np.load(cache_path) as obj:
-        sample_ids = obj["sample_ids"].astype(str)
-        full = np.asarray(obj["full"], dtype=np.float32)
-    return sample_ids, full
+def risk_curve(score: np.ndarray, correct: np.ndarray) -> np.ndarray:
+    """Selective risk after accepting the top-n queries, n = 1..N
+    (descending score, ties in stable input order)."""
+    order = np.argsort(-score, kind="stable")
+    err = 1.0 - correct[order].astype(float)
+    return np.cumsum(err) / np.arange(1, len(err) + 1)
 
 
-def resolve_local_snapshot(model_name: str, cache_dir: str | Path = "/media/dhqg/d3/hf_cache") -> str | None:
-    repo_id = model_name.replace("/", "--")
-    candidate_roots = [
-        Path(cache_dir) / "hub" / f"models--{repo_id}",
-        Path(cache_dir) / f"models--{repo_id}",
-    ]
-    for root in candidate_roots:
-        snapshots = root / "snapshots"
-        if snapshots.exists():
-            bins = sorted(p for p in snapshots.iterdir() if p.is_dir())
-            if bins:
-                return str(bins[-1])
-    return None
+def n_at(coverage: float, n: int) -> int:
+    return max(1, int(round(coverage * n)))
 
 
-def load_text_embeddings(model_name: str = "google/siglip-base-patch16-224") -> tuple[list[str], np.ndarray]:
-    from transformers import AutoModel, AutoProcessor
-
-    snapshot_dir = resolve_local_snapshot(model_name)
-    if snapshot_dir is None:
-        raise FileNotFoundError(f"No local Hugging Face snapshot found for {model_name}")
-    processor = AutoProcessor.from_pretrained(snapshot_dir, local_files_only=True)
-    model = AutoModel.from_pretrained(snapshot_dir, local_files_only=True)
-    model.eval()
-    texts = sorted({r["why"] for r in load_manifest(ROOT / "results/hoi_detection_v1/manifest.jsonl")})
-    tokens = processor(
-        text=texts,
-        padding="max_length",
-        max_length=64,
-        truncation=True,
-        return_tensors="pt",
-    )
-    with torch.no_grad():
-        emb = model.get_text_features(**tokens)
-        if hasattr(emb, "pooler_output"):
-            emb = emb.pooler_output
-        emb = torch.nn.functional.normalize(emb.float(), dim=-1).cpu().numpy()
-    return texts, emb
+def aurc(score: np.ndarray, correct: np.ndarray) -> float:
+    return float(risk_curve(score, correct).mean())
 
 
-def softmax_prob(scores: np.ndarray, temp: float = 0.07) -> np.ndarray:
-    scaled = scores / temp
-    scaled = scaled - scaled.max(axis=1, keepdims=True)
-    ex = np.exp(scaled)
-    return ex / ex.sum(axis=1, keepdims=True)
+def sel_acc(score: np.ndarray, correct: np.ndarray, coverage: float) -> float:
+    return float(1.0 - risk_curve(score, correct)[n_at(coverage, len(score)) - 1])
 
 
-def compute_kway_accuracy(emb_mean: np.ndarray, text_emb: np.ndarray, candidates: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    valid = (candidates >= 0).all(axis=1)
-    safe = np.where(candidates >= 0, candidates, 0)
-    scores = np.einsum("nd,nkd->nk", emb_mean, text_emb[safe])
-    hits = (scores[:, :1] > scores[:, 1:]).all(axis=1)
-    return hits, valid
+def video_bootstrap_stats(clusters, score, correct, B=B_SELECTIVE, seed=0):
+    """Resample whole videos; recompute the sort per resample. Returns arrays
+    of (acc@50% - acc@100%) and (overall error - AURC)."""
+    uniq, inv = np.unique(clusters, return_inverse=True)
+    members = [np.flatnonzero(inv == u) for u in range(len(uniq))]
+    rng = np.random.default_rng(seed)
+    gain, excess = np.zeros(B), np.zeros(B)
+    for b in range(B):
+        pick = rng.integers(0, len(uniq), size=len(uniq))
+        idx = np.concatenate([members[p] for p in pick])
+        s, c = score[idx], correct[idx]
+        rc = risk_curve(s, c)
+        gain[b] = (1 - rc[n_at(0.5, len(s)) - 1]) - c.mean()
+        excess[b] = (1 - c.mean()) - rc.mean()
+    return gain, excess
 
 
-def score_margin_and_acc():
-    manifest_path = ROOT / "results/hoi_detection_v1/manifest.jsonl"
-    rows = load_manifest(manifest_path)
-    sample_ids = [r["sample_id"] for r in rows]
-    cache_sample_ids, frame_emb = load_cache(Path("/media/dhqg/d3/vlia_outputs/e1/siglip_frame_embeddings_e1_v1.npz"))
-    sample_to_idx = {sid: i for i, sid in enumerate(cache_sample_ids)}
-    if sorted(sample_ids) != sorted(cache_sample_ids.tolist()):
-        raise ValueError("Manifest and cache sample_id sets differ.")
-    idx = np.array([sample_to_idx[sid] for sid in sample_ids], dtype=np.int64)
-    frame_emb = frame_emb[idx]
-    text_list, text_emb = load_text_embeddings()
-    texts = [r["why"] for r in rows]
-    text_vocab = {text: i for i, text in enumerate(text_list)}
-    target_emb = np.asarray([text_emb[text_vocab[t]] for t in texts], dtype=np.float32)
-    video_uids = np.asarray([r["video_uid"] for r in rows])
-    scenes = np.asarray([r["scene"] for r in rows])
-    cands = CV.build_kway(video_uids.tolist(), texts, sample_ids, KWAY_K)
-    expected = {
-        2: 0.27726727926488215,
-        4: 0.275269676388334,
-        6: 0.2808629644426688,
-        8: 0.2884538553735517,
-    }
-    for k in PREFIXES:
-        prefix_emb = frame_emb[:, :k].mean(axis=1)
-        prefix_emb = prefix_emb / np.maximum(np.linalg.norm(prefix_emb, axis=1, keepdims=True), 1e-12)
-        metrics = []
-        for i in range(len(rows)):
-            cand = cands[i]
-            if (cand < 0).any():
-                continue
-            cos = prefix_emb[i] @ target_emb[cand].T
-            metrics.append(bool(cos[0] > np.max(cos[1:])))
-        actual = float(np.mean(metrics))
-        if not np.isclose(actual, expected[k], atol=1e-9, rtol=0.0):
-            raise AssertionError(f"K-way accuracy mismatch for k={k}: actual={actual} expected={expected[k]}")
-    return rows, frame_emb, target_emb, cands, video_uids, scenes
+def fold_thresholds(score, fold_of, target_coverage):
+    """Threshold for each fold = quantile of the score on queries OUTSIDE that
+    fold; returns the accept mask pooled over held-out folds and thresholds."""
+    accept = np.zeros(len(score), dtype=bool)
+    thr = {}
+    for f in np.unique(fold_of):
+        held = fold_of == f
+        q = float(np.quantile(score[~held], 1.0 - target_coverage))
+        thr[int(f)] = q
+        accept[held] = score[held] >= q
+    return accept, thr
 
 
-def compute_score_stats(rows, frame_emb, target_emb, candidates, video_uids, scenes):
-    rows_by_k = {}
-    for k in PREFIXES:
-        prefix_emb = frame_emb[:, :k].mean(axis=1)
-        prefix_emb = prefix_emb / np.maximum(np.linalg.norm(prefix_emb, axis=1, keepdims=True), 1e-12)
-        sims = prefix_emb @ target_emb.T
-        score_rows = []
-        for i, row in enumerate(rows):
-            cand = candidates[i]
-            if (cand < 0).any():
-                continue
-            cos = prefix_emb[i] @ target_emb[cand].T
-            top_idx = np.argsort(cos)[::-1]
-            top1 = float(cos[top_idx[0]])
-            top2 = float(cos[top_idx[1]])
-            probs = softmax_prob(target_emb[cand][None, :] if False else np.asarray([cos], dtype=np.float32), temp=0.07)[0]
-            margin = top1 - top2
-            confidence = float(probs.max())
-            entropy_neg = float(-(probs * np.log(np.clip(probs, 1e-12, 1.0))).sum() / math.log(5.0))
-            # note: the score for a query is the same as the candidate ranking for its true label in the full candidate set
-            correct = bool(cos[0] > np.max(cos[1:]))
-            score_rows.append({
-                "sample_id": row["sample_id"],
-                "video_uid": row["video_uid"],
-                "scene": row["scene"],
-                "k": k,
-                "margin": margin,
-                "confidence": confidence,
-                "entropy_neg": -float(-(probs * np.log(np.clip(probs, 1e-12, 1.0))).sum() / math.log(5.0)),
-                "correct": correct,
-                "score": margin,
-            })
-        rows_by_k[k] = score_rows
-    return rows_by_k
+def selftest() -> None:
+    score = np.array([0.9, 0.8, 0.7, 0.6])
+    correct = np.array([1, 1, 0, 0])
+    assert np.allclose(risk_curve(score, correct), [0, 0, 1 / 3, 0.5])
+    assert abs(aurc(score, correct) - (0 + 0 + 1 / 3 + 0.5) / 4) < 1e-12
+    assert sel_acc(score, correct, 0.5) == 1.0 and sel_acc(score, correct, 1.0) == 0.5
+    # ties broken by stable input order
+    assert np.allclose(risk_curve(np.zeros(3), np.array([0, 1, 1])), [1, 0.5, 1 / 3])
+    # random rejection: AURC on shuffled scores ~ overall error
+    rng = np.random.default_rng(0)
+    c = (rng.random(2000) < 0.3).astype(float)
+    vals = [aurc(rng.random(2000), c) for _ in range(200)]
+    assert abs(np.mean(vals) - (1 - c.mean())) < 0.01, np.mean(vals)
+    # fold-quantile thresholding never touches the held-out fold
+    s = rng.random(100)
+    folds = np.repeat(np.arange(4), 25)
+    acc1, thr1 = fold_thresholds(s, folds, 0.5)
+    for f in range(4):
+        s2 = s.copy()
+        s2[folds == f] = rng.random(25) * 100  # perturb only the held-out fold
+        _, thr2 = fold_thresholds(s2, folds, 0.5)
+        assert thr2[f] == thr1[f]
+    # bootstrap helper: a perfect score with all-correct data gives zero gain
+    g, e = video_bootstrap_stats(np.repeat(np.arange(5), 4), np.arange(20.0), np.ones(20), B=50)
+    assert np.allclose(g, 0) and np.allclose(e, 0)
+    point, lo, hi = CV.video_bootstrap(np.repeat(np.arange(3), 2), np.ones(6), np.ones(6), B=100)
+    assert point == lo == hi == 1.0
+    print("selftest: PASS (risk-coverage/AURC, stable ties, random-rejection AURC, "
+          "fold-quantile thresholds held-out-free, bootstrap helpers)")
 
 
-def _accept_mask_for_threshold(score, threshold, higher_is_more_confident):
-    return np.asarray(score >= threshold) if higher_is_more_confident else np.asarray(score <= threshold)
+# ======================================================================
+# analysis
+# ======================================================================
 
-
-def compute_summary(rows_by_k, out_dir: Path) -> dict:
-    out_dir.mkdir(parents=True, exist_ok=True)
-    summary_rows = []
-    risk_rows = []
-    for k, samples in rows_by_k.items():
-        score = np.asarray([s["margin"] for s in samples], dtype=np.float64)
-        correct = np.asarray([1 if s["correct"] else 0 for s in samples], dtype=np.float64)
-        order = np.argsort(-score, kind="mergesort")
-        sorted_score = score[order]
-        sorted_correct = correct[order]
-        coverage_levels = [1.0, 0.8, 0.6, 0.5, 0.4, 0.2]
-        for cov in coverage_levels:
-            n_accept = max(1, int(round(len(samples) * cov)))
-            if cov == 1.0:
-                accept = np.ones(len(samples), dtype=bool)
-            else:
-                accept = np.arange(len(samples)) < n_accept
-            accepted = sorted_correct[accept]
-            acc = float(accepted.mean()) if accepted.size else 0.0
-            risk = float((~accepted.astype(bool)).mean()) if accepted.size else 1.0
-            summary_rows.append({
-                "k": k,
-                "score": "margin",
-                "coverage": cov,
-                "selective_accuracy": acc,
-                "risk": risk,
-                "n_accepted": int(accepted.size),
-            })
-            risk_rows.append({"k": k, "score": "margin", "coverage": cov, "risk": risk, "selective_accuracy": acc})
-    with (out_dir / "risk_coverage_curves.csv").open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["k", "score", "coverage", "risk", "selective_accuracy"])
+def write_csv(path: Path, rows: list[dict]) -> None:
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
         writer.writeheader()
-        writer.writerows(risk_rows)
-    with (out_dir / "summary.csv").open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["k", "score", "coverage", "selective_accuracy", "risk", "n_accepted"])
-        writer.writeheader()
-        writer.writerows(summary_rows)
-    return {"summary_rows": summary_rows, "risk_rows": risk_rows}
+        writer.writerows(rows)
 
 
-def operational_thresholds(rows_by_k):
-    rows = []
-    for k, samples in rows_by_k.items():
-        score = np.asarray([s["margin"] for s in samples], dtype=np.float64)
-        correct = np.asarray([1 if s["correct"] else 0 for s in samples], dtype=np.float64)
-        scene = np.asarray([s["scene"] for s in samples])
-        fold_map = CV.assign_folds(scene.tolist(), 8)
-        for target_cov in (0.8, 0.5, 0.2):
-            thresh = []
-            used = []
-            for fold in sorted(set(fold_map.values())):
-                ids = np.asarray([i for i, f in enumerate(scene) if fold_map[f] == fold], dtype=int)
-                out = np.asarray([i for i in range(len(samples)) if fold_map[scene[i]] != fold], dtype=int)
-                if len(out) == 0:
-                    continue
-                q = np.quantile(score[out], 1.0 - target_cov)
-                thresh.append(float(q))
-                pred = score[ids] >= q
-                used.append({"fold": fold, "coverage": float(pred.mean()), "acc": float(correct[ids][pred].mean()) if pred.any() else 0.0})
-            rows.append({"k": k, "target_coverage": target_cov, "threshold": float(np.median(thresh)) if thresh else 0.0, "realized_coverage": float(np.mean([u["coverage"] for u in used])) if used else 0.0, "realized_acc": float(np.mean([u["acc"] for u in used])) if used else 0.0})
-    return rows
+def run(out: Path) -> int:
+    import run_ladder_v1 as L
 
+    gate = json.loads((ROOT / "results/ladder_v1/gate_amended.json").read_text())
+    if not gate["pass"]:
+        raise SystemExit("amended baseline gate did not pass; stop")
+    data = L.Data(encoders=(L.BASELINE_ENCODER,), minilm=False)
+    assert data.meta[L.BASELINE_ENCODER]["frame_dtype"] == "float32"
+    expected = L.e1_expected()
+    fr = data.frames[L.BASELINE_ENCODER]
+    t0 = data.text[L.BASELINE_ENCODER]["T0"]
+    gate_rows = []
+    for k in PREFIXES:
+        hits = L.baseline_hits(data, k)
+        exp_hits = int(round(expected[k] * data.n))
+        gate_rows.append({"k": k, "e1_hits": exp_hits, "hits": int(hits.sum())})
+        if abs(int(hits.sum()) - exp_hits) > 2:
+            raise AssertionError(f"amended gate fails at k={k}")
 
-def plot_curve(rows_by_k, out_dir: Path):
+    out.mkdir(parents=True, exist_ok=True)
+    curve_rows, summary_rows, op_rows = [], [], []
+    plot_data = {}
+    for K, cands, valid in ((5, data.cands5, data.valid5), (10, data.cands10, data.valid10)):
+        q = np.flatnonzero(valid)  # queries with a full K-way set
+        for k in PREFIXES:
+            cos = L.candidate_scores(fr, t0, t0, np.zeros(data.n, bool), q, cands[q], "A0", k)
+            correct = (cos[:, :1] > cos[:, 1:]).all(axis=1).astype(float)
+            scores = decision_scores(cos)
+            vids = data.vids[q]
+            for name, s in scores.items():
+                primary = name == "margin"
+                rc = risk_curve(s, correct)
+                n = len(s)
+                step = max(1, n // 200)
+                for m in list(range(step, n, step)) + [n]:
+                    curve_rows.append({"K": K, "k": k, "score": name, "n_accepted": m,
+                                       "coverage": m / n, "selective_risk": float(rc[m - 1])})
+                if K == 5:
+                    plot_data[(k, name)] = rc
+                row = {"K": K, "k": k, "score": name, "role": "primary" if primary and K == 5 else "secondary",
+                       "n_queries": n, "overall_acc": float(correct.mean())}
+                for cov in COVERAGES:
+                    row[f"acc@{int(cov * 100)}"] = float(1 - rc[n_at(cov, n) - 1])
+                row["AURC"] = float(rc.mean())
+                row["random_rejection_AURC"] = float(1 - correct.mean())
+                row["AURC_excess"] = row["random_rejection_AURC"] - row["AURC"]
+                row["gain50"] = row["acc@50"] - row["acc@100"]
+                if name in ("margin", "confidence", "entropy_neg"):
+                    g, e = video_bootstrap_stats(vids, s, correct)
+                    row["gain50_ci_lo"], row["gain50_ci_hi"] = (float(x) for x in np.percentile(g, [2.5, 97.5]))
+                    row["AURC_excess_ci_lo"], row["AURC_excess_ci_hi"] = (float(x) for x in np.percentile(e, [2.5, 97.5]))
+                summary_rows.append(row)
+                if name in ("margin", "confidence", "entropy_neg"):
+                    for tc in TARGET_COVERAGES:
+                        accept, thr = fold_thresholds(s, data.fold_of[q], tc)
+                        acc_pt, acc_lo, acc_hi = CV.video_bootstrap(vids, correct * accept, accept.astype(float), B=B_SELECTIVE)
+                        cov_pt, cov_lo, cov_hi = CV.video_bootstrap(vids, accept.astype(float), np.ones(n), B=B_SELECTIVE)
+                        op_rows.append({
+                            "K": K, "k": k, "score": name, "target_coverage": tc,
+                            "realized_coverage": cov_pt, "coverage_ci_lo": cov_lo, "coverage_ci_hi": cov_hi,
+                            "selective_acc": acc_pt, "selective_acc_ci_lo": acc_lo, "selective_acc_ci_hi": acc_hi,
+                            "overall_acc": float(correct.mean()),
+                            "thresholds_by_fold": json.dumps({f: round(v, 6) for f, v in thr.items()}),
+                        })
+            print(f"K={K} k={k} done", flush=True)
+    for row in summary_rows:  # uniform columns
+        for col in ("gain50_ci_lo", "gain50_ci_hi", "AURC_excess_ci_lo", "AURC_excess_ci_hi"):
+            row.setdefault(col, "")
+    write_csv(out / "risk_coverage_curves.csv", curve_rows)
+    write_csv(out / "summary.csv", summary_rows)
+    write_csv(out / "operational_thresholds.csv", op_rows)
+
+    primary = [r for r in summary_rows if r["K"] == 5 and r["score"] == "margin"]
+    passing = [r["k"] for r in primary if r["gain50_ci_lo"] > 0]
+    s1 = len(passing) >= 2
+    verdict = {"S1": {"pass": s1, "prefixes_ci_lo_gt0": passing,
+                      "rule": "margin, K=5: 95% CI lower bound of acc@50% - acc@100% > 0 at >= 2 of 4 prefixes"}}
+
     import matplotlib
+
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    for k, samples in rows_by_k.items():
-        score = np.asarray([s["margin"] for s in samples], dtype=np.float64)
-        correct = np.asarray([1 if s["correct"] else 0 for s in samples], dtype=np.float64)
-        order = np.argsort(-score, kind="mergesort")
-        sorted_score = score[order]
-        sorted_correct = correct[order]
-        coverage = np.linspace(1.0, 0.0, len(samples))
-        risks = []
-        for idx in range(len(samples)):
-            accepted = sorted_correct[: idx + 1]
-            risks.append(float(1.0 - accepted.mean()))
-        fig, ax = plt.subplots(figsize=(6, 4))
-        ax.plot(coverage, risks, label=f"k={k}")
-        ax.plot([0, 1], [1.0 - correct.mean(), 1.0 - correct.mean()], linestyle="--", label="random rejection")
-        ax.set_xlim(0, 1)
-        ax.set_ylim(0, 1)
+
+    fig, axes = plt.subplots(1, 4, figsize=(16, 4), sharey=True)
+    for ax, k in zip(axes, PREFIXES):
+        for name in ("margin", "confidence", "entropy_neg"):
+            rc = plot_data[(k, name)]
+            ax.plot(np.arange(1, len(rc) + 1) / len(rc), rc, label=name)
+        overall = [r for r in primary if r["k"] == k][0]["random_rejection_AURC"]
+        ax.axhline(overall, color="gray", ls="--", label="random rejection")
+        ax.set_title(f"K=5, k={k}")
         ax.set_xlabel("coverage")
-        ax.set_ylabel("risk")
-        ax.legend()
-        fig.tight_layout()
-        fig.savefig(out_dir / f"risk_coverage_k{k}.svg")
-        plt.close(fig)
+        ax.set_xlim(0, 1)
+    axes[0].set_ylabel("selective risk (1 - accuracy)")
+    axes[0].legend(fontsize=8)
+    fig.tight_layout()
+    fig.savefig(out / "risk_coverage.png", dpi=150)
+    plt.close(fig)
+
+    lines = ["# Selective prediction on SigLIP baseline scores", "",
+             "Float32 baseline re-extraction (amendment 1). Video bootstrap B=2000, seed 0.", "",
+             "| K | k | score | overall acc | acc@80 | acc@50 | acc@20 | acc@50 - acc@100 [95% CI] | AURC | random AURC | AURC excess [95% CI] |",
+             "|---:|---:|---|---:|---:|---:|---:|---|---:|---:|---|"]
+    for r in summary_rows:
+        if r["score"] not in ("margin", "confidence", "entropy_neg"):
+            continue
+        lines.append(
+            f"| {r['K']} | {r['k']} | {r['score']} | {r['overall_acc']:.4f} | {r['acc@80']:.4f} | {r['acc@50']:.4f} | "
+            f"{r['acc@20']:.4f} | {r['gain50']:+.4f} [{r['gain50_ci_lo']:+.4f}, {r['gain50_ci_hi']:+.4f}] | "
+            f"{r['AURC']:.4f} | {r['random_rejection_AURC']:.4f} | {r['AURC_excess']:+.4f} "
+            f"[{r['AURC_excess_ci_lo']:+.4f}, {r['AURC_excess_ci_hi']:+.4f}] |")
+    lines += ["", "## Temperature sensitivity (secondary, K=5)", "", "| k | score | acc@50 - acc@100 | AURC excess |", "|---:|---|---:|---:|"]
+    for r in summary_rows:
+        if r["K"] == 5 and "_T" in r["score"]:
+            lines.append(f"| {r['k']} | {r['score']} | {r['gain50']:+.4f} | {r['AURC_excess']:+.4f} |")
+    lines += ["", "## Operational thresholds (fold quantiles, never tuned on the evaluated fold)", "",
+              "| K | k | score | target cov | realized cov [95% CI] | selective acc [95% CI] | overall acc |",
+              "|---:|---:|---|---:|---|---|---:|"]
+    for r in op_rows:
+        lines.append(f"| {r['K']} | {r['k']} | {r['score']} | {r['target_coverage']} | {r['realized_coverage']:.3f} "
+                     f"[{r['coverage_ci_lo']:.3f}, {r['coverage_ci_hi']:.3f}] | {r['selective_acc']:.4f} "
+                     f"[{r['selective_acc_ci_lo']:.4f}, {r['selective_acc_ci_hi']:.4f}] | {r['overall_acc']:.4f} |")
+    lines += ["", f"S1: {'PASS' if s1 else 'FAIL'} (prefixes with CI lower bound > 0: {passing})", ""]
+    (out / "summary.md").write_text("\n".join(lines))
+    config = {
+        "embeddings": str(L.LADDER_ROOT / L.BASELINE_ENCODER), "frame_dtype": "float32",
+        "gate": "amendment 1 (|hits - E1 hits| <= 2)", "gate_rows": gate_rows,
+        "prefixes": PREFIXES, "kway": [5, 10], "scores": ["margin (primary)", "confidence", "entropy_neg"],
+        "temperatures": {"primary": 0.07, "secondary": [0.02, 0.2]},
+        "coverage_n": "round(coverage * N), at least 1", "ties": "stable input (manifest) order",
+        "bootstrap": {"B": B_SELECTIVE, "seed": 0, "cluster": "video_uid", "resort_per_resample": True},
+        "operational_thresholds": "per fold: quantile(score outside fold, 1 - target); accept score >= threshold",
+        "verdicts": verdict,
+        "preregistration_sha256": {p: L.sha256(ROOT / p) for p in L.PREREGS},
+        "git_commit": L.git_commit(), "test_split_read": False,
+    }
+    (out / "config.json").write_text(json.dumps(config, indent=2))
+    print(json.dumps(verdict, indent=2))
+    return 0
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--manifest", type=Path, default=ROOT / "results/hoi_detection_v1/manifest.jsonl")
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=ROOT / "results/selective_e1_v1")
+    parser.add_argument("--selftest", action="store_true")
     args = parser.parse_args()
-
-    rows, frame_emb, target_emb, cands, video_uids, scenes = score_margin_and_acc()
-    rows_by_k = compute_score_stats(rows, frame_emb, target_emb, cands, video_uids, scenes)
-    summary = compute_summary(rows_by_k, args.output_dir)
-    thresholds = operational_thresholds(rows_by_k)
-    plot_curve(rows_by_k, args.output_dir)
-
-    config = {
-        "git_commit": __import__("subprocess").check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip(),
-        "cache": "/media/dhqg/d3/vlia_outputs/e1/siglip_frame_embeddings_e1_v1.npz",
-        "prefixes": list(PREFIXES),
-        "kway": KWAY_K,
-        "scores": ["margin", "confidence", "entropy_neg"],
-        "thresholds": thresholds,
-    }
-    with (args.output_dir / "config.json").open("w", encoding="utf-8") as handle:
-        json.dump(config, handle, indent=2, sort_keys=True)
-
-    with (args.output_dir / "operational_thresholds.csv").open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["k", "target_coverage", "threshold", "realized_coverage", "realized_acc"])
-        writer.writeheader()
-        writer.writerows(thresholds)
-
-    interpretation = """# Selective prediction interpretation
-
-- The signal is computed from the cached SigLIP full-frame embeddings only.
-- Margin is the primary decision score; confidence and entropy are secondary baselines.
-- This is an analysis-only validation slice, not a calibrated deployment policy.
-- No untouched test split is used.
-"""
-    (args.output_dir / "INTERPRETATION.md").write_text(interpretation, encoding="utf-8")
-    return 0
+    if args.selftest:
+        selftest()
+        return 0
+    return run(args.output_dir)
 
 
 if __name__ == "__main__":
