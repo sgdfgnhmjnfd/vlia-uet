@@ -1,0 +1,55 @@
+{
+  "gate": "amendment 1: |float32 K=5 hits - E1 hits| <= 2 for every k in {2,4,6,8}",
+  "pass": true,
+  "rows": [
+    {
+      "k": 2,
+      "e1_hits": 694,
+      "float32_hits": 694,
+      "delta": 0,
+      "n_queries": 2503,
+      "e1_acc": 0.27726727926488215,
+      "float32_acc": 0.27726727926488215,
+      "within_2": true
+    },
+    {
+      "k": 4,
+      "e1_hits": 689,
+      "float32_hits": 689,
+      "delta": 0,
+      "n_queries": 2503,
+      "e1_acc": 0.275269676388334,
+      "float32_acc": 0.275269676388334,
+      "within_2": true
+    },
+    {
+      "k": 6,
+      "e1_hits": 703,
+      "float32_hits": 703,
+      "delta": 0,
+      "n_queries": 2503,
+      "e1_acc": 0.2808629644426688,
+      "float32_acc": 0.2808629644426688,
+      "within_2": true
+    },
+    {
+      "k": 8,
+      "e1_hits": 722,
+      "float32_hits": 722,
+      "delta": 0,
+      "n_queries": 2503,
+      "e1_acc": 0.2884538553735517,
+      "float32_acc": 0.2884538553735517,
+      "within_2": true
+    }
+  ],
+  "embeddings": "/media/dhqg/d3/vlia_outputs/ladder/siglip-base-patch16-224",
+  "frame_dtype": "float32",
+  "preregistration_sha256": {
+    "results/prereg_ladder_v1.md": "a8fbc132843e3bd9214b7ba8a298dc522798830cbf8f54a084e5a2990a30892e",
+    "results/prereg_ladder_v1_amendment_1.md": "9363700e17e273ec85d58338afe90b0499fe4bb9fe35c31abe428e5ca044548d",
+    "results/prereg_daily_v1.md": "7f8d3c0b877d0fbda04a8888a90b816cc71de1ff7aaa48d7834985080e65a7be",
+    "results/prereg_daily_v1_addendum.md": "69ee7ad41789f9235f4b8a90a77cbb3799ac777197c3ba2764c2ed3827e0d909"
+  },
+  "git_commit": "a9ea2ef758089a817500daafe15cae3b41355a43"
+}
