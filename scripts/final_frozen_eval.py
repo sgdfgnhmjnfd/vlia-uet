@@ -13,12 +13,18 @@ ROOT = Path(__file__).resolve().parents[1]
 FROZEN_PATH = ROOT / "results/frozen_pipeline_v1/FROZEN.json"
 APPROVAL_PATH = ROOT / "results/frozen_pipeline_v1/USER_APPROVED_TEST_EVAL"
 OUTPUT_DIR = ROOT / "results/locked_test_final_v1"
+TEST_MANIFEST = ROOT / "results/test_protocol_full_v1/candidate_test_manifest.csv"
 REQUIRED_FIELDS = (
     "encoder_id",
     "aggregator",
     "centering",
     "template",
+    "template_text",
     "beta",
+    "frame_dtype",
+    "c1_means_file",
+    "c1_means_sha256",
+    "baseline",
     "preregistration_sha256",
     "git_commit",
 )
@@ -75,6 +81,9 @@ def validate_freeze(
                 f"Frozen preregistration hash mismatch for {relative_path}: "
                 f"expected {expected_hash}, got {actual}"
             )
+    means_path = root / frozen["c1_means_file"]
+    if sha256_file(means_path) != frozen["c1_means_sha256"]:
+        raise ValueError(f"C1 means hash mismatch: {means_path}")
     return frozen
 
 
@@ -86,20 +95,16 @@ def main() -> int:
         FROZEN_PATH, APPROVAL_PATH, OUTPUT_DIR, args.confirm_freeze
     )
 
-    try:
-        from run_ladder import evaluate_frozen_test
-    except ImportError as exc:
-        raise RuntimeError(
-            "The frozen pipeline evaluator is unavailable because Stage 3 is blocked; "
-            "no test data was read."
-        ) from exc
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from frozen_eval_lib import evaluate_frozen_test
 
-    OUTPUT_DIR.mkdir(parents=False, exist_ok=False)
-    evaluate_frozen_test(
+    # evaluate_frozen_test creates OUTPUT_DIR itself and refuses if it exists.
+    result = evaluate_frozen_test(
         frozen=frozen,
-        test_manifest=ROOT / "datasets/egointent_full_split_v1/test.jsonl",
+        test_manifest=TEST_MANIFEST,
         output_dir=OUTPUT_DIR,
     )
+    print(json.dumps(result["verdicts"], indent=2))
     return 0
 
 
