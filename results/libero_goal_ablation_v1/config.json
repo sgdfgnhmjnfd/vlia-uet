@@ -1,0 +1,57 @@
+{
+  "episodes_dir": "/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes",
+  "n_pairs": 100,
+  "conditions": [
+    "correct",
+    "empty",
+    "wrong"
+  ],
+  "seed_rule": "seed = 1000 + episode, init_state_id = episode",
+  "wrong_map": "t -> (t+5) mod 10",
+  "bootstrap": {
+    "B": 10000,
+    "seed": 0,
+    "unit": "(task, episode) pair"
+  },
+  "verdicts": {
+    "L1": {
+      "pass": true,
+      "delta": 0.19,
+      "ci95": [
+        0.12,
+        0.27
+      ],
+      "rule": "success(correct) - success(empty) CI lower bound > 0"
+    },
+    "L2": {
+      "pass": false,
+      "delta": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "rule": "success(empty) - success(wrong) CI lower bound > 0"
+    }
+  },
+  "videos": {
+    "correct": {
+      "success": "/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t1_e4.mp4",
+      "failure": "/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t0_e0.mp4"
+    },
+    "empty": {
+      "success": null,
+      "failure": "/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t0_e0.mp4"
+    },
+    "wrong": {
+      "success": null,
+      "failure": "/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t0_e0.mp4"
+    }
+  },
+  "probe_seconds_per_episode": 10.686931689580282,
+  "probe_episodes": 3,
+  "eta_hours_N10": 0.8905776407983568,
+  "ladder_level": "N=10 per task per condition (300 total)",
+  "checkpoint": "/media/dhqg/d1/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000/pretrained_model",
+  "reference_eval": "~/lerobot/outputs/eval/2026-10-06/14-29-45_libero_smolvla (24%/100)",
+  "python": "~/lerobot/.venv/bin/python"
+}

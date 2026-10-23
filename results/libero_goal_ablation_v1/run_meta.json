@@ -1,0 +1,9 @@
+{
+  "probe_seconds_per_episode": 10.686931689580282,
+  "probe_episodes": 3,
+  "eta_hours_N10": 0.8905776407983568,
+  "ladder_level": "N=10 per task per condition (300 total)",
+  "checkpoint": "/media/dhqg/d1/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000/pretrained_model",
+  "reference_eval": "~/lerobot/outputs/eval/2026-10-06/14-29-45_libero_smolvla (24%/100)",
+  "python": "~/lerobot/.venv/bin/python"
+}

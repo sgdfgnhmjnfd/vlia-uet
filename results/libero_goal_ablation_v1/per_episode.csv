@@ -1,0 +1,301 @@
+condition,task,episode,seed,init_state_id,instruction,success,n_steps,seconds,video
+correct,0,0,1000,0,put both the alphabet soup and the tomato sauce in the basket,False,520,12.388962984085083,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t0_e0.mp4
+empty,0,0,1000,0,,False,520,9.947477579116821,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t0_e0.mp4
+wrong,0,0,1000,0,pick up the book and place it in the back compartment of the caddy,False,520,10.486353158950806,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t0_e0.mp4
+correct,0,1,1001,1,put both the alphabet soup and the tomato sauce in the basket,False,520,11.153032064437866,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t0_e1.mp4
+empty,0,1,1001,1,,False,520,11.105628490447998,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t0_e1.mp4
+wrong,0,1,1001,1,pick up the book and place it in the back compartment of the caddy,False,520,10.534537076950073,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t0_e1.mp4
+correct,0,2,1002,2,put both the alphabet soup and the tomato sauce in the basket,False,520,11.607137680053711,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t0_e2.mp4
+empty,0,2,1002,2,,False,520,10.949342489242554,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t0_e2.mp4
+wrong,0,2,1002,2,pick up the book and place it in the back compartment of the caddy,False,520,19.321796417236328,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t0_e2.mp4
+correct,0,3,1003,3,put both the alphabet soup and the tomato sauce in the basket,False,520,11.525162935256958,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t0_e3.mp4
+empty,0,3,1003,3,,False,520,10.820238590240479,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t0_e3.mp4
+wrong,0,3,1003,3,pick up the book and place it in the back compartment of the caddy,False,520,11.348531007766724,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t0_e3.mp4
+correct,0,4,1004,4,put both the alphabet soup and the tomato sauce in the basket,False,520,10.959794521331787,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t0_e4.mp4
+empty,0,4,1004,4,,False,520,10.931385040283203,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t0_e4.mp4
+wrong,0,4,1004,4,pick up the book and place it in the back compartment of the caddy,False,520,10.489920139312744,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t0_e4.mp4
+correct,0,5,1005,5,put both the alphabet soup and the tomato sauce in the basket,False,520,9.497800827026367,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t0_e5.mp4
+empty,0,5,1005,5,,False,520,9.84783411026001,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t0_e5.mp4
+wrong,0,5,1005,5,pick up the book and place it in the back compartment of the caddy,False,520,9.359487771987915,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t0_e5.mp4
+correct,0,6,1006,6,put both the alphabet soup and the tomato sauce in the basket,False,520,10.149511575698853,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t0_e6.mp4
+empty,0,6,1006,6,,False,520,10.20328950881958,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t0_e6.mp4
+wrong,0,6,1006,6,pick up the book and place it in the back compartment of the caddy,False,520,9.886372327804565,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t0_e6.mp4
+correct,0,7,1007,7,put both the alphabet soup and the tomato sauce in the basket,False,520,10.589964389801025,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t0_e7.mp4
+empty,0,7,1007,7,,False,520,10.049185991287231,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t0_e7.mp4
+wrong,0,7,1007,7,pick up the book and place it in the back compartment of the caddy,False,520,10.024840354919434,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t0_e7.mp4
+correct,0,8,1008,8,put both the alphabet soup and the tomato sauce in the basket,False,520,11.232776641845703,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t0_e8.mp4
+empty,0,8,1008,8,,False,520,11.637701272964478,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t0_e8.mp4
+wrong,0,8,1008,8,pick up the book and place it in the back compartment of the caddy,False,520,10.900254964828491,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t0_e8.mp4
+correct,0,9,1009,9,put both the alphabet soup and the tomato sauce in the basket,False,520,10.96009612083435,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t0_e9.mp4
+empty,0,9,1009,9,,False,520,11.844152212142944,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t0_e9.mp4
+wrong,0,9,1009,9,pick up the book and place it in the back compartment of the caddy,False,520,11.790557384490967,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t0_e9.mp4
+correct,1,0,1000,0,put both the cream cheese box and the butter in the basket,False,520,17.34446406364441,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t1_e0.mp4
+empty,1,0,1000,0,,False,520,15.484759330749512,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t1_e0.mp4
+wrong,1,0,1000,0,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,15.814088582992554,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t1_e0.mp4
+correct,1,1,1001,1,put both the cream cheese box and the butter in the basket,False,520,16.400688886642456,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t1_e1.mp4
+empty,1,1,1001,1,,False,520,10.661832809448242,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t1_e1.mp4
+wrong,1,1,1001,1,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,10.604899644851685,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t1_e1.mp4
+correct,1,2,1002,2,put both the cream cheese box and the butter in the basket,False,520,10.114686965942383,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t1_e2.mp4
+empty,1,2,1002,2,,False,520,9.656267642974854,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t1_e2.mp4
+wrong,1,2,1002,2,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,10.051064252853394,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t1_e2.mp4
+correct,1,3,1003,3,put both the cream cheese box and the butter in the basket,False,520,10.257320880889893,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t1_e3.mp4
+empty,1,3,1003,3,,False,520,10.497063636779785,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t1_e3.mp4
+wrong,1,3,1003,3,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,11.277661323547363,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t1_e3.mp4
+correct,1,4,1004,4,put both the cream cheese box and the butter in the basket,True,247,6.299993515014648,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t1_e4.mp4
+empty,1,4,1004,4,,False,520,10.843956708908081,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t1_e4.mp4
+wrong,1,4,1004,4,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,10.870321273803711,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t1_e4.mp4
+correct,1,5,1005,5,put both the cream cheese box and the butter in the basket,False,520,10.04842758178711,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t1_e5.mp4
+empty,1,5,1005,5,,False,520,10.222905158996582,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t1_e5.mp4
+wrong,1,5,1005,5,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,10.666746139526367,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t1_e5.mp4
+correct,1,6,1006,6,put both the cream cheese box and the butter in the basket,False,520,10.171940088272095,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t1_e6.mp4
+empty,1,6,1006,6,,False,520,10.316264152526855,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t1_e6.mp4
+wrong,1,6,1006,6,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,10.306325197219849,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t1_e6.mp4
+correct,1,7,1007,7,put both the cream cheese box and the butter in the basket,False,520,10.222490072250366,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t1_e7.mp4
+empty,1,7,1007,7,,False,520,10.366913080215454,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t1_e7.mp4
+wrong,1,7,1007,7,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,10.48213267326355,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t1_e7.mp4
+correct,1,8,1008,8,put both the cream cheese box and the butter in the basket,False,520,10.81966757774353,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t1_e8.mp4
+empty,1,8,1008,8,,False,520,10.061075210571289,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t1_e8.mp4
+wrong,1,8,1008,8,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.775994300842285,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t1_e8.mp4
+correct,1,9,1009,9,put both the cream cheese box and the butter in the basket,False,520,10.657403707504272,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t1_e9.mp4
+empty,1,9,1009,9,,False,520,10.392199277877808,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t1_e9.mp4
+wrong,1,9,1009,9,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.89240837097168,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t1_e9.mp4
+correct,2,0,1000,0,turn on the stove and put the moka pot on it,False,520,9.842989921569824,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t2_e0.mp4
+empty,2,0,1000,0,,False,520,9.818163394927979,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t2_e0.mp4
+wrong,2,0,1000,0,put both the alphabet soup and the cream cheese box in the basket,False,520,9.689058542251587,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t2_e0.mp4
+correct,2,1,1001,1,turn on the stove and put the moka pot on it,False,520,8.400608539581299,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t2_e1.mp4
+empty,2,1,1001,1,,False,520,8.929648876190186,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t2_e1.mp4
+wrong,2,1,1001,1,put both the alphabet soup and the cream cheese box in the basket,False,520,8.662487506866455,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t2_e1.mp4
+correct,2,2,1002,2,turn on the stove and put the moka pot on it,False,520,9.197703838348389,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t2_e2.mp4
+empty,2,2,1002,2,,False,520,9.781112909317017,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t2_e2.mp4
+wrong,2,2,1002,2,put both the alphabet soup and the cream cheese box in the basket,False,520,9.326143264770508,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t2_e2.mp4
+correct,2,3,1003,3,turn on the stove and put the moka pot on it,False,520,8.90347146987915,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t2_e3.mp4
+empty,2,3,1003,3,,False,520,9.508987426757812,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t2_e3.mp4
+wrong,2,3,1003,3,put both the alphabet soup and the cream cheese box in the basket,False,520,9.594232559204102,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t2_e3.mp4
+correct,2,4,1004,4,turn on the stove and put the moka pot on it,False,520,9.039223909378052,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t2_e4.mp4
+empty,2,4,1004,4,,False,520,9.019098997116089,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t2_e4.mp4
+wrong,2,4,1004,4,put both the alphabet soup and the cream cheese box in the basket,False,520,9.231521129608154,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t2_e4.mp4
+correct,2,5,1005,5,turn on the stove and put the moka pot on it,False,520,9.083635807037354,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t2_e5.mp4
+empty,2,5,1005,5,,False,520,8.85581111907959,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t2_e5.mp4
+wrong,2,5,1005,5,put both the alphabet soup and the cream cheese box in the basket,False,520,10.063957929611206,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t2_e5.mp4
+correct,2,6,1006,6,turn on the stove and put the moka pot on it,True,255,5.136569023132324,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t2_e6.mp4
+empty,2,6,1006,6,,False,520,9.809985160827637,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t2_e6.mp4
+wrong,2,6,1006,6,put both the alphabet soup and the cream cheese box in the basket,False,520,10.002388715744019,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t2_e6.mp4
+correct,2,7,1007,7,turn on the stove and put the moka pot on it,True,302,5.91867208480835,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t2_e7.mp4
+empty,2,7,1007,7,,False,520,9.519337177276611,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t2_e7.mp4
+wrong,2,7,1007,7,put both the alphabet soup and the cream cheese box in the basket,False,520,9.653726816177368,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t2_e7.mp4
+correct,2,8,1008,8,turn on the stove and put the moka pot on it,True,248,4.8485424518585205,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t2_e8.mp4
+empty,2,8,1008,8,,False,520,9.609609127044678,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t2_e8.mp4
+wrong,2,8,1008,8,put both the alphabet soup and the cream cheese box in the basket,False,520,9.104919195175171,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t2_e8.mp4
+correct,2,9,1009,9,turn on the stove and put the moka pot on it,False,520,9.105275630950928,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t2_e9.mp4
+empty,2,9,1009,9,,False,520,9.352447032928467,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t2_e9.mp4
+wrong,2,9,1009,9,put both the alphabet soup and the cream cheese box in the basket,False,520,9.686747550964355,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t2_e9.mp4
+correct,3,0,1000,0,put the black bowl in the bottom drawer of the cabinet and close it,True,282,7.560177803039551,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t3_e0.mp4
+empty,3,0,1000,0,,False,520,9.799048662185669,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t3_e0.mp4
+wrong,3,0,1000,0,put both moka pots on the stove,False,520,9.662216186523438,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t3_e0.mp4
+correct,3,1,1001,1,put the black bowl in the bottom drawer of the cabinet and close it,True,270,6.183465242385864,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t3_e1.mp4
+empty,3,1,1001,1,,False,520,10.133142948150635,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t3_e1.mp4
+wrong,3,1,1001,1,put both moka pots on the stove,False,520,9.78004765510559,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t3_e1.mp4
+correct,3,2,1002,2,put the black bowl in the bottom drawer of the cabinet and close it,True,263,6.546443939208984,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t3_e2.mp4
+empty,3,2,1002,2,,False,520,10.228271484375,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t3_e2.mp4
+wrong,3,2,1002,2,put both moka pots on the stove,False,520,9.398762941360474,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t3_e2.mp4
+correct,3,3,1003,3,put the black bowl in the bottom drawer of the cabinet and close it,True,320,7.225151300430298,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t3_e3.mp4
+empty,3,3,1003,3,,False,520,9.523185729980469,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t3_e3.mp4
+wrong,3,3,1003,3,put both moka pots on the stove,False,520,9.399932861328125,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t3_e3.mp4
+correct,3,4,1004,4,put the black bowl in the bottom drawer of the cabinet and close it,True,281,6.504307746887207,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t3_e4.mp4
+empty,3,4,1004,4,,False,520,9.518632888793945,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t3_e4.mp4
+wrong,3,4,1004,4,put both moka pots on the stove,False,520,9.976178407669067,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t3_e4.mp4
+correct,3,5,1005,5,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.967269897460938,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t3_e5.mp4
+empty,3,5,1005,5,,False,520,9.54208517074585,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t3_e5.mp4
+wrong,3,5,1005,5,put both moka pots on the stove,False,520,10.146396398544312,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t3_e5.mp4
+correct,3,6,1006,6,put the black bowl in the bottom drawer of the cabinet and close it,True,266,5.723347902297974,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t3_e6.mp4
+empty,3,6,1006,6,,False,520,10.028659343719482,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t3_e6.mp4
+wrong,3,6,1006,6,put both moka pots on the stove,False,520,9.777907609939575,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t3_e6.mp4
+correct,3,7,1007,7,put the black bowl in the bottom drawer of the cabinet and close it,False,520,10.118697166442871,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t3_e7.mp4
+empty,3,7,1007,7,,False,520,10.114778995513916,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t3_e7.mp4
+wrong,3,7,1007,7,put both moka pots on the stove,False,520,9.82668685913086,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t3_e7.mp4
+correct,3,8,1008,8,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.636097431182861,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t3_e8.mp4
+empty,3,8,1008,8,,False,520,9.535655498504639,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t3_e8.mp4
+wrong,3,8,1008,8,put both moka pots on the stove,False,520,9.397167444229126,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t3_e8.mp4
+correct,3,9,1009,9,put the black bowl in the bottom drawer of the cabinet and close it,True,279,6.35369348526001,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t3_e9.mp4
+empty,3,9,1009,9,,False,520,9.478519916534424,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t3_e9.mp4
+wrong,3,9,1009,9,put both moka pots on the stove,False,520,10.043602466583252,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t3_e9.mp4
+correct,4,0,1000,0,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,12.529580354690552,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t4_e0.mp4
+empty,4,0,1000,0,,False,520,10.221293210983276,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t4_e0.mp4
+wrong,4,0,1000,0,put the yellow and white mug in the microwave and close it,False,520,10.333184242248535,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t4_e0.mp4
+correct,4,1,1001,1,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.860941171646118,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t4_e1.mp4
+empty,4,1,1001,1,,False,520,9.954481840133667,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t4_e1.mp4
+wrong,4,1,1001,1,put the yellow and white mug in the microwave and close it,False,520,10.034749031066895,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t4_e1.mp4
+correct,4,2,1002,2,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.062824964523315,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t4_e2.mp4
+empty,4,2,1002,2,,False,520,10.414987325668335,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t4_e2.mp4
+wrong,4,2,1002,2,put the yellow and white mug in the microwave and close it,False,520,10.313303470611572,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t4_e2.mp4
+correct,4,3,1003,3,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.481531143188477,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t4_e3.mp4
+empty,4,3,1003,3,,False,520,9.979443788528442,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t4_e3.mp4
+wrong,4,3,1003,3,put the yellow and white mug in the microwave and close it,False,520,10.175928831100464,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t4_e3.mp4
+correct,4,4,1004,4,put the white mug on the left plate and put the yellow and white mug on the right plate,True,288,7.408562898635864,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t4_e4.mp4
+empty,4,4,1004,4,,False,520,10.267122030258179,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t4_e4.mp4
+wrong,4,4,1004,4,put the yellow and white mug in the microwave and close it,False,520,10.222518682479858,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t4_e4.mp4
+correct,4,5,1005,5,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.203453063964844,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t4_e5.mp4
+empty,4,5,1005,5,,False,520,10.346004486083984,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t4_e5.mp4
+wrong,4,5,1005,5,put the yellow and white mug in the microwave and close it,False,520,10.306235790252686,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t4_e5.mp4
+correct,4,6,1006,6,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,11.11987018585205,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t4_e6.mp4
+empty,4,6,1006,6,,False,520,10.146713495254517,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t4_e6.mp4
+wrong,4,6,1006,6,put the yellow and white mug in the microwave and close it,False,520,9.758422374725342,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t4_e6.mp4
+correct,4,7,1007,7,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.128767251968384,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t4_e7.mp4
+empty,4,7,1007,7,,False,520,9.981526613235474,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t4_e7.mp4
+wrong,4,7,1007,7,put the yellow and white mug in the microwave and close it,False,520,10.177034854888916,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t4_e7.mp4
+correct,4,8,1008,8,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.302541255950928,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t4_e8.mp4
+empty,4,8,1008,8,,False,520,10.156879425048828,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t4_e8.mp4
+wrong,4,8,1008,8,put the yellow and white mug in the microwave and close it,False,520,10.187897205352783,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t4_e8.mp4
+correct,4,9,1009,9,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.54832124710083,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t4_e9.mp4
+empty,4,9,1009,9,,False,520,10.204534769058228,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t4_e9.mp4
+wrong,4,9,1009,9,put the yellow and white mug in the microwave and close it,False,520,10.341733694076538,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t4_e9.mp4
+correct,5,0,1000,0,pick up the book and place it in the back compartment of the caddy,False,520,9.529458999633789,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t5_e0.mp4
+empty,5,0,1000,0,,False,520,8.360487222671509,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t5_e0.mp4
+wrong,5,0,1000,0,put both the alphabet soup and the tomato sauce in the basket,False,520,9.081711769104004,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t5_e0.mp4
+correct,5,1,1001,1,pick up the book and place it in the back compartment of the caddy,False,520,8.686805963516235,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t5_e1.mp4
+empty,5,1,1001,1,,False,520,9.46019959449768,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t5_e1.mp4
+wrong,5,1,1001,1,put both the alphabet soup and the tomato sauce in the basket,False,520,9.22904348373413,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t5_e1.mp4
+correct,5,2,1002,2,pick up the book and place it in the back compartment of the caddy,False,520,8.24370551109314,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t5_e2.mp4
+empty,5,2,1002,2,,False,520,8.715800762176514,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t5_e2.mp4
+wrong,5,2,1002,2,put both the alphabet soup and the tomato sauce in the basket,False,520,8.440334558486938,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t5_e2.mp4
+correct,5,3,1003,3,pick up the book and place it in the back compartment of the caddy,True,187,4.0353357791900635,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t5_e3.mp4
+empty,5,3,1003,3,,False,520,9.066430807113647,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t5_e3.mp4
+wrong,5,3,1003,3,put both the alphabet soup and the tomato sauce in the basket,False,520,8.354801893234253,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t5_e3.mp4
+correct,5,4,1004,4,pick up the book and place it in the back compartment of the caddy,True,177,3.8012821674346924,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t5_e4.mp4
+empty,5,4,1004,4,,False,520,8.461953401565552,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t5_e4.mp4
+wrong,5,4,1004,4,put both the alphabet soup and the tomato sauce in the basket,False,520,9.27850890159607,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t5_e4.mp4
+correct,5,5,1005,5,pick up the book and place it in the back compartment of the caddy,False,520,8.362876415252686,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t5_e5.mp4
+empty,5,5,1005,5,,False,520,9.1014883518219,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t5_e5.mp4
+wrong,5,5,1005,5,put both the alphabet soup and the tomato sauce in the basket,False,520,8.378392457962036,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t5_e5.mp4
+correct,5,6,1006,6,pick up the book and place it in the back compartment of the caddy,False,520,8.33958625793457,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t5_e6.mp4
+empty,5,6,1006,6,,False,520,8.73192310333252,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t5_e6.mp4
+wrong,5,6,1006,6,put both the alphabet soup and the tomato sauce in the basket,False,520,8.896283388137817,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t5_e6.mp4
+correct,5,7,1007,7,pick up the book and place it in the back compartment of the caddy,True,216,4.424999952316284,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t5_e7.mp4
+empty,5,7,1007,7,,False,520,8.916063070297241,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t5_e7.mp4
+wrong,5,7,1007,7,put both the alphabet soup and the tomato sauce in the basket,False,520,8.416816234588623,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t5_e7.mp4
+correct,5,8,1008,8,pick up the book and place it in the back compartment of the caddy,False,520,8.319206714630127,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t5_e8.mp4
+empty,5,8,1008,8,,False,520,9.294288873672485,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t5_e8.mp4
+wrong,5,8,1008,8,put both the alphabet soup and the tomato sauce in the basket,False,520,8.618457317352295,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t5_e8.mp4
+correct,5,9,1009,9,pick up the book and place it in the back compartment of the caddy,False,520,8.76352596282959,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t5_e9.mp4
+empty,5,9,1009,9,,False,520,8.813166618347168,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t5_e9.mp4
+wrong,5,9,1009,9,put both the alphabet soup and the tomato sauce in the basket,False,520,8.798105239868164,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t5_e9.mp4
+correct,6,0,1000,0,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,11.138675212860107,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t6_e0.mp4
+empty,6,0,1000,0,,False,520,9.539079904556274,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t6_e0.mp4
+wrong,6,0,1000,0,put both the cream cheese box and the butter in the basket,False,520,9.343565940856934,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t6_e0.mp4
+correct,6,1,1001,1,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.75154995918274,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t6_e1.mp4
+empty,6,1,1001,1,,False,520,9.490176916122437,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t6_e1.mp4
+wrong,6,1,1001,1,put both the cream cheese box and the butter in the basket,False,520,9.441696882247925,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t6_e1.mp4
+correct,6,2,1002,2,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,10.045956373214722,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t6_e2.mp4
+empty,6,2,1002,2,,False,520,9.574314594268799,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t6_e2.mp4
+wrong,6,2,1002,2,put both the cream cheese box and the butter in the basket,False,520,9.163415908813477,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t6_e2.mp4
+correct,6,3,1003,3,put the white mug on the plate and put the chocolate pudding to the right of the plate,True,289,6.686338901519775,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t6_e3.mp4
+empty,6,3,1003,3,,False,520,9.57298493385315,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t6_e3.mp4
+wrong,6,3,1003,3,put both the cream cheese box and the butter in the basket,False,520,9.857787132263184,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t6_e3.mp4
+correct,6,4,1004,4,put the white mug on the plate and put the chocolate pudding to the right of the plate,True,391,8.289526224136353,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t6_e4.mp4
+empty,6,4,1004,4,,False,520,9.87464690208435,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t6_e4.mp4
+wrong,6,4,1004,4,put both the cream cheese box and the butter in the basket,False,520,9.24485993385315,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t6_e4.mp4
+correct,6,5,1005,5,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.33900237083435,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t6_e5.mp4
+empty,6,5,1005,5,,False,520,9.229177951812744,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t6_e5.mp4
+wrong,6,5,1005,5,put both the cream cheese box and the butter in the basket,False,520,9.209991693496704,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t6_e5.mp4
+correct,6,6,1006,6,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.554042100906372,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t6_e6.mp4
+empty,6,6,1006,6,,False,520,9.296219110488892,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t6_e6.mp4
+wrong,6,6,1006,6,put both the cream cheese box and the butter in the basket,False,520,9.808811902999878,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t6_e6.mp4
+correct,6,7,1007,7,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.46290922164917,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t6_e7.mp4
+empty,6,7,1007,7,,False,520,9.164371252059937,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t6_e7.mp4
+wrong,6,7,1007,7,put both the cream cheese box and the butter in the basket,False,520,9.494564771652222,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t6_e7.mp4
+correct,6,8,1008,8,put the white mug on the plate and put the chocolate pudding to the right of the plate,True,288,6.777790307998657,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t6_e8.mp4
+empty,6,8,1008,8,,False,520,9.564873456954956,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t6_e8.mp4
+wrong,6,8,1008,8,put both the cream cheese box and the butter in the basket,False,520,9.875354766845703,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t6_e8.mp4
+correct,6,9,1009,9,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.612925291061401,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t6_e9.mp4
+empty,6,9,1009,9,,False,520,9.528075456619263,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t6_e9.mp4
+wrong,6,9,1009,9,put both the cream cheese box and the butter in the basket,False,520,9.871882677078247,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t6_e9.mp4
+correct,7,0,1000,0,put both the alphabet soup and the cream cheese box in the basket,False,520,10.594761610031128,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t7_e0.mp4
+empty,7,0,1000,0,,False,520,9.033643960952759,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t7_e0.mp4
+wrong,7,0,1000,0,turn on the stove and put the moka pot on it,False,520,9.298890829086304,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t7_e0.mp4
+correct,7,1,1001,1,put both the alphabet soup and the cream cheese box in the basket,False,520,9.207972288131714,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t7_e1.mp4
+empty,7,1,1001,1,,False,520,9.109836339950562,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t7_e1.mp4
+wrong,7,1,1001,1,turn on the stove and put the moka pot on it,False,520,9.162136554718018,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t7_e1.mp4
+correct,7,2,1002,2,put both the alphabet soup and the cream cheese box in the basket,False,520,9.387320280075073,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t7_e2.mp4
+empty,7,2,1002,2,,False,520,9.020681142807007,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t7_e2.mp4
+wrong,7,2,1002,2,turn on the stove and put the moka pot on it,False,520,9.361846446990967,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t7_e2.mp4
+correct,7,3,1003,3,put both the alphabet soup and the cream cheese box in the basket,False,520,9.142144680023193,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t7_e3.mp4
+empty,7,3,1003,3,,False,520,9.288654088973999,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t7_e3.mp4
+wrong,7,3,1003,3,turn on the stove and put the moka pot on it,False,520,9.33479642868042,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t7_e3.mp4
+correct,7,4,1004,4,put both the alphabet soup and the cream cheese box in the basket,False,520,9.829264163970947,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t7_e4.mp4
+empty,7,4,1004,4,,False,520,10.019473314285278,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t7_e4.mp4
+wrong,7,4,1004,4,turn on the stove and put the moka pot on it,False,520,9.455400705337524,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t7_e4.mp4
+correct,7,5,1005,5,put both the alphabet soup and the cream cheese box in the basket,False,520,9.382951974868774,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t7_e5.mp4
+empty,7,5,1005,5,,False,520,8.745352506637573,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t7_e5.mp4
+wrong,7,5,1005,5,turn on the stove and put the moka pot on it,False,520,9.555374383926392,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t7_e5.mp4
+correct,7,6,1006,6,put both the alphabet soup and the cream cheese box in the basket,False,520,8.994856595993042,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t7_e6.mp4
+empty,7,6,1006,6,,False,520,9.297800064086914,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t7_e6.mp4
+wrong,7,6,1006,6,turn on the stove and put the moka pot on it,False,520,9.053575992584229,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t7_e6.mp4
+correct,7,7,1007,7,put both the alphabet soup and the cream cheese box in the basket,False,520,9.486837148666382,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t7_e7.mp4
+empty,7,7,1007,7,,False,520,8.866056680679321,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t7_e7.mp4
+wrong,7,7,1007,7,turn on the stove and put the moka pot on it,False,520,9.517230749130249,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t7_e7.mp4
+correct,7,8,1008,8,put both the alphabet soup and the cream cheese box in the basket,False,520,9.232064962387085,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t7_e8.mp4
+empty,7,8,1008,8,,False,520,9.213502407073975,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t7_e8.mp4
+wrong,7,8,1008,8,turn on the stove and put the moka pot on it,False,520,9.356177806854248,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t7_e8.mp4
+correct,7,9,1009,9,put both the alphabet soup and the cream cheese box in the basket,False,520,9.486977577209473,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t7_e9.mp4
+empty,7,9,1009,9,,False,520,8.783855438232422,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t7_e9.mp4
+wrong,7,9,1009,9,turn on the stove and put the moka pot on it,False,520,9.453197002410889,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t7_e9.mp4
+correct,8,0,1000,0,put both moka pots on the stove,False,520,9.705986976623535,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t8_e0.mp4
+empty,8,0,1000,0,,False,520,9.707236289978027,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t8_e0.mp4
+wrong,8,0,1000,0,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.475281238555908,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t8_e0.mp4
+correct,8,1,1001,1,put both moka pots on the stove,False,520,9.142931699752808,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t8_e1.mp4
+empty,8,1,1001,1,,False,520,9.192111492156982,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t8_e1.mp4
+wrong,8,1,1001,1,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.170730113983154,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t8_e1.mp4
+correct,8,2,1002,2,put both moka pots on the stove,False,520,9.443419933319092,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t8_e2.mp4
+empty,8,2,1002,2,,False,520,9.07868504524231,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t8_e2.mp4
+wrong,8,2,1002,2,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.783798694610596,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t8_e2.mp4
+correct,8,3,1003,3,put both moka pots on the stove,False,520,9.27030348777771,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t8_e3.mp4
+empty,8,3,1003,3,,False,520,9.784891366958618,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t8_e3.mp4
+wrong,8,3,1003,3,put the black bowl in the bottom drawer of the cabinet and close it,False,520,8.66197419166565,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t8_e3.mp4
+correct,8,4,1004,4,put both moka pots on the stove,False,520,9.578524112701416,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t8_e4.mp4
+empty,8,4,1004,4,,False,520,9.350799798965454,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t8_e4.mp4
+wrong,8,4,1004,4,put the black bowl in the bottom drawer of the cabinet and close it,False,520,8.74963903427124,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t8_e4.mp4
+correct,8,5,1005,5,put both moka pots on the stove,False,520,9.449465990066528,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t8_e5.mp4
+empty,8,5,1005,5,,False,520,9.078879356384277,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t8_e5.mp4
+wrong,8,5,1005,5,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.498917818069458,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t8_e5.mp4
+correct,8,6,1006,6,put both moka pots on the stove,False,520,9.273799419403076,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t8_e6.mp4
+empty,8,6,1006,6,,False,520,9.702926635742188,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t8_e6.mp4
+wrong,8,6,1006,6,put the black bowl in the bottom drawer of the cabinet and close it,False,520,8.774809122085571,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t8_e6.mp4
+correct,8,7,1007,7,put both moka pots on the stove,False,520,9.430020809173584,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t8_e7.mp4
+empty,8,7,1007,7,,False,520,9.299250841140747,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t8_e7.mp4
+wrong,8,7,1007,7,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.132836103439331,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t8_e7.mp4
+correct,8,8,1008,8,put both moka pots on the stove,False,520,9.305224657058716,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t8_e8.mp4
+empty,8,8,1008,8,,False,520,9.390883207321167,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t8_e8.mp4
+wrong,8,8,1008,8,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.049042463302612,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t8_e8.mp4
+correct,8,9,1009,9,put both moka pots on the stove,False,520,9.56493592262268,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t8_e9.mp4
+empty,8,9,1009,9,,False,520,9.192342042922974,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t8_e9.mp4
+wrong,8,9,1009,9,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.513203859329224,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t8_e9.mp4
+correct,9,0,1000,0,put the yellow and white mug in the microwave and close it,True,367,9.185311794281006,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t9_e0.mp4
+empty,9,0,1000,0,,False,520,10.2569580078125,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t9_e0.mp4
+wrong,9,0,1000,0,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,12.059677124023438,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t9_e0.mp4
+correct,9,1,1001,1,put the yellow and white mug in the microwave and close it,False,520,10.49511981010437,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t9_e1.mp4
+empty,9,1,1001,1,,False,520,10.248183488845825,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t9_e1.mp4
+wrong,9,1,1001,1,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.897742748260498,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t9_e1.mp4
+correct,9,2,1002,2,put the yellow and white mug in the microwave and close it,False,520,8.80314302444458,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t9_e2.mp4
+empty,9,2,1002,2,,False,520,9.621938943862915,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t9_e2.mp4
+wrong,9,2,1002,2,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.503868341445923,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t9_e2.mp4
+correct,9,3,1003,3,put the yellow and white mug in the microwave and close it,False,520,9.587291955947876,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t9_e3.mp4
+empty,9,3,1003,3,,False,520,9.445389986038208,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t9_e3.mp4
+wrong,9,3,1003,3,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.581818580627441,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t9_e3.mp4
+correct,9,4,1004,4,put the yellow and white mug in the microwave and close it,False,520,9.27303695678711,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t9_e4.mp4
+empty,9,4,1004,4,,False,520,9.777371406555176,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t9_e4.mp4
+wrong,9,4,1004,4,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.632539987564087,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t9_e4.mp4
+correct,9,5,1005,5,put the yellow and white mug in the microwave and close it,False,520,9.312138557434082,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t9_e5.mp4
+empty,9,5,1005,5,,False,520,9.890671968460083,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t9_e5.mp4
+wrong,9,5,1005,5,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.587362289428711,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t9_e5.mp4
+correct,9,6,1006,6,put the yellow and white mug in the microwave and close it,False,520,9.649621486663818,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t9_e6.mp4
+empty,9,6,1006,6,,False,520,9.40722393989563,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t9_e6.mp4
+wrong,9,6,1006,6,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.519996166229248,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t9_e6.mp4
+correct,9,7,1007,7,put the yellow and white mug in the microwave and close it,False,520,9.446759939193726,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t9_e7.mp4
+empty,9,7,1007,7,,False,520,9.661906719207764,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t9_e7.mp4
+wrong,9,7,1007,7,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.96507978439331,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t9_e7.mp4
+correct,9,8,1008,8,put the yellow and white mug in the microwave and close it,False,520,9.58237624168396,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t9_e8.mp4
+empty,9,8,1008,8,,False,520,9.353959560394287,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t9_e8.mp4
+wrong,9,8,1008,8,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.84302806854248,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t9_e8.mp4
+correct,9,9,1009,9,put the yellow and white mug in the microwave and close it,False,520,9.610554456710815,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/correct_t9_e9.mp4
+empty,9,9,1009,9,,False,520,9.736298084259033,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/empty_t9_e9.mp4
+wrong,9,9,1009,9,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.936810493469238,/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/videos/wrong_t9_e9.mp4
