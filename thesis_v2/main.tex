@@ -161,10 +161,11 @@ Sinh viên\\[2cm]
 % =====================================================================
 \chapter*{Tóm tắt}
 \addcontentsline{toc}{chapter}{Tóm tắt}
+\sloppy
 
 \noindent\textbf{Tóm tắt:} Robot cộng tác làm việc cạnh con người sẽ hữu ích hơn nếu đoán được người đó \textit{định làm gì} trước khi hành động kết thúc, thay vì chờ một câu lệnh. Các mô hình Thị giác--Ngôn ngữ--Hành động (VLA) hiện nay như SmolVLA nhận ảnh, câu lệnh và trạng thái robot để sinh hành động, nhưng không có thành phần nào ước lượng ý định của người. Đồ án đề xuất kiến trúc VLIA (Vision--Language--Intention--Action), bổ sung vào SmolVLA một \textit{mô-đun ý định}: mô-đun này xem đoạn đầu video góc nhìn thứ nhất của người dùng, ước lượng mục đích (WHY) của bước thao tác đang diễn ra, rồi đưa kết quả vào SmolVLA dưới dạng một token ý định qua lớp chiếu Intention Adapter.
 
-Chất lượng của mô-đun ý định được đo bằng bài toán \textit{phân định sớm mục tiêu}: chỉ với $k \in \{2,4,6,8\}$ khung hình đầu tiên, mô-đun phải xếp câu mục đích đúng lên trên các câu mục đích khác của cùng video. Thực nghiệm dùng 2.503 bước thao tác từ 27 video, 13 bối cảnh của bộ dữ liệu EgoIntent, đánh giá chéo theo bối cảnh (8 fold) để mô hình luôn được kiểm tra trên bối cảnh chưa từng thấy, và các luật quyết định được chốt trước khi chạy. Kết quả: (i) đầu đọc được huấn luyện trên đặc trưng đóng băng của SmolVLM2 chỉ nhỉnh hơn ngẫu nhiên (MRR gấp 1,13--1,19 lần mức ngẫu nhiên, khoảng tin cậy 95\% chứa 1), và về mức ngẫu nhiên trên tập kiểm thử khóa; (ii) thay bằng bộ mã hóa ảnh--văn bản SigLIP dùng \textit{zero-shot}, không huấn luyện thêm, MRR tăng lên 2,25--2,57 lần mức ngẫu nhiên với khoảng tin cậy nằm hoàn toàn trên 1, và tăng dần khi quan sát thêm khung hình (+0,0094 MRR từ 2 lên 8 khung, khoảng tin cậy không chứa 0); tuy vậy độ chính xác chọn-1-trong-5 cao nhất là 28,9\%, chưa đạt ngưỡng 30\% đã chốt trước. Phía VLA, Intention Adapter và cơ chế chèn token ý định vào SmolVLA đã vượt qua các kiểm thử cài đặt, nhưng đồ án chưa đánh giá việc ý định có cải thiện hành vi robot hay không. Đồ án vì vậy đóng góp một quy trình đánh giá chặt chẽ cho mô-đun ý định, một bằng chứng rằng căn chỉnh ảnh--văn bản quan trọng hơn việc huấn luyện đầu đọc trên dữ liệu nhỏ, và một giao diện đã kiểm thử để nối mô-đun ý định với chính sách VLA.
+Chất lượng của mô-đun ý định được đo bằng bài toán \textit{phân định sớm mục tiêu}: chỉ với $k \in \{2,4,6,8\}$ khung hình đầu tiên, mô-đun phải xếp câu mục đích đúng lên trên các câu mục đích khác của cùng video. Thực nghiệm dùng 2.503 bước thao tác từ 27 video, 13 bối cảnh của bộ dữ liệu EgoIntent, đánh giá chéo theo bối cảnh (8 fold) để mô hình luôn được kiểm tra trên bối cảnh chưa từng thấy, và các luật quyết định được chốt trước khi chạy. Kết quả: (i) đầu đọc được huấn luyện trên đặc trưng đóng băng của SmolVLM2 chỉ nhỉnh hơn ngẫu nhiên (MRR gấp 1,13--1,19 lần mức ngẫu nhiên, khoảng tin cậy 95\% chứa 1), và về mức ngẫu nhiên trên tập kiểm thử khóa; (ii) thay bằng bộ mã hóa ảnh--văn bản SigLIP dùng \textit{zero-shot}, không huấn luyện thêm, MRR tăng lên 2,25--2,57 lần mức ngẫu nhiên với khoảng tin cậy nằm hoàn toàn trên 1, và tăng dần khi quan sát thêm khung hình; (iii) chọn cấu hình lồng nhau trên 90 tổ hợp không huấn luyện chọn cùng một cấu hình ở cả 8/8 fold (SigLIP so400m, gộp trung bình, trừ ngữ cảnh các bước trước), nâng độ chính xác chọn-1-trong-5 lên 34,1--38,7\%, vượt ngưỡng 30\% đã chốt trước; (iv) cấu hình này được đóng băng rồi chạy \textit{đúng một lần} trên tập kiểm thử khóa (407 mẫu, 4 video): độ chính xác chọn-1-trong-5 là 21,9--30,2\%, trên mức ngẫu nhiên ở 4/4 độ dài tiền tố và hơn cấu hình gốc ở 3/4, nhưng thấp hơn rõ so với đánh giá chéo; (v) chỉ nhận 50\% truy vấn có điểm chênh lệch cao nhất thì độ chính xác tăng thêm 6,9--7,9 điểm, cho phép robot biết khi nào nên chờ. Phía VLA, Intention Adapter vượt qua mọi kiểm thử cài đặt với vector ý định 256, 768 và 1152 chiều. Trên LIBERO-10, SmolVLA thành công 19/100 lượt với câu lệnh đúng nhưng 0/100 khi câu lệnh rỗng hoặc sai, cho thấy chính sách phụ thuộc hoàn toàn vào thông tin mục tiêu; đồ án chưa đo việc token ý định dự đoán có thay thế được câu lệnh hay không. Đồ án vì vậy đóng góp một quy trình đánh giá chặt chẽ cho mô-đun ý định, một bằng chứng rằng căn chỉnh ảnh--văn bản quan trọng hơn việc huấn luyện đầu đọc trên dữ liệu nhỏ, kết quả kiểm thử khóa một lần cho cấu hình đề xuất, và một giao diện đã kiểm thử để nối mô-đun ý định với chính sách VLA.
 
 \vspace{6pt}
 \noindent\textbf{Từ khóa:} robot cộng tác, dự đoán ý định, mô hình VLA, video góc nhìn thứ nhất, SmolVLA, SigLIP, phân định mục tiêu sớm.
@@ -174,10 +175,11 @@ Chất lượng của mô-đun ý định được đo bằng bài toán \textit
 % =====================================================================
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
+\sloppy
 
 \noindent\textbf{Abstract:} A collaborative robot is more useful when it can anticipate what a person \textit{intends} to do before the action is finished, instead of waiting for an explicit command. Current Vision--Language--Action (VLA) models such as SmolVLA map images, an instruction and the robot state to actions, but contain no component that estimates the human partner's intention. This thesis proposes VLIA (Vision--Language--Intention--Action), which adds an \textit{intention module} to SmolVLA: the module observes the beginning of a first-person (egocentric) video of the user, estimates the purpose (WHY) of the ongoing manipulation step, and passes it to SmolVLA as one intention token through a linear Intention Adapter.
 
-The intention module is evaluated on \textit{early goal disambiguation}: given only the first $k \in \{2,4,6,8\}$ frames, it must rank the correct purpose above the other purposes of the same video. Experiments use 2,503 manipulation steps from 27 videos and 13 scenes of the EgoIntent dataset, with 8-fold scene-grouped cross-validation (every test scene is unseen) and decision rules fixed before running. (i) A readout trained on frozen SmolVLM2 features is only marginally above chance (MRR 1.13--1.19$\times$ chance, 95\% intervals include 1) and returns to chance on a locked test split. (ii) A zero-shot SigLIP image--text encoder, without any training, reaches 2.25--2.57$\times$ chance MRR with intervals entirely above 1, and improves as more frames are observed (+0.0094 MRR from 2 to 8 frames, interval excluding 0); its best 5-way accuracy, 28.9\%, nonetheless misses the pre-registered 30\% threshold. On the VLA side, the Intention Adapter and the intention-token injection into SmolVLA pass implementation tests, but whether intention improves robot behaviour is not evaluated. The thesis therefore contributes a rigorous evaluation protocol for the intention module, evidence that pretrained image--text alignment matters more than training a readout on small data, and a tested interface connecting the intention module to a VLA policy.
+The intention module is evaluated on \textit{early goal disambiguation}: given only the first $k \in \{2,4,6,8\}$ frames, it must rank the correct purpose above the other purposes of the same video. Experiments use 2,503 manipulation steps from 27 videos and 13 scenes of the EgoIntent dataset, with 8-fold scene-grouped cross-validation (every test scene is unseen) and decision rules fixed before running. (i) A readout trained on frozen SmolVLM2 features is only marginally above chance (MRR 1.13--1.19$\times$ chance, 95\% intervals include 1) and returns to chance on a locked test split. (ii) A zero-shot SigLIP image--text encoder, without any training, reaches 2.25--2.57$\times$ chance MRR with intervals entirely above 1, and improves as more frames are observed. (iii) Nested selection over 90 training-free configurations picks the same one in 8/8 folds (SigLIP so400m, mean pooling, subtraction of earlier-step video context), raising 5-way accuracy to 34.1--38.7\% and passing the pre-registered 30\% bar. (iv) Frozen and run \emph{once} on the locked test split (407 steps, 4 videos), this pipeline reaches 21.9--30.2\% 5-way accuracy, above chance at 4/4 prefixes and above the baseline at 3/4, though clearly lower than in cross-validation. (v) Accepting only the 50\% most confident queries adds 6.9--7.9 points of accuracy, letting the robot know when to wait. On the VLA side, the Intention Adapter passes all implementation tests for 256-, 768- and 1152-d intention vectors. On LIBERO-10, SmolVLA succeeds in 19/100 episodes with the correct instruction but 0/100 with an empty or wrong one, so the policy depends entirely on goal information; whether a predicted intention token can supply it is not yet measured. The thesis contributes a rigorous evaluation protocol, evidence that pretrained image--text alignment matters more than training a readout on small data, a one-shot locked test of the proposed pipeline, and a tested interface connecting the intention module to a VLA policy.
 
 \vspace{6pt}
 \noindent\textbf{Keywords:} collaborative robots, intention prediction, vision--language--action models, egocentric video, SmolVLA, SigLIP, early goal disambiguation.
@@ -277,9 +279,10 @@ Trong đồ án, chữ ``tăng cường'' được hiểu là \textit{cải thi�
 
 \begin{description}[leftmargin=1.2cm,style=nextline]
   \item[RQ1] Một đầu đọc nhỏ được huấn luyện trên đặc trưng thị giác đóng băng của chính backbone SmolVLA (SmolVLM2) có phân định được mục tiêu tốt hơn đoán ngẫu nhiên trên bối cảnh chưa thấy không?
-  \item[RQ2] Một bộ mã hóa đã được căn chỉnh sẵn giữa ảnh và văn bản (SigLIP), dùng zero-shot, có làm tốt hơn đầu đọc đó không?
+  \item[RQ2] Một bộ mã hóa đã được căn chỉnh sẵn giữa ảnh và văn bản (SigLIP), dùng zero-shot, có làm tốt hơn đầu đọc đó không? Có thể cải thiện thêm mà không huấn luyện, và cải thiện đó có giữ được trên tập kiểm thử khóa không?
   \item[RQ3] Khi quan sát thêm khung hình, khả năng phân định mục tiêu có tăng lên không?
-  \item[RQ4] Thông tin ý định có thể được đưa vào SmolVLA theo cách đúng về mặt cài đặt mà không phá vỡ chính sách gốc không?
+  \item[RQ4] Thông tin ý định có thể được đưa vào SmolVLA theo cách đúng về mặt cài đặt mà không phá vỡ chính sách gốc không, và SmolVLA phụ thuộc vào thông tin mục tiêu đến mức nào?
+  \item[RQ5] Điểm số của mô-đun ý định có cho biết \textit{khi nào} nên đưa ra dự đoán và khi nào nên chờ thêm không?
 \end{description}
 
 \section{Đóng góp}
@@ -287,8 +290,8 @@ Trong đồ án, chữ ``tăng cường'' được hiểu là \textit{cải thi�
 \begin{enumerate}
   \item \textbf{Kiến trúc VLIA}: một mô-đun ý định tách rời, nối vào SmolVLA qua Intention Adapter và một token ý định chèn vào tiền tố đa phương thức. Kiến trúc cho phép thay bộ mã hóa ý định mà không sửa chính sách.
   \item \textbf{Quy trình đánh giá chặt chẽ cho bài toán phân định sớm mục tiêu}: chỉ dùng khung hình trong tiền tố, đánh giá chéo theo bối cảnh, ứng viên nhiễu lấy từ cùng video, mức ngẫu nhiên tính chính xác, khoảng tin cậy bootstrap theo video và luật quyết định chốt trước.
-  \item \textbf{Bằng chứng thực nghiệm}: đầu đọc huấn luyện trên dữ liệu nhỏ gần như ngang ngẫu nhiên, trong khi căn chỉnh ảnh--văn bản zero-shot cho tín hiệu rõ và tăng theo lượng quan sát. Các kết quả âm (ngưỡng 30\% không đạt, cổng phát hiện bàn tay không đạt) được báo cáo đầy đủ.
-  \item \textbf{Giao diện tích hợp đã kiểm thử}: Intention Adapter và đường chèn token ý định trong SmolVLA vượt qua bộ kiểm thử cài đặt, sẵn sàng cho thí nghiệm hành vi sau này.
+  \item \textbf{Bằng chứng thực nghiệm}: đầu đọc huấn luyện trên dữ liệu nhỏ gần như ngang ngẫu nhiên, trong khi căn chỉnh ảnh--văn bản zero-shot cho tín hiệu rõ và tăng theo lượng quan sát. Bước \textit{trừ ngữ cảnh các bước trước} (C2), chọn bằng lựa chọn lồng nhau, đưa độ chính xác chọn-1-trong-5 vượt 30\%, và cấu hình đóng băng vẫn vượt mức ngẫu nhiên lẫn cấu hình gốc trên tập kiểm thử khóa chạy một lần. Các kết quả âm (G1, cổng phát hiện bàn tay, quyết định sớm, kNN, MRR trên tập kiểm thử) được báo cáo đầy đủ.
+  \item \textbf{Giao diện tích hợp đã kiểm thử}: Intention Adapter và đường chèn token ý định trong SmolVLA vượt qua bộ kiểm thử cài đặt với ba kích thước vector ý định, cùng một thí nghiệm LIBERO cho thấy SmolVLA không làm được gì khi thiếu thông tin mục tiêu.
 \end{enumerate}
 
 \section{Cấu trúc đồ án}
@@ -515,18 +518,50 @@ Phương án thứ hai xuất phát từ nhận xét rằng đầu đọc ở \c
 Phương án này \textbf{không có tham số nào được huấn luyện} trên dữ liệu của đồ án, nên không có nguy cơ quá khớp vào tập nhỏ, và các fold chỉ dùng để chia tập ứng viên giống hệt phương án 1.
 
 \begin{giaithich}[Vì sao SigLIP vẫn nằm trong khung ``dựa trên VLA'']
-SigLIP chỉ thay \textit{bộ mã hóa của mô-đun ý định}. Chính sách điều khiển robot vẫn là SmolVLA, và vector ý định 768 chiều vẫn đi vào SmolVLA qua Intention Adapter như ở \cref{fig:vlia}. Backbone SmolVLM2 của SmolVLA vốn dùng tháp thị giác họ SigLIP; điểm khác là checkpoint đồ án dùng còn giữ tháp văn bản đã căn chỉnh, cho phép so khớp trực tiếp với câu mục đích.
+SigLIP chỉ thay \textit{bộ mã hóa của mô-đun ý định}. Chính sách điều khiển robot vẫn là SmolVLA, và vector ý định vẫn đi vào SmolVLA qua Intention Adapter như ở \cref{fig:vlia}. Backbone SmolVLM2 của SmolVLA vốn dùng tháp thị giác họ SigLIP; điểm khác là checkpoint đồ án dùng còn giữ tháp văn bản đã căn chỉnh, cho phép so khớp trực tiếp với câu mục đích.
 \end{giaithich}
+
+\section{Phương án 3: chọn cấu hình lồng nhau và trừ ngữ cảnh}
+\label{sec:ladder}
+
+Phương án 2 vẫn còn nhiều lựa chọn thiết kế không cần huấn luyện: dùng bộ mã hóa nào, gộp các khung ra sao, có xử lý gì trước khi so khớp hay không. Nếu thử hết rồi báo cáo cấu hình tốt nhất trên chính dữ liệu đánh giá thì kết quả sẽ lạc quan một cách giả tạo. Đồ án vì vậy dùng \textit{lựa chọn lồng nhau} (nested selection) trên lưới $5\times3\times3\times2=90$ cấu hình:
+\begin{itemize}\sloppy
+  \item \textbf{Bộ mã hóa (5)}: \texttt{siglip-base-patch16-224} (phương án 2), \texttt{siglip-base-patch16-384}, \texttt{siglip2-base-patch16-224}, \texttt{siglip-so400m-patch14-384} và \texttt{clip-vit-large-patch14}.
+  \item \textbf{Cách gộp (3)}: A0 trung bình các khung; A1 lấy cosine lớn nhất theo khung; A2 log-sum-exp theo khung.
+  \item \textbf{Hiệu chỉnh (3)}: C0 không làm gì; C1 trừ vector trung bình của ảnh và của câu (tính trên fold huấn luyện) để bù ``khoảng cách giữa hai phương thức''; C2 trừ \textit{ngữ cảnh của video}, tức trung bình mọi khung của các bước \textit{trước đó} trong cùng video.
+  \item \textbf{Mẫu câu (2)}: T0 dùng nguyên câu WHY; T1 là ``\texttt{a first-person photo of a person doing: \{why\}}''.
+\end{itemize}
+Ở mỗi fold ngoài, cả 90 cấu hình chỉ được chấm trên các fold huấn luyện, cấu hình tốt nhất được chọn rồi mới áp dụng cho fold kiểm tra. Như vậy con số báo cáo luôn đến từ dữ liệu không dùng để chọn.
+
+\begin{giaithich}[Trực giác của bước trừ ngữ cảnh (C2)]
+Trong cùng một video nhào bột, khung hình nào cũng có cái bàn, cái chậu, đôi tay và bột. Những thứ chung này chiếm phần lớn vector ảnh, nên mọi câu ``về nhào bột'' đều khớp gần như ngang nhau. Trừ đi trung bình của các bước \textit{đã xảy ra trước đó} giống như hỏi ``khung hình bây giờ \textit{khác gì} so với những gì đã thấy?''. Phần còn lại tập trung vào cái mới của bước hiện tại, là thứ phân biệt các mục đích. Bước này chỉ dùng quá khứ nên vẫn đúng nguyên tắc nhân quả; khi chưa có bước nào trước đó (khoảng 1\% truy vấn), C2 quay về C1.
+\end{giaithich}
+
+Cấu hình được chọn ở bước này được \textit{đóng băng} vào một tệp cấu hình có mã băm (\texttt{FROZEN.json}) trước khi đọc tập kiểm thử khóa (\cref{sec:locked}).
+
+\section{Dự đoán hay hoãn}
+\label{sec:selective}
+
+Một robot không nhất thiết phải đoán ở mọi thời điểm; nó có thể chờ thêm khi chưa chắc. Đồ án dùng \textit{độ chênh} (margin) giữa điểm của ứng viên cao nhất và ứng viên thứ hai trong bài chọn-1-trong-5 làm thước đo độ chắc chắn. Với một ngưỡng $\theta$, mô-đun chỉ đưa ra dự đoán khi độ chênh $\geq\theta$ và hoãn trong các trường hợp còn lại. Tỉ lệ truy vấn được trả lời gọi là \textit{độ phủ}. Ngưỡng cho từng fold được tính chỉ từ các fold khác, nên không rò rỉ thông tin của fold kiểm tra.
 
 \section{Tích hợp ý định vào SmolVLA}
 \label{sec:adapter}
 
 \subsection{Intention Adapter}
 
-Vector ý định $\mathbf{z}^{\mathrm{int}}\in\R^{d}$ (với $d=256$ cho phương án 1 và $d=768$ cho phương án 2) được chiếu tuyến tính sang không gian ẩn 960 chiều của SmolVLA:
+Vector ý định $\mathbf{z}^{\mathrm{int}}\in\R^{d}$ (với $d=256$ cho phương án 1, $d=768$ cho phương án 2 và $d=1152$ cho cấu hình đóng băng dùng so400m) được chiếu tuyến tính sang không gian ẩn 960 chiều của SmolVLA:
 \begin{equation}
   \mathbf{e}^{\mathrm{int}} = \mathbf{W}\mathbf{z}^{\mathrm{int}} + \mathbf{b}, \qquad \mathbf{W}\in\R^{960\times d}.
 \end{equation}
+
+\Cref{fig:vlia_detailed} vẽ chi tiết tới từng lớp của toàn hệ thống với cấu hình đóng băng: mô-đun ý định dùng SigLIP so400m, Intention Adapter 1152$\to$960, và SmolVLA với backbone 16 lớp cùng action expert 16 lớp.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\linewidth]{figs/vlia_detailed.pdf}
+\caption{Sơ đồ chi tiết hệ thống VLIA. Đường đi của thông tin ý định tô đỏ; khối viền nét đứt được đóng băng. Số lớp và số chiều bên trong SigLIP, SmolVLM2 và action expert lấy theo cấu hình công bố của các checkpoint.}
+\label{fig:vlia_detailed}
+\end{figure}
 
 \subsection{Chèn token ý định vào tiền tố}
 
@@ -607,12 +642,32 @@ Khi thử nhiều cấu hình trên dữ liệu nhỏ, rất dễ vô tình ch�
   \item[R2] Biểu diễn \texttt{sentence} chỉ được chọn thay cho \texttt{smolvlm\_pca} nếu cận dưới khoảng tin cậy của hiệu ghép cặp lớn hơn 0 ở ít nhất 2/4 độ dài tiền tố.
   \item[G1] Phương án SigLIP \textit{đạt} nếu, ở mọi độ dài tiền tố: cận dưới CI của lift MRR $>1$, cận dưới CI của lift chọn-1-trong-5 $>1$, \textbf{và} độ chính xác chọn-1-trong-5 $\geq 0{,}30$.
   \item[Cổng HOI] Nhánh dùng vùng HOI chỉ được đánh giá nếu tỉ lệ khung phát hiện được bàn tay $\geq 60\%$ trên toàn bộ dữ liệu \textbf{và} $\geq 30\%$ ở mọi bối cảnh.
+  \item[N1] Lựa chọn lồng nhau \textit{có ích} nếu hiệu ghép cặp so với phương án 2 có cận dưới CI $>0$ cho \textbf{cả} MRR \textbf{và} chọn-1-trong-5 ở ít nhất 2/4 độ dài tiền tố.
+  \item[N2] Lựa chọn lồng nhau \textit{đạt ngưỡng thực dụng} nếu độ chính xác chọn-1-trong-5 $\geq 0{,}30$ và cận dưới CI của lift MRR và lift chọn-1-trong-5 $>1$, ở ít nhất 2/4 độ dài. G1 vẫn giữ nguyên kết quả cũ; N2 là ngưỡng mới, không phải chấm lại G1.
+  \item[T1] Trên tập kiểm thử khóa, cấu hình đóng băng \textit{trên mức ngẫu nhiên} nếu cận dưới CI của lift chọn-1-trong-5 $>1$ ở ít nhất 3/4 độ dài.
+  \item[T2] Trên tập kiểm thử khóa, cấu hình đóng băng \textit{hơn phương án 2} nếu cận dưới CI của hiệu ghép cặp chọn-1-trong-5 $>0$ ở ít nhất 2/4 độ dài.
+  \item[S1b] Dự đoán hay hoãn \textit{có ích} nếu cận dưới CI của (độ chính xác ở độ phủ 50\% $-$ độ chính xác ở độ phủ 100\%) $>0$ ở ít nhất 2/4 độ dài.
+  \item[L1, L2] Trên LIBERO: L1 \textit{thông tin mục tiêu quan trọng} nếu cận dưới CI của (thành công với lệnh đúng $-$ với lệnh rỗng) $>0$; L2 \textit{mục tiêu sai còn hại hơn không có mục tiêu} nếu cận dưới CI của (lệnh rỗng $-$ lệnh sai) $>0$.
 \end{description}
+Hai thí nghiệm phụ cũng có luật chốt trước và đều \textbf{không đạt}: quyết định sớm theo độ chênh (S2) và hiệu chỉnh bằng $k$ láng giềng gần nhất trong không gian câu (K1). Chúng được tóm tắt ở \cref{sec:negative}.
 
 \section{Tập kiểm thử khóa}
 \label{sec:locked}
 
 Ngoài đánh giá chéo, đồ án còn một phép thử độc lập trên phần kiểm thử của EgoIntent cho đầu đọc phương án 1. Một video của phần này từng xuất hiện trong tập kiểm định thử nghiệm ban đầu nên bị loại trước khi khóa giao thức, còn lại 407 mẫu từ 4 video, 2 bối cảnh. Giao thức (mô hình, epoch, độ đo) được khóa trước, và tập này chỉ được chạy một lần. Lưu ý rằng tập kiểm thử này tách theo video nhưng không tách theo bối cảnh.
+
+Cấu hình đóng băng của phương án 3 được kiểm tra trên đúng 407 mẫu này theo một quy trình riêng, cũng chỉ chạy một lần:
+\begin{itemize}
+  \item Tệp \texttt{FROZEN.json} (bộ mã hóa, cách gộp, hiệu chỉnh, mẫu câu, vector trung bình C1 tính trên 2.503 mẫu train + val) và luật T1/T2 được ghi vào kho mã, kèm mã băm, \textit{trước} khi chạy.
+  \item Mã đánh giá được kiểm thử trên dữ liệu giả, và từ chối chạy nếu thư mục kết quả đã tồn tại. Lần chạy thật chỉ được thực hiện khi người làm đồ án tự tạo một tệp xác nhận.
+  \item C2 trên tập kiểm thử chỉ dùng các bước trước đó của \textit{chính video kiểm thử}, không bao giờ dùng khung của train/val.
+  \item Vì chỉ có 4 video, mọi khoảng tin cậy chỉ dựa trên 4 cụm bootstrap và được ghi nhãn là \textit{thăm dò}.
+\end{itemize}
+
+\section{Thí nghiệm thông tin mục tiêu trên LIBERO}
+\label{sec:libero_setup}
+
+Để biết SmolVLA phụ thuộc vào thông tin mục tiêu đến mức nào, đồ án dùng checkpoint SmolVLA đã huấn luyện lại trên LIBERO-10 (hành động 7 chiều, 1 camera rỗng, 25.000 bước) và chạy 10 tác vụ $\times$ 10 lượt trong ba điều kiện: \textbf{lệnh đúng}; \textbf{lệnh rỗng}; \textbf{lệnh sai}, tức câu lệnh của tác vụ khác theo hoán vị cố định $t\mapsto(t+5)\bmod 10$. Lượt thứ $e$ của mỗi tác vụ dùng cùng trạng thái khởi tạo và cùng hạt giống ở cả ba điều kiện; chỉ chuỗi câu lệnh thay đổi. Khoảng tin cậy dùng bootstrap ghép cặp trên 100 cặp (tác vụ, lượt) và khoảng Wilson 95\% cho từng điều kiện.
 
 \section{Tập dữ liệu tự thu}
 \label{sec:own_data}
@@ -630,7 +685,7 @@ Mã nguồn viết bằng Python và PyTorch, dựa trên thư viện LeRobot \c
 \label{chap:results}
 % =====================================================================
 
-Chương này trả lời lần lượt bốn câu hỏi nghiên cứu. Mọi số liệu được lấy từ các tệp kết quả trong kho mã. Trong các bảng, ``$\pm$'' là độ lệch chuẩn giữa 3 seed, còn khoảng trong ngoặc vuông là khoảng tin cậy 95\% bootstrap theo video.
+Chương này trả lời lần lượt năm câu hỏi nghiên cứu. Mọi số liệu được lấy từ các tệp kết quả trong kho mã. Trong các bảng, ``$\pm$'' là độ lệch chuẩn giữa 3 seed, còn khoảng trong ngoặc vuông là khoảng tin cậy 95\% bootstrap theo video.
 
 \section{Đầu đọc trên tập chia cố định và tập kiểm thử khóa}
 \label{sec:fixed_split}
@@ -694,6 +749,8 @@ Biểu diễn đích & $k$ & MRR & Lift MRR [CI 95\%] & Chọn 1/5 & Lift 1/5 [C
 
 Kết quả cũng không đồng đều giữa các video: với \texttt{sentence}, có 8--12 trên 27 video có lift MRR dưới 1 tùy độ dài tiền tố. Điều này cho thấy tín hiệu yếu không đến từ vài video ``khó'' riêng lẻ mà phổ biến trên toàn bộ dữ liệu.
 
+\textbf{Backbone tự chấm điểm.} Một cách khác để dùng backbone mà không huấn luyện là để chính SmolVLM2 đọc khung hình và chấm xác suất của từng câu WHY ứng viên (so với khi không có ảnh). Sau khi sửa lỗi cài đặt của lần chạy đầu, cách này đạt 23,5\% ($k=2$) và 24,6\% ($k=8$) ở chọn-1-trong-5, lift 1,18--1,23 với cận dưới CI trên 1, nhưng thấp hơn SigLIP base khoảng 4,2 điểm (CI không chứa 0). Phép thử đổi video cho CI chứa mức ngẫu nhiên. Như vậy backbone của VLA \textit{có} chứa một chút tín hiệu về mục đích, nhưng yếu hơn rõ so với một bộ mã hóa đã căn chỉnh ảnh--văn bản.
+
 \section{RQ2: Căn chỉnh ảnh--văn bản zero-shot}
 \label{sec:rq2}
 
@@ -753,7 +810,69 @@ $k$ & MRR & Lift MRR [CI 95\%] & Chọn 1/5 & Lift 1/5 [CI 95\%] & Chọn 1/10 \
 Có. Không huấn luyện tham số nào, SigLIP đạt lift MRR 2,25--2,57 với cận dưới CI từ 1,87 trở lên, và độ chính xác chọn-1-trong-5 là 27,5--28,9\%. Tuy vậy, theo luật G1 đã chốt trước, phương án này \textbf{không đạt}: hai điều kiện về khoảng tin cậy thỏa mãn ở 4/4 độ dài, nhưng điều kiện độ chính xác chọn-1-trong-5 $\geq 30\%$ thỏa mãn ở 0/4 độ dài.
 \end{ketqua}
 
-Kết quả cho thấy nút thắt của phương án 1 nằm ở \textit{mối liên hệ giữa ảnh và ngôn ngữ}, không phải ở bản thân thông tin thị giác: hai nghìn mẫu không đủ để một đầu đọc học lại mối liên hệ mà SigLIP đã có sẵn từ dữ liệu quy mô Internet. Đây là cơ sở để đồ án coi phương án 2 là bộ mã hóa ý định ưu tiên trong VLIA, đồng thời ghi rõ rằng nó chưa đạt ngưỡng chất lượng đã đặt.
+Kết quả cho thấy nút thắt của phương án 1 nằm ở \textit{mối liên hệ giữa ảnh và ngôn ngữ}, không phải ở bản thân thông tin thị giác: hai nghìn mẫu không đủ để một đầu đọc học lại mối liên hệ mà SigLIP đã có sẵn từ dữ liệu quy mô Internet. Đây là cơ sở để đồ án chuyển sang các bộ mã hóa đã căn chỉnh, và tìm cách cải thiện chúng mà không huấn luyện (\cref{sec:ladder_result}).
+
+\section{RQ2 (tiếp): Chọn cấu hình lồng nhau}
+\label{sec:ladder_result}
+
+Ở cả \textbf{8/8} fold ngoài, lựa chọn lồng nhau chọn cùng một cấu hình: \texttt{siglip-so400m-patch14-384}, gộp trung bình (A0), trừ ngữ cảnh các bước trước (C2), mẫu câu T1. Không fold nào có hai cấu hình đồng hạng. \Cref{tab:ladder} so sánh cấu hình này với phương án 2 trên cùng truy vấn.
+
+\begin{table}[ht]
+\centering
+\caption{Cấu hình chọn lồng nhau (so400m, A0, C2, T1) so với phương án 2 (SigLIP base, không hiệu chỉnh), 2.503 mẫu, đánh giá ngoài fold. Hiệu là ghép cặp trên cùng truy vấn, CI 95\% bootstrap theo video.}
+\label{tab:ladder}
+\small
+\begin{tabular}{ccccccc}
+\toprule
+& \multicolumn{3}{c}{Chọn-1-trong-5} & \multicolumn{3}{c}{MRR} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+$k$ & PA 2 & Lồng nhau & Hiệu [CI 95\%] & PA 2 & Lồng nhau & Hiệu [CI 95\%] \\
+\midrule
+2 & 0,277 & \textbf{0,341} & $+0{,}064$ [$+0{,}039$; $+0{,}089$] & 0,0671 & 0,0747 & $+0{,}0076$ [$-0{,}0037$; $+0{,}0195$] \\
+4 & 0,275 & \textbf{0,349} & $+0{,}074$ [$+0{,}049$; $+0{,}100$] & 0,0715 & 0,0777 & $+0{,}0062$ [$-0{,}0059$; $+0{,}0183$] \\
+6 & 0,281 & \textbf{0,362} & $+0{,}082$ [$+0{,}051$; $+0{,}112$] & 0,0734 & 0,0825 & $+0{,}0091$ [$-0{,}0024$; $+0{,}0206$] \\
+8 & 0,289 & \textbf{0,387} & $+0{,}099$ [$+0{,}062$; $+0{,}134$] & 0,0765 & 0,0850 & $+0{,}0085$ [$-0{,}0026$; $+0{,}0195$] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{ketqua}[Kết quả lựa chọn lồng nhau]
+\textbf{N2 đạt}: độ chính xác chọn-1-trong-5 là 34,1--38,7\%, vượt 30\% ở 4/4 độ dài; lift MRR 2,51--2,86 và lift chọn-1-trong-5 1,70--1,94, mọi cận dưới CI đều trên 1. \textbf{N1 không đạt}: hiệu chọn-1-trong-5 có cận dưới CI $>0$ ở 4/4 độ dài, nhưng hiệu MRR có CI chứa 0 ở cả 4 độ dài, trong khi luật đòi cả hai.
+\end{ketqua}
+
+Hai kiểm tra phụ củng cố kết quả. Thứ nhất, khi thay khung hình bằng khung của một video khác ở bối cảnh khác (313 truy vấn, $k=8$), độ chính xác của cấu hình chọn rơi từ 39,6\% xuống 18,8\%, tức xấp xỉ ngẫu nhiên: tín hiệu đến từ chính nội dung hình ảnh. Thứ hai, trong lưới mô tả (không hiệu chỉnh cho việc chọn), 6 cấu hình đứng đầu đều dùng so400m với C2; bỏ C2 khỏi so400m thì còn 31,1--33,0\%, và thêm C2 cho SigLIP base thì được 29,1--32,1\%. Như vậy cả bộ mã hóa lớn hơn lẫn bước trừ ngữ cảnh đều đóng góp.
+
+\section{RQ2 (tiếp): Tập kiểm thử khóa cho cấu hình đóng băng}
+\label{sec:locked_result}
+
+Cấu hình trên được đóng băng và chạy \textbf{một lần duy nhất} trên tập kiểm thử khóa vào ngày 23/10/2026 (\cref{tab:locked}).
+
+\begin{table}[ht]
+\centering
+\caption{Tập kiểm thử khóa (407 mẫu, 4 video), chạy một lần. Mức ngẫu nhiên: chọn-1-trong-5 là 0,20, MRR 0,0318. CI 95\% bootstrap trên 4 video (thăm dò).}
+\label{tab:locked}
+\small
+\begin{tabular}{cccccc}
+\toprule
+& \multicolumn{2}{c}{Chọn-1-trong-5} & & \multicolumn{2}{c}{MRR} \\
+\cmidrule(lr){2-3}\cmidrule(lr){5-6}
+$k$ & Đóng băng [lift CI] & PA 2 & Hiệu [CI 95\%] & Đóng băng & PA 2 \\
+\midrule
+2 & 0,219 [1,04; 1,14] & 0,204 & $+0{,}015$ [$-0{,}010$; $+0{,}038$] & 0,0459 & 0,0631 \\
+4 & 0,246 [1,16; 1,30] & 0,211 & $+0{,}034$ [$+0{,}013$; $+0{,}048$] & 0,0488 & 0,0594 \\
+6 & 0,278 [1,20; 1,62] & 0,224 & $+0{,}054$ [$+0{,}010$; $+0{,}097$] & 0,0557 & 0,0660 \\
+8 & \textbf{0,302} [1,29; 1,73] & 0,214 & $+0{,}089$ [$+0{,}044$; $+0{,}148$] & 0,0615 & 0,0653 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{ketqua}[Kết quả tập kiểm thử khóa]
+\textbf{T1 đạt}: cận dưới CI của lift chọn-1-trong-5 lớn hơn 1 ở 4/4 độ dài. \textbf{T2 đạt}: cấu hình đóng băng hơn phương án 2 với cận dưới CI $>0$ ở 3/4 độ dài ($k=4,6,8$). Ở chọn-1-trong-10, cấu hình đóng băng cũng hơn phương án 2 ở 4/4 độ dài.
+\end{ketqua}
+
+Ba điểm cần đọc kèm. (i) Độ chính xác trên tập kiểm thử (21,9--30,2\%) thấp hơn rõ so với đánh giá chéo (34,1--38,7\%); chỉ ở $k=8$ mới chạm 30\%. Phương án 2 cũng giảm (từ 27,5--28,9\% xuống 20,4--22,4\%), nên tập kiểm thử có vẻ khó hơn, nhưng với 4 video thì không tách được hai nguyên nhân. (ii) \textbf{MRR trên toàn tập của cấu hình đóng băng lại thấp hơn phương án 2} ở cả 4 độ dài, với CI nằm dưới 0 ở $k=2$. C2 giúp phân biệt các bước trong cùng video (đúng thứ mà chọn-1-trong-$K$ đo), nhưng không giúp xếp hạng giữa mọi câu WHY của nhiều video. (iii) Phép thử đổi video ($k=8$, 51 truy vấn) cho 31,4\% với khung thật và 21,6\% với khung của video khác, cùng chiều với đánh giá chéo.
+
+Kết quả trên tập kiểm thử vì vậy ủng hộ \textit{có giới hạn} cho cấu hình đề xuất: tín hiệu giữ được trên video mới, ưu thế so với phương án 2 trong bài toán sát với robot vẫn còn, nhưng độ lớn nhỏ hơn và chỉ dựa trên 4 video.
 
 \section{RQ3: Ảnh hưởng của lượng quan sát}
 \label{sec:rq3}
@@ -782,7 +901,43 @@ SigLIP, chọn 1/5 & $+0{,}0112$ [$+0{,}0014$; $+0{,}0211$] & $+0{,}0076$ [$0{,}
 Với SigLIP, MRR tăng đều khi quan sát thêm: từ 2 lên 8 khung tăng $+0{,}0094$ (khoảng 14\% tương đối) và khoảng tin cậy không chứa 0. Với đầu đọc, hiệu MRR nhỏ và mọi khoảng tin cậy đều chứa 0, tức không phát hiện được lợi ích của việc quan sát thêm. Như vậy chỉ khi biểu diễn đã căn chỉnh tốt, thêm bằng chứng thị giác mới chuyển thành khả năng phân định mục tiêu tốt hơn.
 \end{ketqua}
 
-Mức tăng này vẫn nhỏ so với khoảng cách tới một hệ thống dùng được: ở 8 khung, câu đúng chỉ đứng đầu trong 28,9\% số lần chọn-1-trong-5. Điều này phù hợp với bản chất của bài toán, vì nhiều bước thao tác kết thúc trước khi mục đích lộ rõ.
+Mức tăng này vẫn nhỏ so với khoảng cách tới một hệ thống dùng được: ở 8 khung, câu đúng chỉ đứng đầu trong 28,9\% số lần chọn-1-trong-5 với SigLIP base, và 38,7\% với cấu hình chọn lồng nhau. Điều này phù hợp với bản chất của bài toán, vì nhiều bước thao tác kết thúc trước khi mục đích lộ rõ.
+
+\section{RQ5: Dự đoán hay hoãn}
+\label{sec:rq5}
+
+\Cref{tab:selective} cho kết quả khi mô-đun ý định (cấu hình chọn lồng nhau) chỉ trả lời các truy vấn có độ chênh cao nhất.
+
+\begin{table}[ht]
+\centering
+\caption{Độ chính xác chọn-1-trong-5 theo độ phủ, dùng độ chênh top-1 $-$ top-2 làm điểm tin cậy (2.503 mẫu, ngoài fold). CI 95\% bootstrap theo video.}
+\label{tab:selective}
+\small
+\begin{tabular}{cccccc}
+\toprule
+$k$ & Phủ 100\% & Phủ 50\% & Phủ 20\% & Lợi ích ở 50\% [CI 95\%] & AURC (ngẫu nhiên) \\
+\midrule
+2 & 0,341 & 0,410 & 0,533 & $+0{,}069$ [$+0{,}039$; $+0{,}096$] & 0,549 (0,659) \\
+4 & 0,349 & 0,418 & 0,557 & $+0{,}069$ [$+0{,}045$; $+0{,}095$] & 0,534 (0,651) \\
+6 & 0,362 & 0,441 & 0,577 & $+0{,}079$ [$+0{,}053$; $+0{,}106$] & 0,517 (0,638) \\
+8 & 0,387 & 0,457 & 0,609 & $+0{,}070$ [$+0{,}040$; $+0{,}097$] & 0,497 (0,613) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{ketqua}[Trả lời RQ5]
+Có. \textbf{S1b đạt} ở 4/4 độ dài: chỉ trả lời 50\% truy vấn chắc nhất thì độ chính xác tăng 6,9--7,9 điểm; chỉ trả lời 20\% thì đạt 53--61\%. Với ngưỡng tính từ các fold khác (không rò rỉ), độ phủ thực tế khớp mục tiêu (0,50 và 0,20), độ chính xác lần lượt là 40,7--46,1\% và 53,3--60,9\%, đều cao hơn khi trả lời mọi truy vấn. Ở độ phủ 80\% thì lợi ích không còn rõ.
+\end{ketqua}
+
+Với cấu hình SigLIP base, cùng phép thử chỉ cho lợi ích +2,6 đến +3,5 điểm (S1, đạt nhưng nhỏ). Điểm tin cậy vì vậy hữu ích hơn hẳn khi bộ mã hóa tốt hơn. Cần lưu ý độ chênh chỉ là một điểm quyết định đơn giản, chưa phải thước đo đã kiểm chứng cho việc ``đã đủ bằng chứng hay chưa'', và kết quả này chưa được kiểm tra trên tập kiểm thử khóa.
+
+\section{Các hướng đã thử và không đạt}
+\label{sec:negative}
+
+\begin{itemize}
+  \item \textbf{Quyết định sớm theo độ chênh (S2, không đạt).} Robot dừng quan sát ở khung đầu tiên có độ chênh vượt ngưỡng. So với dùng số khung cố định có cùng số khung trung bình, độ chính xác chỉ hơn có ý nghĩa ở 1/4 mức ngân sách ($+0{,}014$ ở 5 khung), không đạt yêu cầu 2/4.
+  \item \textbf{Hiệu chỉnh bằng láng giềng gần nhất (K1, không đạt).} Lấy 20 truy vấn huấn luyện giống nhất rồi pha câu WHY của chúng vào điểm số làm MRR \textit{giảm} 0,004--0,007 (CI dưới 0 ở 3/4 độ dài) và không cải thiện chọn-1-trong-5. Cấu hình đóng băng vì vậy dùng trọng số kNN bằng 0.
+\end{itemize}
 
 \section{Phân tích lỗi}
 \label{sec:errors}
@@ -853,21 +1008,45 @@ Lưu/tải & Lưu và tải lại checkpoint không mất trọng số & Đạt 
 \end{tabularx}
 \end{table}
 
-Các kiểm thử trên được chạy với vector ý định 256 chiều của phương án 1. \TODO{Kết quả chạy lại các kiểm thử với vector 768 chiều của SigLIP; nếu chưa chạy, ghi ``chưa kiểm thử''.}
+Toàn bộ kiểm thử được chạy lại với ba kích thước vector ý định $d\in\{256, 768, 1152\}$, ứng với phương án 1, phương án 2 và cấu hình đóng băng (so400m), trên một SmolVLA khởi tạo ngẫu nhiên có cùng kiến trúc với checkpoint LIBERO. Cả 7 kiểm thử đạt ở cả 3 kích thước: tiền tố dài từ 77 lên 78 token, khóa trong KV cache cũng dài 78 và thay đổi khi đổi $\mathbf{z}^{\mathrm{int}}$, sai khác tối đa khi tắt cờ và khi lưu/tải đều bằng 0. Đây chỉ là bằng chứng cài đặt đúng, không phải kết quả khoa học.
 
-Bên cạnh đó, đồ án huấn luyện lại SmolVLA \textit{không có ý định} trên LIBERO-10 \citep{liu2023libero} với cấu hình hành động 7 chiều đúng chuẩn, đạt tỉ lệ thành công 24\% trên 100 lượt chạy. Hai lượt huấn luyện trước đó bị loại vì cấu hình sai (hành động 6 chiều, thiếu camera rỗng). Con số này chỉ là mốc kỹ thuật cho thấy đường huấn luyện và đánh giá chạy được, không phải kết quả cạnh tranh trên LIBERO.
+\subsection{SmolVLA phụ thuộc vào thông tin mục tiêu đến mức nào}
+
+Đồ án huấn luyện lại SmolVLA \textit{không có ý định} trên LIBERO-10 \citep{liu2023libero} với cấu hình hành động 7 chiều đúng chuẩn; lần đánh giá tham chiếu đạt 24\% trên 100 lượt. Hai lượt huấn luyện trước đó bị loại vì cấu hình sai (hành động 6 chiều, thiếu camera rỗng). Với checkpoint này, thí nghiệm ở \cref{sec:libero_setup} cho kết quả ở \cref{tab:libero}.
+
+\begin{table}[ht]
+\centering
+\caption{SmolVLA trên LIBERO-10 với ba loại câu lệnh, cùng trạng thái khởi tạo và hạt giống (10 tác vụ $\times$ 10 lượt mỗi điều kiện).}
+\label{tab:libero}
+\small
+\begin{tabular}{lccc}
+\toprule
+Câu lệnh & Thành công & Tỉ lệ & Wilson 95\% \\
+\midrule
+Đúng & 19/100 & 0,19 & [0,125; 0,278] \\
+Rỗng & 0/100 & 0,00 & [0,000; 0,037] \\
+Sai (lệnh của tác vụ khác) & 0/100 & 0,00 & [0,000; 0,037] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Theo tác vụ, số lượt thành công với lệnh đúng là 0, 1, 3, 7, 1, 3, 3, 0, 0, 1 trên 10. Mọi lượt với lệnh rỗng hoặc sai đều chạy hết giới hạn 520 bước mà không hoàn thành. \textbf{L1 đạt}: lệnh đúng hơn lệnh rỗng $+0{,}19$ [$+0{,}12$; $+0{,}27$]. \textbf{L2 không đạt}: cả hai điều kiện đều bằng 0, nên không thể thấy lệnh sai có hại hơn lệnh rỗng hay không. Tỉ lệ 19\% dùng tập khởi tạo khác với lần đánh giá 24\% nên hai số không được so sánh với nhau.
+
+\begin{giaithich}[Thí nghiệm này nói gì và không nói gì]
+Thí nghiệm cho thấy SmolVLA \textit{hoàn toàn} dựa vào câu lệnh để biết phải làm gì: không có mục tiêu thì robot không làm xong việc nào. Đây là lý do một robot cộng tác cần nguồn thông tin mục tiêu khác khi người không nói ra. Tuy nhiên, câu lệnh rỗng và sai nằm ngoài phân bố huấn luyện, nên thí nghiệm chỉ đo sự phụ thuộc vào kênh ngôn ngữ; nó \textbf{chưa} cho thấy token ý định dự đoán sẽ giúp được.
+\end{giaithich}
 
 \begin{ketqua}[Trả lời RQ4]
-Có, ở mức cài đặt: thông tin ý định đi vào SmolVLA đúng vị trí, có gradient, và không phá vỡ mô hình gốc khi tắt. Đồ án \textbf{chưa} đo việc token ý định có làm robot hành động tốt hơn hay không.
+Có, ở mức cài đặt: thông tin ý định đi vào SmolVLA đúng vị trí, có gradient, và không phá vỡ mô hình gốc khi tắt, với cả ba kích thước vector. SmolVLA phụ thuộc gần như tuyệt đối vào thông tin mục tiêu (19\% so với 0\%). Đồ án \textbf{chưa} đo việc token ý định dự đoán có thay thế hay bổ sung được cho câu lệnh hay không.
 \end{ketqua}
 
 \section{Thảo luận chung}
 
-\textbf{Điều gì đã được chứng minh.} Trên bối cảnh chưa thấy, một bộ mã hóa ảnh--văn bản đã căn chỉnh sẵn phân định mục tiêu tốt gấp khoảng hai lần đầu đọc được huấn luyện trên đặc trưng của backbone VLA, và hưởng lợi từ việc quan sát thêm. Kết luận này đứng vững dưới đánh giá chéo theo bối cảnh và khoảng tin cậy theo video.
+\textbf{Điều gì đã được chứng minh.} Trên bối cảnh chưa thấy, một bộ mã hóa ảnh--văn bản đã căn chỉnh sẵn phân định mục tiêu tốt gấp khoảng hai lần đầu đọc được huấn luyện trên đặc trưng của backbone VLA, và hưởng lợi từ việc quan sát thêm. Một bộ mã hóa lớn hơn cùng bước trừ ngữ cảnh các bước trước đưa độ chính xác chọn-1-trong-5 lên 34--39\%, được chọn ổn định ở 8/8 fold, và giữ được ưu thế so với cấu hình gốc trên tập kiểm thử khóa chạy một lần. Điểm tin cậy cho phép robot biết khi nào nên chờ. Về phía robot, SmolVLA không làm được việc gì khi thiếu thông tin mục tiêu.
 
-\textbf{Điều gì chưa được chứng minh.} Chất lượng tuyệt đối còn thấp (28,9\% chọn-1-trong-5 so với 20\% ngẫu nhiên) và chưa đạt ngưỡng đã đặt. Tác động của ý định lên hành vi robot chưa được đo. Kết quả đến từ 27 video, 13 bối cảnh, nên chưa đủ để khẳng định khái quát rộng.
+\textbf{Điều gì chưa được chứng minh.} Trên tập kiểm thử, độ chính xác chỉ 22--30\%, thấp hơn rõ so với đánh giá chéo, và MRR toàn tập còn kém cấu hình gốc. Mọi kết luận trên tập kiểm thử chỉ dựa trên 4 video. Tác động của token ý định dự đoán lên hành vi robot chưa được đo. Dữ liệu chính chỉ có 27 video, 13 bối cảnh.
 
-\textbf{Ý nghĩa cho thiết kế VLIA.} Kết quả gợi ý rằng mô-đun ý định nên dựa trên biểu diễn đã căn chỉnh ảnh--ngôn ngữ, và việc huấn luyện thêm (nếu có) nên ở dạng nhẹ trên biểu diễn đó thay vì học từ đầu trên dữ liệu nhỏ.
+\textbf{Ý nghĩa cho thiết kế VLIA.} Kết quả gợi ý rằng mô-đun ý định nên dựa trên biểu diễn đã căn chỉnh ảnh--ngôn ngữ, tập trung vào \textit{phần thay đổi} so với ngữ cảnh trước đó, và đi kèm cơ chế hoãn khi chưa chắc. Việc huấn luyện thêm (nếu có) nên ở dạng nhẹ trên biểu diễn đó thay vì học từ đầu trên dữ liệu nhỏ.
 
 % =====================================================================
 \chapter{Kết luận và hướng phát triển}
@@ -881,7 +1060,10 @@ Có, ở mức cài đặt: thông tin ý định đi vào SmolVLA đúng vị t
   \item Đề xuất kiến trúc VLIA, bổ sung cho SmolVLA một mô-đun ý định tách rời và một token ý định trong tiền tố đa phương thức; phần tích hợp vượt qua bộ kiểm thử cài đặt.
   \item Xây dựng quy trình đánh giá mô-đun ý định qua bài toán phân định sớm mục tiêu, với đánh giá chéo theo bối cảnh, ứng viên nhiễu cùng video, mức ngẫu nhiên chính xác, bootstrap theo video và luật quyết định chốt trước.
   \item Chỉ ra rằng đầu đọc huấn luyện trên đặc trưng đóng băng của SmolVLM2 gần như ngang ngẫu nhiên (lift MRR 1,13--1,19, CI chứa 1; ngang ngẫu nhiên trên tập kiểm thử khóa).
-  \item Chỉ ra rằng SigLIP zero-shot tăng lift MRR lên 2,25--2,57 (CI hoàn toàn trên 1) và cải thiện khi quan sát thêm khung hình, nhưng chưa đạt ngưỡng 30\% chọn-1-trong-5 đã chốt trước.
+  \item Chỉ ra rằng SigLIP zero-shot tăng lift MRR lên 2,25--2,57 (CI hoàn toàn trên 1) và cải thiện khi quan sát thêm khung hình, nhưng chưa đạt ngưỡng G1.
+  \item Lựa chọn lồng nhau trên 90 cấu hình không huấn luyện chọn cùng cấu hình so400m + trừ ngữ cảnh ở 8/8 fold, đạt 34,1--38,7\% chọn-1-trong-5 (N2 đạt). Trên tập kiểm thử khóa chạy một lần, cấu hình đóng băng đạt 21,9--30,2\%, trên ngẫu nhiên (T1) và hơn cấu hình gốc (T2).
+  \item Cơ chế dự đoán hay hoãn tăng độ chính xác 6,9--7,9 điểm khi trả lời một nửa số truy vấn.
+  \item Trên LIBERO-10, SmolVLA thành công 19\% với lệnh đúng và 0\% khi lệnh rỗng hoặc sai.
 \end{enumerate}
 
 \section{Hạn chế}
@@ -890,17 +1072,18 @@ Có, ở mức cài đặt: thông tin ý định đi vào SmolVLA đúng vị t
   \item \textbf{Chưa có thí nghiệm hành vi.} Chưa đo việc token ý định cải thiện thao tác của robot, trên mô phỏng hay robot thật (UR5).
   \item \textbf{Dữ liệu nhỏ.} 27 video, 13 bối cảnh; khoảng tin cậy theo video chỉ mô tả tập này.
   \item \textbf{Đánh giá theo câu trùng khớp.} Câu đồng nghĩa bị tính là sai, làm điểm tuyệt đối bị chặn trên.
-  \item \textbf{Chưa có tập kiểm thử độc lập cho SigLIP.} Kết quả SigLIP được tính trên phần train + val (không có tham số nào được huấn luyện, nhưng các lựa chọn thiết kế được đưa ra khi đã biết dữ liệu này).
+  \item \textbf{Tập kiểm thử nhỏ.} Tập kiểm thử khóa chỉ có 4 video, 2 bối cảnh, tách theo video nhưng không tách theo bối cảnh; khoảng tin cậy trên đó chỉ mang tính thăm dò. Tập này đã được dùng một lần và không được chạy lại.
+  \item \textbf{Lựa chọn trên dữ liệu đánh giá chéo.} Cấu hình chọn lồng nhau được chọn trên các fold huấn luyện của cùng 27 video, và kết quả dự đoán hay hoãn chưa được kiểm tra trên tập kiểm thử.
   \item \textbf{Lưu trữ đặc trưng.} Đặc trưng SigLIP lưu ở dạng float16; khi tái tạo, độ chính xác chọn-1-trong-5 lệch 1 truy vấn trên 2.503 ở $k=2$ và $k=4$.
-  \item \textbf{Phép thử backbone VLA tự chấm điểm.} Thử nghiệm dùng chính SmolVLM2 chấm xác suất câu WHY bị lỗi cài đặt (che sai phần token ảnh) nên kết quả bị loại; chưa có kết luận về khả năng tự phân định mục tiêu của backbone.
+  \item \textbf{Thí nghiệm LIBERO.} Một checkpoint, một seed huấn luyện, 10 lượt mỗi tác vụ; lệnh rỗng và sai nằm ngoài phân bố huấn luyện.
 \end{itemize}
 
 \section{Hướng phát triển}
 
 \begin{itemize}
-  \item Đánh giá giá trị của thông tin mục tiêu với SmolVLA trên LIBERO bằng cách thay câu lệnh đúng, sai và rỗng, sau đó thay bằng token ý định dự đoán.
-  \item Dùng điểm tin cậy của mô-đun ý định để quyết định \textit{khi nào} robot nên hành động sớm và khi nào nên chờ (dự đoán hoặc hoãn), đo bằng đường rủi ro--độ phủ.
-  \item Thử các bộ mã hóa căn chỉnh lớn hơn và adapter nhẹ trên embedding SigLIP, với lựa chọn lồng nhau (chọn cấu hình chỉ trên các fold huấn luyện).
+  \item Huấn luyện SmolVLA có token ý định trên LIBERO và so sánh với lệnh rỗng: token ý định có lấy lại được một phần trong 19 điểm mất đi khi thiếu câu lệnh không.
+  \item Ablation riêng cho bước trừ ngữ cảnh (C2) với luật chốt trước, và so sánh với một VLM lớn chấm điểm zero-shot (ví dụ Qwen2.5-VL-7B).
+  \item Thu thêm dữ liệu kiểm thử tách theo bối cảnh để có khoảng tin cậy đáng tin hơn 4 video.
   \item Hoàn thiện tập dữ liệu tự thu theo kịch bản trà chiều và đánh giá trên robot UR5.
 \end{itemize}
 
