@@ -1,0 +1,210 @@
+{
+  "pipeline": "nested-selected (ladder_v1), per-fold selected configs",
+  "selected_configs": [
+    {
+      "fold": "0",
+      "held_out_scenes": "workshop",
+      "n_held_out": "459",
+      "n_train": "2044",
+      "grid_index": "59",
+      "encoder": "siglip-so400m-patch14-384",
+      "aggregator": "A0",
+      "centering": "C2",
+      "template": "T1",
+      "train_mean_5way_acc": "0.3703522504892368",
+      "baseline_train_mean_5way_acc": "0.2953767123287671",
+      "n_tied_at_max": "1"
+    },
+    {
+      "fold": "1",
+      "held_out_scenes": "kitchen",
+      "n_held_out": "396",
+      "n_train": "2107",
+      "grid_index": "59",
+      "encoder": "siglip-so400m-patch14-384",
+      "aggregator": "A0",
+      "centering": "C2",
+      "template": "T1",
+      "train_mean_5way_acc": "0.35168485999050786",
+      "baseline_train_mean_5way_acc": "0.2632890365448505",
+      "n_tied_at_max": "1"
+    },
+    {
+      "fold": "2",
+      "held_out_scenes": "garage",
+      "n_held_out": "321",
+      "n_train": "2182",
+      "grid_index": "59",
+      "encoder": "siglip-so400m-patch14-384",
+      "aggregator": "A0",
+      "centering": "C2",
+      "template": "T1",
+      "train_mean_5way_acc": "0.3475022914757104",
+      "baseline_train_mean_5way_acc": "0.28483043079743353",
+      "n_tied_at_max": "1"
+    },
+    {
+      "fold": "3",
+      "held_out_scenes": "farm",
+      "n_held_out": "214",
+      "n_train": "2289",
+      "grid_index": "59",
+      "encoder": "siglip-so400m-patch14-384",
+      "aggregator": "A0",
+      "centering": "C2",
+      "template": "T1",
+      "train_mean_5way_acc": "0.35288335517693314",
+      "baseline_train_mean_5way_acc": "0.27424639580602883",
+      "n_tied_at_max": "1"
+    },
+    {
+      "fold": "4",
+      "held_out_scenes": "hallway,living_room",
+      "n_held_out": "299",
+      "n_train": "2204",
+      "grid_index": "59",
+      "encoder": "siglip-so400m-patch14-384",
+      "aggregator": "A0",
+      "centering": "C2",
+      "template": "T1",
+      "train_mean_5way_acc": "0.3642241379310345",
+      "baseline_train_mean_5way_acc": "0.2808529945553539",
+      "n_tied_at_max": "1"
+    },
+    {
+      "fold": "5",
+      "held_out_scenes": "bedroom,yard",
+      "n_held_out": "295",
+      "n_train": "2208",
+      "grid_index": "59",
+      "encoder": "siglip-so400m-patch14-384",
+      "aggregator": "A0",
+      "centering": "C2",
+      "template": "T1",
+      "train_mean_5way_acc": "0.3619791666666667",
+      "baseline_train_mean_5way_acc": "0.2770606884057971",
+      "n_tied_at_max": "1"
+    },
+    {
+      "fold": "6",
+      "held_out_scenes": "clothing_closet,space",
+      "n_held_out": "217",
+      "n_train": "2286",
+      "grid_index": "59",
+      "encoder": "siglip-so400m-patch14-384",
+      "aggregator": "A0",
+      "centering": "C2",
+      "template": "T1",
+      "train_mean_5way_acc": "0.37106299212598426",
+      "baseline_train_mean_5way_acc": "0.2892607174103237",
+      "n_tied_at_max": "1"
+    },
+    {
+      "fold": "7",
+      "held_out_scenes": "art_studio,deck,laundry_room",
+      "n_held_out": "302",
+      "n_train": "2201",
+      "grid_index": "59",
+      "encoder": "siglip-so400m-patch14-384",
+      "aggregator": "A0",
+      "centering": "C2",
+      "template": "T1",
+      "train_mean_5way_acc": "0.35904134484325306",
+      "baseline_train_mean_5way_acc": "0.2790776919582008",
+      "n_tied_at_max": "1"
+    }
+  ],
+  "reproduction_check": [
+    {
+      "K": 5,
+      "k": 2,
+      "hits": 853,
+      "acc": 0.3407910507391131,
+      "reported_acc": 0.3407910507391131
+    },
+    {
+      "K": 5,
+      "k": 4,
+      "hits": 874,
+      "acc": 0.34918098282061527,
+      "reported_acc": 0.34918098282061527
+    },
+    {
+      "K": 5,
+      "k": 6,
+      "hits": 907,
+      "acc": 0.362365161805833,
+      "reported_acc": 0.362365161805833
+    },
+    {
+      "K": 5,
+      "k": 8,
+      "hits": 969,
+      "acc": 0.38713543747503,
+      "reported_acc": 0.38713543747503
+    },
+    {
+      "K": 10,
+      "k": 2,
+      "hits": 522,
+      "acc": 0.20854974031162604,
+      "reported_acc": 0.20854974031162604
+    },
+    {
+      "K": 10,
+      "k": 4,
+      "hits": 526,
+      "acc": 0.21014782261286455,
+      "reported_acc": 0.21014782261286455
+    },
+    {
+      "K": 10,
+      "k": 6,
+      "hits": 548,
+      "acc": 0.21893727526967638,
+      "reported_acc": 0.21893727526967638
+    },
+    {
+      "K": 10,
+      "k": 8,
+      "hits": 588,
+      "acc": 0.23491809828206153,
+      "reported_acc": 0.23491809828206153
+    }
+  ],
+  "scores": [
+    "margin (primary)",
+    "confidence",
+    "entropy_neg"
+  ],
+  "temperatures": {
+    "primary": 0.07,
+    "secondary": [
+      0.02,
+      0.2
+    ]
+  },
+  "bootstrap": {
+    "B": 2000,
+    "seed": 0,
+    "cluster": "video_uid",
+    "resort_per_resample": true
+  },
+  "verdicts": {
+    "S1b": {
+      "pass": true,
+      "prefixes_ci_lo_gt0": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "rule": "margin, K=5, frozen pipeline: 95% CI lower bound of acc@50% - acc@100% > 0 at >= 2 of 4 prefixes"
+    }
+  },
+  "preregistration_sha256": {
+    "results/prereg_v2.md": "e7dc0a29a1e646125865f9028a05f16fec7a7bd8a5d59b62a257ba6a4da9a712"
+  },
+  "git_commit": "dacf1b8704827d71a419b765883c05f8f17b644b",
+  "test_split_read": false
+}
