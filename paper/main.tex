@@ -1,0 +1,238 @@
+\documentclass[conference,a4paper]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\TODO}[1]{\textcolor{red}{[TODO: #1]}}
+
+\begin{document}
+
+\title{Is the VLA Backbone Enough to Read Human Goals?\\ Early Goal Disambiguation from Egocentric Video}
+
+\author{\IEEEauthorblockN{\TODO{Author 1}}
+\IEEEauthorblockA{\textit{Faculty of \TODO{...}}\\
+\textit{VNU University of Engineering and Technology}\\
+Hanoi, Vietnam\\
+\TODO{email}}
+\and
+\IEEEauthorblockN{\TODO{Supervisor}}
+\IEEEauthorblockA{\textit{Faculty of \TODO{...}}\\
+\textit{VNU University of Engineering and Technology}\\
+Hanoi, Vietnam\\
+\TODO{email}}}
+
+\maketitle
+
+\begin{abstract}
+Collaborative robots must often infer what a person is trying to achieve before the action is finished. Vision--language--action (VLA) policies such as SmolVLA receive the goal only through a language instruction and have no component that estimates the human partner's intention. We study an intention module that would feed such a policy, and ask a concrete design question: should the module reuse the VLA's own visual backbone, or rely on an image--text encoder that is already aligned with language? We evaluate both on \emph{early goal disambiguation}: from only the first $k\in\{2,4,6,8\}$ frames of an egocentric manipulation step, rank the true purpose sentence above other purposes from the same video. On 2,503 steps from 27 videos and 13 scenes of EgoIntent, with 8-fold scene-grouped cross-validation, video-level bootstrap intervals and pre-registered decision rules, a readout trained on frozen SmolVLM2 features reaches only 1.13--1.19$\times$ chance MRR (intervals include 1) and is at chance on a locked test split. A zero-shot SigLIP encoder with no trained parameters reaches 2.25--2.57$\times$ chance MRR (all lower bounds $\geq 1.87$) and improves with more observed frames (+0.0094 MRR from 2 to 8 frames, interval excluding 0). Its best 5-way accuracy (28.9\% vs.\ 20\% chance) misses our pre-registered 30\% threshold, which we report as a negative result. We also describe a tested interface that injects the resulting intention vector into SmolVLA as one prefix token.
+\end{abstract}
+
+\begin{IEEEkeywords}
+intention prediction, egocentric video, vision--language--action models, human--robot collaboration, zero-shot retrieval
+\end{IEEEkeywords}
+
+% ---------------------------------------------------------------------
+\section{Introduction}
+% ---------------------------------------------------------------------
+
+A robot that helps a person at a table is useful only if it acts on the person's goal, and is most useful if it can do so \emph{before} the goal becomes obvious. The difficulty is early ambiguity: lifting a cup is compatible with storing it, filling it, or putting it in a tray to be washed, and the observed motion diverges only later.
+
+Vision--language--action (VLA) models~\cite{brohan2022rt1,zitkovich2023rt2,openx2024,shukor2025smolvla} map camera images, a language instruction and the robot state to motor commands. They inherit broad visual and linguistic knowledge from a pretrained vision--language backbone, but the goal reaches them only through the instruction. In collaboration, the human rarely states every intention, so the robot needs an \emph{intention module} that turns its observation of the human into a goal signal the policy can consume.
+
+This paper studies how to build such a module. A natural choice is to reuse the VLA's own backbone: if the policy already understands images, a light readout on its features might recover human goals. An alternative is a contrastive image--text encoder~\cite{radford2021clip,zhai2023siglip}, which is trained so that images lie close to matching sentences. We compare the two under a protocol designed to be hard to fool, and make three contributions:
+\begin{itemize}
+\item An evaluation protocol for \emph{early goal disambiguation} from egocentric video: strictly causal prefixes, scene-grouped cross-validation, same-video distractors, exact chance levels, video-level bootstrap, and decision rules fixed before running.
+\item Evidence that a readout trained on frozen SmolVLM2 features is close to chance on unseen scenes, whereas zero-shot SigLIP gives roughly twice the lift and benefits from additional frames.
+\item VLIA, a minimal interface that injects an intention vector into SmolVLA as one prefix token, with implementation tests; behavioural benefit is left for future work and not claimed.
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Related Work}
+% ---------------------------------------------------------------------
+
+\textbf{Egocentric anticipation and intention.} Large egocentric corpora~\cite{grauman2022ego4d,grauman2024egoexo4d} enabled long-term action anticipation. Intention has been modelled as a latent variable conditioning future actions~\cite{mascaro2023intention}, inferred with large language models~\cite{zhao2024antgpt}, or used to guide reasoning~\cite{chu2026insight}. These works predict sequences of future action labels. We instead isolate a narrower question that matters for assistance: discriminating among \emph{competing purposes} inside the same activity from a short prefix. EgoIntent~\cite{egointent2026} provides the required pre-outcome WHAT/WHY annotations.
+
+\textbf{VLA policies.} RT-1/RT-2~\cite{brohan2022rt1,zitkovich2023rt2} and Open X-Embodiment~\cite{openx2024} showed that transformer policies on vision--language features generalise across tasks. SmolVLA~\cite{shukor2025smolvla}, built on LeRobot~\cite{cadene2026lerobot}, couples a 500M SmolVLM2 backbone~\cite{marafioti2025smolvlm} with a flow-matching~\cite{lipman2023flow} action expert. None of these models estimate the intention of a human partner.
+
+\textbf{Image--text alignment.} CLIP~\cite{radford2021clip} and SigLIP~\cite{zhai2023siglip} learn a joint embedding from web-scale image--caption pairs and transfer zero-shot to new label sets. Our results suggest this alignment, rather than the visual features alone, is what a small-data intention module lacks.
+
+% ---------------------------------------------------------------------
+\section{Problem and Method}
+% ---------------------------------------------------------------------
+
+\subsection{Early goal disambiguation}
+Each manipulation step $i$ has a video segment ending before its outcome, a WHAT label (the visible sub-action) and a WHY label $y_i$ (a short free-form purpose sentence). Eight frames $x_{i,1:8}$ are sampled uniformly; a prefix of length $k$ exposes only $x_{i,1:k}$. An intention module consists of an observation encoder $f$ and a sentence encoder $g$ and scores candidates by
+\begin{equation}
+s(i,c)=\cos\!\big(f(x_{i,1:k}),\,g(c)\big).
+\end{equation}
+We use two candidate sets: (a) \emph{gallery ranking} over all WHY sentences of the held-out fold (several hundred), and (b) \emph{$K$-way choice} between $y_i$ and $K-1$ different WHY sentences of the \emph{same video}. The latter is the assistance-relevant case: distractors share scene, objects and often the opening motion.
+
+\subsection{Intention encoders}
+\textbf{Trained readout on the VLA backbone.} Each frame is encoded by frozen SmolVLM2-500M-Video-Instruct (960-d). The first $k$ frame vectors are mean-pooled and passed through a two-layer MLP (512 hidden units). Targets are either a frozen sentence encoder (all-MiniLM-L6-v2~\cite{reimers2019sbert}, \texttt{sentence}) or SmolVLM2 text features reduced to 256-d by PCA (\texttt{smolvlm\_pca}). Training uses multi-positive InfoNCE ($\tau=0.07$) plus $0.1\times$ a cosine loss, AdamW (lr $10^{-3}$, weight decay $10^{-4}$), up to 100 epochs, three seeds. Mean pooling is used because GRU and Transformer temporal heads did not outperform it in preliminary runs.
+
+\textbf{Zero-shot SigLIP.} We encode frames with the image tower of \texttt{siglip-base-patch16-224}~\cite{zhai2023siglip}, $\ell_2$-normalise, mean-pool the first $k$ frames and renormalise; candidate sentences are encoded with the text tower (max 64 tokens; none truncated). No parameter is trained on our data. Note that SmolVLM2 itself uses a SigLIP-family vision tower, but its weights are adapted for generation and it carries no aligned text tower; the checkpoint we use is a different one.
+
+\subsection{Injecting intention into SmolVLA}
+In the VLIA architecture (Fig.~\ref{fig:arch}), the intention vector $\mathbf{z}\in\mathbb{R}^d$ ($d=256$ or $768$) is projected by a linear Intention Adapter to the 960-d hidden space of SmolVLA and inserted as one token before the state token in the multimodal prefix, $[E_{\text{img}};E_{\text{lang}};W\mathbf{z}+b;E_{\text{state}}]$. Because the prefix is cached before the flow-matching steps, the extra token adds negligible cost, and disabling it recovers the original policy exactly.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tikzpicture}[node distance=0.35cm and 0.4cm,
+  b/.style={draw,rounded corners,align=center,font=\footnotesize,minimum height=0.85cm,inner sep=3pt},
+  >=Latex]
+  \node[b,fill=gray!10] (v) {Egocentric\\prefix $x_{1:k}$};
+  \node[b,fill=blue!8,right=of v] (e) {Frame\\encoder};
+  \node[b,fill=blue!8,right=of e] (p) {Mean\\pool};
+  \node[b,fill=blue!8,right=of p] (z) {Intention\\vector $\mathbf{z}$};
+  \node[b,fill=blue!8,above=0.35cm of z] (c) {Rank WHY\\candidates};
+  \draw[->](v)--(e); \draw[->](e)--(p); \draw[->](p)--(z); \draw[->](z)--(c);
+  \node[b,fill=orange!10,below=0.6cm of z] (a) {Intention\\Adapter};
+  \node[b,fill=orange!10,left=of a] (pre) {Prefix: img; lang;\\\textbf{intent}; state};
+  \node[b,fill=orange!10,left=of pre] (s) {SmolVLA\\policy};
+  \node[b,fill=gray!10,left=of s] (act) {Action\\chunk};
+  \draw[->](z)--(a); \draw[->](a)--(pre); \draw[->](pre)--(s); \draw[->](s)--(act);
+  \begin{scope}[on background layer]
+  \node[draw=blue!50,dashed,rounded corners,fit=(v)(e)(p)(z)(c),inner sep=4pt]{};
+  \node[draw=orange!70!black,dashed,rounded corners,fit=(a)(pre)(s)(act),inner sep=4pt]{};
+  \end{scope}
+\end{tikzpicture}}
+\caption{VLIA. The intention module (top, evaluated here) maps an egocentric prefix to an intention vector; the adapter turns it into one prefix token of SmolVLA (bottom, implementation-tested only).}
+\label{fig:arch}
+\end{figure}
+
+% ---------------------------------------------------------------------
+\section{Experimental Protocol}
+% ---------------------------------------------------------------------
+
+\textbf{Data.} We use the train and validation portions of EgoIntent~\cite{egointent2026}, derived from Ego4D: 2,503 steps, 27 source videos, 13 scenes (e.g.\ kitchen, workshop, farm, laundry room), 2,032 distinct WHY sentences, 19--125 steps per video.
+
+\textbf{Scene-grouped cross-validation.} Scenes are assigned to 8 folds of similar size; every video belongs to one fold, and each step is evaluated once, out-of-fold, in a scene the model has not seen. For the trained readout, the number of epochs is chosen on an inner 15\% split of the \emph{training} scenes, after which the model is refit on all training scenes.
+
+\textbf{Metrics and chance.} We report MRR and Top-$n$ on the gallery with exact-text positives, and $K$-way accuracy for $K\in\{5,10\}$ with distractors fixed per query by a hash of its id (identical across methods, prefixes and seeds; all 2,503 queries valid). Gallery chance is computed exactly per query from fold size and number of positives (mean MRR chance 0.0298). \emph{Lift} is the ratio of a metric to its chance level.
+
+\textbf{Uncertainty.} 95\% intervals come from 10,000 bootstrap resamples of whole source videos. Prefix comparisons use paired per-example differences.
+
+\textbf{Pre-registered rules.} Written to the repository before the corresponding runs: (R1) the readout is above chance if the lower bound of its lift exceeds 1; (G1) SigLIP passes if, at every $k$, the lower bounds of MRR lift and 5-way lift exceed 1 \emph{and} 5-way accuracy is at least 0.30; (Gate) an HOI-crop variant is evaluated only if MediaPipe~\cite{zhang2020mediapipe} detects hands in $\geq$60\% of frames overall and $\geq$30\% in every scene.
+
+\textbf{Locked test.} The readout was additionally evaluated once on the EgoIntent test portion (407 steps, 4 videos, 2 scenes) under a protocol locked in advance. One test video that overlapped an earlier pilot validation set was removed before locking. This split is video- but not scene-disjoint.
+
+% ---------------------------------------------------------------------
+\section{Results}
+% ---------------------------------------------------------------------
+
+\begin{table}[t]
+\caption{Scene-held-out results (8 folds, 2,503 queries). Readout values are means over 3 seeds; brackets are 95\% video-bootstrap intervals. Chance: MRR 0.0298, 5-way 0.20.}
+\label{tab:main}
+\centering
+\setlength{\tabcolsep}{3.5pt}
+\footnotesize
+\begin{tabular}{llcccc}
+\toprule
+Encoder & $k$ & MRR & MRR lift & 5-way & 5-way lift \\
+\midrule
+\multirow{4}{*}{\shortstack[l]{Readout\\(\texttt{sentence})}}
+ & 2 & .0335 & 1.13 [0.86, 1.43] & .216 & 1.08 [1.00, 1.16] \\
+ & 4 & .0345 & 1.16 [0.88, 1.48] & .215 & 1.07 [1.00, 1.16] \\
+ & 6 & .0353 & 1.18 [0.90, 1.52] & .212 & 1.06 [0.98, 1.16] \\
+ & 8 & .0347 & 1.17 [0.87, 1.51] & .219 & 1.10 [1.01, 1.20] \\
+\midrule
+\multirow{4}{*}{\shortstack[l]{Readout\\(\texttt{smolvlm\_pca})}}
+ & 2 & .0340 & 1.14 [0.95, 1.36] & .219 & 1.09 [1.02, 1.17] \\
+ & 4 & .0338 & 1.14 [0.94, 1.35] & .222 & 1.11 [1.03, 1.19] \\
+ & 6 & .0346 & 1.16 [0.95, 1.39] & .223 & 1.12 [1.04, 1.20] \\
+ & 8 & .0354 & 1.19 [0.98, 1.42] & .230 & 1.15 [1.07, 1.23] \\
+\midrule
+\multirow{4}{*}{\shortstack[l]{SigLIP\\zero-shot}}
+ & 2 & .0671 & 2.25 [1.87, 2.75] & .277 & 1.39 [1.23, 1.56] \\
+ & 4 & .0715 & 2.40 [2.02, 2.88] & .275 & 1.38 [1.22, 1.55] \\
+ & 6 & .0734 & 2.47 [2.06, 2.97] & .281 & 1.40 [1.24, 1.58] \\
+ & 8 & .0765 & 2.57 [2.13, 3.14] & .289 & 1.44 [1.27, 1.62] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The trained readout is close to chance}
+Table~\ref{tab:main} shows that the readout on frozen SmolVLM2 features does not satisfy R1 for MRR at any prefix, for either target: every lower bound is below 1. On 5-way choice, \texttt{smolvlm\_pca} has lower bounds above 1 at all prefixes, but accuracy is only 21.9--23.0\% against 20\% chance. The two targets are statistically indistinguishable (paired lower bound above 0 at 0/4 prefixes). Heterogeneity is broad: depending on $k$, 8--12 of 27 videos fall below chance for \texttt{sentence}. On the locked test split, the best mean MRR (0.0314 at $k=8$) is at the gallery chance of 0.0318, although validation MRR on the fixed split had been 1.7--1.9$\times$ chance with epochs selected on that same split. This gap is what motivated scene-grouped cross-validation.
+
+\subsection{Zero-shot alignment roughly doubles the lift}
+With no trained parameters, SigLIP reaches 2.25--2.57$\times$ chance MRR, and its interval lower bounds (1.87--2.13) lie above the readout's upper bounds (1.35--1.52) at every prefix (Fig.~\ref{fig:lift}). 5-way accuracy rises to 27.5--28.9\% and 10-way to 15.7--17.7\% (chance 10\%). Under G1, however, SigLIP \textbf{fails}: both interval conditions hold at 4/4 prefixes, but 5-way accuracy $\geq 0.30$ holds at 0/4. We keep this verdict.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\columnwidth,height=4.8cm,
+  xlabel={Observed frames $k$},ylabel={MRR lift over chance},
+  xtick={2,4,6,8},ymin=0.7,ymax=3.3,grid=major,grid style={gray!20},
+  legend style={font=\scriptsize,draw=none,fill=none,at={(0.5,1.02)},anchor=south,legend columns=2},
+  every axis plot/.append style={thick,mark size=1.8pt}]
+\addplot[blue!70!black,mark=*,error bars/.cd,y dir=both,y explicit] coordinates {
+  (2,2.254) += (0,0.494) -= (0,0.389) (4,2.403) += (0,0.475) -= (0,0.387)
+  (6,2.466) += (0,0.503) -= (0,0.404) (8,2.571) += (0,0.565) -= (0,0.446)};
+\addplot[orange!80!black,mark=square*,error bars/.cd,y dir=both,y explicit] coordinates {
+  (2,1.14) += (0,0.22) -= (0,0.19) (4,1.14) += (0,0.21) -= (0,0.20)
+  (6,1.16) += (0,0.23) -= (0,0.21) (8,1.19) += (0,0.23) -= (0,0.21)};
+\addplot[gray,dashed,thin,domain=1.5:8.5,samples=2,forget plot]{1};
+\legend{SigLIP zero-shot,Readout (\texttt{smolvlm\_pca})}
+\end{axis}
+\end{tikzpicture}
+\caption{MRR lift versus prefix length with 95\% video-bootstrap intervals. Dashed line: chance.}
+\label{fig:lift}
+\end{figure}
+
+\subsection{More observation helps only with aligned features}
+Paired over identical queries, SigLIP's MRR increases by $+0.0094$ [$+0.0053$, $+0.0141$] from 2 to 8 frames (about 14\% relative) and 5-way accuracy by $+0.0112$ [$+0.0014$, $+0.0211$]. For the readout, all paired MRR differences have intervals containing 0 (e.g.\ $+0.0012$ [$-0.0014$, $+0.0039$] for \texttt{sentence}, 2$\to$8). Additional visual evidence thus translates into better disambiguation only when the representation is already aligned with language.
+
+\subsection{Diagnostics}
+\textbf{Paraphrase ceiling.} WHY sentences are free-form: 66.6\% of queries have another WHY in the same video with sentence-embedding cosine $\geq 0.8$ (44.5\% at $\geq 0.9$), yet only exact text counts as correct. Two pre-registered secondary variants estimate the effect: with distractors filtered to cosine $<0.8$, SigLIP's 5-way accuracy at $k=8$ is 30.8\%; counting near-paraphrases ($\geq 0.9$) as positives gives MRR 0.112 (lift 2.13 [1.71, 2.66]). These do not change the G1 verdict.
+
+\textbf{Typical failure.} For a dough-kneading step labelled ``positioning basin'', SigLIP ranks ``prepare to knead dough'', ``developing dough consistency'' and ``forming cohesive dough'' above it: the activity is recognised, the step-level purpose is not. This is the characteristic error of the task, since same-video candidates share objects and scene.
+
+\textbf{HOI gate.} MediaPipe detects hands in 58.2\% of 20,024 frames, with four scenes below 30\% (deck 10.3\%, laundry room 15.3\%, yard 15.9\%, outdoor space 24.8\%). The gate fails, so no HOI-crop variant was evaluated and we draw no conclusion about it.
+
+\subsection{Policy interface}
+The Intention Adapter and prefix injection pass implementation tests with 256-d intention vectors: gradients reach the adapter, the prefix grows by exactly one token placed before the state token, the token is present in the KV cache at inference, the flow-matching loss is finite, checkpoints round-trip, and disabling intention reproduces the original SmolVLA. As an engineering reference, SmolVLA without intention, retrained on LIBERO-10~\cite{liu2023libero} with the correct 7-D action configuration, reaches 24\% success over 100 episodes. We do not claim that intention improves robot behaviour.
+
+% ---------------------------------------------------------------------
+\section{Discussion and Limitations}
+% ---------------------------------------------------------------------
+
+The main lesson is a design one: with about two thousand labelled steps, an intention module cannot learn the visual--linguistic mapping from the VLA backbone's visual features, while a pretrained aligned encoder provides it for free and is the better default for the intention branch. Absolute accuracy, however, remains low and below our threshold. The study covers 27 videos in 13 scenes, so video-bootstrap intervals describe this set rather than a population. SigLIP results are computed on train+val portions; although nothing is trained, design choices were made with knowledge of these data, and an untouched test evaluation remains to be done. Frame embeddings were cached in float16, and re-computing 5-way accuracy differed by one query in 2,503 at $k=2$ and $k=4$. An attempt to score WHY sentences with SmolVLM2's own likelihood was invalidated by an implementation error (image tokens were not masked) and is not reported. Finally, closed-loop evaluation with a real or simulated robot is future work.
+
+% ---------------------------------------------------------------------
+\section{Conclusion}
+% ---------------------------------------------------------------------
+
+We evaluated intention modules for VLA policies on early goal disambiguation from egocentric video under scene-held-out, pre-registered conditions. A readout on the VLA's frozen backbone features is near chance, whereas zero-shot image--text alignment yields roughly twice the lift and improves with more observation, but still falls short of a pre-registered accuracy threshold. Next steps are selective prediction (deciding when the robot should act early), light adapters on aligned embeddings with nested selection, and measuring the value of intention tokens for SmolVLA on LIBERO and a UR5 arm. Code and result files are available at \url{https://github.com/sgdfgnhmjnfd/vlia-uet}.
+
+\begin{thebibliography}{99}
+\bibitem{brohan2022rt1} A.~Brohan \emph{et al.}, ``RT-1: Robotics transformer for real-world control at scale,'' arXiv:2212.06817, 2022.
+\bibitem{zitkovich2023rt2} B.~Zitkovich \emph{et al.}, ``RT-2: Vision-language-action models transfer web knowledge to robotic control,'' in \emph{Proc. CoRL}, 2023, pp.~2165--2183.
+\bibitem{openx2024} Open X-Embodiment Collaboration, ``Open X-Embodiment: Robotic learning datasets and RT-X models,'' in \emph{Proc. ICRA}, 2024, pp.~6892--6903.
+\bibitem{shukor2025smolvla} M.~Shukor \emph{et al.}, ``SmolVLA: A vision-language-action model for affordable and efficient robotics,'' arXiv:2506.01844, 2025.
+\bibitem{cadene2026lerobot} R.~Cadene \emph{et al.}, ``LeRobot: An open-source library for end-to-end robot learning,'' in \emph{Proc. ICLR}, 2026.
+\bibitem{marafioti2025smolvlm} A.~Marafioti \emph{et al.}, ``SmolVLM: Redefining small and efficient multimodal models,'' arXiv:2504.05299, 2025.
+\bibitem{lipman2023flow} Y.~Lipman, R.~T.~Q. Chen, H.~Ben-Hamu, M.~Nickel, and M.~Le, ``Flow matching for generative modeling,'' in \emph{Proc. ICLR}, 2023.
+\bibitem{grauman2022ego4d} K.~Grauman \emph{et al.}, ``Ego4D: Around the world in 3,000 hours of egocentric video,'' in \emph{Proc. CVPR}, 2022, pp.~18995--19012.
+\bibitem{grauman2024egoexo4d} K.~Grauman \emph{et al.}, ``Ego-Exo4D: Understanding skilled human activity from first- and third-person perspectives,'' in \emph{Proc. CVPR}, 2024, pp.~19383--19400.
+\bibitem{mascaro2023intention} E.~Valls Mascaro, H.~Ahn, and D.~Lee, ``Intention-conditioned long-term human egocentric action anticipation,'' in \emph{Proc. WACV}, 2023, pp.~6048--6057.
+\bibitem{zhao2024antgpt} Q.~Zhao \emph{et al.}, ``AntGPT: Can large language models help long-term action anticipation from videos?'' in \emph{Proc. ICLR}, 2024.
+\bibitem{chu2026insight} Q.~Chu, H.~Zhang, M.~Liu, Y.~Feng, H.~Shi, and L.~Nie, ``Intention-guided cognitive reasoning for egocentric long-term action anticipation,'' in \emph{Proc. AAAI}, 2026.
+\bibitem{egointent2026} ``EgoIntent: An open-ended benchmark for intent understanding at pre-outcome micro-steps in egocentric procedural activities,'' Hugging Face dataset \texttt{py2279105943/EgoIntent}, 2026.
+\bibitem{radford2021clip} A.~Radford \emph{et al.}, ``Learning transferable visual models from natural language supervision,'' in \emph{Proc. ICML}, 2021, pp.~8748--8763.
+\bibitem{zhai2023siglip} X.~Zhai, B.~Mustafa, A.~Kolesnikov, and L.~Beyer, ``Sigmoid loss for language image pre-training,'' in \emph{Proc. ICCV}, 2023, pp.~11975--11986.
+\bibitem{reimers2019sbert} N.~Reimers and I.~Gurevych, ``Sentence-BERT: Sentence embeddings using Siamese BERT-networks,'' in \emph{Proc. EMNLP-IJCNLP}, 2019, pp.~3982--3992.
+\bibitem{zhang2020mediapipe} F.~Zhang \emph{et al.}, ``MediaPipe Hands: On-device real-time hand tracking,'' arXiv:2006.10214, 2020.
+\bibitem{liu2023libero} B.~Liu, Y.~Zhu, C.~Gao, Y.~Feng, Q.~Liu, Y.~Zhu, and P.~Stone, ``LIBERO: Benchmarking knowledge transfer for lifelong robot learning,'' in \emph{Proc. NeurIPS}, 2023.
+\end{thebibliography}
+
+\end{document}
