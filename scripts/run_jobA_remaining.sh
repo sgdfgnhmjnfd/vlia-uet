@@ -42,7 +42,7 @@ say "downloads done"
 ENC="google/siglip-base-patch16-384 google/siglip2-base-patch16-224 google/siglip-so400m-patch14-384 openai/clip-vit-large-patch14"
 BASE_S=$($PY -c "import json;print(json.load(open('/media/dhqg/d3/vlia_outputs/ladder/siglip-base-patch16-224/meta.json'))['throughput']['wall_seconds'])")
 for attempt in 1 2 3; do
-  $PY scripts/extract_ladder_embeddings.py --encoders $ENC --limit 200 --preprocess-in-workers --decode-workers 8 \
+  $PY scripts/extract_ladder_embeddings.py --encoders $ENC --limit 200 --preprocess-in-workers --decode-workers 4 \
     > $LOG/ladder_probe_$attempt.log 2>&1 || { say "probe FAILED"; exit 1; }
   PROJ=$(grep -o '"projected_full_wall_seconds": [0-9.]*' $LOG/ladder_probe_$attempt.log | awk '{print $2}')
   TOTAL=$($PY -c "print(int($BASE_S + $PROJ))")
@@ -52,7 +52,7 @@ for attempt in 1 2 3; do
   elif [[ $ENC == *clip-vit-large* ]]; then ENC=${ENC/openai\/clip-vit-large-patch14/}; say "DROP clip-vit-large (projected > 3 h)"
   else break; fi
 done
-$PY scripts/extract_ladder_embeddings.py --encoders $ENC --preprocess-in-workers --decode-workers 8 \
+$PY scripts/extract_ladder_embeddings.py --encoders $ENC --preprocess-in-workers --decode-workers 4 \
   > $LOG/ladder_extract_rest.log 2>&1 || { say "extraction FAILED"; exit 1; }
 say "extraction done: $ENC"
 $PY scripts/run_ladder_v1.py stage3 > $LOG/ladder_stage3.log 2>&1 || { say "stage3 FAILED"; exit 1; }

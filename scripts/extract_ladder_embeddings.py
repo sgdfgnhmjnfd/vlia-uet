@@ -204,12 +204,14 @@ def main() -> int:
     t_start = time.time()
     def load(row):
         sampled = sample_exact_video_frames(row["video_path"])
+        n_frames, digest = sampled.shape[0], frame_hash(sampled)
         if not args.preprocess_in_workers:
-            return sampled, None
-        return sampled, {name: pixel_values(proc, sampled) for name, (_, proc) in models.items()}
+            return sampled, None, n_frames, digest
+        # keep only the resized pixel tensors; full-resolution frames are dropped here
+        return None, {name: pixel_values(proc, sampled) for name, (_, proc) in models.items()}, n_frames, digest
 
     with ThreadPoolExecutor(max_workers=args.decode_workers) as pool:
-        futures = [pool.submit(load, row) for row in rows[: args.decode_workers * 2]]
+        futures = [pool.submit(load, row) for row in rows[: args.decode_workers + SAMPLES_PER_BATCH]]
         next_submit = len(futures)
         for start in range(0, len(rows), SAMPLES_PER_BATCH):
             group = rows[start : start + SAMPLES_PER_BATCH]
@@ -217,7 +219,7 @@ def main() -> int:
             pixels = {name: [] for name in args.encoders}
             for offset, row in enumerate(group):
                 tw = time.time()
-                sampled, pv = futures[start + offset].result()
+                sampled, pv, n_frames, digest = futures[start + offset].result()
                 decode_wait += time.time() - tw
                 futures[start + offset] = None
                 if pv is not None:
@@ -226,13 +228,13 @@ def main() -> int:
                 if next_submit < len(rows):
                     futures.append(pool.submit(load, rows[next_submit]))
                     next_submit += 1
-                if sampled.shape[0] != 8:
-                    raise AssertionError(f"{row['sample_id']}: {sampled.shape[0]} frames")
-                digest = frame_hash(sampled)
+                if n_frames != 8:
+                    raise AssertionError(f"{row['sample_id']}: {n_frames} frames")
                 if known_hashes is not None and known_hashes.get(row["sample_id"]) != digest:
                     raise AssertionError(f"Decoded frames differ from first pass: {row['sample_id']}")
                 hashes[row["sample_id"]] = digest
-                frames.extend(list(sampled))
+                if sampled is not None:
+                    frames.extend(list(sampled))
             for name, (model, processor) in models.items():
                 tm = time.time()
                 if args.preprocess_in_workers:
