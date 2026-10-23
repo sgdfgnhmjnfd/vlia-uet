@@ -33,7 +33,7 @@ Hanoi, Vietnam\\
 \maketitle
 
 \begin{abstract}
-Collaborative robots must often infer what a person is trying to achieve before the action is finished. Vision--language--action (VLA) policies such as SmolVLA receive the goal only through a language instruction and have no component that estimates the human partner's intention. We study an intention module that would feed such a policy, and ask a concrete design question: should the module reuse the VLA's own visual backbone, or rely on an image--text encoder that is already aligned with language? We evaluate both on \emph{early goal disambiguation}: from only the first $k\in\{2,4,6,8\}$ frames of an egocentric manipulation step, rank the true purpose sentence above other purposes from the same video. On 2,503 steps from 27 videos and 13 scenes of EgoIntent, with 8-fold scene-grouped cross-validation, video-level bootstrap intervals and pre-registered decision rules, a readout trained on frozen SmolVLM2 features reaches only 1.13--1.19$\times$ chance MRR (intervals include 1) and is at chance on a locked test split. A zero-shot SigLIP encoder with no trained parameters reaches 2.25--2.57$\times$ chance MRR (all lower bounds $\geq 1.87$) and improves with more observed frames (+0.0094 MRR from 2 to 8 frames, interval excluding 0). Its best 5-way accuracy (28.9\% vs.\ 20\% chance) misses our pre-registered 30\% threshold, which we report as a negative result. We also describe a tested interface that injects the resulting intention vector into SmolVLA as one prefix token.
+Collaborative robots must often infer what a person is trying to achieve before the action is finished. Vision--language--action (VLA) policies such as SmolVLA receive the goal only through a language instruction and have no component that estimates the human partner's intention. We study an intention module that would feed such a policy, and ask a concrete design question: should the module reuse the VLA's own visual backbone, or rely on an image--text encoder that is already aligned with language? We evaluate both on \emph{early goal disambiguation}: from only the first $k\in\{2,4,6,8\}$ frames of an egocentric manipulation step, rank the true purpose sentence above other purposes from the same video. On 2,503 steps from 27 videos and 13 scenes of EgoIntent, with 8-fold scene-grouped cross-validation, video-level bootstrap intervals and pre-registered decision rules, a readout trained on frozen SmolVLM2 features reaches only 1.13--1.19$\times$ chance MRR (intervals include 1) and is at chance on a locked test split. A zero-shot SigLIP encoder with no trained parameters reaches 2.25--2.57$\times$ chance MRR (all lower bounds $\geq 1.87$) and improves with more observed frames. Nested selection over 90 training-free configurations picks the same pipeline in 8/8 folds (SigLIP so400m, mean pooling, subtraction of earlier-step video context), reaching 34.1--38.7\% 5-way accuracy (20\% chance). Frozen and evaluated once on a locked test split, it stays above chance at 4/4 prefixes and above the base SigLIP pipeline at 3/4, but drops to 21.9--30.2\%. A top-2 margin lets the module abstain: answering the 50\% most confident queries adds 6.9--7.9 points. Finally, SmolVLA on LIBERO-10 succeeds in 19/100 episodes with the correct instruction and 0/100 with an empty or wrong one, which motivates an intention channel; we provide a tested interface that injects the intention vector into SmolVLA as one prefix token.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -51,8 +51,8 @@ Vision--language--action (VLA) models~\cite{brohan2022rt1,zitkovich2023rt2,openx
 This paper studies how to build such a module. A natural choice is to reuse the VLA's own backbone: if the policy already understands images, a light readout on its features might recover human goals. An alternative is a contrastive image--text encoder~\cite{radford2021clip,zhai2023siglip}, which is trained so that images lie close to matching sentences. We compare the two under a protocol designed to be hard to fool, and make three contributions:
 \begin{itemize}
 \item An evaluation protocol for \emph{early goal disambiguation} from egocentric video: strictly causal prefixes, scene-grouped cross-validation, same-video distractors, exact chance levels, video-level bootstrap, and decision rules fixed before running.
-\item Evidence that a readout trained on frozen SmolVLM2 features is close to chance on unseen scenes, whereas zero-shot SigLIP gives roughly twice the lift and benefits from additional frames.
-\item VLIA, a minimal interface that injects an intention vector into SmolVLA as one prefix token, with implementation tests; behavioural benefit is left for future work and not claimed.
+\item Evidence that a readout trained on frozen SmolVLM2 features is close to chance on unseen scenes, whereas zero-shot SigLIP gives roughly twice the lift; a nested-selected training-free pipeline with causal context subtraction reaches 34--39\% 5-way accuracy and keeps its advantage on a one-shot locked test.
+\item VLIA, a minimal interface that injects an intention vector into SmolVLA as one prefix token, with implementation tests for three intention sizes, and a LIBERO ablation showing that SmolVLA fails completely without goal information. Behavioural benefit of a predicted intention is not claimed.
 \end{itemize}
 
 % ---------------------------------------------------------------------
@@ -81,8 +81,12 @@ We use two candidate sets: (a) \emph{gallery ranking} over all WHY sentences of 
 
 \textbf{Zero-shot SigLIP.} We encode frames with the image tower of \texttt{siglip-base-patch16-224}~\cite{zhai2023siglip}, $\ell_2$-normalise, mean-pool the first $k$ frames and renormalise; candidate sentences are encoded with the text tower (max 64 tokens; none truncated). No parameter is trained on our data. Note that SmolVLM2 itself uses a SigLIP-family vision tower, but its weights are adapted for generation and it carries no aligned text tower; the checkpoint we use is a different one.
 
+\textbf{Nested-selected pipeline.} The zero-shot encoder leaves training-free choices open. We search a grid of 5 encoders (SigLIP base 224/384, SigLIP2 base, SigLIP so400m, CLIP ViT-L/14) $\times$ 3 frame aggregators (mean; max of per-frame cosine; log-sum-exp) $\times$ 3 centerings $\times$ 2 text templates (raw WHY; ``a first-person photo of a person doing: \{why\}''). Centering C1 subtracts training-fold mean image and text embeddings (a modality-gap correction). Centering C2 subtracts the mean embedding of all frames of \emph{strictly earlier} steps of the same video, falling back to C1 when there is none (1\% of queries). C2 removes what the scene and activity share across steps and keeps what is new in the current one, while remaining causal. In each outer fold, the configuration with the best mean 5-way accuracy on the \emph{training} folds is applied to the held-out fold.
+
+\textbf{Selective prediction.} The module may abstain when the top-1 minus top-2 cosine margin among the $K=5$ candidates is below a threshold; thresholds for each fold are set from the other folds only.
+
 \subsection{Injecting intention into SmolVLA}
-In the VLIA architecture (Fig.~\ref{fig:arch}), the intention vector $\mathbf{z}\in\mathbb{R}^d$ ($d=256$ or $768$) is projected by a linear Intention Adapter to the 960-d hidden space of SmolVLA and inserted as one token before the state token in the multimodal prefix, $[E_{\text{img}};E_{\text{lang}};W\mathbf{z}+b;E_{\text{state}}]$. Because the prefix is cached before the flow-matching steps, the extra token adds negligible cost, and disabling it recovers the original policy exactly.
+In the VLIA architecture (Fig.~\ref{fig:arch}), the intention vector $\mathbf{z}\in\mathbb{R}^d$ ($d=256$, $768$ or $1152$) is projected by a linear Intention Adapter to the 960-d hidden space of SmolVLA and inserted as one token before the state token in the multimodal prefix, $[E_{\text{img}};E_{\text{lang}};W\mathbf{z}+b;E_{\text{state}}]$. Because the prefix is cached before the flow-matching steps, the extra token adds negligible cost, and disabling it recovers the original policy exactly.
 
 \begin{figure}[t]
 \centering
@@ -122,9 +126,11 @@ In the VLIA architecture (Fig.~\ref{fig:arch}), the intention vector $\mathbf{z}
 
 \textbf{Uncertainty.} 95\% intervals come from 10,000 bootstrap resamples of whole source videos. Prefix comparisons use paired per-example differences.
 
-\textbf{Pre-registered rules.} Written to the repository before the corresponding runs: (R1) the readout is above chance if the lower bound of its lift exceeds 1; (G1) SigLIP passes if, at every $k$, the lower bounds of MRR lift and 5-way lift exceed 1 \emph{and} 5-way accuracy is at least 0.30; (Gate) an HOI-crop variant is evaluated only if MediaPipe~\cite{zhang2020mediapipe} detects hands in $\geq$60\% of frames overall and $\geq$30\% in every scene.
+\textbf{Pre-registered rules.} Written to the repository before the corresponding runs: (R1) the readout is above chance if the lower bound of its lift exceeds 1; (G1) SigLIP passes if, at every $k$, the lower bounds of MRR lift and 5-way lift exceed 1 \emph{and} 5-way accuracy is at least 0.30; (Gate) an HOI-crop variant is evaluated only if MediaPipe~\cite{zhang2020mediapipe} detects hands in $\geq$60\% of frames overall and $\geq$30\% in every scene; (N1) nested selection helps if its paired gain over base SigLIP has lower bound $>0$ for both MRR and 5-way at $\geq$2/4 prefixes; (N2) it meets the practical bar if 5-way accuracy is $\geq$0.30 and MRR and 5-way lift lower bounds exceed 1 at $\geq$2/4 prefixes; (T1) on the locked test the frozen pipeline's 5-way lift lower bound exceeds 1 at $\geq$3/4 prefixes; (T2) its paired 5-way gain over base SigLIP has lower bound $>0$ at $\geq$2/4; (S1b) accuracy at 50\% coverage minus full coverage has lower bound $>0$ at $\geq$2/4; (L1/L2) on LIBERO, success(correct)$-$success(empty) and success(empty)$-$success(wrong) have lower bound $>0$.
 
-\textbf{Locked test.} The readout was additionally evaluated once on the EgoIntent test portion (407 steps, 4 videos, 2 scenes) under a protocol locked in advance. One test video that overlapped an earlier pilot validation set was removed before locking. This split is video- but not scene-disjoint.
+\textbf{Locked test.} The readout was additionally evaluated once on the EgoIntent test portion (407 steps, 4 videos, 2 scenes) under a protocol locked in advance. One test video that overlapped an earlier pilot validation set was removed before locking. This split is video- but not scene-disjoint. The nested-selected pipeline was then frozen into a hashed configuration file, together with rules T1/T2, and run once on the same 407 steps; context subtraction on test uses only earlier steps of the same test video. With 4 videos, test intervals rest on 4 bootstrap clusters and are exploratory.
+
+\textbf{LIBERO ablation.} A SmolVLA checkpoint retrained on LIBERO-10~\cite{liu2023libero} (7-D actions, 25k steps) is run on 10 tasks $\times$ 10 episodes under three instructions: correct, empty, and the instruction of task $(t+5)\bmod 10$. Episode $e$ uses the same initial state and seed in every condition.
 
 % ---------------------------------------------------------------------
 \section{Results}
@@ -192,6 +198,37 @@ With no trained parameters, SigLIP reaches 2.25--2.57$\times$ chance MRR, and it
 \subsection{More observation helps only with aligned features}
 Paired over identical queries, SigLIP's MRR increases by $+0.0094$ [$+0.0053$, $+0.0141$] from 2 to 8 frames (about 14\% relative) and 5-way accuracy by $+0.0112$ [$+0.0014$, $+0.0211$]. For the readout, all paired MRR differences have intervals containing 0 (e.g.\ $+0.0012$ [$-0.0014$, $+0.0039$] for \texttt{sentence}, 2$\to$8). Additional visual evidence thus translates into better disambiguation only when the representation is already aligned with language.
 
+\subsection{Training-free selection and the locked test}
+In all 8 outer folds, nested selection chose the same configuration: SigLIP so400m, mean pooling, C2, template T1 (no ties). Table~\ref{tab:ladder} compares it with base SigLIP. 5-way accuracy rises to 34.1--38.7\% with paired gains of $+0.064$ to $+0.099$ (all lower bounds $>0$), so \textbf{N2 passes}; MRR lifts are 2.51--2.86. The MRR gain, however, has intervals containing 0 at every prefix, so \textbf{N1 fails}. Replacing frames by those of another scene's video ($k=8$, 313 queries) drops accuracy from 39.6\% to 18.8\%. In the descriptive grid, the top six configurations all combine so400m with C2; removing C2 gives 31.1--33.0\%.
+
+\begin{table}[t]
+\caption{5-way accuracy of base SigLIP (B) and the nested-selected/frozen pipeline (F). CV: 8-fold out-of-fold, 2,503 queries. Test: locked split, 407 queries, 4 videos, run once (intervals exploratory). $\Delta$: paired F$-$B with 95\% video-bootstrap interval.}
+\label{tab:ladder}
+\centering
+\setlength{\tabcolsep}{3pt}
+\footnotesize
+\begin{tabular}{ccccccc}
+\toprule
+& \multicolumn{3}{c}{Cross-validation} & \multicolumn{3}{c}{Locked test} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+$k$ & B & F & $\Delta$ & B & F & $\Delta$ \\
+\midrule
+2 & .277 & .341 & +.064 [.039, .089] & .204 & .219 & +.015 [$-$.010, .038] \\
+4 & .275 & .349 & +.074 [.049, .100] & .211 & .246 & +.034 [.013, .048] \\
+6 & .281 & .362 & +.082 [.051, .112] & .224 & .278 & +.054 [.010, .097] \\
+8 & .289 & .387 & +.099 [.062, .134] & .214 & .302 & +.089 [.044, .148] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+On the locked test, the frozen pipeline's 5-way lift lower bound exceeds 1 at 4/4 prefixes (\textbf{T1 passes}) and its paired gain over base SigLIP is positive at 3/4 (\textbf{T2 passes}); 10-way gains are positive at 4/4. Absolute accuracy is lower than in cross-validation (21.9--30.2\%), and base SigLIP drops as well (20.4--22.4\%). Gallery MRR of the frozen pipeline is \emph{below} base SigLIP at every prefix (interval below 0 at $k=2$): context subtraction helps separate steps within a video, which is the assistance-relevant case, but not ranking across videos.
+
+\subsection{Knowing when to wait}
+With the margin of the selected pipeline as confidence score, accuracy at 50\% coverage exceeds full-coverage accuracy by $+0.069$ to $+0.079$ (lower bounds $\geq 0.039$; \textbf{S1b passes}), and at 20\% coverage it reaches 53--61\%. Leakage-free fold thresholds realise the target coverages (0.50, 0.20) with 40.7--46.1\% and 53.3--60.9\% accuracy. The same analysis on base SigLIP gains only 2.6--3.5 points. Two other pre-registered ideas failed: stopping observation at the first frame whose margin exceeds a threshold (S2) did not beat fixed-$k$ at matched frame budgets, and a kNN text-space correction from training scenes (K1) lowered MRR.
+
+\subsection{Does SmolVLA need the goal?}
+On LIBERO-10, SmolVLA succeeds in 19/100 episodes with the correct instruction (Wilson [0.125, 0.278]) and in 0/100 with an empty or a wrong one (both [0, 0.037]); all failed episodes run to the 520-step limit. \textbf{L1 passes} ($+0.19$ [$+0.12$, $+0.27$]); \textbf{L2 fails}, since both alternatives are at zero. Empty and wrong prompts are out of distribution, so this measures dependence on the language channel, not the value of a predicted intention.
+
 \subsection{Diagnostics}
 \textbf{Paraphrase ceiling.} WHY sentences are free-form: 66.6\% of queries have another WHY in the same video with sentence-embedding cosine $\geq 0.8$ (44.5\% at $\geq 0.9$), yet only exact text counts as correct. Two pre-registered secondary variants estimate the effect: with distractors filtered to cosine $<0.8$, SigLIP's 5-way accuracy at $k=8$ is 30.8\%; counting near-paraphrases ($\geq 0.9$) as positives gives MRR 0.112 (lift 2.13 [1.71, 2.66]). These do not change the G1 verdict.
 
@@ -200,19 +237,19 @@ Paired over identical queries, SigLIP's MRR increases by $+0.0094$ [$+0.0053$, $
 \textbf{HOI gate.} MediaPipe detects hands in 58.2\% of 20,024 frames, with four scenes below 30\% (deck 10.3\%, laundry room 15.3\%, yard 15.9\%, outdoor space 24.8\%). The gate fails, so no HOI-crop variant was evaluated and we draw no conclusion about it.
 
 \subsection{Policy interface}
-The Intention Adapter and prefix injection pass implementation tests with 256-d intention vectors: gradients reach the adapter, the prefix grows by exactly one token placed before the state token, the token is present in the KV cache at inference, the flow-matching loss is finite, checkpoints round-trip, and disabling intention reproduces the original SmolVLA. As an engineering reference, SmolVLA without intention, retrained on LIBERO-10~\cite{liu2023libero} with the correct 7-D action configuration, reaches 24\% success over 100 episodes. We do not claim that intention improves robot behaviour.
+The Intention Adapter and prefix injection pass implementation tests with 256-, 768- and 1152-d intention vectors: gradients reach the adapter, the prefix grows by exactly one token placed before the state token, the token is present in the KV cache at inference, the flow-matching loss is finite, checkpoints round-trip, and disabling intention reproduces the original SmolVLA. We do not claim that intention improves robot behaviour.
 
 % ---------------------------------------------------------------------
 \section{Discussion and Limitations}
 % ---------------------------------------------------------------------
 
-The main lesson is a design one: with about two thousand labelled steps, an intention module cannot learn the visual--linguistic mapping from the VLA backbone's visual features, while a pretrained aligned encoder provides it for free and is the better default for the intention branch. Absolute accuracy, however, remains low and below our threshold. The study covers 27 videos in 13 scenes, so video-bootstrap intervals describe this set rather than a population. SigLIP results are computed on train+val portions; although nothing is trained, design choices were made with knowledge of these data, and an untouched test evaluation remains to be done. Frame embeddings were cached in float16, and re-computing 5-way accuracy differed by one query in 2,503 at $k=2$ and $k=4$. An attempt to score WHY sentences with SmolVLM2's own likelihood was invalidated by an implementation error (image tokens were not masked) and is not reported. Finally, closed-loop evaluation with a real or simulated robot is future work.
+The main lesson is a design one: with about two thousand labelled steps, an intention module cannot learn the visual--linguistic mapping from the VLA backbone's visual features, while a pretrained aligned encoder provides it for free and is the better default for the intention branch. Scoring WHY sentences with SmolVLM2's own likelihood (PMI against a no-image prompt) confirms this: it is above chance (5-way 23.5--24.6\%) but 4.2 points below base SigLIP on identical queries. Subtracting causal video context is a cheap, training-free addition that helps exactly in the within-activity setting a collaborative robot faces. Limitations are substantial. The main study covers 27 videos in 13 scenes; the locked test has only 4 videos in 2 scenes, is not scene-disjoint, and shows a clear drop from cross-validation. The selected pipeline lowers cross-video gallery MRR on test. Selective prediction has not been tested on the locked split. The LIBERO ablation uses one checkpoint and 10 episodes per task. Closed-loop evaluation with a predicted intention token is future work.
 
 % ---------------------------------------------------------------------
 \section{Conclusion}
 % ---------------------------------------------------------------------
 
-We evaluated intention modules for VLA policies on early goal disambiguation from egocentric video under scene-held-out, pre-registered conditions. A readout on the VLA's frozen backbone features is near chance, whereas zero-shot image--text alignment yields roughly twice the lift and improves with more observation, but still falls short of a pre-registered accuracy threshold. Next steps are selective prediction (deciding when the robot should act early), light adapters on aligned embeddings with nested selection, and measuring the value of intention tokens for SmolVLA on LIBERO and a UR5 arm. Code and result files are available at \url{https://github.com/sgdfgnhmjnfd/vlia-uet}.
+We evaluated intention modules for VLA policies on early goal disambiguation from egocentric video under scene-held-out, pre-registered conditions. A readout on the VLA's frozen backbone features is near chance, whereas zero-shot image--text alignment yields roughly twice the lift. A training-free pipeline with causal context subtraction, chosen by nested selection, reaches 34--39\% 5-way accuracy and keeps a smaller but positive advantage on a one-shot locked test, and its confidence margin supports abstention. Since SmolVLA fails without goal information, the next step is to train it with intention tokens on LIBERO and measure how much of the lost success they recover, then move to scene-disjoint test data and a UR5 arm. Code and result files are available at \url{https://github.com/sgdfgnhmjnfd/vlia-uet}.
 
 \begin{thebibliography}{99}
 \bibitem{brohan2022rt1} A.~Brohan \emph{et al.}, ``RT-1: Robotics transformer for real-world control at scale,'' arXiv:2212.06817, 2022.
