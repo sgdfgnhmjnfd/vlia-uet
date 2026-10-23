@@ -44,5 +44,5 @@
   },
   "tie_rule": "fractional credit",
   "siglip_reference": "siglip-base-patch16-224|A0|C0|T0 float32, fractional credit",
-  "git_commit": "2cb964b5aad05824f1fb57df6d6fc3439ca51fbc"
+  "git_commit": "9cfc44235c061655a229db86f78017edc6bf314d"
 }
