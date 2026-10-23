@@ -1,0 +1,244 @@
+{
+  "stage": "ladder_v1 Stage 3",
+  "encoders_evaluated": [
+    "siglip-base-patch16-224",
+    "siglip-base-patch16-384",
+    "siglip2-base-patch16-224",
+    "siglip-so400m-patch14-384",
+    "clip-vit-large-patch14"
+  ],
+  "encoders_dropped": [],
+  "grid_size": 90,
+  "grid_order": "encoder x aggregator x centering x template (nested, listed order)",
+  "folds": "run_scene_cv.assign_folds(scenes, 8)",
+  "selection": "argmax of summed training-fold K=5 hits over k in {2,4,6,8}; ties -> lowest grid index",
+  "baseline": "siglip-base-patch16-224|A0|C0|T0",
+  "baseline_frame_dtype": "float32",
+  "c2_fallback_fraction": 0.010787055533360013,
+  "lse_temperature": 0.02,
+  "bootstrap": {
+    "B": 10000,
+    "seed": 0,
+    "cluster": "video_uid"
+  },
+  "implementation_choices": "* C1 mean frame embedding = mean over all 8 per-frame embeddings of the\n    training-fold queries; mean text embedding = mean of the training-fold\n    queries' target WHY embeddings (template-specific). Frames and texts are\n    centred per vector, then re-normalised.\n  * C2 subtracts the context from the frames only (texts stay raw); a query\n    without an earlier step uses C1 for both frames and texts.\n  * A2 = 0.02 * logsumexp(cos / 0.02) over the first k frames.\n  * K-way hits are strict (positive > every distractor), as in E1; invalid\n    K-way rows count as misses, as in E1.",
+  "selection_stability": {
+    "n_folds": 8,
+    "n_distinct_selected": 1,
+    "most_common": "siglip-so400m-patch14-384|A0|C2|T1",
+    "most_common_folds": 8,
+    "counts": {
+      "siglip-so400m-patch14-384|A0|C2|T1": 8
+    },
+    "per_component": {
+      "encoder": {
+        "siglip-so400m-patch14-384": 8
+      },
+      "aggregator": {
+        "A0": 8
+      },
+      "centering": {
+        "C2": 8
+      },
+      "template": {
+        "T1": 8
+      }
+    }
+  },
+  "verdicts": {
+    "N1": {
+      "pass": false,
+      "label": "Selection does not help (rule not met)",
+      "MRR_ci_lo_gt0_prefixes": [],
+      "5way_ci_lo_gt0_prefixes": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "rule": "per metric: CI lower bound > 0 at >= 2 of 4 prefixes, for both MRR and 5-way",
+      "both_metrics_same_prefix": []
+    },
+    "N2": {
+      "pass": true,
+      "5way_acc_ge_0.30_prefixes": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "MRR_lift_ci_lo_gt1_prefixes": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "5way_lift_ci_lo_gt1_prefixes": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "G1": "FAIL (unchanged)"
+    }
+  },
+  "preregistration_sha256": {
+    "results/prereg_ladder_v1.md": "a8fbc132843e3bd9214b7ba8a298dc522798830cbf8f54a084e5a2990a30892e",
+    "results/prereg_ladder_v1_amendment_1.md": "9363700e17e273ec85d58338afe90b0499fe4bb9fe35c31abe428e5ca044548d",
+    "results/prereg_daily_v1.md": "7f8d3c0b877d0fbda04a8888a90b816cc71de1ff7aaa48d7834985080e65a7be",
+    "results/prereg_daily_v1_addendum.md": "69ee7ad41789f9235f4b8a90a77cbb3799ac777197c3ba2764c2ed3827e0d909"
+  },
+  "git_commit": "9cfc44235c061655a229db86f78017edc6bf314d",
+  "test_split_read": false,
+  "encoder_meta": {
+    "siglip-base-patch16-224": {
+      "encoder": "google/siglip-base-patch16-224",
+      "frame_dtype": "float32",
+      "text_dtype": "float32",
+      "frame_shape": [
+        2503,
+        8,
+        768
+      ],
+      "text_max_length": 64,
+      "templates": {
+        "T0": "{why}",
+        "T1": "a first-person photo of a person doing: {why}"
+      },
+      "truncated_unique_texts": {
+        "T0": 0,
+        "T1": 0
+      },
+      "n_unique_texts": 2032,
+      "versions": {
+        "torch": "2.11.0+cu130",
+        "transformers": "5.5.4"
+      },
+      "device": "cuda",
+      "image_batch_frames": 32,
+      "frame_hashes": "/media/dhqg/d3/vlia_outputs/ladder/frame_hashes.json",
+      "frame_hashes_checked_against_first_pass": false,
+      "hf_home": "/media/dhqg/d3/hf_cache"
+    },
+    "siglip-base-patch16-384": {
+      "encoder": "google/siglip-base-patch16-384",
+      "frame_dtype": "float16",
+      "text_dtype": "float32",
+      "frame_shape": [
+        2503,
+        8,
+        768
+      ],
+      "text_max_length": 64,
+      "templates": {
+        "T0": "{why}",
+        "T1": "a first-person photo of a person doing: {why}"
+      },
+      "truncated_unique_texts": {
+        "T0": 0,
+        "T1": 0
+      },
+      "n_unique_texts": 2032,
+      "versions": {
+        "torch": "2.11.0+cu130",
+        "transformers": "5.5.4"
+      },
+      "device": "cuda",
+      "image_batch_frames": 32,
+      "preprocess_in_workers": true,
+      "frame_hashes": "/media/dhqg/d3/vlia_outputs/ladder/frame_hashes.json",
+      "frame_hashes_checked_against_first_pass": true,
+      "hf_home": "/media/dhqg/d3/hf_cache"
+    },
+    "siglip2-base-patch16-224": {
+      "encoder": "google/siglip2-base-patch16-224",
+      "frame_dtype": "float16",
+      "text_dtype": "float32",
+      "frame_shape": [
+        2503,
+        8,
+        768
+      ],
+      "text_max_length": 64,
+      "templates": {
+        "T0": "{why}",
+        "T1": "a first-person photo of a person doing: {why}"
+      },
+      "truncated_unique_texts": {
+        "T0": 0,
+        "T1": 0
+      },
+      "n_unique_texts": 2032,
+      "versions": {
+        "torch": "2.11.0+cu130",
+        "transformers": "5.5.4"
+      },
+      "device": "cuda",
+      "image_batch_frames": 32,
+      "preprocess_in_workers": true,
+      "frame_hashes": "/media/dhqg/d3/vlia_outputs/ladder/frame_hashes.json",
+      "frame_hashes_checked_against_first_pass": true,
+      "hf_home": "/media/dhqg/d3/hf_cache"
+    },
+    "siglip-so400m-patch14-384": {
+      "encoder": "google/siglip-so400m-patch14-384",
+      "frame_dtype": "float16",
+      "text_dtype": "float32",
+      "frame_shape": [
+        2503,
+        8,
+        1152
+      ],
+      "text_max_length": 64,
+      "templates": {
+        "T0": "{why}",
+        "T1": "a first-person photo of a person doing: {why}"
+      },
+      "truncated_unique_texts": {
+        "T0": 0,
+        "T1": 0
+      },
+      "n_unique_texts": 2032,
+      "versions": {
+        "torch": "2.11.0+cu130",
+        "transformers": "5.5.4"
+      },
+      "device": "cuda",
+      "image_batch_frames": 32,
+      "preprocess_in_workers": true,
+      "frame_hashes": "/media/dhqg/d3/vlia_outputs/ladder/frame_hashes.json",
+      "frame_hashes_checked_against_first_pass": true,
+      "hf_home": "/media/dhqg/d3/hf_cache"
+    },
+    "clip-vit-large-patch14": {
+      "encoder": "openai/clip-vit-large-patch14",
+      "frame_dtype": "float16",
+      "text_dtype": "float32",
+      "frame_shape": [
+        2503,
+        8,
+        768
+      ],
+      "text_max_length": 77,
+      "templates": {
+        "T0": "{why}",
+        "T1": "a first-person photo of a person doing: {why}"
+      },
+      "truncated_unique_texts": {
+        "T0": 0,
+        "T1": 0
+      },
+      "n_unique_texts": 2032,
+      "versions": {
+        "torch": "2.11.0+cu130",
+        "transformers": "5.5.4"
+      },
+      "device": "cuda",
+      "image_batch_frames": 32,
+      "preprocess_in_workers": true,
+      "frame_hashes": "/media/dhqg/d3/vlia_outputs/ladder/frame_hashes.json",
+      "frame_hashes_checked_against_first_pass": true,
+      "hf_home": "/media/dhqg/d3/hf_cache"
+    }
+  }
+}

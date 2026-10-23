@@ -1,0 +1,37 @@
+{
+  "stage": "ladder_v1 Stage 5 (cache-kNN)",
+  "pipeline": "siglip-base-patch16-224|A0|C0|T0 (float32)",
+  "M": 20,
+  "temperature": 0.05,
+  "betas": [
+    0.0,
+    0.25,
+    0.5,
+    1.0,
+    2.0
+  ],
+  "beta_selection": "leave-one-scene-out within training scenes; max summed 5-way hits over k; ties -> lowest beta",
+  "neighbours": "training-fold queries at the same k; never the held-out fold",
+  "bootstrap": {
+    "B": 10000,
+    "seed": 0,
+    "cluster": "video_uid"
+  },
+  "verdicts": {
+    "K1": {
+      "pass": false,
+      "MRR_ci_lo_gt0_prefixes": [],
+      "5way_ci_lo_gt0_prefixes": [],
+      "rule": "per metric: CI lower bound > 0 at >= 2 of 4 prefixes, for both MRR and 5-way"
+    }
+  },
+  "note": "uses training-scene labels: a non-parametric trained method",
+  "preregistration_sha256": {
+    "results/prereg_ladder_v1.md": "a8fbc132843e3bd9214b7ba8a298dc522798830cbf8f54a084e5a2990a30892e",
+    "results/prereg_ladder_v1_amendment_1.md": "9363700e17e273ec85d58338afe90b0499fe4bb9fe35c31abe428e5ca044548d",
+    "results/prereg_daily_v1.md": "7f8d3c0b877d0fbda04a8888a90b816cc71de1ff7aaa48d7834985080e65a7be",
+    "results/prereg_daily_v1_addendum.md": "69ee7ad41789f9235f4b8a90a77cbb3799ac777197c3ba2764c2ed3827e0d909"
+  },
+  "git_commit": "9cfc44235c061655a229db86f78017edc6bf314d",
+  "test_split_read": false
+}
