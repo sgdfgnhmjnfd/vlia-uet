@@ -1,0 +1,184 @@
+\documentclass[border=8pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds}
+
+\definecolor{cIn}{HTML}{EEEEEE}
+\definecolor{cVis}{HTML}{DCE9F7}
+\definecolor{cTxt}{HTML}{E4F3E1}
+\definecolor{cOp}{HTML}{FFF2CC}
+\definecolor{cVLM}{HTML}{E8E0F5}
+\definecolor{cExp}{HTML}{FDE3D3}
+\definecolor{cAd}{HTML}{FFD6D6}
+
+\begin{document}
+\begin{tikzpicture}[
+  font=\sffamily\scriptsize,
+  >=Latex,
+  node distance=3mm and 4mm,
+  b/.style={draw,rounded corners=2pt,align=center,inner sep=3pt,minimum height=8mm,line width=0.4pt},
+  inp/.style={b,fill=cIn},
+  vis/.style={b,fill=cVis},
+  txt/.style={b,fill=cTxt},
+  op/.style={b,fill=cOp},
+  vlm/.style={b,fill=cVLM},
+  exp/.style={b,fill=cExp},
+  ad/.style={b,fill=cAd,line width=0.9pt},
+  lay/.style={b,fill=white,align=left,font=\sffamily\tiny,inner sep=3pt},
+  dim/.style={font=\sffamily\tiny\itshape,text=black!65},
+  frz/.style={dash pattern=on 2pt off 1pt},
+  grp/.style={draw,rounded corners=4pt,inner sep=6pt,line width=0.6pt},
+  ttl/.style={font=\sffamily\small\bfseries,anchor=south west},
+]
+
+% =====================================================================
+% (A) MÔ-ĐUN Ý ĐỊNH
+% =====================================================================
+\node[inp] (vid) {Video góc nhìn thứ nhất\\của người dùng\\$k\in\{2,4,6,8\}$ khung đầu\\RGB $384{\times}384$};
+
+\node[vis,right=of vid] (patch) {Patch embedding\\Conv $14{\times}14$, stride 14\\$+$ position embedding};
+\node[dim,below=0.5mm of patch] {$729{\times}1152$ / khung};
+
+\node[lay,right=of patch,minimum width=33mm] (enc) {\textbf{ViT encoder $\times$27 lớp}\\[1pt]
+LayerNorm\\
+Multi-head self-attention (16 head)\\
+$+$ residual\\
+LayerNorm\\
+MLP $1152\!\to\!4304\!\to\!1152$ (GELU)\\
+$+$ residual};
+\node[vis,right=of enc] (map) {Post-LayerNorm\\[1pt]MAP head\\(attention pooling,\\1 probe token)};
+\node[dim,below=0.5mm of map] {$1152$ / khung};
+\node[op,right=of map] (l2a) {L2-normalize\\từng khung};
+\node[op,right=of l2a] (mean) {\textbf{A0}: trung bình\\theo thời gian\\$\frac{1}{k}\sum_{j\le k}$};
+\node[op,right=of mean] (c2) {\textbf{C2}: trừ trung bình\\khung của các \textbf{bước}\\\textbf{trước} cùng video\\(không có thì C1)};
+\node[op,right=of c2] (l2b) {L2-normalize};
+\node[op,right=of l2b,line width=0.9pt] (z) {\textbf{Vector ý định}\\$\mathbf{z}^{\mathrm{int}}\in\mathbb{R}^{1152}$};
+
+\draw[->] (vid) -- (patch);
+\draw[->] (patch) -- (enc);
+\draw[->] (enc) -- (map);
+\draw[->] (map) -- (l2a);
+\draw[->] (l2a) -- (mean);
+\draw[->] (mean) -- (c2);
+\draw[->] (c2) -- (l2b);
+\draw[->] (l2b) -- (z);
+
+% Nhánh văn bản
+\node[inp,below=13mm of vid] (why) {Câu WHY ứng viên $c_1..c_K$\\(cùng video)\\Template \textbf{T1}: ``a first-person\\photo of a person doing: \{why\}''};
+\node[txt,right=of why] (tok) {SentencePiece\\tokenizer\\(tối đa 64 token)\\$+$ token/pos embedding};
+\node[lay,right=of tok,minimum width=33mm] (tenc) {\textbf{Text encoder $\times$27 lớp}\\[1pt]
+LayerNorm $\to$ self-attention\\(16 head) $+$ residual\\
+LayerNorm $\to$ MLP\\$1152\!\to\!4304\!\to\!1152$ $+$ residual};
+\node[txt,right=of tenc] (tpool) {Final LayerNorm\\token cuối\\$+$ Linear head};
+\node[op,right=of tpool] (l2t) {L2-normalize\\$\mathbf{t}_c\in\mathbb{R}^{1152}$};
+\draw[->] (why) -- (tok);
+\draw[->] (tok) -- (tenc);
+\draw[->] (tenc) -- (tpool);
+\draw[->] (tpool) -- (l2t);
+
+\node[op,below=13mm of l2b,xshift=6mm] (score) {Điểm $s_c=\cos(\mathbf{z}^{\mathrm{int}},\mathbf{t}_c)$\\xếp hạng $K$ ứng viên};
+\node[op,right=of score] (dec) {Margin $s_{(1)}-s_{(2)}$\\$\ge\tau$: \textbf{dự đoán} WHY\\$<\tau$: \textbf{hoãn}, xem thêm khung};
+\draw[->] (l2t) -- (score);
+\draw[->] (z.south) |- ($(score.north)+(0,3mm)$) -- (score.north);
+\draw[->] (score) -- (dec);
+
+\begin{scope}[on background layer]
+  \node[grp,draw=blue!60!black,fill=blue!2,fit=(vid)(patch)(enc)(map)(l2a)(mean)(c2)(l2b)(z)(why)(tok)(tenc)(tpool)(l2t)(score)(dec),inner sep=9pt] (GA) {};
+  \node[grp,draw=blue!40,frz,fit=(patch)(enc)(map),inner sep=3pt,label={[dim]above:Tháp ảnh SigLIP so400m-patch14-384 (đóng băng)}] {};
+  \node[grp,draw=green!45!black,frz,fit=(tok)(tenc)(tpool),inner sep=3pt,label={[dim]below:Tháp văn bản SigLIP so400m (đóng băng)}] {};
+\end{scope}
+\node[ttl,text=blue!60!black] at ($(GA.north west)+(0,1mm)$) {(A) Mô-đun ý định -- cấu hình đóng băng: so400m $|$ A0 $|$ C2 $|$ T1 (không có tham số huấn luyện)};
+
+% =====================================================================
+% (A') Phương án đối chứng: đầu đọc huấn luyện
+% =====================================================================
+\node[inp,below=17mm of why] (sfeat) {Đặc trưng SmolVLM2\\đóng băng\\$8{\times}960$ / bước};
+\node[op,right=of sfeat] (smean) {Trung bình\\$k$ khung đầu\\$960$};
+\node[lay,right=of smean] (mlp) {\textbf{MLP đầu đọc (huấn luyện)}\\Linear $960\!\to\!512$\\GELU\\Dropout\\Linear $512\!\to\!256$};
+\node[op,right=of mlp] (zr) {$\mathbf{z}\in\mathbb{R}^{256}$};
+\node[txt,right=of zr] (loss) {Loss: InfoNCE nhiều mẫu dương\\($\tau=0{,}07$) $+\,0{,}1\times$ cosine\\đích: MiniLM-384 hoặc\\SmolVLM2-text PCA-256};
+\draw[->] (sfeat) -- (smean);
+\draw[->] (smean) -- (mlp);
+\draw[->] (mlp) -- (zr);
+\draw[->,dashed] (zr) -- (loss);
+\begin{scope}[on background layer]
+  \node[grp,draw=gray!70,frz,fill=gray!3,fit=(sfeat)(smean)(mlp)(zr)(loss),inner sep=7pt] (GR) {};
+\end{scope}
+\node[ttl,text=gray!50!black] at ($(GR.north west)+(0,1mm)$) {(A$'$) Phương án đối chứng: đầu đọc trên backbone VLA (gần mức ngẫu nhiên, không dùng trong cấu hình cuối)};
+
+% =====================================================================
+% (C) SMOLVLA
+% =====================================================================
+\node[inp,below=22mm of sfeat] (cam) {Ảnh camera robot\\$N$ camera\\resize+pad $512{\times}512$};
+\node[lay,right=of cam,frz] (sv) {\textbf{SigLIP-B/16 vision}\\(trong SmolVLM2, đóng băng)\\Patch $16{\times}16$ $\to$ 1024 patch\\$\times$12 lớp ViT, $d$=768};
+\node[vlm,right=of sv,frz] (ps) {Connector\\Pixel shuffle $\times4$\\$1024{\times}768\to64{\times}12288$\\Linear $\to960$};
+\node[dim,below=0.5mm of ps] {64 token / camera};
+\node[inp,below=10mm of cam] (lang) {Câu lệnh\\``put the cup\\on the tray''};
+\node[vlm,right=of lang] (ltok) {Tokenizer\\(tối đa 48 token)\\Embedding $\to960$};
+\node[inp,below=10mm of lang] (state) {Trạng thái robot\\(pad $\to$ 32 chiều)};
+\node[vlm,right=of state] (sproj) {State projection\\Linear $32\!\to\!960$\\1 token};
+
+\coordinate (px) at ($(ps.east)+(14mm,0)$);
+\node[b,fill=white,align=left,anchor=west] (prefix) at (px |- ltok) {\textbf{Tiền tố đa phương thức}\\[2pt]
+\colorbox{cVis}{ảnh: $64N$ token}\\[1pt]
+\colorbox{cVLM}{lệnh: $\le48$ token}\\[1pt]
+\colorbox{cAd}{\textbf{ý định: 1 token}}\\[1pt]
+\colorbox{cVLM}{trạng thái: 1 token}\\[2pt]
+{\tiny segment 0: ảnh + lệnh}\\
+{\tiny segment 1: ý định + trạng thái}};
+\draw[->] (ps.east) -- ++(5mm,0) |- ($(prefix.west)+(0,7mm)$);
+\draw[->] (ltok.east) -- (ltok.east -| prefix.west);
+\draw[->] (sproj.east) -- ++(5mm,0) |- ($(prefix.west)+(0,-7mm)$);
+
+% (B) Intention Adapter, ngay trên tiền tố
+\node[ad,above=9mm of prefix] (adapter) {\textbf{Intention Adapter} (huấn luyện)\\Linear $1152\!\to\!960$:\ \ $\mathbf{e}^{\mathrm{int}}=\mathbf{W}\mathbf{z}^{\mathrm{int}}+\mathbf{b}$\\$\to$ 1 token $1{\times}960$};
+\draw[->,line width=0.9pt,red!60!black] (adapter.south) -- (prefix.north);
+\draw[->,line width=0.9pt,red!60!black] (z.east) -- ++(5mm,0) |- (adapter.east);
+
+\node[lay,right=8mm of prefix,minimum width=38mm,frz] (vlmL) {\textbf{SmolVLM2 decoder (SmolLM2)}, đóng băng\\\textbf{16 lớp đầu} (giữ 16/32), $d$=960\\[1pt]
+RMSNorm\\
+Self-attention GQA: 15 head Q, 5 head KV, RoPE\\
+$+$ residual\\
+RMSNorm\\
+SwiGLU MLP $960\!\to\!2560\!\to\!960$\\
+$+$ residual};
+\node[vlm,right=of vlmL] (kv) {\textbf{KV cache}\\của tiền tố\\(tính 1 lần,\\dùng lại 10 bước)};
+\draw[->] (prefix) -- (vlmL);
+\draw[->] (vlmL) -- (kv);
+
+\node[lay,below=12mm of vlmL,minimum width=38mm] (expL) {\textbf{Action expert $\times$16 lớp}, $d$=720 (huấn luyện)\\[1pt]
+RMSNorm\\
+Lớp xen kẽ: \textbf{cross-attention} tới K,V\\của lớp VLM tương ứng / self-attention\\
+$+$ residual, RMSNorm\\
+SwiGLU MLP, $+$ residual};
+\draw[->,line width=0.7pt,violet] (vlmL.south) -- node[right,dim]{K, V của tiền tố} (expL.north);
+\node[exp,left=of expL] (ain) {Action in-proj\\Linear $32\!\to\!720$\\$\tau$: sinusoidal $\to720$\\concat $\to$ MLP\\$1440\!\to\!720$, SiLU, $720\!\to\!720$};
+\node[inp,left=of ain] (noise) {$\mathbf{A}^{\tau}$: khối hành động\\$50{\times}32$, bắt đầu từ\\nhiễu $\mathcal{N}(0,I)$ ở $\tau{=}1$};
+\node[exp,right=of expL] (aout) {Action out-proj\\Linear $720\!\to\!32$\\$\to$ vận tốc $\mathbf{v}_\theta$};
+\node[exp,below=6mm of aout] (euler) {Euler, 10 bước\\$\mathbf{A}^{\tau-\delta}=\mathbf{A}^{\tau}-\delta\,\mathbf{v}_\theta$};
+\node[inp,right=of euler] (act) {\textbf{Khối hành động}\\$50{\times}32$ (LIBERO: 7 chiều)\\$\to$ tay robot};
+\draw[->] (noise) -- (ain);
+\draw[->] (ain) -- (expL);
+\draw[->] (expL) -- (aout);
+\draw[->] (aout) -- (euler);
+\draw[->] (euler) -- (act);
+\draw[->,dashed] (euler.south) -- ++(0,-4mm) -| node[pos=0.25,below,dim]{lặp với $\tau$ mới (chưa đủ 10 bước)} (noise.south);
+
+\begin{scope}[on background layer]
+  \node[grp,draw=orange!70!black,fill=orange!2,fit=(cam)(sv)(ps)(lang)(ltok)(state)(sproj)(prefix)(adapter)(vlmL)(kv)(noise)(ain)(expL)(aout)(euler)(act),inner sep=10pt,yshift=-2mm] (GC) {};
+\end{scope}
+\node[ttl,text=orange!60!black] at ($(GC.north west)+(0,1mm)$) {(B, C) Intention Adapter và chính sách SmolVLA (huấn luyện bằng flow matching; VLM đóng băng)};
+
+% Chú giải
+\node[anchor=north west,align=left,font=\sffamily\tiny] at ($(GC.south west)+(0,-2mm)$) {%
+\textbf{Chú giải:}\quad
+\colorbox{cVis}{tháp ảnh}\ \colorbox{cTxt}{tháp văn bản}\ \colorbox{cOp}{phép toán không tham số}\ \colorbox{cVLM}{backbone VLM}\ \colorbox{cExp}{action expert}\ \colorbox{cAd}{khối mới của VLIA}\quad
+khung nét đứt = đóng băng\quad mũi tên đỏ = đường đi của ý định\\
+Số lớp/chiều của SigLIP và SmolVLA lấy theo cấu hình công bố của các checkpoint \texttt{siglip-so400m-patch14-384}, \texttt{SmolVLM2-500M-Video-Instruct} và cấu hình mặc định của SmolVLA trong LeRobot.};
+
+\end{tikzpicture}
+\end{document}
