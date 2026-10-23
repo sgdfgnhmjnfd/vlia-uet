@@ -1,0 +1,32 @@
+{
+  "name": "frozen_pipeline_v1",
+  "encoder_id": "google/siglip-so400m-patch14-384",
+  "aggregator": "A0",
+  "aggregator_description": "cosine of the re-normalised mean of the first k frame embeddings",
+  "centering": "C2",
+  "centering_description": "subtract the mean of all frames of strictly earlier steps of the same video, re-normalise frames; texts raw. Fallback when no earlier step: C1 (frames and texts minus the frozen train+val means, re-normalised)",
+  "c1_means_file": "results/frozen_pipeline_v1/c1_means.npz",
+  "c1_means_sha256": "4525ff7cadedc4595174d18ef58e2630f38d0b9c6ed86c86d802d25ec9dfb7f6",
+  "c1_means_source": "all 2503 train+val queries; mean over 8 frames per query (ladder cache) and mean T1 text target",
+  "template": "T1",
+  "template_text": "a first-person photo of a person doing: {why}",
+  "beta": 0.0,
+  "beta_note": "cache-kNN rejected (K1 FAIL, results/knn_cache_v1)",
+  "frame_dtype": "float16",
+  "text_max_length": 64,
+  "selection_evidence": "results/ladder_v1/selected_configs.csv (selected in 8/8 outer folds)",
+  "baseline": {
+    "encoder_id": "google/siglip-base-patch16-224",
+    "aggregator": "A0",
+    "centering": "C0",
+    "template": "T0",
+    "template_text": "{why}",
+    "frame_dtype": "float32",
+    "text_max_length": 64,
+    "label": "siglip-base-patch16-224|A0|C0|T0"
+  },
+  "preregistration_sha256": {
+    "results/prereg_v2.md": "e7dc0a29a1e646125865f9028a05f16fec7a7bd8a5d59b62a257ba6a4da9a712"
+  },
+  "git_commit": "6052756f6599a4cc1d9b216146d0b73edb089c49"
+}
