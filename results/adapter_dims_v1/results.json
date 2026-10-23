@@ -1,0 +1,103 @@
+{
+  "rows": [
+    {
+      "d": 256,
+      "results": {
+        "finite_loss": true,
+        "adapter_grad_nonzero": true,
+        "prefix_len_plus_1": true,
+        "intention_before_state": true,
+        "in_kv_cache": true,
+        "flag_off_identical": true,
+        "checkpoint_roundtrip": true
+      },
+      "detail": {
+        "loss": 2.3837387561798096,
+        "adapter_grad_norm": 0.07747265696525574,
+        "prefix_len": {
+          "base": 77,
+          "vlia": 78
+        },
+        "kv_len": {
+          "with_intention": 78,
+          "without": 77
+        },
+        "flag_off_max_abs_diff": {
+          "flag_off": 0.0,
+          "z_int_none": 0.0,
+          "prefix": 0.0
+        },
+        "roundtrip_max_abs_diff": 0.0
+      },
+      "seconds": 108.7618658542633
+    },
+    {
+      "d": 768,
+      "results": {
+        "finite_loss": true,
+        "adapter_grad_nonzero": true,
+        "prefix_len_plus_1": true,
+        "intention_before_state": true,
+        "in_kv_cache": true,
+        "flag_off_identical": true,
+        "checkpoint_roundtrip": true
+      },
+      "detail": {
+        "loss": 2.3828983306884766,
+        "adapter_grad_norm": 0.1295718550682068,
+        "prefix_len": {
+          "base": 77,
+          "vlia": 78
+        },
+        "kv_len": {
+          "with_intention": 78,
+          "without": 77
+        },
+        "flag_off_max_abs_diff": {
+          "flag_off": 0.0,
+          "z_int_none": 0.0,
+          "prefix": 0.0
+        },
+        "roundtrip_max_abs_diff": 0.0
+      },
+      "seconds": 106.18165707588196
+    },
+    {
+      "d": 1152,
+      "results": {
+        "finite_loss": true,
+        "adapter_grad_nonzero": true,
+        "prefix_len_plus_1": true,
+        "intention_before_state": true,
+        "in_kv_cache": true,
+        "flag_off_identical": true,
+        "checkpoint_roundtrip": true
+      },
+      "detail": {
+        "loss": 2.387240171432495,
+        "adapter_grad_norm": 0.16490647196769714,
+        "prefix_len": {
+          "base": 77,
+          "vlia": 78
+        },
+        "kv_len": {
+          "with_intention": 78,
+          "without": 77
+        },
+        "flag_off_max_abs_diff": {
+          "flag_off": 0.0,
+          "z_int_none": 0.0,
+          "prefix": 0.0
+        },
+        "roundtrip_max_abs_diff": 0.0
+      },
+      "seconds": 107.21077990531921
+    }
+  ],
+  "tolerance": 1e-06,
+  "device": "cpu",
+  "dtype": "float32",
+  "config_source": "/media/dhqg/d1/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000/pretrained_model/config.json",
+  "torch": "2.11.0+cu130",
+  "git_commit": "7183abf82b5a30d08e64196998e58b9329bcafbb"
+}
