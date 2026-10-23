@@ -1,0 +1,48 @@
+{
+  "score_dir": "/media/dhqg/d3/vlia_outputs/e1b_v2",
+  "n_records": 5319,
+  "n_real": 5006,
+  "n_control": 313,
+  "diagnostics": {
+    "2": {
+      "lp_img_mean_range": [
+        -17.306564331054688,
+        -2.1672797203063965
+      ],
+      "mean_within_query_std_lp_img": 1.497599165114676,
+      "mean_within_query_std_lp_null": 1.8337400632603762,
+      "std_ratio_null_over_img": 1.2244531821169657,
+      "fraction_pmi_gt0": 0.9944866160607271,
+      "queries_with_tied_max_pmi_mean": 0
+    },
+    "8": {
+      "lp_img_mean_range": [
+        -18.561471939086914,
+        -2.07971986134847
+      ],
+      "mean_within_query_std_lp_img": 1.4819216058298967,
+      "mean_within_query_std_lp_null": 1.82314885136759,
+      "std_ratio_null_over_img": 1.2302599841957236,
+      "fraction_pmi_gt0": 0.9947263284059129,
+      "queries_with_tied_max_pmi_mean": 0
+    }
+  },
+  "verdicts": {
+    "E1b-A": {
+      "pass": true,
+      "prefixes_lift_ci_lo_gt1": [
+        2,
+        8
+      ],
+      "prefixes_evaluated": [
+        2,
+        8
+      ],
+      "rule": "primary per-token-mean PMI, fractional tie credit: 5-way lift CI lower bound > 1 (video bootstrap B=10000, seed 0) at BOTH evaluated prefixes"
+    },
+    "E1b-B": "descriptive only (paired_vs_siglip.csv)"
+  },
+  "tie_rule": "fractional credit",
+  "siglip_reference": "siglip-base-patch16-224|A0|C0|T0 float32, fractional credit",
+  "git_commit": "2cb964b5aad05824f1fb57df6d6fc3439ca51fbc"
+}

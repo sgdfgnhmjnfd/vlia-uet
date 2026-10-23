@@ -1,0 +1,34 @@
+{
+  "model_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+  "model_dir": "/home/dhqg/.cache/huggingface/hub/models--HuggingFaceTB--SmolVLM2-500M-Video-Instruct/snapshots/7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+  "dtype": "torch.bfloat16",
+  "n_queries": 2503,
+  "stride": 1,
+  "prefixes": [
+    2,
+    8
+  ],
+  "n_control": 313,
+  "elapsed_s": 2908.260787963867,
+  "seconds_per_query": 1.6879052745002132,
+  "checks": {
+    "image_passes": 3660,
+    "null_passes": 1306,
+    "expanded_gt_unexpanded": 3660,
+    "last_prefix_len": {
+      "expanded": 571,
+      "unexpanded": 43
+    }
+  },
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "transformers": "5.5.4"
+  },
+  "git_commit": "2cb964b5aad05824f1fb57df6d6fc3439ca51fbc",
+  "preregistration_sha256": {
+    "results/prereg_daily_v1.md": "7f8d3c0b877d0fbda04a8888a90b816cc71de1ff7aaa48d7834985080e65a7be",
+    "results/prereg_daily_v1_addendum.md": "69ee7ad41789f9235f4b8a90a77cbb3799ac777197c3ba2764c2ed3827e0d909",
+    "results/prereg_ladder_v1.md": "a8fbc132843e3bd9214b7ba8a298dc522798830cbf8f54a084e5a2990a30892e",
+    "results/prereg_ladder_v1_amendment_1.md": "9363700e17e273ec85d58338afe90b0499fe4bb9fe35c31abe428e5ca044548d"
+  }
+}
