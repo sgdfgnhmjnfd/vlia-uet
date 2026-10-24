@@ -28,6 +28,9 @@ from pathlib import Path
 import numpy as np
 
 CONDITIONS = ("correct", "empty", "wrong")
+# prereg v3 Stage 4 (VLIA intention-only checkpoint): empty language + z_int
+INTENTION_CONDITIONS = ("I-only", "I-wrong")
+ROOT = Path(__file__).resolve().parents[1]
 N_TASKS = 10
 SEED0 = 1000
 
@@ -62,6 +65,8 @@ def run(own, rest) -> int:
     import torch
 
     sys.argv = [sys.argv[0], *rest]
+    sys.path.insert(0, str(ROOT))
+    import policies.smolvla.configuration_smolvla  # noqa: F401  (registers vlia_smolvla)
     from lerobot.configs import parser
     from lerobot.configs.eval import EvalPipelineConfig
     from lerobot.envs.factory import make_env, make_env_pre_post_processors
@@ -86,7 +91,28 @@ def run(own, rest) -> int:
         suite = next(iter(envs))
         task_envs = envs[suite]
         assert sorted(task_envs) == list(range(N_TASKS)), sorted(task_envs)
-        policy = make_policy(cfg=cfg.policy, env_cfg=cfg.env, rename_map=cfg.rename_map)
+        conditions = tuple(own.conditions.split(","))
+        is_vlia = cfg_json.get("type") == "vlia_smolvla"
+        if is_vlia:
+            from policies.smolvla.modeling_smolvla import VLIASmolVLAPolicy
+
+            assert set(conditions) <= set(INTENTION_CONDITIONS), conditions
+            policy = VLIASmolVLAPolicy.from_pretrained(cfg.policy.pretrained_path)
+            policy.to(cfg.policy.device)
+            emb = np.load(own.task_embeddings)
+            table = {str(t): torch.tensor(e, dtype=torch.float32) for t, e in zip(emb["tasks"], emb["emb"])}
+            current_z = {"z": None}
+            inner_select = policy.select_action
+
+            def select_with_intention(batch, *a, **kw):
+                batch = dict(batch)
+                batch["intention"] = current_z["z"].to(policy.config.device)[None, :]
+                return inner_select(batch, *a, **kw)
+
+            policy.select_action = select_with_intention
+        else:
+            assert set(conditions) <= set(CONDITIONS), conditions
+            policy = make_policy(cfg=cfg.policy, env_cfg=cfg.env, rename_map=cfg.rename_map)
         policy.eval()
         pre, post = make_pre_post_processors(
             policy_cfg=cfg.policy, pretrained_path=cfg.policy.pretrained_path,
@@ -99,12 +125,12 @@ def run(own, rest) -> int:
 
         jobs = []
         if own.probe:
-            jobs = [("correct", 0, e) for e in range(own.probe)]
+            jobs = [(conditions[0], 0, e) for e in range(own.probe)]
         else:
             # condition-interleaved order so a partial run stays paired
             for t in range(N_TASKS):
                 for e in range(own.episodes_per_task):
-                    for c in CONDITIONS:
+                    for c in conditions:
                         jobs.append((c, t, e))
         t_start = time.time()
         n_done = 0
@@ -112,7 +138,11 @@ def run(own, rest) -> int:
             path = ep_dir / f"{c}_t{t}_e{e}.json"
             if path.exists():
                 continue
-            instr = {"correct": original[t], "empty": "", "wrong": original[wrong_task(t)]}[c]
+            instr = {"correct": original[t], "empty": "", "wrong": original[wrong_task(t)],
+                     "I-only": "", "I-wrong": ""}[c]
+            if is_vlia:
+                z_task = original[t] if c == "I-only" else original[wrong_task(t)]
+                current_z["z"] = table[z_task]
             env = task_envs[t]
             sub = env.envs[0]
             sub.init_state_id = e
@@ -135,7 +165,7 @@ def run(own, rest) -> int:
             if frames:
                 write_video(str(video), np.stack(frames), fps=sub.metadata.get("render_fps", 30))
             rec = {"condition": c, "task": t, "episode": e, "seed": SEED0 + e, "init_state_id": e,
-                   "instruction": instr, "success": success, "n_steps": n_steps, "seconds": secs,
+                   "instruction": instr, "z_int_task": (z_task if is_vlia else None), "success": success, "n_steps": n_steps, "seconds": secs,
                    "video": str(video) if frames else None}
             path.write_text(json.dumps(rec))
             n_done += 1
@@ -223,6 +253,73 @@ def analyze(own) -> int:
     return 0
 
 
+def analyze_intention(own) -> int:
+    """B1: I-only - empty(v1); B2: I-only - I-wrong; paired over (task, episode)."""
+    import csv
+
+    out = Path(own.out)
+    res = Path(own.results)
+    res.mkdir(parents=True, exist_ok=True)
+    recs = [json.loads(p.read_text()) for p in sorted((out / "episodes").glob("*.json"))]
+    v1 = [json.loads(p.read_text()) for p in sorted(Path(own.v1_episodes).glob("*.json"))]
+    by = {(r["condition"], r["task"], r["episode"]): r for r in recs + v1}
+    need = ("I-only", "I-wrong", "empty", "correct")
+    pairs = sorted({(r["task"], r["episode"]) for r in recs if all((c, r["task"], r["episode"]) in by for c in need)})
+    for t, e in pairs:  # pairing must be on identical seeds / init states
+        assert len({(by[(c, t, e)]["seed"], by[(c, t, e)]["init_state_id"]) for c in need}) == 1
+    succ = {c: np.array([float(by[(c, t, e)]["success"]) for t, e in pairs]) for c in need}
+    rows = []
+    for c in need:
+        k, n = int(succ[c].sum()), len(pairs)
+        lo, hi = wilson(k, n)
+        rows.append({"condition": c, "source": "this run" if c.startswith("I-") else "libero_goal_ablation_v1",
+                     "n_episodes": n, "successes": k, "success_rate": k / n, "wilson_lo": lo, "wilson_hi": hi})
+    b1 = paired_bootstrap(succ["I-only"] - succ["empty"])
+    b2 = paired_bootstrap(succ["I-only"] - succ["I-wrong"])
+    dc = paired_bootstrap(succ["I-only"] - succ["correct"])
+    verdict = {
+        "B1": {"pass": b1[1] > 0, "delta": b1[0], "ci95": [b1[1], b1[2]], "rule": "success(I-only) - success(empty, v1) CI lower bound > 0"},
+        "B2": {"pass": b2[1] > 0, "delta": b2[0], "ci95": [b2[1], b2[2]], "rule": "success(I-only) - success(I-wrong) CI lower bound > 0"},
+        "descriptive_I-only_minus_correct_language": {"delta": dc[0], "ci95": [dc[1], dc[2]], "note": "no superiority claim"},
+    }
+    task_rows = []
+    for t in range(N_TASKS):
+        row = {"task": t}
+        for c in need:
+            v = [by[(c, tt, e)]["success"] for tt, e in pairs if tt == t]
+            row[c] = f"{int(sum(v))}/{len(v)}"
+        task_rows.append(row)
+    for name, table in (("summary.csv", rows), ("per_task.csv", task_rows),
+                        ("per_episode.csv", sorted(recs, key=lambda r: (r["task"], r["episode"], r["condition"])))):
+        with (res / name).open("w", newline="") as h:
+            w = csv.DictWriter(h, fieldnames=list(table[0]))
+            w.writeheader()
+            w.writerows(table)
+    videos = {}
+    for c in ("I-only", "I-wrong"):
+        ok = [by[(c, t, e)]["video"] for t, e in pairs if by[(c, t, e)]["success"]]
+        bad = [by[(c, t, e)]["video"] for t, e in pairs if not by[(c, t, e)]["success"]]
+        videos[c] = {"success": ok[0] if ok else None, "failure": bad[0] if bad else None}
+    lines = ["# LIBERO-10 intention-only (prereg v3, Stage 4)", "",
+             f"{len(pairs)} paired (task, episode) units; seeds and init states identical to libero_goal_ablation_v1.", "",
+             "| condition | source | successes / n | rate | Wilson 95% |", "|---|---|---:|---:|---|"]
+    for r in rows:
+        lines.append(f"| {r['condition']} | {r['source']} | {r['successes']} / {r['n_episodes']} | {r['success_rate']:.3f} | "
+                     f"[{r['wilson_lo']:.3f}, {r['wilson_hi']:.3f}] |")
+    lines += ["", "| task | I-only | I-wrong | empty (v1) | correct (v1) |", "|---:|---:|---:|---:|---:|"]
+    lines += [f"| {r['task']} | {r['I-only']} | {r['I-wrong']} | {r['empty']} | {r['correct']} |" for r in task_rows]
+    lines += ["", "## Verdicts (paired bootstrap over (task, episode), B=10000, seed 0)", "",
+              f"- B1 I-only − empty: {b1[0]:+.3f} [{b1[1]:+.3f}, {b1[2]:+.3f}] → {'PASS' if verdict['B1']['pass'] else 'FAIL'}",
+              f"- B2 I-only − I-wrong: {b2[0]:+.3f} [{b2[1]:+.3f}, {b2[2]:+.3f}] → {'PASS' if verdict['B2']['pass'] else 'FAIL'}",
+              f"- descriptive I-only − correct language: {dc[0]:+.3f} [{dc[1]:+.3f}, {dc[2]:+.3f}]",
+              "", "```", json.dumps(videos, indent=2), "```", ""]
+    (res / "summary.md").write_text("\n".join(lines))
+    (res / "config.json").write_text(json.dumps({"episodes_dir": str(out / "episodes"), "v1_episodes": own.v1_episodes,
+                                                 "n_pairs": len(pairs), "verdicts": verdict, "videos": videos}, indent=2))
+    print(json.dumps(verdict, indent=2))
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", required=True)
@@ -230,9 +327,15 @@ def main() -> int:
     ap.add_argument("--probe", type=int, default=0)
     ap.add_argument("--analyze", action="store_true")
     ap.add_argument("--results")
+    ap.add_argument("--conditions", default=",".join(CONDITIONS))
+    ap.add_argument("--task-embeddings", default="/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/task_embeddings.npz")
+    ap.add_argument("--analyze-intention", action="store_true")
+    ap.add_argument("--v1-episodes", default="/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes")
     own, rest = ap.parse_known_args()
     if own.analyze:
         return analyze(own)
+    if own.analyze_intention:
+        return analyze_intention(own)
     return run(own, rest)
 
 
