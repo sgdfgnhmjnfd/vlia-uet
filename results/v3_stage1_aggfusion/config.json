@@ -1,0 +1,120 @@
+{
+  "grid": [
+    "A0|lam=0.0",
+    "A0|lam=0.25",
+    "A0|lam=0.5",
+    "A0|lam=1.0",
+    "A0|lam=2.0",
+    "A0|lam=inf",
+    "A3|lam=0.0",
+    "A3|lam=0.25",
+    "A3|lam=0.5",
+    "A3|lam=1.0",
+    "A3|lam=2.0",
+    "A3|lam=inf",
+    "A4h1|lam=0.0",
+    "A4h1|lam=0.25",
+    "A4h1|lam=0.5",
+    "A4h1|lam=1.0",
+    "A4h1|lam=2.0",
+    "A4h1|lam=inf",
+    "A4h2|lam=0.0",
+    "A4h2|lam=0.25",
+    "A4h2|lam=0.5",
+    "A4h2|lam=1.0",
+    "A4h2|lam=2.0",
+    "A4h2|lam=inf",
+    "A4h4|lam=0.0",
+    "A4h4|lam=0.25",
+    "A4h4|lam=0.5",
+    "A4h4|lam=1.0",
+    "A4h4|lam=2.0",
+    "A4h4|lam=inf"
+  ],
+  "verdicts": {
+    "V1": {
+      "5way_ci_lo_gt0_prefixes": [],
+      "5way_part": false,
+      "MRR_ci_hi_gt0_prefixes": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "MRR_part": true,
+      "pass": false,
+      "rule": "improves on F: 5-way delta CI lo > 0 at >= 2/4 prefixes AND MRR delta CI hi > 0 at 4/4"
+    }
+  },
+  "selected_by_fold": [
+    {
+      "fold": 0,
+      "grid_index": 15,
+      "config": "A4h1|lam=1.0",
+      "train_mean_5way": 0.3836839530332681,
+      "F_train_mean_5way": 0.3703522504892368,
+      "n_tied": 1
+    },
+    {
+      "fold": 1,
+      "grid_index": 23,
+      "config": "A4h2|lam=inf",
+      "train_mean_5way": 0.35868533459895585,
+      "F_train_mean_5way": 0.35168485999050786,
+      "n_tied": 1
+    },
+    {
+      "fold": 2,
+      "grid_index": 22,
+      "config": "A4h2|lam=2.0",
+      "train_mean_5way": 0.35506416131989,
+      "F_train_mean_5way": 0.3475022914757104,
+      "n_tied": 1
+    },
+    {
+      "fold": 3,
+      "grid_index": 22,
+      "config": "A4h2|lam=2.0",
+      "train_mean_5way": 0.3614023591087811,
+      "F_train_mean_5way": 0.35288335517693314,
+      "n_tied": 1
+    },
+    {
+      "fold": 4,
+      "grid_index": 16,
+      "config": "A4h1|lam=2.0",
+      "train_mean_5way": 0.37034936479128855,
+      "F_train_mean_5way": 0.3642241379310345,
+      "n_tied": 1
+    },
+    {
+      "fold": 5,
+      "grid_index": 22,
+      "config": "A4h2|lam=2.0",
+      "train_mean_5way": 0.3717164855072464,
+      "F_train_mean_5way": 0.3619791666666667,
+      "n_tied": 1
+    },
+    {
+      "fold": 6,
+      "grid_index": 22,
+      "config": "A4h2|lam=2.0",
+      "train_mean_5way": 0.380249343832021,
+      "F_train_mean_5way": 0.37106299212598426,
+      "n_tied": 1
+    },
+    {
+      "fold": 7,
+      "grid_index": 22,
+      "config": "A4h2|lam=2.0",
+      "train_mean_5way": 0.36937755565651975,
+      "F_train_mean_5way": 0.35904134484325306,
+      "n_tied": 1
+    }
+  ],
+  "preregistration_sha256": {
+    "results/prereg_v3.md": "35c9b0493fe2fb66f993b769d9e62e08023b2771ef6f7812cefaa1ca54e5415b"
+  },
+  "git_commit": "b222d0201469e04dffa493c5541e86b191efe9d6",
+  "test_split_read": false
+}
