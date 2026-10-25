@@ -207,7 +207,7 @@ EgoIntent videos are not redistributed here. Download them from the original aut
 ```bibtex
 @misc{vlia2026,
   title  = {Is the VLA Backbone Enough to Read Human Goals? Early Goal Disambiguation from Egocentric Video},
-  author = {Trang},
+  author = {Vu Thi Thu Trang},
   year   = {2026},
   note   = {Undergraduate thesis project, VNU University of Engineering and Technology},
   url    = {https://github.com/sgdfgnhmjnfd/vlia-uet}
