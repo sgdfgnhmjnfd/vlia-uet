@@ -496,8 +496,8 @@ Chương này trình bày quá trình xây dựng mô-đun ý định theo thứ
   st/.style={draw,rounded corners=2pt,align=left,font=\footnotesize,text width=5.6cm,inner sep=4pt,fill=white},
   rs/.style={draw,rounded corners=2pt,align=left,font=\footnotesize,text width=6.4cm,inner sep=4pt,fill=blue!5},
   ar/.style={-{Stealth[length=5pt]},thick,gray!70!black}]
-  \node[st] (s0) at (0,0) {\textbf{GĐ 0.} Mô hình WHAT$\to$WHY có cấu trúc, tập thử nhỏ};
-  \node[rs,right=4mm of s0] (r0) {Không hơn mô hình trung bình đơn giản; tập kiểm định quá nhỏ $\Rightarrow$ cần dữ liệu đầy đủ, cách đánh giá chặt hơn};
+  \node[st] (s0) at (0,0) {\textbf{GĐ 0.} Thử nhiều mô hình trên tập nhỏ (8 video); dựng LIBERO};
+  \node[rs,right=4mm of s0] (r0) {Không mô hình nào vượt rõ trung bình 8 khung; 81,5\% lỗi là nhầm bước cùng tác vụ $\Rightarrow$ dùng đủ dữ liệu, đo chọn 1/5 trong cùng video};
   \node[st,below=3mm of s0] (s1) {\textbf{GĐ 1.} Lớp đọc trên đặc trưng SmolVLM2};
   \node[rs,right=4mm of s1] (r1) {Gần bằng đoán mò (1,13--1,19 lần) $\Rightarrow$ backbone VLA không đủ, cần mô hình đã liên kết ảnh với chữ};
   \node[st,below=3mm of s1] (s2) {\textbf{GĐ 2.} SigLIP dùng nguyên, không huấn luyện};
@@ -517,17 +517,59 @@ Chương này trình bày quá trình xây dựng mô-đun ý định theo thứ
 \end{figure}
 
 % ---------------------------------------------------------------------
-\section{Giai đoạn 0: Khảo sát ban đầu với mô hình có cấu trúc}
+\section{Giai đoạn 0: Thử nghiệm ban đầu trên tập nhỏ}
 \label{sec:stage0}
 
-\textbf{Câu hỏi.} Nếu mô hình học đoán hành động con (WHAT) trước, rồi dùng nó để đoán mục đích (WHY), thì có tốt hơn đoán thẳng mục đích không?
+Trước khi tập trung hẳn vào bài toán đoán ý định, đồ án đi theo kế hoạch ban đầu: vừa xây bộ dự đoán ý định, vừa chuẩn bị thí nghiệm trên robot (LIBERO). Giai đoạn này gồm nhiều bước nhỏ. Mỗi bước trả lời một câu hỏi và loại bớt một hướng. Mục này ghi lại các bước đó vì chúng giải thích vì sao các giai đoạn sau được thiết kế như vậy.
 
-\textbf{Cách làm.} Đồ án bắt đầu trên một tập thử nghiệm nhỏ của EgoIntent (556 bước để huấn luyện, 215 bước để kiểm định), với đặc trưng khung hình của SmolVLM2. Nhiều mô hình đã được thử: đoán thẳng WHY; thêm nhánh phụ đoán WHAT và NEXT; cho dự đoán WHAT đi vào đường suy luận WHY; thêm mẫu âm khó trong cùng tác vụ; và một bộ xếp hạng lại nhỏ phía sau. Mô hình đơn giản nhất để so sánh là lấy trung bình 8 khung rồi qua một mạng hai lớp.
+\textbf{Thiết lập chung.} Tập thử gồm 8 video EgoIntent: 6 video trong nhà (556 bước) để huấn luyện và 2 video ngoài trời (215 bước) để kiểm định, không có video nào nằm ở cả hai phía. Mỗi khung hình được mã hóa bằng SmolVLM2 (vector 960 chiều). Mô hình học cách đưa video về gần câu mục đích đúng. Thước đo là MRR khi xếp hạng mục đích đúng trong toàn bộ các câu mục đích của tập kiểm định; xếp hạng ngẫu nhiên cho MRR 0,0420. Mọi số trong mục này đều đo trên cùng 215 bước kiểm định đó.
 
-\textbf{Kết quả.} Mô hình trung bình đơn giản đạt MRR toàn tập 0,0589 ở 8 khung (mức ngẫu nhiên 0,0422). Các mô hình có cấu trúc phức tạp hơn \textit{không vượt rõ} mức này. Hai vấn đề khiến kết quả khó tin cậy: tập kiểm định chỉ có 215 bước từ 2 video, và mọi lựa chọn (số epoch, trọng số các nhánh) đều được làm trên chính tập đó.
+\textbf{Bước 0.1: Cách học.} Bản đầu tiên chỉ ép vector dự đoán gần với câu mục đích đúng (hàm mất mát cosine). Độ tương đồng cosine đạt 0,795, nghe có vẻ tốt, nhưng MRR chỉ 0,0282, \textit{thấp hơn} xếp hạng ngẫu nhiên: mô hình trả về gần như cùng một vector cho mọi video. Đồ án đổi sang học tương phản (đẩy câu đúng lại gần, đẩy câu sai ra xa), và từ đây MRR vượt mức ngẫu nhiên.
+
+\textbf{Bước 0.2: Đầu vào nào.} Thử ảnh, tên tác vụ, lịch sử các bước trước, và các tổ hợp (4 hạt giống). Chỉ dùng ảnh đạt MRR $0{,}0540 \pm 0{,}0017$. Dùng tất cả đạt cao nhất ($0{,}0607 \pm 0{,}0020$), nhưng lịch sử bước lấy từ nhãn do người ghi, robot thật không có. Đồ án giữ \textbf{chỉ dùng ảnh}.
+
+\textbf{Bước 0.3: Có cần mô hình theo thời gian không.} Cùng một hạt giống, lấy trung bình các khung đạt 0,0542, cao hơn chú ý theo thời gian (0,0516) và Transformer (0,0408, gần mức ngẫu nhiên vì học thuộc tập nhỏ). Trên 3 hạt giống với 8 khung, lấy trung bình đạt $0{,}0589$, vẫn cao hơn GRU ($0{,}052$) và trung bình kèm độ thay đổi giữa các khung ($0{,}048$). Đồ án giữ \textbf{lấy trung bình các khung}.
+
+\textbf{Bước 0.4: Học thêm WHAT và NEXT.} Thêm nhánh phụ đoán hành động hiện tại (WHAT) và bước tiếp theo (NEXT). Ở hạt giống 0, MRR tăng lên 0,0571; nhưng trên 3 hạt giống thì trung bình $0{,}0551$, ngang với chỉ học WHY ($0{,}0556$). Giảm trọng số nhánh phụ cũng không đổi ($0{,}0551$). Lợi ích ở một hạt giống là do may mắn.
+
+\textbf{Bước 0.5: Cho WHAT dẫn đường cho WHY.} Thay vì chỉ học WHAT bên cạnh, đưa dự đoán WHAT vào thẳng đường tính WHY. Bảng~\ref{tab:stage0} cho thấy từng cải tiến nhỏ: dẫn đường bằng WHAT, thêm mẫu âm khó cùng tác vụ, và một bộ xếp hạng lại nhỏ huấn luyện sau khi đóng băng mô hình chính. Cấu hình cuối đạt $0{,}0551$, cao hơn đoán thẳng WHY khoảng 16\%. Nếu cho mô hình biết WHAT đúng (gian lận, chỉ để chẩn đoán) thì MRR lên $0{,}1055$: thông tin về hành động có ích nếu đoán được nó chính xác. Hơn mười biến thể khác (WHAT mạnh hơn, chưng cất từ mô hình biết WHAT đúng, cổng theo độ tin cậy, huấn luyện chung hai đầu ra) đều không tốt hơn.
+
+\textbf{Bước 0.6: Học từ cặp video góc nhìn thứ nhất và thứ ba.} Trên ENIGMA-360 \citep{ragusa2026enigma360}, mô hình học ghép đúng đoạn video góc nhìn thứ nhất với đoạn góc nhìn thứ ba (MRR ghép cặp 0,118). Nhưng dùng mô hình này làm điểm khởi đầu cho WHY lại cho MRR 0,0345, thấp hơn khởi tạo ngẫu nhiên (0,0476). Hướng này bị bỏ.
+
+\begin{table}[ht]
+\centering
+\caption{Giai đoạn 0: các bước chính trên tập thử nhỏ (215 bước kiểm định, 2 video). MRR xếp hạng trong toàn bộ câu mục đích; trung bình $\pm$ độ lệch chuẩn trên 3--4 hạt giống, trừ dòng ghi ``1 hạt giống''.}
+\label{tab:stage0}
+\small
+\begin{tabular}{l l c}
+\toprule
+Bước & Cấu hình & MRR \\
+\midrule
+--- & Xếp hạng ngẫu nhiên & 0,0420 \\
+0.1 & Mất mát cosine (1 hạt giống) & 0,0282 \\
+0.2 & Học tương phản, chỉ ảnh & $0{,}0540 \pm 0{,}0017$ \\
+0.2 & Học tương phản, ảnh + tác vụ + lịch sử (không dùng được trên robot) & $0{,}0607 \pm 0{,}0020$ \\
+0.3 & Trung bình 8 khung & $0{,}0589 \pm 0{,}0016$ \\
+0.3 & Transformer theo thời gian (1 hạt giống) & 0,0408 \\
+0.4 & WHY + WHAT + NEXT & $0{,}0551 \pm 0{,}0044$ \\
+0.5 & Đoán thẳng WHY & $0{,}0475 \pm 0{,}0061$ \\
+0.5 & WHAT dẫn đường cho WHY & $0{,}0518 \pm 0{,}0015$ \\
+0.5 & \quad + mẫu âm khó cùng tác vụ & $0{,}0540 \pm 0{,}0023$ \\
+0.5 & \quad + bộ xếp hạng lại (tốt nhất) & $0{,}0551 \pm 0{,}0009$ \\
+0.5 & Biết trước WHAT đúng (chỉ để chẩn đoán) & $0{,}1055 \pm 0{,}0067$ \\
+0.6 & Khởi tạo từ ghép cặp nhìn thứ nhất--thứ ba & $0{,}0345 \pm 0{,}0004$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Bước 0.7: Mô hình sai ở đâu.} Phân tích lỗi của mô hình trung bình 8 khung: 510 trên 626 lần đoán sai (81,5\%) là chọn nhầm sang mục đích của \textit{một bước khác trong cùng tác vụ}. Mô hình nhận ra người đang làm gì (nhào bột, rửa bát), nhưng không phân biệt được người đang ở bước nào và định làm gì tiếp. Đây chính là phần khó của bài toán, và cũng là phần robot cần.
+
+\textbf{Bước 0.8: Phía robot.} Song song, đồ án dựng thí nghiệm trên LIBERO-10. Khi kiểm tra lại checkpoint, đồ án phát hiện hai lần huấn luyện 25.000 bước đầu tiên (có và không có ý định) đã lưu hành động 6 chiều và thiếu một camera rỗng, trong khi LIBERO dùng 7 chiều. Cả hai lần chạy bị loại. Sau khi sửa và thêm kiểm tra bắt buộc, SmolVLA huấn luyện lại đạt 24/100 lượt thành công trong lần đánh giá chuẩn đầu tiên. Thử 500 bước với ý định ``biết trước'' cho mất mát giảm 3,2\%, nhưng đây chỉ là kiểm tra quá trình học, không phải bằng chứng robot làm tốt hơn. Checkpoint 24\% này là checkpoint được dùng ở giai đoạn 6.
 
 \begin{ketqua}[Kết luận giai đoạn 0]
-Cấu trúc WHAT$\to$WHY không cho lợi ích đo được trên dữ liệu nhỏ. Đồ án quyết định: (i) giữ mô hình đơn giản nhất (trung bình các khung + mạng hai lớp) làm điểm xuất phát; (ii) chuyển sang toàn bộ 2.503 bước với kiểm tra chéo theo khung cảnh (\cref{sec:eval}) để kết quả đáng tin hơn.
+Trên tập nhỏ, không mô hình phức tạp nào vượt rõ cách lấy trung bình 8 khung (0,0589), và tất cả chỉ cao hơn xếp hạng ngẫu nhiên khoảng 1,3--1,4 lần. Ba lý do khiến không thể đi tiếp theo hướng này: (i) tập kiểm định chỉ có 2 video, và mọi lựa chọn đều làm trên chính tập đó; (ii) chênh lệch giữa các cấu hình nhỏ hơn dao động giữa các hạt giống; (iii) 81,5\% lỗi là nhầm bước trong cùng tác vụ, nên xếp hạng trên toàn bộ câu mục đích không đo đúng phần khó.
+
+Theo góp ý của giảng viên hướng dẫn, đồ án tập trung hẳn vào bài toán đoán ý định và đổi cách làm: (i) dùng toàn bộ 2.503 bước với kiểm tra chéo theo khung cảnh và một tập test riêng (\cref{sec:eval}); (ii) thêm phép đo chọn 1 trong 5 mục đích \textit{của cùng video}, nhắm thẳng vào lỗi nhầm bước; (iii) giữ mô hình đơn giản nhất (trung bình các khung) làm điểm xuất phát.
 \end{ketqua}
 
 % ---------------------------------------------------------------------
@@ -861,7 +903,7 @@ Lưu/tải & Lưu và tải lại checkpoint không mất trọng số & Đạt 
 \subsection{SmolVLA phụ thuộc vào câu lệnh đến mức nào}
 \label{sec:libero}
 
-Đồ án huấn luyện lại SmolVLA (không có token ý định) trên LIBERO-10 \citep{liu2023libero} với hành động 7 chiều, 25.000 bước. Sau đó chạy 10 nhiệm vụ $\times$ 10 lượt trong ba điều kiện: \textbf{lệnh đúng}; \textbf{lệnh rỗng}; và \textbf{lệnh sai} (câu lệnh của nhiệm vụ khác). Lượt thứ $e$ của mỗi nhiệm vụ dùng cùng vị trí ban đầu và cùng hạt giống ở cả ba điều kiện; chỉ câu lệnh thay đổi.
+Đồ án huấn luyện lại SmolVLA (không có token ý định) trên LIBERO-10 \citep{liu2023libero} với hành động 7 chiều, 25.000 bước. Đây là checkpoint đạt 24/100 trong lần đánh giá chuẩn ở giai đoạn 0 (\cref{sec:stage0}). Sau đó chạy 10 nhiệm vụ $\times$ 10 lượt trong ba điều kiện: \textbf{lệnh đúng}; \textbf{lệnh rỗng}; và \textbf{lệnh sai} (câu lệnh của nhiệm vụ khác). Lượt thứ $e$ của mỗi nhiệm vụ dùng cùng vị trí ban đầu và cùng hạt giống ở cả ba điều kiện; chỉ câu lệnh thay đổi.
 
 \begin{table}[ht]
 \centering
@@ -879,7 +921,7 @@ Sai (lệnh của nhiệm vụ khác) & 0/100 & 0\% & [0,0\%; 3,7\%] \\
 \end{tabular}
 \end{table}
 
-Theo từng nhiệm vụ, số lượt thành công với lệnh đúng là 0, 1, 3, 7, 1, 3, 3, 0, 0, 1 trên 10. Mọi lượt với lệnh rỗng hoặc sai đều chạy hết giới hạn 520 bước mà không hoàn thành. Lệnh đúng hơn lệnh rỗng $+19$ điểm [$+12$; $+27$].
+Theo từng nhiệm vụ, số lượt thành công với lệnh đúng là 0, 1, 3, 7, 1, 3, 3, 0, 0, 1 trên 10. Mọi lượt với lệnh rỗng hoặc sai đều chạy hết giới hạn 520 bước mà không hoàn thành. Lệnh đúng hơn lệnh rỗng $+19$ điểm [$+12$; $+27$]. Với lệnh đúng, 19/100 thấp hơn 24/100 của lần đánh giá đầu vì lần này cố định vị trí ban đầu và hạt giống cho từng lượt; 24\% vẫn nằm trong khoảng Wilson [12,5\%; 27,8\%].
 
 \begin{ketqua}[Kết luận giai đoạn 6]
 Token ý định đã được cài vào SmolVLA đúng cách và không làm hỏng mô hình gốc. SmolVLA phụ thuộc hoàn toàn vào câu lệnh: bỏ câu lệnh thì robot không làm xong việc nào. Chỗ của câu lệnh vì vậy là nơi cần đưa ý định vào khi người không nói ra; thí nghiệm này là hướng tiếp theo (\cref{sec:future}).
@@ -900,7 +942,7 @@ Token ý định đã được cài vào SmolVLA đúng cách và không làm h�
 \toprule
 GĐ & Cách làm & Kết quả chính & Quyết định \\
 \midrule
-0 & Mô hình WHAT$\to$WHY, tập thử nhỏ & Không hơn mô hình trung bình đơn giản & Dùng toàn bộ dữ liệu, kiểm tra chéo \\
+0 & Nhiều mô hình trên tập nhỏ; sửa lỗi 6 chiều ở LIBERO & Tốt nhất 0,0551--0,0589 MRR (ngẫu nhiên 0,0420); 81,5\% lỗi nhầm bước & Dùng toàn bộ dữ liệu, kiểm tra chéo, chọn 1/5 \\
 1 & Lớp đọc trên SmolVLM2 & MRR gấp 1,13--1,19 lần ngẫu nhiên; chọn 1/5: 21,9--23,0\% & Thử mô hình đã liên kết ảnh--chữ \\
 2 & SigLIP cơ bản, không huấn luyện & Gấp 2,25--2,57 lần; chọn 1/5: 27,5--28,9\% & Bỏ khung cảnh chung, thử bộ mã hóa lớn hơn \\
 3 & Chọn 1 trong 90 cấu hình & Chọn 1/5: 34,1--38,7\%, cùng cấu hình 8/8 lần & Ghi cố định cấu hình \\
@@ -986,6 +1028,9 @@ A.~Marafioti \emph{et al.}, ``SmolVLM: Redefining small and efficient multimodal
 
 \bibitem{huggingface2025smolvlm2}
 O.~Zohar, M.~Farre, A.~Marafioti \emph{et al.}, ``SmolVLM2: Bringing video understanding to every device,'' Hugging Face technical blog, 2025.
+
+\bibitem{ragusa2026enigma360}
+F.~Ragusa, R.~Leonardi, M.~Mazzamuto \emph{et al.}, ``ENIGMA-360: An ego-exo dataset for human behavior understanding in industrial scenarios,'' arXiv:2603.09741, 2026.
 
 \bibitem{liu2023libero}
 B.~Liu, Y.~Zhu, C.~Gao, Y.~Feng, Q.~Liu, Y.~Zhu, and P.~Stone, ``LIBERO: Benchmarking knowledge transfer for lifelong robot learning,'' in \emph{Advances in Neural Information Processing Systems (NeurIPS)}, 2023.

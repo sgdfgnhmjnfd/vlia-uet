@@ -117,6 +117,7 @@ The main metric is \emph{5-way accuracy}: choose $y_i$ among itself and 4 other 
 \toprule
 Stage & Question & Result & Next step \\
 \midrule
+0 & Do structured models help on a small split? & No; 81.5\% of errors are same-task & Full data, same-video 5-way \\
 1 & Is the VLA backbone enough? & 1.13--1.19$\times$ chance MRR & Use aligned encoder \\
 2 & Does zero-shot alignment help? & 5-way 27.5--28.9\% & Remove shared context \\
 3 & Can training-free choices pass 30\%? & 5-way 34.1--38.7\%, same config 8/8 & Freeze, test once \\
@@ -162,8 +163,11 @@ Encoder & $k$ & MRR & MRR / chance & 5-way & 5-way / chance \\
 \end{tabular}
 \end{table}
 
+\subsection{Stage 0: a pilot on a small split}
+On 8 videos (556 training and 215 validation steps, one fixed split) with SmolVLM2 frame features, we tried a range of trained predictors, ranked against all validation goals (random MRR 0.0420). A cosine-only loss collapsed (MRR 0.028, below random); contrastive training with visual input alone gave $0.0540\pm0.0017$. Temporal attention, a Transformer, a GRU and frame deltas all stayed below mean pooling of 8 frames ($0.0589\pm0.0016$). Auxiliary WHAT/NEXT heads gave no gain over 3 seeds; feeding predicted WHAT into the WHY path, with same-task hard negatives and a frozen-base reranker, reached $0.0551\pm0.0009$ (an oracle WHAT reached 0.105, a diagnostic only). Ego--exo pretraining on ENIGMA-360~\cite{ragusa2026enigma360} hurt WHY (0.035 vs.\ 0.048). Most tellingly, 81.5\% of top-1 errors picked a goal from \emph{another step of the same task}. With two validation videos and all choices tuned on them, none of these differences was reliable. We therefore moved to the full data with scene-held-out folds, kept mean pooling as the starting point, and added a 5-way test against same-video goals that targets exactly this confusion. The same pilot surfaced a schema bug in our LIBERO runs (6-d instead of 7-d actions); after the fix, the retrained SmolVLA reached 24/100 in its first standard evaluation, and this checkpoint is the one used in Stage 6.
+
 \subsection{Stage 1: a readout on the VLA backbone}
-\textbf{Method.} Each frame is encoded by frozen SmolVLM2-500M-Video-Instruct (960-d); the first $k$ vectors are mean-pooled and passed through a two-layer MLP (512 hidden units). Targets are a frozen sentence encoder (all-MiniLM-L6-v2~\cite{reimers2019sbert}) or SmolVLM2 text features reduced to 256-d by PCA. Training uses multi-positive InfoNCE ($\tau=0.07$) plus $0.1\times$ a cosine loss, AdamW (lr $10^{-3}$), up to 100 epochs chosen on an inner split of the training scenes, three seeds. Mean pooling is the starting point because, in a pilot on a small split, structured WHAT$\to$WHY models did not beat it.
+\textbf{Method.} Each frame is encoded by frozen SmolVLM2-500M-Video-Instruct (960-d); the first $k$ vectors are mean-pooled and passed through a two-layer MLP (512 hidden units). Targets are a frozen sentence encoder (all-MiniLM-L6-v2~\cite{reimers2019sbert}) or SmolVLM2 text features reduced to 256-d by PCA. Training uses multi-positive InfoNCE ($\tau=0.07$) plus $0.1\times$ a cosine loss, AdamW (lr $10^{-3}$), up to 100 epochs chosen on an inner split of the training scenes, three seeds.
 
 \textbf{Result.} The readout is close to chance (Table~\ref{tab:main}): MRR is 1.13--1.19$\times$ chance and every interval includes 1; 5-way accuracy is 21.9--23.0\% with SmolVLM2 targets. On the original fixed split, validation MRR had looked like 1.7--1.9$\times$ chance, but with epochs selected on that same split; on the held-out test portion the readout's best MRR (0.0314) equals chance (0.0318). Letting SmolVLM2 score each candidate by its own likelihood (no training) gives 23.5--24.6\% 5-way accuracy, above chance but still weak. \emph{The VLA backbone carries little usable goal signal at this data scale}, which leads to Stage 2.
 
@@ -238,6 +242,8 @@ A readout on the VLA's frozen backbone is near chance at reading human goals, wh
 \bibitem{zhai2023siglip} X.~Zhai, B.~Mustafa, A.~Kolesnikov, and L.~Beyer, ``Sigmoid loss for language image pre-training,'' in \emph{Proc. ICCV}, 2023, pp.~11975--11986.
 \bibitem{reimers2019sbert} N.~Reimers and I.~Gurevych, ``Sentence-BERT: Sentence embeddings using Siamese BERT-networks,'' in \emph{Proc. EMNLP-IJCNLP}, 2019, pp.~3982--3992.
 \bibitem{zhang2020mediapipe} F.~Zhang \emph{et al.}, ``MediaPipe Hands: On-device real-time hand tracking,'' arXiv:2006.10214, 2020.
+\bibitem{ragusa2026enigma360} F.~Ragusa, R.~Leonardi, M.~Mazzamuto \emph{et al.}, ``ENIGMA-360: An ego-exo dataset for human behavior understanding in industrial scenarios,'' arXiv:2603.09741, 2026.
+
 \bibitem{liu2023libero} B.~Liu, Y.~Zhu, C.~Gao, Y.~Feng, Q.~Liu, Y.~Zhu, and P.~Stone, ``LIBERO: Benchmarking knowledge transfer for lifelong robot learning,'' in \emph{Proc. NeurIPS}, 2023.
 \end{thebibliography}
 
