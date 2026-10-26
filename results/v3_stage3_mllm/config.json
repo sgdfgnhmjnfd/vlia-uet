@@ -1,0 +1,54 @@
+{
+  "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "why_not_7b": "7B bf16 weights 16.58 GB > 16 GB GPU",
+  "image_long_side": 448,
+  "orders": [
+    "canonical",
+    "reversed"
+  ],
+  "run_info": {
+    "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+    "n_queries": 2503,
+    "stride": 1,
+    "probe": 0,
+    "seconds_per_query": 2.951939437201294,
+    "eta_full_hours": 2.0524178920319
+  },
+  "probe_info": {
+    "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+    "n_queries": 30,
+    "stride": 1,
+    "probe": 30,
+    "seconds_per_query": 3.2115851243336997,
+    "eta_full_hours": 2.232943768390903
+  },
+  "gammas": [
+    0.0,
+    0.25,
+    0.5,
+    1.0,
+    2.0
+  ],
+  "verdicts": {
+    "V3": {
+      "pass": true,
+      "prefixes_lift_ci_lo_gt1": [
+        2,
+        8
+      ],
+      "rule": "MLLM 5-way lift CI lower bound > 1 at both k (fractional tie credit)"
+    },
+    "V4": {
+      "pass": false,
+      "prefixes_5way_delta_ci_lo_gt0": [
+        8
+      ],
+      "rule": "nested fusion: 5-way delta vs F CI lower bound > 0 at both k"
+    }
+  },
+  "preregistration_sha256": {
+    "results/prereg_v3.md": "35c9b0493fe2fb66f993b769d9e62e08023b2771ef6f7812cefaa1ca54e5415b"
+  },
+  "git_commit": "da8f7f4781c01b1331eab9c71fab51b48d9ff176",
+  "test_split_read": false
+}
