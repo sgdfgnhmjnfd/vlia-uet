@@ -25,7 +25,6 @@ venv_env() {  # environment of the original LIBERO training / eval
   SITEPKG=$($VPY -c 'import site; print(site.getsitepackages()[0])')
   export VLIA_ORACLE_ROOT=/media/dhqg/d3/datasets/libero_oracle/v0
   export HF_LEROBOT_HOME=/home/dhqg/.cache/huggingface/lerobot
-  export HF_HUB_OFFLINE=1  # all models are cached; avoid transient hub errors
   export PYTHONPATH="$SITEPKG:$REPO"
 }
 
@@ -82,16 +81,21 @@ if ! $PY -c "import sys; sys.exit(0 if $ETA <= 40 else 1)"; then
 fi
 
 # ---- 4. matched 25k training (resumable) ----
-if [ ! -f $CKPT_DIR/summary.json ]; then
+for attempt in 1 2 3 4 5; do  # retries resume from the latest checkpoint (transient hub/network errors)
+  [ -f $CKPT_DIR/summary.json ] && break
   LAST=$(ls -d $CKPT_DIR/checkpoint_* 2>/dev/null | sort | tail -1)
   RESUME=()
   [ -n "$LAST" ] && RESUME=(--resume "$LAST") && say "resume training from $LAST"
-  say "Stage 4 training start (ETA ${ETA} h)"
-  (venv_env; cd /home/dhqg/lerobot && $VPY $REPO/scripts/train_intention_only_LIBERO7D.py --condition intention_only \
+  say "Stage 4 training start, attempt $attempt (ETA ${ETA} h)"
+  if (venv_env; cd /home/dhqg/lerobot && $VPY $REPO/scripts/train_intention_only_LIBERO7D.py --condition intention_only \
      --output-root $TRAIN_ROOT --steps 25000 --batch-size 32 --save-freq 1000 --log-freq 10 --seed 0 "${RESUME[@]}" \
-     >> $LOG/v3_stage4_train.log 2>&1) || { say "Stage 4 training FAILED"; exit 1; }
-  say "Stage 4 training done"
-fi
+     >> $LOG/v3_stage4_train.log 2>&1); then
+    say "Stage 4 training done"; break
+  fi
+  say "Stage 4 training attempt $attempt FAILED; retry in 120 s"
+  sleep 120
+done
+[ -f $CKPT_DIR/summary.json ] || { say "Stage 4 training FAILED after retries"; exit 1; }
 
 # ---- 5. evaluation + analysis ----
 FINAL=$CKPT_DIR/checkpoint_025000/pretrained_model
