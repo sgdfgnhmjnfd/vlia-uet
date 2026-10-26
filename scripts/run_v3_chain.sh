@@ -25,6 +25,7 @@ venv_env() {  # environment of the original LIBERO training / eval
   SITEPKG=$($VPY -c 'import site; print(site.getsitepackages()[0])')
   export VLIA_ORACLE_ROOT=/media/dhqg/d3/datasets/libero_oracle/v0
   export HF_LEROBOT_HOME=/home/dhqg/.cache/huggingface/lerobot
+  export HF_HUB_OFFLINE=1  # all models are cached; avoid transient hub errors
   export PYTHONPATH="$SITEPKG:$REPO"
 }
 
@@ -37,7 +38,7 @@ copy_processors() {  # same pre/post-processors as the 24% baseline eval
 say "chain start"
 # ---- 1. Stage 3 ----
 until grep -q '"eta_full_hours"' $LOG/v3_stage3_full.log 2>/dev/null; do
-  if ! pgrep -f "scripts/v3_stage3_mllm.py" > /dev/null; then
+  if ! pgrep -f "bin/python scripts/v3_stage3_mllm.py" > /dev/null; then
     say "Stage 3 scoring not running -> (re)start (resumable)"
     (cd $REPO && nohup $PY scripts/v3_stage3_mllm.py >> $LOG/v3_stage3_full.log 2>&1 &)
   fi
