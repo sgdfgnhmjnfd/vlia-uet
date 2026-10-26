@@ -80,7 +80,7 @@ class MLLM:
         return [float(lp[i]) for i in self.letter_ids], int(inputs["input_ids"].shape[1])
 
     def score(self, frames, k, texts):
-        images = [resize448(f) for f in frames[:k]]
+        images = list(frames[:k])  # already resized to 448 px by load_small
         fwd, n_tok = self.letter_logprobs(images, texts)
         rev_lp, _ = self.letter_logprobs(images, texts[::-1])
         rev = rev_lp[::-1]  # back to canonical candidate order
@@ -107,6 +107,11 @@ def donor_of(i, sid, rows):
 
 def run(args) -> int:
     from hoi_utils import sample_exact_video_frames
+
+    def load_small(path):
+        # resize in the worker: keeps 8 x 448 px PIL images instead of full-res
+        # frames in memory (first full run was OOM-killed at ~14 GB RSS)
+        return [resize448(f) for f in sample_exact_video_frames(path)]
 
     rows, sid, vids, texts, cands = rows_and_sets()
     order = sorted(range(len(rows)), key=lambda i: sid[i])
@@ -138,13 +143,13 @@ def run(args) -> int:
             if i in control:
                 need.append(donor_of(i, sid, rows))
         for j in need[:6]:
-            futs.setdefault(j, pool.submit(sample_exact_video_frames, rows[j]["video_path"]))
+            futs.setdefault(j, pool.submit(load_small, rows[j]["video_path"]))
         cursor = 6
         for n_done, i in enumerate(pending, 1):
             while cursor < min(len(need), 2 * n_done + 6):
-                futs.setdefault(need[cursor], pool.submit(sample_exact_video_frames, rows[need[cursor]]["video_path"]))
+                futs.setdefault(need[cursor], pool.submit(load_small, rows[need[cursor]]["video_path"]))
                 cursor += 1
-            futs.setdefault(i, pool.submit(sample_exact_video_frames, rows[i]["video_path"]))
+            futs.setdefault(i, pool.submit(load_small, rows[i]["video_path"]))
             frames = futs.pop(i).result()
             ci = [int(c) for c in cands[i]]
             assert min(ci) >= 0
@@ -154,7 +159,7 @@ def run(args) -> int:
                        "candidate_sample_ids": [sid[c] for c in ci]}
                 if ctrl:
                     d = donor_of(i, sid, rows)
-                    futs.setdefault(d, pool.submit(sample_exact_video_frames, rows[d]["video_path"]))
+                    futs.setdefault(d, pool.submit(load_small, rows[d]["video_path"]))
                     df = futs.pop(d).result()
                     rec["donor_sample_id"] = sid[d]
                     rec.update(m.score(df, k, ctexts))
@@ -163,6 +168,9 @@ def run(args) -> int:
                 tmp = fname(i, k, ctrl).with_suffix(".tmp")
                 tmp.write_text(json.dumps(rec))
                 tmp.replace(fname(i, k, ctrl))
+            upcoming = set(need[need.index(i) + 1:]) if i in need else set()
+            for j in [j for j in futs if j not in upcoming]:
+                futs.pop(j)
             if n_done % 10 == 0 or n_done == len(pending):
                 el = time.time() - t0
                 print(f"queries {n_done}/{len(pending)} elapsed {el:.0f}s s/query {el / n_done:.2f} "
