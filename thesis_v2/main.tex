@@ -1595,8 +1595,46 @@ Kết quả này có ý nghĩa thực tế cho robot. Một mô hình tổng qu�
 
 \textbf{Kết quả.} Chỉ từ $k$ khung đầu của bước hiện tại, F chọn đúng bước tiếp theo 27,8\%, 28,9\%, 30,0\% và 32,1\% ở $k=2,4,6,8$, đều hơn đoán mò rõ (cận dưới của khoảng tin cậy gấp 1,22--1,45 lần đoán mò), và tăng đều theo số khung đã xem. Không trừ khung cảnh (C0) chỉ đạt 26,7--28,0\%, nên bước trừ khung cảnh vẫn có ích ở nhãn này. Mức trần là 38,4\%, nên ở $k=8$ mô-đun đã đi được khoảng 2/3 quãng từ đoán mò đến mức trần. Con số này cùng mức với kết quả đoán hành động sau khoảng một bước ở giai đoạn 7 (33,5\% ở 2,6 giây), dù hai phép đo dùng nhãn khác nhau.
 
+\subsection{So với các cách làm cơ sở trong tài liệu}
+\label{sec:baselines}
+
+\textbf{Câu hỏi.} Kết quả đoán trước ở giai đoạn 7 và phần NEXT ở trên đều hơn đoán mò. Nhưng các bài về dự đoán hành động sắp tới luôn so với các cách làm cơ sở đơn giản \citep{damen2018epic,furnari2021rulstm}, vì một mô hình có thể ``đoán trước'' tốt chỉ nhờ nhận ra việc đang làm, khi bước sau thường giống bước hiện tại. Phần này kiểm tra xem mô-đun có làm được hơn thế không.
+
+\textbf{Cách làm.} Dùng đúng các thời điểm, các nhãn đích và 5 câu ứng viên của giai đoạn 7 và phần NEXT. Đồ án so mô-đun ý định (F) với ba cách làm cơ sở. Không cách nào được huấn luyện hay chọn tham số.
+\begin{itemize}
+  \item \textbf{Không xem video:} chọn câu ứng viên gần nhất với ``câu trung bình'' của các video khác. Cách này đo xem bản thân các câu có thiên lệch nào giúp đoán đúng mà không cần nhìn hay không.
+  \item \textbf{Nhận ra rồi chép:} dùng chính F để nhận ra bước \textit{hiện tại} (câu gần nhất với đoạn đang xem trong các câu của video), rồi chọn câu ứng viên có nghĩa gần nhất với câu đó. Đây là giả định ``người sẽ tiếp tục làm việc đang làm''.
+  \item \textbf{Chép nhãn đúng:} như trên nhưng dùng câu \textit{đúng} của bước hiện tại. Đây là mức tốt nhất mà mọi cách ``nhận ra rồi chép'' có thể đạt, chỉ dùng để chẩn đoán.
+\end{itemize}
+Trước khi chạy, F được tính lại và cho đúng các con số của giai đoạn 7 và phần NEXT.
+
+\begin{table}[ht]
+\centering
+\caption{Giai đoạn 8e: mô-đun ý định (F) so với các cách làm cơ sở, chọn đúng trong 5 câu cùng video (\%, đoán mò 20\%). Cột cuối: hiệu F trừ ``Nhận ra rồi chép'' [CI 95\%], ghép cặp trên cùng các thời điểm.}
+\label{tab:baselines}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llccccc}
+\toprule
+Bài toán & Mức & F & Không xem video & Nhận ra rồi chép & Chép nhãn đúng & F $-$ Nhận ra rồi chép \\
+\midrule
+Hành động sau $H$ & 0,6 s ($H=2$)   & \textbf{38,0} & 19,9 & 36,3 & 85,4 & $+1{,}7$ [$+0{,}6$; $+2{,}9$] \\
+(WHAT, gđ.~7)     & 2,6 s ($H=8$)   & \textbf{33,5} & 19,7 & 32,2 & 41,9 & $+1{,}4$ [$+0{,}3$; $+2{,}4$] \\
+                  & 5,1 s ($H=16$)  & 29,1 & 19,9 & 28,7 & 35,8 & $+0{,}4$ [$-0{,}8$; $+1{,}6$] \\
+                  & 7,7 s ($H=24$)  & 27,7 & 20,2 & 28,0 & 30,4 & $-0{,}3$ [$-1{,}3$; $+0{,}7$] \\
+                  & 20,5 s ($H=64$) & 24,0 & 20,1 & 24,6 & 26,2 & $-0{,}6$ [$-1{,}4$; $+0{,}3$] \\
+\midrule
+Bước tiếp theo    & $k=2$ & 27,8 & 19,5 & 27,6 & 38,6 & $+0{,}2$ [$-1{,}8$; $+2{,}2$] \\
+(NEXT)            & $k=8$ & 32,1 & 19,5 & 31,0 & 38,6 & $+1{,}1$ [$-0{,}3$; $+2{,}7$] \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\textbf{Kết quả.} \Cref{tab:baselines} cho thấy ba điều. \textit{Thứ nhất}, không xem video chỉ đạt 19--20\%, đúng mức đoán mò, nên các câu ứng viên không có thiên lệch nào giúp đoán đúng; F hơn cách này rõ ở mọi mức (từ $+18{,}2$ điểm ở 0,6 s đến $+3{,}9$ điểm ở 20,5 s, khoảng tin cậy đều trên 0). \textit{Thứ hai}, F gần như bằng cách nhận ra rồi chép. F chỉ hơn rõ ở $H=2$ và $H=8$ (khoảng 1,5 điểm); ở các mức còn lại và ở NEXT, hai cách không phân biệt được. Nghĩa là phần lớn khả năng ``đoán trước'' của mô-đun đến từ việc nhận ra người đang làm gì, chứ chưa dùng hiểu biết về thứ tự các bước. \textit{Thứ ba}, nếu biết đúng bước hiện tại thì chỉ cần chép cũng đạt 41,9\% ở 2,6 s và 38,6\% ở NEXT, cao hơn F 6--8 điểm. Khâu nhận ra hiện tại vì vậy là nút thắt: cải thiện nó sẽ cải thiện trực tiếp phần đoán trước. Ở mức xa (20 s), cả ba cách có xem video đều chỉ còn 24--26\%.
+
+Kết quả này khớp với nhận định của các bài về dự đoán dài hạn: muốn hơn cách ``chép hiện tại'' thì cần dùng thứ tự các bước của tác vụ, ví dụ cho một mô hình ngôn ngữ đọc chuỗi hành động đã thấy như AntGPT \citep{zhao2024antgpt}. Đồ án đã chuẩn bị phép so này (\cref{sec:future}).
+
 \begin{ketqua}[Kết luận giai đoạn 8]
-Cấu hình F của giai đoạn 3 gần như đã là tốt nhất cho phép chọn 1 trong 5 câu cùng video: chú trọng khung gần nhất, huấn luyện thêm lớp hiệu chỉnh hay dùng Qwen2.5-VL-3B đều không tăng rõ ở mọi $k$, và huấn luyện thêm còn làm kém đi 2--4 điểm. Có hai cải tiến dùng được. Thứ nhất, cộng thêm một nửa điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\% mà không ảnh hưởng chọn 1/5, khắc phục điểm yếu đã nêu ở \cref{sec:discussion}. Thứ hai, khi đã xem hết bước, kết hợp F với Qwen tăng thêm 2,2 điểm. Ngoài ra, cùng mô-đun đoán được bước tiếp theo tốt hơn đoán mò (32,1\% ở $k=8$), nên có thể dùng cho robot chuẩn bị trước bước kế tiếp.
+Cấu hình F của giai đoạn 3 gần như đã là tốt nhất cho phép chọn 1 trong 5 câu cùng video: chú trọng khung gần nhất, huấn luyện thêm lớp hiệu chỉnh hay dùng Qwen2.5-VL-3B đều không tăng rõ ở mọi $k$, và huấn luyện thêm còn làm kém đi 2--4 điểm. Có hai cải tiến dùng được. Thứ nhất, cộng thêm một nửa điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\% mà không ảnh hưởng chọn 1/5, khắc phục điểm yếu đã nêu ở \cref{sec:discussion}. Thứ hai, khi đã xem hết bước, kết hợp F với Qwen tăng thêm 2,2 điểm. Ngoài ra, cùng mô-đun đoán được bước tiếp theo tốt hơn đoán mò (32,1\% ở $k=8$). Tuy vậy, so với cách làm cơ sở ``nhận ra bước hiện tại rồi chép'', mô-đun chỉ hơn khoảng 1,5 điểm khi đoán trước dưới 3 giây và ngang bằng khi đoán xa hơn: khả năng đoán trước hiện nay chủ yếu đến từ việc nhận ra việc đang làm. Muốn đoán trước thật sự, mô-đun cần thêm hiểu biết về thứ tự các bước.
 \end{ketqua}
 
 % ---------------------------------------------------------------------
@@ -1622,7 +1660,7 @@ GĐ & Cách làm & Kết quả chính & Quyết định \\
 5 & Trả lời khi đủ chắc & $+$6,9--7,9 điểm ở 50\% độ phủ & Nối vào robot \\
 6 & Token ý định trong SmolVLA; LIBERO & 7/7 kiểm thử đạt; lệnh đúng 19/100, rỗng 0/100 & Thay câu lệnh bằng ý định \\
 7 & Đoán hành động sau $H$ khung, $H$ từ 0,6 đến 20,5 s & 38,0\% (0,6 s) xuống 27,7\% (7,7 s), rồi đi ngang; độ chênh gần như không đổi & Ngưỡng hành động phải tính cả khoảng đoán trước \\
-8 & Gộp khung, lớp hiệu chỉnh, Qwen2.5-VL-3B, đoán NEXT & Chọn 1/5 không tăng rõ; hiệu chỉnh $-$2,0--4,0 điểm; MRR $+$10--21\%; NEXT 27,8--32,1\% & Giữ F, thêm điểm không trừ khung cảnh khi xếp hạng toàn tập \\
+8 & Gộp khung, lớp hiệu chỉnh, Qwen2.5-VL-3B, đoán NEXT, so với cách làm cơ sở & Chọn 1/5 không tăng rõ; hiệu chỉnh $-$2,0--4,0 điểm; MRR $+$10--21\%; NEXT 27,8--32,1\%; đoán trước gần bằng ``nhận ra rồi chép'' & Giữ F, thêm điểm không trừ khung cảnh khi xếp hạng toàn tập \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1696,7 +1734,7 @@ Tình huống C1 và C2 đã có cơ chế xử lý dựa trên độ chênh đi
   \item \textbf{Cho robot cơ chế biết khi nào nên hỏi lại.} Chỉ trả lời một nửa số trường hợp chắc nhất làm độ chính xác tăng 6,9--7,9 điểm; chỉ trả lời 20\% thì đạt 53--61\%.
   \item \textbf{Đo được SmolVLA phụ thuộc hoàn toàn vào thông tin mục tiêu} (19/100 với câu lệnh đúng so với 0/100 khi bỏ câu lệnh), và cài đặt token ý định vào SmolVLA vượt qua 7/7 kiểm thử ở ba kích thước ý định.
   \item \textbf{Đo được robot đoán trước được bao xa.} Chỉ từ 8 khung gần nhất, mô-đun chọn đúng hành động sắp tới 38,0\% khi đoán trước 0,6 giây và 27,7\% khi đoán trước 7,7 giây; từ đó đến 15 giây, các mức không phân biệt được (so sánh ghép cặp). Độ chắc chắn gần như không đổi theo khoảng đoán trước, nên robot cần tính cả khoảng đoán trước khi quyết định hành động.
-  \item \textbf{Kiểm tra được giới hạn của cấu hình đề xuất.} Huấn luyện thêm một lớp hiệu chỉnh với mẫu âm cùng video làm kém đi 2,0--4,0 điểm; Qwen2.5-VL-3B không huấn luyện đạt 30,8\% ($k=2$) và 39,8\% ($k=8$), không hơn rõ cấu hình đề xuất. Cộng thêm điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\% mà không ảnh hưởng chọn 1/5, và cùng mô-đun đoán đúng bước tiếp theo 27,8--32,1\% (đoán mò 20\%).
+  \item \textbf{Kiểm tra được giới hạn của cấu hình đề xuất.} Huấn luyện thêm một lớp hiệu chỉnh với mẫu âm cùng video làm kém đi 2,0--4,0 điểm; Qwen2.5-VL-3B không huấn luyện đạt 30,8\% ($k=2$) và 39,8\% ($k=8$), không hơn rõ cấu hình đề xuất. Cộng thêm điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\% mà không ảnh hưởng chọn 1/5, và cùng mô-đun đoán đúng bước tiếp theo 27,8--32,1\% (đoán mò 20\%). So với các cách làm cơ sở của bài toán dự đoán hành động, mô-đun hơn rõ cách không xem video nhưng gần bằng cách nhận ra bước hiện tại rồi chép sang, nên khâu nhận ra hiện tại là nút thắt.
 \end{enumerate}
 
 \mucnho{Đánh giá kết quả đạt được}
@@ -1730,6 +1768,7 @@ Nếu token ý định đúng cho tỉ lệ thành công cao hơn hẳn cả khi
 \textbf{Song song, cải thiện mô-đun ý định} (chỉ bằng kiểm tra chéo, không dùng lại tập test riêng):
 \begin{itemize}
   \item Làm cho độ chắc chắn biết theo khoảng đoán trước, vì giai đoạn 7 cho thấy độ chênh điểm gần như không đổi khi phải đoán xa: ví dụ ngưỡng hành động riêng cho từng khoảng đoán trước, hoặc chỉ hành động trong khoảng 7--8 giây đầu.
+  \item Dùng thứ tự các bước để vượt cách ``nhận ra rồi chép'' (\cref{sec:baselines}): cho một mô hình ngôn ngữ đọc chuỗi hành động đã nhận ra rồi chọn bước tiếp theo, theo kiểu AntGPT \citep{zhao2024antgpt}. Mã cho phép so này đã sẵn sàng và sẽ chạy khi GPU rảnh.
   \item Cho mô-đun xem đoạn lịch sử dài hơn 8 khung khi đoán bước tiếp theo, vì giai đoạn 8 cho thấy độ chính xác đoán NEXT còn cách mức trần khoảng 6 điểm ở $k=8$.
   \item Dùng kết hợp F với mô hình ngôn ngữ--thị giác (giai đoạn 8) như một bước kiểm tra lại khi đã xem hết bước, và thử bản lớn hơn khi có GPU đủ bộ nhớ.
   \item Không đi tiếp hướng huấn luyện thêm trên SigLIP với dữ liệu hiện có: giai đoạn 0 và 8 đều cho thấy nó làm kém đi; chỉ quay lại khi có thêm dữ liệu.
