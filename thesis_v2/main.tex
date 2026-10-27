@@ -181,7 +181,7 @@
 {\fontsize{12}{15}\selectfont\setstretch{1.3}
 \textbf{Tóm tắt:} Robot cộng tác làm việc cạnh con người sẽ hữu ích hơn nếu tự đoán được người đó \textit{định làm gì}, thay vì chờ một câu lệnh. Các mô hình Thị giác--Ngôn ngữ--Hành động (VLA) như SmolVLA chỉ biết mục tiêu qua câu lệnh: trên bộ mô phỏng LIBERO-10, SmolVLA thành công 19/100 lượt với câu lệnh đúng nhưng 0/100 lượt khi câu lệnh bị bỏ trống. Đồ án đề xuất kiến trúc VLIA (Vision--Language--Intention--Action), gồm một mô-đun ý định xem vài khung hình đầu của video góc nhìn thứ nhất, chọn ra mục đích của bước thao tác người đang làm, rồi đưa mục đích đó vào SmolVLA dưới dạng một token ý định.
 
-Mô-đun ý định được xây dựng qua các giai đoạn thực nghiệm nối tiếp trên bộ dữ liệu EgoIntent. Thử nghiệm ban đầu trên tập nhỏ cho thấy các mô hình huấn luyện có cấu trúc phức tạp không vượt được cách lấy trung bình khung hình, và 81,5\% lỗi là nhầm giữa các bước trong cùng một tác vụ. Trên 2.503 bước thao tác (27 video, 13 khung cảnh) với kiểm tra chéo theo khung cảnh, lớp đọc huấn luyện trên đặc trưng của chính backbone SmolVLM2 chỉ gần bằng đoán mò. Bộ mã hóa ảnh--văn bản SigLIP dùng nguyên, không huấn luyện, đạt 27,5--28,9\% khi chọn đúng mục đích trong 5 câu của cùng video (đoán mò 20\%). Dùng SigLIP cỡ lớn và trừ đi phần khung cảnh chung của các bước trước, độ chính xác đạt 34,1--38,7\%, và cấu hình này được chọn giống nhau ở cả 8 lần kiểm tra chéo. Trên tập test riêng chỉ chạy một lần, cấu hình đề xuất đạt 30,2\% so với 21,4\% của SigLIP cơ bản khi xem 8 khung hình. Nếu chỉ trả lời một nửa số trường hợp chắc chắn nhất, độ chính xác tăng thêm 6,9--7,9 điểm, nên robot biết khi nào cần hỏi lại. Khi đoán hành động sắp tới chỉ từ 8 khung gần nhất, độ chính xác giảm từ 38,0\% (đoán trước 0,6 giây) rồi đi ngang ở khoảng 27\% từ 7--8 giây, nhưng độ chắc chắn của mô-đun gần như không đổi theo khoảng đoán trước. Phía robot, token ý định đã được cài vào SmolVLA và vượt qua mọi kiểm thử cài đặt. Bước tiếp theo là huấn luyện SmolVLA với câu lệnh luôn để trống để kiểm tra token ý định có thay được câu lệnh hay không.
+Mô-đun ý định được xây dựng qua các giai đoạn thực nghiệm nối tiếp trên bộ dữ liệu EgoIntent. Thử nghiệm ban đầu trên tập nhỏ cho thấy các mô hình huấn luyện có cấu trúc phức tạp không vượt được cách lấy trung bình khung hình, và 81,5\% lỗi là nhầm giữa các bước trong cùng một tác vụ. Trên 2.503 bước thao tác (27 video, 13 khung cảnh) với kiểm tra chéo theo khung cảnh, lớp đọc huấn luyện trên đặc trưng của chính backbone SmolVLM2 chỉ gần bằng đoán mò. Bộ mã hóa ảnh--văn bản SigLIP dùng nguyên, không huấn luyện, đạt 27,5--28,9\% khi chọn đúng mục đích trong 5 câu của cùng video (đoán mò 20\%). Dùng SigLIP cỡ lớn và trừ đi phần khung cảnh chung của các bước trước, độ chính xác đạt 34,1--38,7\%, và cấu hình này được chọn giống nhau ở cả 8 lần kiểm tra chéo. Trên tập test riêng chỉ chạy một lần, cấu hình đề xuất đạt 30,2\% so với 21,4\% của SigLIP cơ bản khi xem 8 khung hình. Nếu chỉ trả lời một nửa số trường hợp chắc chắn nhất, độ chính xác tăng thêm 6,9--7,9 điểm, nên robot biết khi nào cần hỏi lại. Khi đoán hành động sắp tới chỉ từ 8 khung gần nhất, độ chính xác giảm từ 38,0\% (đoán trước 0,6 giây) rồi đi ngang ở khoảng 27\% từ 7--8 giây, nhưng độ chắc chắn của mô-đun gần như không đổi theo khoảng đoán trước. Các thử nghiệm cải thiện thêm cho thấy cấu hình đề xuất gần như đã là tốt nhất: huấn luyện thêm một lớp hiệu chỉnh làm kém đi 2--4 điểm, mô hình Qwen2.5-VL-3B không huấn luyện chỉ đạt ngang (39,8\% so với 38,7\% ở 8 khung), còn cộng thêm điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\%. Phía robot, token ý định đã được cài vào SmolVLA và vượt qua mọi kiểm thử cài đặt. Bước tiếp theo là huấn luyện SmolVLA với câu lệnh luôn để trống để kiểm tra token ý định có thay được câu lệnh hay không.
 
 \vspace{6pt}
 \noindent\textbf{\textit{Từ khóa:}} \textit{robot cộng tác, dự đoán ý định, mô hình VLA, video góc nhìn thứ nhất.}\par}
@@ -319,13 +319,14 @@ Cách tự nhiên để bù vào chỗ câu lệnh là cho robot nhìn người 
 
 \subsection{Câu hỏi nghiên cứu}
 
-Từ hai vấn đề trên, đồ án đặt ra năm câu hỏi, mỗi câu được trả lời bởi một hoặc nhiều giai đoạn thực nghiệm ở \cref{chap:thucnghiem}:
+Từ hai vấn đề trên, đồ án đặt ra sáu câu hỏi, mỗi câu được trả lời bởi một hoặc nhiều giai đoạn thực nghiệm ở \cref{chap:thucnghiem}:
 \begin{enumerate}
   \item[\textbf{Q1.}] Đặc trưng của backbone VLA (SmolVLM2) có đủ để đọc mục đích của người từ video góc nhìn thứ nhất không? (giai đoạn 0--1)
   \item[\textbf{Q2.}] Khi mới thấy $k$ khung hình đầu, có thể chọn đúng mục đích giữa các bước \textit{cùng video} đến mức nào, và cấu hình nào làm được điều đó tốt nhất? (giai đoạn 2--4)
   \item[\textbf{Q3.}] Độ chắc chắn của mô-đun ý định có cho biết lúc nào nên hỏi lại người không? (giai đoạn 5)
   \item[\textbf{Q4.}] SmolVLA phụ thuộc vào thông tin mục tiêu đến mức nào, và có thể đưa ý định vào SmolVLA mà không phá vỡ mô hình gốc không? (giai đoạn 6)
   \item[\textbf{Q5.}] Chỉ từ đoạn video gần nhất, mô-đun ý định đoán trước được hành động sắp tới xa đến mức nào, và độ chắc chắn của nó thay đổi ra sao theo khoảng đoán trước? (giai đoạn 7)
+  \item[\textbf{Q6.}] Cấu hình đã chốt có cải thiện được thêm bằng cách gộp khung khác, huấn luyện nhẹ hay một mô hình ngôn ngữ--thị giác lớn không, và có đoán được bước tiếp theo không? (giai đoạn 8)
 \end{enumerate}
 
 \section{Các nghiên cứu liên quan}
@@ -1522,10 +1523,87 @@ Chỉ từ 8 khung gần nhất, mô-đun ý định đoán được hành độ
 \end{ketqua}
 
 % ---------------------------------------------------------------------
+\section{Giai đoạn 8: Thử cải thiện cấu hình đã chốt}
+\label{sec:stage8}
+
+\textbf{Câu hỏi.} Giai đoạn 3 chốt một cấu hình, gọi tắt là F: SigLIP lớn, lấy trung bình các khung, trừ khung cảnh của các bước trước (C2) và mẫu câu T1. Giai đoạn này kiểm tra xem F đã là cách tốt nhất trong tầm dữ liệu hiện có chưa, bằng bốn hướng cải thiện mà các giai đoạn trước gợi ra: (a) chú trọng các khung gần nhất và kết hợp điểm có với không trừ khung cảnh; (b) huấn luyện nhẹ một lớp hiệu chỉnh với mẫu âm là các câu của cùng video; (c) dùng một mô hình ngôn ngữ--thị giác lớn làm bài trắc nghiệm; và (d) đoán thẳng bước tiếp theo (nhãn NEXT).
+
+\textbf{Quy tắc chung.} Tiêu chí đạt hay không được viết ra \textit{trước} khi có con số. Mọi thí nghiệm chỉ dùng 27 video phát triển với cùng 8 lần kiểm tra chéo theo khung cảnh như giai đoạn 3; tập test riêng không được dùng lại. Trước khi chạy, F được tính lại và phải cho \textit{đúng} 853, 874, 907 và 969 lần chọn đúng (trên 2.503 bước) ở $k=2,4,6,8$, trùng với giai đoạn 3; nếu lệch thì dừng. Một cách làm được coi là \textit{tốt hơn F} khi hiệu chọn 1/5 so với F có khoảng tin cậy nằm hẳn trên 0 ở ít nhất 2 trong 4 giá trị $k$, và MRR toàn tập không kém rõ F ở cả 4 giá trị $k$. Mọi hiệu đều tính ghép cặp trên cùng các bước, với khoảng tin cậy bootstrap theo video (\cref{sec:stats}).
+
+\subsection{Chú trọng khung gần nhất và kết hợp hai cách tính điểm}
+
+\textbf{Cách làm.} Đồ án thử ba cách gộp $k$ khung: lấy trung bình như F; chỉ lấy khung cuối; và trung bình có trọng số, trong đó khung càng gần khung cuối càng nặng, trọng số giảm $e$ lần sau mỗi $h$ khung ($h=1,2,4$). Điểm của mỗi câu ứng viên là $s=\cos_{\text{C0}}+\lambda\cos_{\text{C2}}$, tức điểm không trừ khung cảnh cộng với $\lambda$ lần điểm có trừ khung cảnh, với $\lambda\in\{0;\,0{,}25;\,0{,}5;\,1;\,2;\,\infty\}$ ($\lambda=\infty$ là chỉ dùng C2 như F). Tổng cộng 30 tổ hợp. Ở mỗi lần kiểm tra chéo, tổ hợp được chọn chỉ trên các khung cảnh huấn luyện, rồi mới chấm trên khung cảnh để riêng.
+
+\textbf{Kết quả.} \Cref{tab:stage8a} cho thấy chọn 1/5 gần như không đổi: hiệu so với F nằm trong khoảng $-0{,}4$ đến $+0{,}7$ điểm, và mọi khoảng tin cậy đều chứa 0. Ngược lại, MRR toàn tập tăng rõ ở cả 4 giá trị $k$, từ 10\% ($k=2$) đến 21\% ($k=8$) so với F, với mọi khoảng tin cậy nằm trên 0; ở $k=8$, chọn 1/10 cũng tăng 1,5 điểm [0,2; 3,0]. Tổ hợp được chọn khá ổn định: trọng số nghiêng về khung gần nhất với $h=2$ và $\lambda=2$ ở 5/8 lần, các lần còn lại là tổ hợp lân cận. Nghĩa là cách tốt nhất vẫn dựa chủ yếu vào điểm có trừ khung cảnh, nhưng cộng thêm một nửa điểm không trừ khung cảnh. Phần cộng thêm này trả lại thông tin ``đang ở khung cảnh nào'' mà bước trừ khung cảnh đã bỏ đi, đúng với nhận định ở \cref{sec:discussion}. Thí nghiệm này được chạy lại bằng một đoạn mã viết độc lập và cho đúng các con số trên.
+
+\begin{table}[ht]
+\centering
+\caption{Giai đoạn 8a: cấu hình F so với tổ hợp gộp khung và kết hợp điểm được chọn trong mỗi lần kiểm tra chéo (2.503 bước, 27 video). Hiệu tính bằng điểm phần trăm (chọn 1/5) hoặc đơn vị MRR.}
+\label{tab:stage8a}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{ccccccc}
+\toprule
+& \multicolumn{3}{c}{Chọn 1/5 (\%)} & \multicolumn{3}{c}{MRR toàn tập} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+$k$ & F & Chọn lại & Hiệu [CI 95\%] & F & Chọn lại & Hiệu [CI 95\%] \\
+\midrule
+2 & 34,1 & 34,1 & $+0{,}0$ [$-0{,}9$; $+0{,}9$] & 0,0747 & 0,0825 & $+0{,}0078$ [$+0{,}0032$; $+0{,}0123$] \\
+4 & 34,9 & 35,6 & $+0{,}7$ [$-0{,}4$; $+1{,}8$] & 0,0777 & 0,0898 & $+0{,}0121$ [$+0{,}0068$; $+0{,}0178$] \\
+6 & 36,2 & 36,8 & $+0{,}5$ [$-1{,}0$; $+2{,}0$] & 0,0825 & 0,0941 & $+0{,}0116$ [$+0{,}0065$; $+0{,}0165$] \\
+8 & 38,7 & 38,3 & $-0{,}4$ [$-2{,}1$; $+1{,}0$] & 0,0850 & 0,1032 & $+0{,}0182$ [$+0{,}0122$; $+0{,}0242$] \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\subsection{Huấn luyện nhẹ một lớp hiệu chỉnh}
+
+\textbf{Cách làm.} Trên vector truy vấn của F, đồ án thêm một lớp hiệu chỉnh $z'=\mathrm{norm}(z+Wz)$, với $W$ khởi tạo bằng 0, nên lúc đầu lớp này không làm thay đổi gì. Phần chữ giữ nguyên. Lớp được huấn luyện bằng học tương phản: câu WHY đúng là mẫu dương; mẫu âm là mọi câu WHY khác của \textit{cùng video} (mẫu âm khó \citep{robinson2021hard}) cộng 64 câu ngẫu nhiên của video khác. Mức điều chuẩn (weight decay $10^{-2}$, $10^{-1}$, $1$) và số vòng huấn luyện (5 hoặc 20) được chọn trên một phần khung cảnh huấn luyện để riêng; kết quả lấy trung bình 3 hạt giống. Để kiểm tra vai trò của mẫu âm khó, đồ án huấn luyện thêm một bản chỉ dùng mẫu âm ngẫu nhiên.
+
+\textbf{Kết quả.} Lớp hiệu chỉnh làm \textit{kém đi} ở mọi $k$: chọn 1/5 đạt 31,9\%, 33,0\%, 33,8\% và 34,7\% ở $k=2,4,6,8$, thấp hơn F từ 2,0 đến 4,0 điểm, với mọi khoảng tin cậy nằm hẳn dưới 0 (ví dụ $k=8$: $-4{,}0$ [$-6{,}3$; $-1{,}7$]). MRR toàn tập cũng giảm 0,016--0,018. Bản chỉ dùng mẫu âm ngẫu nhiên kém tương tự ($-2{,}5$ đến $-3{,}7$ điểm). Đáng chú ý, ở cả 8/8 lần, cách chọn tham số đều chọn mức điều chuẩn mạnh nhất và số vòng ít nhất, tức là lớp hiệu chỉnh càng ít thay đổi SigLIP thì càng tốt. Đây là cùng bài học với giai đoạn 0: với khoảng hai nghìn bước và gần như mỗi bước một câu WHY riêng, huấn luyện thêm chỉ làm mô hình học thuộc dữ liệu huấn luyện.
+
+\subsection{Mô hình ngôn ngữ--thị giác lớn làm bài trắc nghiệm}
+
+\textbf{Cách làm.} Đồ án cho Qwen2.5-VL-3B-Instruct \citep{bai2025qwen25vl} xem $k$ khung đầu của bước (cạnh dài 448 điểm ảnh) cùng 5 câu ứng viên, và hỏi câu nào là mục đích của người. Mô hình được dùng nguyên, không huấn luyện, với một câu hỏi cố định, không thử nhiều cách hỏi. Mỗi câu hỏi được hỏi hai lần với thứ tự ứng viên đảo ngược rồi lấy trung bình, để tránh mô hình thiên về một vị trí. Bản 7B không được dùng vì cần 16,58 GB, lớn hơn bộ nhớ 16 GB của GPU. Vì mỗi câu hỏi mất khoảng 3 giây, đồ án chỉ chạy $k=2$ và $k=8$. Để chắc mô hình thật sự nhìn ảnh, đồ án chạy thêm một phép đối chứng: giữ nguyên 5 câu nhưng đưa khung hình của một khung cảnh khác. Cuối cùng, đồ án thử kết hợp điểm của F và của Qwen sau khi chuẩn hoá, $s=z(F)+\gamma\,z(\text{Qwen})$, với $\gamma$ chọn trong từng lần kiểm tra chéo.
+
+\textbf{Kết quả.} \Cref{tab:stage8c} cho thấy Qwen2.5-VL-3B tốt hơn rõ đoán mò ở cả hai $k$ (gấp 1,54 và 1,99 lần, khoảng tin cậy trên 1). Khi đưa khung hình của khung cảnh khác, độ chính xác tụt từ 39,8\% xuống 11,7\%, nên mô hình thật sự dùng ảnh. Tuy vậy, so với F trên cùng các bước, Qwen kém hơn khi mới thấy 2 khung ($-3{,}3$ điểm, khoảng tin cậy dưới 0) và chỉ ngang F khi thấy đủ 8 khung. Kết hợp hai điểm ($\gamma=0{,}5$ ở 7/8 lần) tăng 2,2 điểm ở $k=8$, nhưng không tăng ở $k=2$, nên không đạt tiêu chí đã đặt trước (cần tăng ở cả hai $k$).
+
+\begin{table}[ht]
+\centering
+\caption{Giai đoạn 8c: Qwen2.5-VL-3B làm bài trắc nghiệm 5 câu cùng video, so với F trên cùng 2.503 bước (đoán mò 20\%).}
+\label{tab:stage8c}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+& \multicolumn{2}{c}{$k=2$} & \multicolumn{2}{c}{$k=8$} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Cách làm & Chọn 1/5 (\%) & Hiệu so với F & Chọn 1/5 (\%) & Hiệu so với F \\
+\midrule
+F (giai đoạn 3) & 34,1 & --- & 38,7 & --- \\
+Qwen2.5-VL-3B & 30,8 & $-3{,}3$ [$-6{,}0$; $-0{,}3$] & 39,8 & $+1{,}1$ [$-2{,}6$; $+5{,}1$] \\
+F $+$ Qwen & 34,2 & $+0{,}1$ [$-1{,}8$; $+2{,}2$] & \textbf{40,9} & $+2{,}2$ [$+0{,}1$; $+4{,}4$] \\
+\midrule
+Qwen, khung cảnh khác (đối chứng) & --- & --- & 11,7 & --- \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+Kết quả này có ý nghĩa thực tế cho robot. Một mô hình tổng quát 3 tỉ tham số chưa từng thấy EgoIntent chỉ đạt ngang F, trong khi F chỉ cần mã hoá ảnh một lần bằng SigLIP và so với các câu đã mã hoá sẵn. Ưu thế của F rõ nhất khi mới thấy ít khung, đúng là lúc robot cần đoán sớm. Qwen có ích nhất như một nguồn kiểm tra thêm khi đã xem hết bước, nhưng 3 giây cho mỗi lần hỏi là quá chậm để cập nhật liên tục.
+
+\subsection{Đoán bước tiếp theo}
+
+\textbf{Cách làm.} Nhãn là câu NEXT (\textit{observed\_next\_step}) của bước đang xem, tức bước người sẽ làm tiếp. Ứng viên là 5 câu NEXT khác nhau của cùng video, dùng đúng F, không có tham số nào được chọn lại. Mức trần là khi mô-đun được xem 8 khung của chính bước tiếp theo. Một kiểm tra phụ cho thấy câu NEXT của một bước chỉ trùng nguyên văn câu WHAT của bước kế sau ở 1,9\% số bước, nên đây là một nhãn riêng chứ không phải chép lại WHAT.
+
+\textbf{Kết quả.} Chỉ từ $k$ khung đầu của bước hiện tại, F chọn đúng bước tiếp theo 27,8\%, 28,9\%, 30,0\% và 32,1\% ở $k=2,4,6,8$, đều hơn đoán mò rõ (cận dưới của khoảng tin cậy gấp 1,22--1,45 lần đoán mò), và tăng đều theo số khung đã xem. Không trừ khung cảnh (C0) chỉ đạt 26,7--28,0\%, nên bước trừ khung cảnh vẫn có ích ở nhãn này. Mức trần là 38,4\%, nên ở $k=8$ mô-đun đã đi được khoảng 2/3 quãng từ đoán mò đến mức trần. Con số này cùng mức với kết quả đoán hành động sau khoảng một bước ở giai đoạn 7 (33,5\% ở 2,6 giây), dù hai phép đo dùng nhãn khác nhau.
+
+\begin{ketqua}[Kết luận giai đoạn 8]
+Cấu hình F của giai đoạn 3 gần như đã là tốt nhất cho phép chọn 1 trong 5 câu cùng video: chú trọng khung gần nhất, huấn luyện thêm lớp hiệu chỉnh hay dùng Qwen2.5-VL-3B đều không tăng rõ ở mọi $k$, và huấn luyện thêm còn làm kém đi 2--4 điểm. Có hai cải tiến dùng được. Thứ nhất, cộng thêm một nửa điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\% mà không ảnh hưởng chọn 1/5, khắc phục điểm yếu đã nêu ở \cref{sec:discussion}. Thứ hai, khi đã xem hết bước, kết hợp F với Qwen tăng thêm 2,2 điểm. Ngoài ra, cùng mô-đun đoán được bước tiếp theo tốt hơn đoán mò (32,1\% ở $k=8$), nên có thể dùng cho robot chuẩn bị trước bước kế tiếp.
+\end{ketqua}
+
+% ---------------------------------------------------------------------
 \section{Tổng hợp các giai đoạn}
 \label{sec:summary}
 
-\Cref{tab:summary} tóm tắt các giai đoạn. Mạch chung: tự huấn luyện trên dữ liệu nhỏ không đủ (giai đoạn 0--1); dùng mô hình đã liên kết sẵn ảnh với chữ cho tín hiệu rõ (giai đoạn 2); trừ phần khung cảnh chung và dùng bộ mã hóa lớn hơn vượt ngưỡng 30\% (giai đoạn 3) và giữ được ưu thế trên video mới (giai đoạn 4); độ chắc chắn cho robot biết khi nào hỏi lại (giai đoạn 5); chỗ cần đưa ý định vào robot là chỗ của câu lệnh (giai đoạn 6); và từ 8 khung gần nhất, mô-đun đoán trước được hành động sắp tới, với phần có ích nhất trong khoảng 7--8 giây (giai đoạn 7).
+\Cref{tab:summary} tóm tắt các giai đoạn. Mạch chung: tự huấn luyện trên dữ liệu nhỏ không đủ (giai đoạn 0--1); dùng mô hình đã liên kết sẵn ảnh với chữ cho tín hiệu rõ (giai đoạn 2); trừ phần khung cảnh chung và dùng bộ mã hóa lớn hơn vượt ngưỡng 30\% (giai đoạn 3) và giữ được ưu thế trên video mới (giai đoạn 4); độ chắc chắn cho robot biết khi nào hỏi lại (giai đoạn 5); chỗ cần đưa ý định vào robot là chỗ của câu lệnh (giai đoạn 6); từ 8 khung gần nhất, mô-đun đoán trước được hành động sắp tới, với phần có ích nhất trong khoảng 7--8 giây (giai đoạn 7); và các cách cải thiện thêm không vượt rõ cấu hình đã chốt, trừ việc kết hợp hai cách tính điểm giúp xếp hạng toàn tập (giai đoạn 8).
 
 \begin{table}[ht]
 \centering
@@ -1544,6 +1622,7 @@ GĐ & Cách làm & Kết quả chính & Quyết định \\
 5 & Trả lời khi đủ chắc & $+$6,9--7,9 điểm ở 50\% độ phủ & Nối vào robot \\
 6 & Token ý định trong SmolVLA; LIBERO & 7/7 kiểm thử đạt; lệnh đúng 19/100, rỗng 0/100 & Thay câu lệnh bằng ý định \\
 7 & Đoán hành động sau $H$ khung, $H$ từ 0,6 đến 20,5 s & 38,0\% (0,6 s) xuống 27,7\% (7,7 s), rồi đi ngang; độ chênh gần như không đổi & Ngưỡng hành động phải tính cả khoảng đoán trước \\
+8 & Gộp khung, lớp hiệu chỉnh, Qwen2.5-VL-3B, đoán NEXT & Chọn 1/5 không tăng rõ; hiệu chỉnh $-$2,0--4,0 điểm; MRR $+$10--21\%; NEXT 27,8--32,1\% & Giữ F, thêm điểm không trừ khung cảnh khi xếp hạng toàn tập \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1561,7 +1640,7 @@ Giai đoạn 0 và 1 cho cùng một kết quả theo hai cách khác nhau: trê
 
 Bằng chứng ở giai đoạn 3 cho thấy bước trừ khung cảnh của các bước trước là một trong hai thành phần chính của cấu hình đề xuất: SigLIP lớn không có bước này chỉ đạt 31,1--33,0\% (so với 34,1--38,7\%), còn SigLIP cơ bản có thêm bước này đạt 29,1--32,1\% (so với 27,5--28,9\%). Điều này khớp với phân tích lỗi: ở giai đoạn 0, 81,5\% lỗi là nhầm bước trong cùng tác vụ; ở giai đoạn 2, SigLIP cơ bản nhận đúng hoạt động nhào bột nhưng xếp câu đúng xuống cuối. Khi mọi khung của video có chung bàn, chậu, tay và bột, phần chung này lấn át phần khác biệt giữa các bước; trừ nó đi làm phần khác biệt nổi lên, đúng như phân tích về thành phần chung trong không gian biểu diễn \citep{liang2022mindgap}.
 
-Cái giá là thông tin ``đang ở khung cảnh nào'' cũng bị trừ đi. Khi xếp hạng giữa câu của nhiều video (MRR toàn tập), thông tin này có ích, nên MRR toàn tập của cấu hình đề xuất không tăng rõ ở kiểm tra chéo và giảm trên tập test riêng. Với robot cộng tác, robot đã biết mình đang ở đâu và người đang làm hoạt động gì; câu hỏi khó là bước nào. Vì vậy đồ án ưu tiên phép chọn 1 trong 5 cùng video, và coi việc kết hợp điểm có và không trừ khung cảnh là hướng cải thiện (\cref{sec:future}).
+Cái giá là thông tin ``đang ở khung cảnh nào'' cũng bị trừ đi. Khi xếp hạng giữa câu của nhiều video (MRR toàn tập), thông tin này có ích, nên MRR toàn tập của cấu hình đề xuất không tăng rõ ở kiểm tra chéo và giảm trên tập test riêng. Với robot cộng tác, robot đã biết mình đang ở đâu và người đang làm hoạt động gì; câu hỏi khó là bước nào. Vì vậy đồ án ưu tiên phép chọn 1 trong 5 cùng video. Giai đoạn 8 cho thấy cái giá này lấy lại được: cộng thêm một nửa điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\% mà chọn 1/5 không đổi (\cref{tab:stage8a}).
 
 \subsection{Kết quả trên tập test riêng}
 
@@ -1609,7 +1688,7 @@ Tình huống C1 và C2 đã có cơ chế xử lý dựa trên độ chênh đi
 
 \mucnho{Kết quả chính}
 
-Đồ án nghiên cứu cách tăng cường khả năng hiểu ý định người dùng cho robot cộng tác dựa trên mô hình VLA, theo hướng bổ sung cho SmolVLA một mô-đun ý định đọc video góc nhìn thứ nhất của người. Qua tám giai đoạn thực nghiệm nối tiếp, đồ án đạt được các kết quả sau:
+Đồ án nghiên cứu cách tăng cường khả năng hiểu ý định người dùng cho robot cộng tác dựa trên mô hình VLA, theo hướng bổ sung cho SmolVLA một mô-đun ý định đọc video góc nhìn thứ nhất của người. Qua chín giai đoạn thực nghiệm nối tiếp, đồ án đạt được các kết quả sau:
 \begin{enumerate}
   \item \textbf{Xác định được giới hạn của cách tiếp cận huấn luyện trên dữ liệu nhỏ.} Trên tập thử 8 video, hơn mười cấu hình huấn luyện (học tương phản, mô hình theo thời gian, học phụ WHAT/NEXT, dẫn đường bằng WHAT, học từ hai góc nhìn) đều không vượt rõ cách lấy trung bình 8 khung; 81,5\% lỗi là nhầm bước trong cùng tác vụ. Kết quả này định hình cách đánh giá của các giai đoạn sau.
   \item \textbf{Chỉ ra rằng backbone của VLA không đủ để đọc ý định.} Lớp đọc huấn luyện trên đặc trưng SmolVLM2 chỉ gấp 1,13--1,19 lần mức ngẫu nhiên khi kiểm tra chéo theo khung cảnh, với khoảng tin cậy chứa mức ngẫu nhiên.
@@ -1617,6 +1696,7 @@ Tình huống C1 và C2 đã có cơ chế xử lý dựa trên độ chênh đi
   \item \textbf{Cho robot cơ chế biết khi nào nên hỏi lại.} Chỉ trả lời một nửa số trường hợp chắc nhất làm độ chính xác tăng 6,9--7,9 điểm; chỉ trả lời 20\% thì đạt 53--61\%.
   \item \textbf{Đo được SmolVLA phụ thuộc hoàn toàn vào thông tin mục tiêu} (19/100 với câu lệnh đúng so với 0/100 khi bỏ câu lệnh), và cài đặt token ý định vào SmolVLA vượt qua 7/7 kiểm thử ở ba kích thước ý định.
   \item \textbf{Đo được robot đoán trước được bao xa.} Chỉ từ 8 khung gần nhất, mô-đun chọn đúng hành động sắp tới 38,0\% khi đoán trước 0,6 giây và 27,7\% khi đoán trước 7,7 giây; từ đó đến 15 giây, các mức không phân biệt được (so sánh ghép cặp). Độ chắc chắn gần như không đổi theo khoảng đoán trước, nên robot cần tính cả khoảng đoán trước khi quyết định hành động.
+  \item \textbf{Kiểm tra được giới hạn của cấu hình đề xuất.} Huấn luyện thêm một lớp hiệu chỉnh với mẫu âm cùng video làm kém đi 2,0--4,0 điểm; Qwen2.5-VL-3B không huấn luyện đạt 30,8\% ($k=2$) và 39,8\% ($k=8$), không hơn rõ cấu hình đề xuất. Cộng thêm điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\% mà không ảnh hưởng chọn 1/5, và cùng mô-đun đoán đúng bước tiếp theo 27,8--32,1\% (đoán mò 20\%).
 \end{enumerate}
 
 \mucnho{Đánh giá kết quả đạt được}
@@ -1629,7 +1709,8 @@ So với mục tiêu ở \cref{sec:muctieu}, mục tiêu thứ nhất (xây dự
   \item \textbf{Chưa đo tác động lên hành vi robot.} Token ý định chưa được huấn luyện cùng SmolVLA, nên chưa biết nó có thay được câu lệnh hay không.
   \item \textbf{Độ chính xác còn thấp.} 30\% trên tập test riêng nghĩa là robot vẫn chọn sai phần lớn các trường hợp nếu trả lời mọi lúc.
   \item \textbf{Dữ liệu nhỏ.} 27 video, 13 khung cảnh để phát triển và 4 video để test, nên khoảng tin cậy trên tập test còn rộng.
-  \item \textbf{Xếp hạng toàn tập chưa tốt hơn.} Bước trừ khung cảnh chung giúp phân biệt các bước cùng video nhưng làm giảm MRR toàn tập trên tập test.
+  \item \textbf{Xếp hạng toàn tập.} Bước trừ khung cảnh chung giúp phân biệt các bước cùng video nhưng làm giảm MRR toàn tập trên tập test. Cách kết hợp hai điểm ở giai đoạn 8 khắc phục được điều này khi kiểm tra chéo, nhưng chưa được kiểm tra trên một tập test mới vì tập test riêng đã dùng hết.
+  \item \textbf{Chỉ thử một mô hình ngôn ngữ--thị giác nhỏ.} Qwen2.5-VL-3B với một câu hỏi cố định, ở hai giá trị $k$; bản 7B không vừa GPU 16 GB.
   \item \textbf{Câu đồng nghĩa bị tính là sai.} 44,5\% số bước có một câu khác trong cùng video gần như cùng nghĩa, nên điểm tuyệt đối bị chặn trên.
   \item \textbf{Thí nghiệm LIBERO nhỏ.} Một checkpoint, 10 lượt mỗi nhiệm vụ, trong mô phỏng.
   \item \textbf{Thời gian trong giai đoạn 7 là xấp xỉ.} Dòng thời gian được dựng từ 8 khung mỗi bước, nên khoảng cách giữa hai khung phụ thuộc độ dài của từng bước; các khoảng trống giữa hai bước liền nhau (nếu có) không được tính.
@@ -1649,11 +1730,9 @@ Nếu token ý định đúng cho tỉ lệ thành công cao hơn hẳn cả khi
 \textbf{Song song, cải thiện mô-đun ý định} (chỉ bằng kiểm tra chéo, không dùng lại tập test riêng):
 \begin{itemize}
   \item Làm cho độ chắc chắn biết theo khoảng đoán trước, vì giai đoạn 7 cho thấy độ chênh điểm gần như không đổi khi phải đoán xa: ví dụ ngưỡng hành động riêng cho từng khoảng đoán trước, hoặc chỉ hành động trong khoảng 7--8 giây đầu.
-  \item Dùng nhãn NEXT có sẵn trong EgoIntent \citep{egointent2026} để đoán trực tiếp bước kế tiếp, và cho mô-đun xem đoạn lịch sử dài hơn 8 khung.
-  \item Chú trọng hơn vào các khung gần nhất, vì nhóm tác giả EgoIntent nhận thấy khung cuối thường mang nhiều thông tin hơn cả đoạn \citep{egointent2026}.
-  \item Kết hợp điểm có và không trừ khung cảnh chung, để giữ được thông tin ``đang ở khung cảnh nào''.
-  \item Huấn luyện nhẹ một lớp hiệu chỉnh trên SigLIP với mẫu âm là các câu của cùng video \citep{robinson2021hard}.
-  \item So sánh với một mô hình ngôn ngữ--thị giác lớn (Qwen2.5-VL \citep{bai2025qwen25vl}) để biết mức trần.
+  \item Cho mô-đun xem đoạn lịch sử dài hơn 8 khung khi đoán bước tiếp theo, vì giai đoạn 8 cho thấy độ chính xác đoán NEXT còn cách mức trần khoảng 6 điểm ở $k=8$.
+  \item Dùng kết hợp F với mô hình ngôn ngữ--thị giác (giai đoạn 8) như một bước kiểm tra lại khi đã xem hết bước, và thử bản lớn hơn khi có GPU đủ bộ nhớ.
+  \item Không đi tiếp hướng huấn luyện thêm trên SigLIP với dữ liệu hiện có: giai đoạn 0 và 8 đều cho thấy nó làm kém đi; chỉ quay lại khi có thêm dữ liệu.
 \end{itemize}
 
 \textbf{Dữ liệu tự thu.} Đồ án đã thiết kế một bộ dữ liệu nhỏ theo kịch bản ``trà chiều cùng robot'' (mời robot vào bàn, chọn cốc, chia bánh, sắp xếp bàn, đổi ý giữa chừng, dọn dẹp). Mỗi lần quay, người thực hiện bốc thăm một mục tiêu bí mật; các mục tiêu khác nhau mở đầu bằng cùng một động tác, và mục tiêu không được nói ra. Bộ dữ liệu này sẽ là tập test độc lập mới, và là bước đệm để đánh giá trên robot UR5. \TODO{Số người tham gia và số video đã quay, nếu có.}
