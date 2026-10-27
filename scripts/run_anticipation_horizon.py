@@ -199,12 +199,12 @@ def selective_accuracy(hits: np.ndarray, margin: np.ndarray, coverage: float) ->
 # I/O
 # ----------------------------------------------------------------------
 
-def encode_texts(encoder: str, texts: list[str], batch_size: int = 32) -> np.ndarray:
+def encode_texts(encoder: str, texts: list[str], batch_size: int = 32, device: str | None = None) -> np.ndarray:
     import torch
     import torch.nn.functional as F
     from transformers import AutoModel, AutoProcessor
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device(device or ("cuda" if torch.cuda.is_available() else "cpu"))
     processor = AutoProcessor.from_pretrained(encoder, token=False)
     model = AutoModel.from_pretrained(encoder, token=False).to(device).eval()
     out = []
