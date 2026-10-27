@@ -339,6 +339,8 @@ RT-1 \citep{brohan2022rt1} cho thấy một Transformer đa nhiệm vụ huấn 
 
 Trong điều khiển chia sẻ và tương tác vật lý người--robot, ý định thường được suy ra từ lực, quỹ đạo hoặc tín hiệu sinh học, rồi dùng để phân xử quyền điều khiển giữa người và robot \citep{losey2018review}. Các phương pháp này giả định một tập mục tiêu nhỏ, định nghĩa trước (ví dụ vị trí đích trên bàn), và thường cần cảm biến tiếp xúc. Đồ án quan tâm tới trường hợp khác: robot quan sát người bằng camera khi người đang làm một hoạt động có nhiều bước, và mục tiêu là một câu mô tả mục đích viết tự do.
 
+Một hướng gần khác là \textit{dự đoán chuyển động của người} để robot phối hợp. ManiCast \citep{kedia2023manicast} học dự đoán quỹ đạo tay và cơ thể người trong khoảng ngắn phía trước, huấn luyện bộ dự đoán theo chi phí của bộ lập kế hoạch robot, rồi dùng dự đoán đó để lập kế hoạch trong các tác vụ như khuấy cùng nồi, trao đồ vật và cùng dọn bàn. Đầu ra của hướng này là \textit{quỹ đạo liên tục} trong không gian, phù hợp để tránh va chạm và phối hợp chuyển động tức thời. Đồ án đi theo hướng bổ sung: đầu ra là \textit{mục đích ngữ nghĩa} của bước thao tác dưới dạng một câu, đưa vào đúng chỗ của câu lệnh trong mô hình VLA. Hai loại dự đoán trả lời hai câu hỏi khác nhau, ``tay người sẽ đi tới đâu'' và ``người làm việc này để làm gì'', nên có thể dùng cùng nhau trong một hệ thống cộng tác.
+
 \subsection{Video góc nhìn thứ nhất và dự đoán hành động}
 
 \textit{Video góc nhìn thứ nhất} (egocentric video) được quay từ camera gắn trên đầu hoặc ngực người thực hiện, nên thấy đúng bàn tay, vật đang cầm và vùng làm việc. EPIC-KITCHENS \citep{damen2018epic} và Ego4D \citep{grauman2022ego4d} là hai bộ dữ liệu lớn đã thúc đẩy hướng nghiên cứu này, với các bài toán như nhận dạng hành động, dự đoán hành động sắp tới và dự đoán dài hạn.
@@ -1569,6 +1571,27 @@ Trên tập test riêng, cả cấu hình đề xuất lẫn cấu hình cơ b�
 
 Độ chính xác 30\% nghĩa là nếu trả lời mọi lúc, robot vẫn chọn sai phần lớn các trường hợp. Giai đoạn 5 cho thấy cách dùng thực tế hơn: robot chỉ hành động khi độ chênh đủ lớn, và chờ thêm hoặc hỏi lại trong các trường hợp còn lại. Ở 20\% độ phủ, độ chính xác đạt 53--61\%; ở 50\% độ phủ, tăng 6,9--7,9 điểm so với trả lời mọi lúc. Điểm tin cậy chỉ hữu ích khi bộ mã hóa đủ tốt: với cấu hình cơ bản, mức tăng tương ứng chỉ 2,6--3,5 điểm. Nói cách khác, cải thiện mô-đun ý định không chỉ tăng độ chính xác mà còn làm robot biết mình sai khi nào. Giai đoạn 7 đặt giới hạn cho điều này: độ chênh điểm cho biết lựa chọn nào chắc hơn \textit{ở cùng một khoảng đoán trước}, nhưng không cho biết robot đang đoán quá xa. Với robot thật, điều này gợi ý chỉ dựa vào dự đoán trong khoảng 7--8 giây tới, và cập nhật liên tục khi có thêm khung hình mới.
 
+\Cref{tab:cases} gom các kết quả trên thành bốn tình huống mà robot cộng tác sẽ gặp, cùng cách hệ thống nên xử lý và bằng chứng đã có cho từng tình huống.
+
+\begin{table}[ht]
+\centering
+\caption{Bốn tình huống ý định, cách xử lý đề xuất và bằng chứng trong đồ án (chọn 1 trong 5 câu cùng video, 27 video phát triển).}
+\label{tab:cases}
+\small
+\begin{tabularx}{\linewidth}{>{\raggedright}p{2.3cm} >{\raggedright}p{3.4cm} >{\raggedright}p{2.9cm} >{\raggedright\arraybackslash}X}
+\toprule
+Tình huống & Dấu hiệu & Robot nên & Bằng chứng \\
+\midrule
+C1. Rõ ràng & Độ chênh điểm cao (20\% trường hợp chắc nhất) & Hành động theo ý định đã chọn & Đúng 53,3--60,9\%, so với 34,1--38,7\% khi trả lời mọi lúc (\cref{tab:selective}) \\
+C2. Mơ hồ & Độ chênh thấp; câu gần nghĩa với bước khác & Chờ thêm khung hình hoặc hỏi lại người & Nửa ít chắc nhất chỉ đúng khoảng 27--32\%; 44,5\% số bước có câu gần cùng nghĩa trong cùng video \\
+C3. Ý định sai & Mục tiêu đưa vào robot không khớp việc người đang làm & Không hành động; cần cơ chế phát hiện và sửa & Đổi khung hình sang video khác: 39,6\% rơi về 18,8\%; SmolVLA với lệnh của nhiệm vụ khác: 0/100 lượt hoàn thành nhiệm vụ đúng (\cref{tab:libero}) \\
+C4. Đoán xa hoặc người đổi ý & Hành động cần đoán còn ở xa phía trước & Chỉ tin dự đoán trong khoảng 7--8 giây tới và cập nhật liên tục & Độ chính xác giảm từ 38,0\% (0,6 s) xuống 24,0\% (20,5 s) nhưng độ chênh gần như không đổi (\cref{tab:horizon}); trường hợp người đổi ý giữa chừng chưa được đo \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Tình huống C1 và C2 đã có cơ chế xử lý dựa trên độ chênh điểm. C3 và C4 thì chưa: độ chênh điểm không cho biết mục tiêu đã sai hay đang đoán quá xa. Đây là hai điểm cần giải quyết trước khi dùng mô-đun ý định trên robot thật (\cref{sec:future}).
+
 \subsection{Những yếu tố có thể ảnh hưởng tới kết luận}
 
 \begin{itemize}
@@ -1804,6 +1827,9 @@ K. Grauman, A. Westbury, L. Torresani, et al., ``Ego-Exo4D: Understanding skille
 
 \bibitem{holtzman2021surface}
 A. Holtzman, P. West, V. Shwartz, Y. Choi, L. Zettlemoyer, ``Surface form competition: Why the highest probability answer isn't always right'', \emph{Proceedings of EMNLP}, 2021, pp. 7038--7051.
+
+\bibitem{kedia2023manicast}
+K. Kedia, P. Dan, A. Bhardwaj, S. Choudhury, ``ManiCast: Collaborative manipulation with cost-aware human forecasting'', \emph{Conference on Robot Learning (CoRL)}, 2023.
 
 \bibitem{khosla2020supcon}
 P. Khosla, P. Teterwak, C. Wang, et al., ``Supervised contrastive learning'', \emph{Advances in Neural Information Processing Systems (NeurIPS)}, 2020.
