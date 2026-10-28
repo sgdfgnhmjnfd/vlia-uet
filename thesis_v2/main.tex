@@ -181,7 +181,7 @@
 {\fontsize{12}{15}\selectfont\setstretch{1.3}
 \textbf{Tóm tắt:} Robot cộng tác làm việc cạnh con người sẽ hữu ích hơn nếu tự đoán được người đó \textit{định làm gì}, thay vì chờ một câu lệnh. Các mô hình Thị giác--Ngôn ngữ--Hành động (VLA) như SmolVLA chỉ biết mục tiêu qua câu lệnh: trên bộ mô phỏng LIBERO-10, SmolVLA thành công 19/100 lượt với câu lệnh đúng nhưng 0/100 lượt khi câu lệnh bị bỏ trống. Đồ án đề xuất kiến trúc VLIA (Vision--Language--Intention--Action), gồm một mô-đun ý định xem vài khung hình đầu của video góc nhìn thứ nhất, chọn ra mục đích của bước thao tác người đang làm, rồi đưa mục đích đó vào SmolVLA dưới dạng một token ý định.
 
-Mô-đun ý định được xây dựng qua các giai đoạn thực nghiệm nối tiếp trên bộ dữ liệu EgoIntent. Thử nghiệm ban đầu trên tập nhỏ cho thấy các mô hình huấn luyện có cấu trúc phức tạp không vượt được cách lấy trung bình khung hình, và 81,5\% lỗi là nhầm giữa các bước trong cùng một tác vụ. Trên 2.503 bước thao tác (27 video, 13 khung cảnh) với kiểm tra chéo theo khung cảnh, lớp đọc huấn luyện trên đặc trưng của chính backbone SmolVLM2 chỉ gần bằng đoán mò. Bộ mã hóa ảnh--văn bản SigLIP dùng nguyên, không huấn luyện, đạt 27,5--28,9\% khi chọn đúng mục đích trong 5 câu của cùng video (đoán mò 20\%). Dùng SigLIP cỡ lớn và trừ đi phần khung cảnh chung của các bước trước, độ chính xác đạt 34,1--38,7\%, và cấu hình này được chọn giống nhau ở cả 8 lần kiểm tra chéo. Trên tập test riêng chỉ chạy một lần, cấu hình đề xuất đạt 30,2\% so với 21,4\% của SigLIP cơ bản khi xem 8 khung hình. Nếu chỉ trả lời một nửa số trường hợp chắc chắn nhất, độ chính xác tăng thêm 6,9--7,9 điểm, nên robot biết khi nào cần hỏi lại. Khi đoán hành động sắp tới chỉ từ 8 khung gần nhất, độ chính xác giảm từ 38,0\% (đoán trước 0,6 giây) rồi đi ngang ở khoảng 27\% từ 7--8 giây, nhưng độ chắc chắn của mô-đun gần như không đổi theo khoảng đoán trước. Các thử nghiệm cải thiện thêm cho thấy cấu hình đề xuất gần như đã là tốt nhất: huấn luyện thêm một lớp hiệu chỉnh làm kém đi 2--4 điểm, mô hình Qwen2.5-VL-3B không huấn luyện chỉ đạt ngang (39,8\% so với 38,7\% ở 8 khung), còn cộng thêm điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\%. Phía robot, khi câu lệnh luôn để trống và nhiệm vụ chỉ được đưa vào qua token ý định, SmolVLA thành công 20/100 lượt, ngang với 19/100 khi nghe câu lệnh đúng, còn token ý định sai cho 0/100. Như vậy token ý định thay được câu lệnh.
+Mô-đun ý định được xây dựng qua các giai đoạn thực nghiệm nối tiếp trên bộ dữ liệu EgoIntent. Thử nghiệm ban đầu trên tập nhỏ cho thấy các mô hình huấn luyện có cấu trúc phức tạp không vượt được cách lấy trung bình khung hình, và 81,5\% lỗi là nhầm giữa các bước trong cùng một tác vụ. Trên 2.503 bước thao tác (27 video, 13 khung cảnh) với kiểm tra chéo theo khung cảnh, lớp đọc huấn luyện trên đặc trưng của chính backbone SmolVLM2 chỉ gần bằng đoán mò. Bộ mã hóa ảnh--văn bản SigLIP dùng nguyên, không huấn luyện, đạt 27,5--28,9\% khi chọn đúng mục đích trong 5 câu của cùng video (đoán mò 20\%). Dùng SigLIP cỡ lớn và trừ đi phần khung cảnh chung của các bước trước, độ chính xác đạt 34,1--38,7\%, và cấu hình này được chọn giống nhau ở cả 8 lần kiểm tra chéo. Trên tập test riêng chỉ chạy một lần, cấu hình đề xuất đạt 30,2\% so với 21,4\% của SigLIP cơ bản khi xem 8 khung hình. Nếu chỉ trả lời một nửa số trường hợp chắc chắn nhất, độ chính xác tăng thêm 6,9--7,9 điểm, nên robot biết khi nào cần hỏi lại. Khi đoán hành động sắp tới chỉ từ 8 khung gần nhất, độ chính xác giảm từ 38,0\% (đoán trước 0,6 giây) rồi đi ngang ở khoảng 25--27\% từ khoảng 12 giây (đo theo giây thật); xem đoạn dài hơn 4 giây không giúp, nhưng độ chắc chắn của mô-đun gần như không đổi theo khoảng đoán trước. Các thử nghiệm cải thiện thêm cho thấy cấu hình đề xuất gần như đã là tốt nhất: huấn luyện thêm một lớp hiệu chỉnh làm kém đi 2--4 điểm, mô hình Qwen2.5-VL-3B không huấn luyện chỉ đạt ngang (39,8\% so với 38,7\% ở 8 khung), còn cộng thêm điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\%. Phía robot, khi câu lệnh luôn để trống và nhiệm vụ chỉ được đưa vào qua token ý định, SmolVLA thành công 20/100 lượt, ngang với 19/100 khi nghe câu lệnh đúng, còn token ý định sai cho 0/100. Như vậy token ý định thay được câu lệnh.
 
 \vspace{6pt}
 \noindent\textbf{\textit{Từ khóa:}} \textit{robot cộng tác, dự đoán ý định, mô hình VLA, video góc nhìn thứ nhất.}\par}
@@ -1545,8 +1545,43 @@ $48\to64$ (15,4$\to$20,5)& $+2{,}2$ [$+1{,}0$; $+3{,}5$] & & $+0{,}4$ [$-0{,}4$;
 \end{tabular}
 \end{table}
 
+\subsection{Đo lại theo giây thật: xem bao lâu và đoán xa bao nhiêu}
+\label{sec:stage7_seconds}
+
+\textbf{Câu hỏi.} Ở trên, mỗi bước có 8 khung lấy cách đều, nên ``$H$ khung'' dài hay ngắn tùy độ dài của bước, và mô-đun luôn xem đúng 8 khung. Cách lấy 8 khung này theo nguyên lý lấy mẫu thưa, cách đều của TSN \citep{wang2016tsn}, nhưng con số 8 chưa được chọn dựa trên kết quả. Phần này trả lời hai câu hỏi: tính theo giây thật thì mô-đun đoán trước được bao xa, và cho mô-đun xem đoạn video dài hơn có giúp không?
+
+\textbf{Cách làm.} Video gốc quay ở 30 khung/giây. Mỗi đoạn video được lấy lại đều \textit{4 khung mỗi giây}, không phụ thuộc độ dài bước, rồi mã hóa bằng SigLIP lớn. Các bước của một video được nối theo thứ tự thành một dòng thời gian. Cứ mỗi giây lấy một thời điểm $t$, và mọi cấu hình dùng chung các thời điểm này (5.710 thời điểm trên 26 video; một video bị bỏ vì ngắn hơn 36 giây). Tại $t$, mô-đun xem $C$ giây gần nhất ($C\in\{1,2,4,8,16\}$, tức 4 đến 64 khung), lấy trung bình và trừ khung cảnh của phần trước đó như C2. Nó phải chọn hành động của bước chứa thời điểm $t+H$ ($H$ từ 0,5 đến 20 giây) trong 5 câu cùng video. Năm câu ứng viên giống nhau với mọi $C$, nên các độ dài quan sát so được trực tiếp với nhau.
+
+\begin{table}[ht]
+\centering
+\caption{Giai đoạn 7, đo theo giây thật: chọn đúng hành động sắp tới trong 5 câu cùng video (\%, 4 khung/giây, 5.710 thời điểm, 26 video, đoán mò 20\%). Hàng: độ dài đoạn mô-đun được xem; cột: đoán trước bao xa.}
+\label{tab:time_horizon}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{6}{c}{Đoán trước (giây)} \\
+\cmidrule(lr){2-7}
+Xem (giây) & 0,5 & 2 & 4 & 8 & 12 & 20 \\
+\midrule
+1  & \textbf{36,3} & 34,3 & 32,1 & 29,2 & 26,2 & 25,2 \\
+2  & 35,9 & \textbf{34,4} & \textbf{32,2} & \textbf{30,1} & 26,7 & 25,4 \\
+4  & 35,7 & 34,2 & 31,9 & 29,5 & 26,9 & 25,6 \\
+8  & 34,3 & 33,2 & 30,7 & 28,8 & 27,0 & 25,6 \\
+16 & 32,7 & 31,9 & 31,1 & 28,8 & \textbf{27,2} & \textbf{26,1} \\
+\midrule
+Bước hiện tại $=$ bước đích (\%) & 82 & 41 & 17 & 1 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Kết quả.} \Cref{tab:time_horizon} cho thấy hai điều.
+
+\textit{Thứ nhất, xem dài hơn không giúp, và với dự đoán gần còn làm kém đi.} So sánh ghép cặp cho thấy xem 1, 2 hay 4 giây gần như không phân biệt được: trong 32 cặp (1 với 2 giây, 2 với 4 giây, ở 8 khoảng đoán trước và hai loại nhãn), chỉ 2 cặp khác nhau rõ, và đều dưới 1,5 điểm. Với dự đoán gần (0,5--2 giây), tăng từ 4 lên 8 giây làm giảm rõ khoảng 1--1,5 điểm ở mọi trường hợp, và tăng tiếp lên 16 giây thường giảm thêm. Ví dụ, đoán trước 0,5 giây: xem 2 giây đạt 35,9\%, xem 16 giây chỉ còn 32,7\%. Với dự đoán xa (từ 8 giây), mọi độ dài quan sát cho kết quả như nhau. Như vậy đoạn quan sát tốt nhất là khoảng 1--4 giây, tức một đến hai bước. Cách cũ (8 khung trên một bước dài trung bình 2,6 giây) đã nằm trong vùng này. Lý do có thể là mô-đun lấy trung bình các khung: đoạn quá dài trộn hành động hiện tại với các hành động đã qua. Một mô hình có thứ tự thời gian có thể dùng đoạn dài tốt hơn; điều này chưa được thử.
+
+\textit{Thứ hai, tính theo giây thật, độ chính xác đi ngang từ khoảng 12 giây.} Với đoạn quan sát 2 giây, độ chính xác giảm rõ từ 2 đến 4, từ 4 đến 8 và từ 8 đến 12 giây (mỗi bước giảm 2--3 điểm, khoảng tin cậy dưới 0), rồi không phân biệt được từ 12 đến 16 và 16 đến 20 giây, ở mức 25--27\%. Mốc này xa hơn mốc ``khoảng 7--8 giây'' ở trên, vì cách đo cũ suy ra thời gian từ độ dài bước. Mô-đun vẫn chỉ ngang với cách ``nhận ra rồi chép'' (\cref{sec:baselines}) ở mọi độ dài quan sát: hiệu nằm trong khoảng $\pm2$ điểm và hầu hết khoảng tin cậy chứa 0.
+
 \begin{ketqua}[Kết luận giai đoạn 7]
-Chỉ từ 8 khung gần nhất, mô-đun ý định đoán được hành động sắp tới tốt hơn đoán mò đến tận 20 giây, mức xa nhất đã thử. Phần có ích nhất nằm trong khoảng 7--8 giây đầu (khoảng 3 bước), sau đó độ chính xác đi ngang ở khoảng 26--28\%. Độ chắc chắn của mô-đun không giảm theo khoảng đoán trước, nên khi dùng cho robot, ngưỡng hành động cần tính cả khoảng đoán trước, không chỉ dựa vào độ chênh điểm (\cref{sec:future}).
+Chỉ từ 8 khung gần nhất, mô-đun ý định đoán được hành động sắp tới tốt hơn đoán mò đến tận 20 giây, mức xa nhất đã thử. Đo theo giây thật, độ chính xác giảm rõ đến khoảng 12 giây rồi đi ngang ở khoảng 25--27\%. Xem đoạn video dài hơn 4 giây không giúp, và với dự đoán gần còn làm kém đi, nên 8 khung trên một bước (khoảng 2,6 giây) đã nằm trong vùng tốt nhất. Độ chắc chắn của mô-đun không giảm theo khoảng đoán trước, nên khi dùng cho robot, ngưỡng hành động cần tính cả khoảng đoán trước, không chỉ dựa vào độ chênh điểm (\cref{sec:future}).
 \end{ketqua}
 
 % ---------------------------------------------------------------------
@@ -1677,7 +1712,7 @@ AntGPT, chuỗi đúng (chẩn đoán) & --- & \textbf{43,8} & $-11{,}7$ [$-14{,
 \end{tabular}
 \end{table}
 
-\Cref{tab:antgpt} cho thấy khi được đọc chuỗi hành động \textit{đúng}, mô hình ngôn ngữ đoán bước tiếp theo đúng 43,8\%, hơn F 11,7 điểm và hơn cả mức trần 38,4\% khi được xem chính bước tiếp theo. Như vậy, hiểu biết về thứ tự các bước có ích thật. Nhưng khi chuỗi hành động do máy tự nhận ra từ video, độ chính xác chỉ còn 27,3--29,2\%, bằng hoặc thấp hơn F (F hơn 2,9 điểm ở $k=8$). Lý do là khâu nhận ra từng hành động còn yếu: chọn đúng câu WHAT của bước hiện tại trong tất cả các bước của video chỉ đạt 4--6\%, nên chuỗi đưa cho mô hình ngôn ngữ phần lớn là sai. Kết quả này khẳng định lại nhận định ở trên: nút thắt của việc đoán trước là nhận ra đúng việc đang làm.
+\Cref{tab:antgpt} cho thấy khi được đọc chuỗi hành động \textit{đúng}, mô hình ngôn ngữ đoán bước tiếp theo đúng 43,8\%, hơn F 11,7 điểm và hơn cả mức trần 38,4\% khi được xem chính bước tiếp theo. Như vậy, hiểu biết về thứ tự các bước có ích thật. Nhưng khi chuỗi hành động do máy tự nhận ra từ video, độ chính xác chỉ còn 27,3--29,2\%, bằng hoặc thấp hơn F (F hơn 2,9 điểm ở $k=8$). Lý do là khâu nhận ra từng hành động còn yếu: chọn đúng câu WHAT của bước hiện tại trong tất cả các bước của video chỉ đạt 4--6\%, nên chuỗi đưa cho mô hình ngôn ngữ phần lớn là sai. Kết quả này khẳng định lại nhận định ở trên: nút thắt của việc đoán trước là nhận ra đúng việc đang làm. Kết hợp điểm của F với điểm của cách này (trọng số chọn trong từng lần kiểm tra chéo như giai đoạn 8c) cũng không giúp: 27,4\% ở $k=2$ và 31,0\% ở $k=8$, so với 27,8\% và 32,1\% của F.
 
 \begin{ketqua}[Kết luận giai đoạn 8]
 Cấu hình F của giai đoạn 3 gần như đã là tốt nhất cho phép chọn 1 trong 5 câu cùng video: chú trọng khung gần nhất, huấn luyện thêm lớp hiệu chỉnh hay dùng Qwen2.5-VL-3B đều không tăng rõ ở mọi $k$, và huấn luyện thêm còn làm kém đi 2--4 điểm. Có hai cải tiến dùng được. Thứ nhất, cộng thêm một nửa điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\% mà không ảnh hưởng chọn 1/5, khắc phục điểm yếu đã nêu ở \cref{sec:discussion}. Thứ hai, khi đã xem hết bước, kết hợp F với Qwen tăng thêm 2,2 điểm. Ngoài ra, cùng mô-đun đoán được bước tiếp theo tốt hơn đoán mò (32,1\% ở $k=8$). Tuy vậy, so với cách làm cơ sở ``nhận ra bước hiện tại rồi chép'', mô-đun chỉ hơn khoảng 1,5 điểm khi đoán trước dưới 3 giây và ngang bằng khi đoán xa hơn: khả năng đoán trước hiện nay chủ yếu đến từ việc nhận ra việc đang làm. Muốn đoán trước thật sự, mô-đun cần thêm hiểu biết về thứ tự các bước: một mô hình ngôn ngữ đọc chuỗi hành động \textit{đúng} đoán được bước tiếp theo 43,8\%, nhưng với chuỗi do máy nhận ra thì chỉ còn 27--29\%, nên trước hết cần nhận ra hành động hiện tại tốt hơn.
@@ -1705,7 +1740,7 @@ GĐ & Cách làm & Kết quả chính & Quyết định \\
 4 & Tập test riêng, chạy một lần & 30,2\% so với 21,4\% (8 khung) & Xét độ chắc chắn \\
 5 & Trả lời khi đủ chắc & $+$6,9--7,9 điểm ở 50\% độ phủ & Nối vào robot \\
 6 & Token ý định trong SmolVLA; LIBERO & 7/7 kiểm thử đạt; lệnh đúng 19/100, rỗng 0/100; chỉ token ý định 20/100, ý định sai 0/100 & Thay ý định đúng bằng ý định đoán từ video \\
-7 & Đoán hành động sau $H$ khung, $H$ từ 0,6 đến 20,5 s & 38,0\% (0,6 s) xuống 27,7\% (7,7 s), rồi đi ngang; độ chênh gần như không đổi & Ngưỡng hành động phải tính cả khoảng đoán trước \\
+7 & Đoán hành động sau $H$ khung, $H$ từ 0,6 đến 20,5 s & 38,0\% (0,6 s) xuống 27,7\% (7,7 s); theo giây thật đi ngang từ 12 s; xem dài hơn 4 s không giúp; độ chênh gần như không đổi & Ngưỡng hành động phải tính cả khoảng đoán trước \\
 8 & Gộp khung, lớp hiệu chỉnh, Qwen2.5-VL-3B, đoán NEXT, so với cách làm cơ sở & Chọn 1/5 không tăng rõ; hiệu chỉnh $-$2,0--4,0 điểm; MRR $+$10--21\%; NEXT 27,8--32,1\%; đoán trước gần bằng ``nhận ra rồi chép'' & Giữ F, thêm điểm không trừ khung cảnh khi xếp hạng toàn tập \\
 \bottomrule
 \end{tabularx}
@@ -1732,7 +1767,7 @@ Trên tập test riêng, cả cấu hình đề xuất lẫn cấu hình cơ b�
 
 \subsection{Ý nghĩa cho robot cộng tác}
 
-Độ chính xác 30\% nghĩa là nếu trả lời mọi lúc, robot vẫn chọn sai phần lớn các trường hợp. Giai đoạn 5 cho thấy cách dùng thực tế hơn: robot chỉ hành động khi độ chênh đủ lớn, và chờ thêm hoặc hỏi lại trong các trường hợp còn lại. Ở 20\% độ phủ, độ chính xác đạt 53--61\%; ở 50\% độ phủ, tăng 6,9--7,9 điểm so với trả lời mọi lúc. Điểm tin cậy chỉ hữu ích khi bộ mã hóa đủ tốt: với cấu hình cơ bản, mức tăng tương ứng chỉ 2,6--3,5 điểm. Nói cách khác, cải thiện mô-đun ý định không chỉ tăng độ chính xác mà còn làm robot biết mình sai khi nào. Giai đoạn 7 đặt giới hạn cho điều này: độ chênh điểm cho biết lựa chọn nào chắc hơn \textit{ở cùng một khoảng đoán trước}, nhưng không cho biết robot đang đoán quá xa. Với robot thật, điều này gợi ý chỉ dựa vào dự đoán trong khoảng 7--8 giây tới, và cập nhật liên tục khi có thêm khung hình mới.
+Độ chính xác 30\% nghĩa là nếu trả lời mọi lúc, robot vẫn chọn sai phần lớn các trường hợp. Giai đoạn 5 cho thấy cách dùng thực tế hơn: robot chỉ hành động khi độ chênh đủ lớn, và chờ thêm hoặc hỏi lại trong các trường hợp còn lại. Ở 20\% độ phủ, độ chính xác đạt 53--61\%; ở 50\% độ phủ, tăng 6,9--7,9 điểm so với trả lời mọi lúc. Điểm tin cậy chỉ hữu ích khi bộ mã hóa đủ tốt: với cấu hình cơ bản, mức tăng tương ứng chỉ 2,6--3,5 điểm. Nói cách khác, cải thiện mô-đun ý định không chỉ tăng độ chính xác mà còn làm robot biết mình sai khi nào. Giai đoạn 7 đặt giới hạn cho điều này: độ chênh điểm cho biết lựa chọn nào chắc hơn \textit{ở cùng một khoảng đoán trước}, nhưng không cho biết robot đang đoán quá xa. Với robot thật, điều này gợi ý chỉ dựa vào dự đoán trong khoảng 10 giây tới, và cập nhật liên tục khi có thêm khung hình mới.
 
 \Cref{tab:cases} gom các kết quả trên thành bốn tình huống mà robot cộng tác sẽ gặp, cùng cách hệ thống nên xử lý và bằng chứng đã có cho từng tình huống.
 
@@ -1748,7 +1783,7 @@ Tình huống & Dấu hiệu & Robot nên & Bằng chứng \\
 C1. Rõ ràng & Độ chênh điểm cao (20\% trường hợp chắc nhất) & Hành động theo ý định đã chọn & Đúng 53,3--60,9\%, so với 34,1--38,7\% khi trả lời mọi lúc (\cref{tab:selective}) \\
 C2. Mơ hồ & Độ chênh thấp; câu gần nghĩa với bước khác & Chờ thêm khung hình hoặc hỏi lại người & Nửa ít chắc nhất chỉ đúng khoảng 27--32\%; 44,5\% số bước có câu gần cùng nghĩa trong cùng video \\
 C3. Ý định sai & Mục tiêu đưa vào robot không khớp việc người đang làm & Không hành động; cần cơ chế phát hiện và sửa & Đổi khung hình sang video khác: 39,6\% rơi về 18,8\%; SmolVLA với lệnh của nhiệm vụ khác: 0/100 lượt hoàn thành nhiệm vụ đúng (\cref{tab:libero}) \\
-C4. Đoán xa hoặc người đổi ý & Hành động cần đoán còn ở xa phía trước & Chỉ tin dự đoán trong khoảng 7--8 giây tới và cập nhật liên tục & Độ chính xác giảm từ 38,0\% (0,6 s) xuống 24,0\% (20,5 s) nhưng độ chênh gần như không đổi (\cref{tab:horizon}); trường hợp người đổi ý giữa chừng chưa được đo \\
+C4. Đoán xa hoặc người đổi ý & Hành động cần đoán còn ở xa phía trước & Chỉ tin dự đoán trong khoảng 10 giây tới và cập nhật liên tục & Độ chính xác giảm từ 38,0\% (0,6 s) xuống 24,0\% (20,5 s) nhưng độ chênh gần như không đổi (\cref{tab:horizon}); trường hợp người đổi ý giữa chừng chưa được đo \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1779,7 +1814,7 @@ Tình huống C1 và C2 đã có cơ chế xử lý dựa trên độ chênh đi
   \item \textbf{Xây dựng mô-đun ý định không cần huấn luyện}, dùng SigLIP lớn và trừ khung cảnh của các bước trước. Mô-đun đạt 34,1--38,7\% chọn đúng trong 5 câu cùng video khi kiểm tra chéo, được chọn ổn định 8/8 lần, và đạt 30,2\% trên tập test riêng chạy một lần (so với 21,4\% của cấu hình cơ bản và 20\% của đoán mò).
   \item \textbf{Cho robot cơ chế biết khi nào nên hỏi lại.} Chỉ trả lời một nửa số trường hợp chắc nhất làm độ chính xác tăng 6,9--7,9 điểm; chỉ trả lời 20\% thì đạt 53--61\%.
   \item \textbf{Token ý định thay được câu lệnh.} SmolVLA gốc phụ thuộc hoàn toàn vào câu lệnh (19/100 với câu lệnh đúng, 0/100 khi bỏ câu lệnh). Huấn luyện lại với câu lệnh luôn để trống và nhiệm vụ đưa vào qua token ý định, robot đạt 20/100, còn ý định sai cho 0/100.
-  \item \textbf{Đo được robot đoán trước được bao xa.} Chỉ từ 8 khung gần nhất, mô-đun chọn đúng hành động sắp tới 38,0\% khi đoán trước 0,6 giây và 27,7\% khi đoán trước 7,7 giây; từ đó đến 15 giây, các mức không phân biệt được (so sánh ghép cặp). Độ chắc chắn gần như không đổi theo khoảng đoán trước, nên robot cần tính cả khoảng đoán trước khi quyết định hành động.
+  \item \textbf{Đo được robot đoán trước được bao xa.} Chỉ từ 8 khung gần nhất, mô-đun chọn đúng hành động sắp tới 38,0\% khi đoán trước 0,6 giây và 27,7\% khi đoán trước 7,7 giây. Đo lại theo giây thật (4 khung/giây), độ chính xác đi ngang từ khoảng 12 giây, và cho mô-đun xem đoạn dài hơn 4 giây không giúp. Độ chắc chắn gần như không đổi theo khoảng đoán trước, nên robot cần tính cả khoảng đoán trước khi quyết định hành động.
   \item \textbf{Kiểm tra được giới hạn của cấu hình đề xuất.} Huấn luyện thêm một lớp hiệu chỉnh với mẫu âm cùng video làm kém đi 2,0--4,0 điểm; Qwen2.5-VL-3B không huấn luyện đạt 30,8\% ($k=2$) và 39,8\% ($k=8$), không hơn rõ cấu hình đề xuất. Cộng thêm điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\% mà không ảnh hưởng chọn 1/5, và cùng mô-đun đoán đúng bước tiếp theo 27,8--32,1\% (đoán mò 20\%). So với các cách làm cơ sở của bài toán dự đoán hành động, mô-đun hơn rõ cách không xem video nhưng gần bằng cách nhận ra bước hiện tại rồi chép sang, nên khâu nhận ra hiện tại là nút thắt.
 \end{enumerate}
 
@@ -1797,7 +1832,7 @@ So với mục tiêu ở \cref{sec:muctieu}, mục tiêu thứ nhất (xây dự
   \item \textbf{Chỉ thử một mô hình ngôn ngữ--thị giác nhỏ.} Qwen2.5-VL-3B với một câu hỏi cố định, ở hai giá trị $k$; bản 7B không vừa GPU 16 GB.
   \item \textbf{Câu đồng nghĩa bị tính là sai.} 44,5\% số bước có một câu khác trong cùng video gần như cùng nghĩa, nên điểm tuyệt đối bị chặn trên.
   \item \textbf{Thí nghiệm LIBERO nhỏ.} Một hạt giống huấn luyện, một checkpoint, 10 lượt mỗi nhiệm vụ, trong mô phỏng; bản token ý định và bản câu lệnh là hai mô hình huấn luyện riêng.
-  \item \textbf{Thời gian trong giai đoạn 7 là xấp xỉ.} Dòng thời gian được dựng từ 8 khung mỗi bước, nên khoảng cách giữa hai khung phụ thuộc độ dài của từng bước; các khoảng trống giữa hai bước liền nhau (nếu có) không được tính.
+  \item \textbf{Dòng thời gian ở giai đoạn 7 bỏ qua khoảng trống giữa các bước.} Phép đo theo giây thật đã thay cho cách suy thời gian từ độ dài bước, nhưng các đoạn video của từng bước được nối liền nhau, nên khoảng trống giữa hai bước (nếu có) không được tính. Chỉ thử một mật độ 4 khung/giây và một cách gộp là lấy trung bình.
 \end{itemize}
 
 \mucnho{Hướng phát triển}
@@ -1807,7 +1842,7 @@ So với mục tiêu ở \cref{sec:muctieu}, mục tiêu thứ nhất (xây dự
 
 \textbf{Song song, cải thiện mô-đun ý định} (chỉ bằng kiểm tra chéo, không dùng lại tập test riêng):
 \begin{itemize}
-  \item Làm cho độ chắc chắn biết theo khoảng đoán trước, vì giai đoạn 7 cho thấy độ chênh điểm gần như không đổi khi phải đoán xa: ví dụ ngưỡng hành động riêng cho từng khoảng đoán trước, hoặc chỉ hành động trong khoảng 7--8 giây đầu.
+  \item Làm cho độ chắc chắn biết theo khoảng đoán trước, vì giai đoạn 7 cho thấy độ chênh điểm gần như không đổi khi phải đoán xa: ví dụ ngưỡng hành động riêng cho từng khoảng đoán trước, hoặc chỉ hành động trong khoảng 10 giây đầu.
   \item Cải thiện khâu nhận ra hành động hiện tại, vì giai đoạn 8e cho thấy với chuỗi hành động đúng, cách hai bước kiểu AntGPT \citep{zhao2024antgpt} đạt 43,8\% nhưng với chuỗi do máy nhận ra chỉ còn 27--29\%.
   \item Cho mô-đun xem đoạn lịch sử dài hơn 8 khung khi đoán bước tiếp theo, vì giai đoạn 8 cho thấy độ chính xác đoán NEXT còn cách mức trần khoảng 6 điểm ở $k=8$.
   \item Dùng kết hợp F với mô hình ngôn ngữ--thị giác (giai đoạn 8) như một bước kiểm tra lại khi đã xem hết bước, và thử bản lớn hơn khi có GPU đủ bộ nhớ.
