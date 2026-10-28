@@ -72,6 +72,8 @@ def main() -> int:
         n_lines = len((tmp / "results/lit_baselines_next/antgpt_scores/true.jsonl").read_text().splitlines())
         assert n_lines == int(data.valid5.sum()) or n_lines > 0
         assert LB.cmd_antgpt_analyze(A) == 0
+        assert LB.cmd_fusion(A) == 0
+        assert (tmp / "results/lit_baselines_next/fusion_summary.csv").exists()
         assert (tmp / "results/lit_baselines_next/antgpt_summary.csv").exists()
     print("all literature-baseline tests passed")
     return 0

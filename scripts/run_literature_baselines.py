@@ -28,6 +28,8 @@ Subcommands
              picks the next step among the same 5 candidates. Resumable.
              (GPU ~15 min; CPU possible but hours)
   antgpt-analyze   paired comparison with ours -> results/lit_baselines_next/antgpt_*.csv
+  fusion     z(F) + gamma * z(LLM) on the NEXT candidates, gamma chosen per outer
+             fold on the other folds (as v3 Stage 3) -> results/lit_baselines_next/fusion_*
 
 Typical run on the lab machine while the GPU trains:
   export HF_HOME=/media/dhqg/d3/hf_cache HF_HUB_OFFLINE=1 CUDA_VISIBLE_DEVICES=""
@@ -441,6 +443,75 @@ def cmd_antgpt_analyze(args) -> int:
 
 
 # ======================================================================
+# fusion: F + AntGPT-style LLM scores, nested gamma
+# ======================================================================
+
+GAMMAS = (0.0, 0.25, 0.5, 1.0, 2.0)  # 0 = F alone, first among ties
+
+
+def zscore(x: np.ndarray) -> np.ndarray:
+    x = np.asarray(x, float)
+    return (x - x.mean(axis=-1, keepdims=True)) / np.maximum(x.std(axis=-1, keepdims=True), 1e-6)
+
+
+def nested_gamma(zf, zm, fold_of, folds):
+    """Per outer fold choose gamma on the other folds (max strict 5-way), apply to the held-out fold."""
+    hits, chosen = np.zeros(len(zf)), {}
+    for f in folds:
+        test, train = fold_of == f, fold_of != f
+        acc = [strict_top1(zf[train] + g * zm[train]).mean() for g in GAMMAS]
+        g = GAMMAS[int(np.argmax(acc))]
+        chosen[int(f)] = g
+        hits[test] = strict_top1(zf[test] + g * zm[test])
+    return hits, chosen
+
+
+def cmd_fusion(args) -> int:
+    base = ROOT / "results/lit_baselines_next"
+    data = V.load_data()
+    V.gate(data)
+    texts, c5 = next_setup(data)
+    v5 = (c5 >= 0).all(axis=1)
+    vocab = sorted(set(texts))
+    emb = AH.encode_texts(V.ENCODER_ID, vocab, device=args.device)
+    tix = {t: i for i, t in enumerate(vocab)}
+    next_raw = emb[[tix[t] for t in texts]]
+    frames = data.frames[V.ENC]
+    ctx, has = data.ctx[V.ENC]
+    fs = {k: np.full((data.n, 5), np.nan) for k in ANTGPT_PREFIXES}
+    for fold in data.folds:
+        idx, train_idx = data.fold_idx(fold)
+        fr, ta, tb, ub = L.processed(frames, next_raw, "C2", train_idx, ctx, has)
+        for k in ANTGPT_PREFIXES:
+            q = V.query_vec(fr[idx], "A0", k)
+            fs[k][idx] = V.cand_scores(q, ta, tb, ub, idx, c5[idx])
+    pos = {s: i for i, s in enumerate(data.sample_ids)}
+    summary, chosen_all = [], {}
+    for variant in antgpt_variants():
+        recs = [json.loads(line) for line in (base / "antgpt_scores" / f"{variant}.jsonl").open() if line.strip()]
+        ms = np.full((data.n, 5), np.nan)
+        for r in recs:
+            i = pos[r["sample_id"]]
+            assert r["candidate_sample_ids"] == [data.sample_ids[j] for j in c5[i]], "candidate mismatch"
+            ms[i] = r["score"]
+        ks = ANTGPT_PREFIXES if variant == "true" else (int(variant.split("_k")[1]),)
+        for k in ks:
+            ok = v5 & ~np.isnan(ms).any(axis=1)
+            zf, zm = zscore(fs[k][ok]), zscore(ms[ok])
+            fused, chosen = nested_gamma(zf, zm, data.fold_of[ok], data.folds)
+            chosen_all[f"{variant}|k{k}"] = chosen
+            f_hits = strict_top1(fs[k][ok])
+            hits = {"ours": f_hits, f"F+antgpt_{variant}": fused}
+            summary += compare_rows("next_fusion", {"k": k, "variant": variant}, hits, data.vids[ok],
+                                    np.ones(int(ok.sum()), bool))
+    write_csv(base / "fusion_summary.csv", summary)
+    (base / "fusion_gamma_by_fold.json").write_text(json.dumps(chosen_all, indent=2))
+    print_rows(summary)
+    print("gamma by fold:", chosen_all, flush=True)
+    return 0
+
+
+# ======================================================================
 # selftest
 # ======================================================================
 
@@ -454,13 +525,19 @@ def cmd_selftest(args) -> int:
     assert fractional_credit(np.array([0.3, 0.3, 0.1])) == 0.5
     p = build_prompt(["cut bread", "spread butter"], list("abcde"))
     assert "2. spread butter (current step)" in p and "E. e" in p
+    zf = np.array([[2.0, 0, 0], [0, 2.0, 0], [1.0, 0, 3.0], [3.0, 0, 1.0]])
+    h, ch = nested_gamma(zf, np.zeros_like(zf), np.array([0, 0, 1, 1]), [0, 1])
+    assert set(ch.values()) == {0.0} and np.array_equal(h, strict_top1(zf)), "ties must keep F"
+    zm = np.array([[0, 0, 5.0], [5.0, 0, 0], [5.0, 0, 0], [5.0, 0, 0]])
+    h, ch = nested_gamma(zf, zm, np.array([0, 0, 1, 1]), [0, 1])
+    assert ch[0] > 0 and h[1] == 1, "a helpful LLM score must be picked on the other fold"
     print("selftest passed")
     return 0
 
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("cmd", choices=["selftest", "horizon", "next", "antgpt", "antgpt-analyze"])
+    p.add_argument("cmd", choices=["selftest", "horizon", "next", "antgpt", "antgpt-analyze", "fusion"])
     p.add_argument("--overwrite", action="store_true")
     p.add_argument("--device", default="cpu", help="text encoder / LLM device")
     p.add_argument("--probe", type=int, default=0, help="antgpt: score only the first N queries (timing)")
@@ -470,7 +547,7 @@ def main() -> int:
     if args.cmd != "selftest" and not PREREG.exists():
         raise SystemExit(f"missing preregistration {PREREG}")
     return {"selftest": cmd_selftest, "horizon": cmd_horizon, "next": cmd_next, "antgpt": cmd_antgpt,
-            "antgpt-analyze": cmd_antgpt_analyze}[args.cmd](args)
+            "antgpt-analyze": cmd_antgpt_analyze, "fusion": cmd_fusion}[args.cmd](args)
 
 
 if __name__ == "__main__":
