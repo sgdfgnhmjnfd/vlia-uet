@@ -1,0 +1,201 @@
+condition,task,episode,seed,init_state_id,instruction,z_int_task,success,n_steps,seconds,video
+I-only,0,0,1000,0,,put both the alphabet soup and the tomato sauce in the basket,False,520,10.330983638763428,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t0_e0.mp4
+I-wrong,0,0,1000,0,,pick up the book and place it in the back compartment of the caddy,False,520,8.460631132125854,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t0_e0.mp4
+I-only,0,1,1001,1,,put both the alphabet soup and the tomato sauce in the basket,False,520,8.590756177902222,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t0_e1.mp4
+I-wrong,0,1,1001,1,,pick up the book and place it in the back compartment of the caddy,False,520,8.969290018081665,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t0_e1.mp4
+I-only,0,2,1002,2,,put both the alphabet soup and the tomato sauce in the basket,False,520,8.742696285247803,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t0_e2.mp4
+I-wrong,0,2,1002,2,,pick up the book and place it in the back compartment of the caddy,False,520,8.928797483444214,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t0_e2.mp4
+I-only,0,3,1003,3,,put both the alphabet soup and the tomato sauce in the basket,False,520,9.02535605430603,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t0_e3.mp4
+I-wrong,0,3,1003,3,,pick up the book and place it in the back compartment of the caddy,False,520,9.21737265586853,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t0_e3.mp4
+I-only,0,4,1004,4,,put both the alphabet soup and the tomato sauce in the basket,False,520,8.948484659194946,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t0_e4.mp4
+I-wrong,0,4,1004,4,,pick up the book and place it in the back compartment of the caddy,False,520,8.771709442138672,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t0_e4.mp4
+I-only,0,5,1005,5,,put both the alphabet soup and the tomato sauce in the basket,False,520,8.740686178207397,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t0_e5.mp4
+I-wrong,0,5,1005,5,,pick up the book and place it in the back compartment of the caddy,False,520,9.208227396011353,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t0_e5.mp4
+I-only,0,6,1006,6,,put both the alphabet soup and the tomato sauce in the basket,False,520,8.82919454574585,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t0_e6.mp4
+I-wrong,0,6,1006,6,,pick up the book and place it in the back compartment of the caddy,False,520,8.894682168960571,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t0_e6.mp4
+I-only,0,7,1007,7,,put both the alphabet soup and the tomato sauce in the basket,False,520,8.773445129394531,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t0_e7.mp4
+I-wrong,0,7,1007,7,,pick up the book and place it in the back compartment of the caddy,False,520,8.5262131690979,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t0_e7.mp4
+I-only,0,8,1008,8,,put both the alphabet soup and the tomato sauce in the basket,False,520,8.925429821014404,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t0_e8.mp4
+I-wrong,0,8,1008,8,,pick up the book and place it in the back compartment of the caddy,False,520,8.696644306182861,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t0_e8.mp4
+I-only,0,9,1009,9,,put both the alphabet soup and the tomato sauce in the basket,False,520,8.992486000061035,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t0_e9.mp4
+I-wrong,0,9,1009,9,,pick up the book and place it in the back compartment of the caddy,False,520,9.01633906364441,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t0_e9.mp4
+I-only,1,0,1000,0,,put both the cream cheese box and the butter in the basket,False,520,10.081725358963013,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t1_e0.mp4
+I-wrong,1,0,1000,0,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,8.817246675491333,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t1_e0.mp4
+I-only,1,1,1001,1,,put both the cream cheese box and the butter in the basket,False,520,8.670998573303223,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t1_e1.mp4
+I-wrong,1,1,1001,1,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.00938105583191,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t1_e1.mp4
+I-only,1,2,1002,2,,put both the cream cheese box and the butter in the basket,False,520,8.962862253189087,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t1_e2.mp4
+I-wrong,1,2,1002,2,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.01186490058899,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t1_e2.mp4
+I-only,1,3,1003,3,,put both the cream cheese box and the butter in the basket,False,520,8.977554082870483,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t1_e3.mp4
+I-wrong,1,3,1003,3,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.049578666687012,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t1_e3.mp4
+I-only,1,4,1004,4,,put both the cream cheese box and the butter in the basket,False,520,8.852772951126099,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t1_e4.mp4
+I-wrong,1,4,1004,4,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,8.930742025375366,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t1_e4.mp4
+I-only,1,5,1005,5,,put both the cream cheese box and the butter in the basket,False,520,9.062982082366943,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t1_e5.mp4
+I-wrong,1,5,1005,5,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.100966215133667,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t1_e5.mp4
+I-only,1,6,1006,6,,put both the cream cheese box and the butter in the basket,False,520,9.193561792373657,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t1_e6.mp4
+I-wrong,1,6,1006,6,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.463359832763672,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t1_e6.mp4
+I-only,1,7,1007,7,,put both the cream cheese box and the butter in the basket,False,520,9.570202112197876,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t1_e7.mp4
+I-wrong,1,7,1007,7,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.485401391983032,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t1_e7.mp4
+I-only,1,8,1008,8,,put both the cream cheese box and the butter in the basket,False,520,9.641600608825684,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t1_e8.mp4
+I-wrong,1,8,1008,8,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.567217111587524,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t1_e8.mp4
+I-only,1,9,1009,9,,put both the cream cheese box and the butter in the basket,False,520,9.665868520736694,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t1_e9.mp4
+I-wrong,1,9,1009,9,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.596065759658813,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t1_e9.mp4
+I-only,2,0,1000,0,,turn on the stove and put the moka pot on it,False,520,9.176762819290161,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t2_e0.mp4
+I-wrong,2,0,1000,0,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.487530708312988,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t2_e0.mp4
+I-only,2,1,1001,1,,turn on the stove and put the moka pot on it,False,520,8.401473999023438,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t2_e1.mp4
+I-wrong,2,1,1001,1,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.52685546875,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t2_e1.mp4
+I-only,2,2,1002,2,,turn on the stove and put the moka pot on it,False,520,8.763403415679932,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t2_e2.mp4
+I-wrong,2,2,1002,2,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.722337245941162,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t2_e2.mp4
+I-only,2,3,1003,3,,turn on the stove and put the moka pot on it,False,520,8.57625961303711,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t2_e3.mp4
+I-wrong,2,3,1003,3,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.73348879814148,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t2_e3.mp4
+I-only,2,4,1004,4,,turn on the stove and put the moka pot on it,False,520,8.844556093215942,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t2_e4.mp4
+I-wrong,2,4,1004,4,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.984841108322144,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t2_e4.mp4
+I-only,2,5,1005,5,,turn on the stove and put the moka pot on it,False,520,8.834587574005127,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t2_e5.mp4
+I-wrong,2,5,1005,5,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.560925483703613,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t2_e5.mp4
+I-only,2,6,1006,6,,turn on the stove and put the moka pot on it,True,295,5.377431392669678,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t2_e6.mp4
+I-wrong,2,6,1006,6,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.90639352798462,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t2_e6.mp4
+I-only,2,7,1007,7,,turn on the stove and put the moka pot on it,True,315,5.718926429748535,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t2_e7.mp4
+I-wrong,2,7,1007,7,,put both the alphabet soup and the cream cheese box in the basket,False,520,9.096695184707642,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t2_e7.mp4
+I-only,2,8,1008,8,,turn on the stove and put the moka pot on it,True,302,5.651976108551025,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t2_e8.mp4
+I-wrong,2,8,1008,8,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.715314865112305,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t2_e8.mp4
+I-only,2,9,1009,9,,turn on the stove and put the moka pot on it,False,520,8.296510457992554,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t2_e9.mp4
+I-wrong,2,9,1009,9,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.769231081008911,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t2_e9.mp4
+I-only,3,0,1000,0,,put the black bowl in the bottom drawer of the cabinet and close it,True,272,6.988339424133301,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t3_e0.mp4
+I-wrong,3,0,1000,0,,put both moka pots on the stove,False,520,9.284645557403564,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t3_e0.mp4
+I-only,3,1,1001,1,,put the black bowl in the bottom drawer of the cabinet and close it,True,277,5.802893877029419,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t3_e1.mp4
+I-wrong,3,1,1001,1,,put both moka pots on the stove,False,520,8.864779472351074,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t3_e1.mp4
+I-only,3,2,1002,2,,put the black bowl in the bottom drawer of the cabinet and close it,True,326,6.777656078338623,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t3_e2.mp4
+I-wrong,3,2,1002,2,,put both moka pots on the stove,False,520,8.767097473144531,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t3_e2.mp4
+I-only,3,3,1003,3,,put the black bowl in the bottom drawer of the cabinet and close it,True,274,5.871427536010742,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t3_e3.mp4
+I-wrong,3,3,1003,3,,put both moka pots on the stove,False,520,9.221381187438965,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t3_e3.mp4
+I-only,3,4,1004,4,,put the black bowl in the bottom drawer of the cabinet and close it,True,298,6.31244421005249,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t3_e4.mp4
+I-wrong,3,4,1004,4,,put both moka pots on the stove,False,520,8.96578574180603,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t3_e4.mp4
+I-only,3,5,1005,5,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.388198852539062,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t3_e5.mp4
+I-wrong,3,5,1005,5,,put both moka pots on the stove,False,520,9.061768054962158,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t3_e5.mp4
+I-only,3,6,1006,6,,put the black bowl in the bottom drawer of the cabinet and close it,True,286,6.1170430183410645,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t3_e6.mp4
+I-wrong,3,6,1006,6,,put both moka pots on the stove,False,520,9.00413727760315,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t3_e6.mp4
+I-only,3,7,1007,7,,put the black bowl in the bottom drawer of the cabinet and close it,True,301,6.56662392616272,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t3_e7.mp4
+I-wrong,3,7,1007,7,,put both moka pots on the stove,False,520,8.960309267044067,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t3_e7.mp4
+I-only,3,8,1008,8,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.08073353767395,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t3_e8.mp4
+I-wrong,3,8,1008,8,,put both moka pots on the stove,False,520,8.744089603424072,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t3_e8.mp4
+I-only,3,9,1009,9,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.705827474594116,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t3_e9.mp4
+I-wrong,3,9,1009,9,,put both moka pots on the stove,False,520,8.984039545059204,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t3_e9.mp4
+I-only,4,0,1000,0,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,11.796525716781616,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t4_e0.mp4
+I-wrong,4,0,1000,0,,put the yellow and white mug in the microwave and close it,False,520,9.812203645706177,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t4_e0.mp4
+I-only,4,1,1001,1,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.037734746932983,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t4_e1.mp4
+I-wrong,4,1,1001,1,,put the yellow and white mug in the microwave and close it,False,520,9.522320032119751,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t4_e1.mp4
+I-only,4,2,1002,2,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.176841497421265,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t4_e2.mp4
+I-wrong,4,2,1002,2,,put the yellow and white mug in the microwave and close it,False,520,9.676262617111206,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t4_e2.mp4
+I-only,4,3,1003,3,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.10765027999878,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t4_e3.mp4
+I-wrong,4,3,1003,3,,put the yellow and white mug in the microwave and close it,False,520,9.73090124130249,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t4_e3.mp4
+I-only,4,4,1004,4,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,10.19752550125122,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t4_e4.mp4
+I-wrong,4,4,1004,4,,put the yellow and white mug in the microwave and close it,False,520,10.46372365951538,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t4_e4.mp4
+I-only,4,5,1005,5,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.87713623046875,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t4_e5.mp4
+I-wrong,4,5,1005,5,,put the yellow and white mug in the microwave and close it,False,520,9.766054391860962,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t4_e5.mp4
+I-only,4,6,1006,6,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.872229099273682,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t4_e6.mp4
+I-wrong,4,6,1006,6,,put the yellow and white mug in the microwave and close it,False,520,9.720381021499634,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t4_e6.mp4
+I-only,4,7,1007,7,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.919523477554321,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t4_e7.mp4
+I-wrong,4,7,1007,7,,put the yellow and white mug in the microwave and close it,False,520,9.795281171798706,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t4_e7.mp4
+I-only,4,8,1008,8,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.91528844833374,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t4_e8.mp4
+I-wrong,4,8,1008,8,,put the yellow and white mug in the microwave and close it,False,520,10.390393495559692,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t4_e8.mp4
+I-only,4,9,1009,9,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.682803392410278,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t4_e9.mp4
+I-wrong,4,9,1009,9,,put the yellow and white mug in the microwave and close it,False,520,9.684138774871826,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t4_e9.mp4
+I-only,5,0,1000,0,,pick up the book and place it in the back compartment of the caddy,True,163,4.757716655731201,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t5_e0.mp4
+I-wrong,5,0,1000,0,,put both the alphabet soup and the tomato sauce in the basket,False,520,7.701858758926392,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t5_e0.mp4
+I-only,5,1,1001,1,,pick up the book and place it in the back compartment of the caddy,False,520,8.084687232971191,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t5_e1.mp4
+I-wrong,5,1,1001,1,,put both the alphabet soup and the tomato sauce in the basket,False,520,7.895843029022217,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t5_e1.mp4
+I-only,5,2,1002,2,,pick up the book and place it in the back compartment of the caddy,True,163,3.6468868255615234,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t5_e2.mp4
+I-wrong,5,2,1002,2,,put both the alphabet soup and the tomato sauce in the basket,False,520,7.772273063659668,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t5_e2.mp4
+I-only,5,3,1003,3,,pick up the book and place it in the back compartment of the caddy,True,221,4.540029525756836,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t5_e3.mp4
+I-wrong,5,3,1003,3,,put both the alphabet soup and the tomato sauce in the basket,False,520,7.932011842727661,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t5_e3.mp4
+I-only,5,4,1004,4,,pick up the book and place it in the back compartment of the caddy,False,520,7.986675977706909,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t5_e4.mp4
+I-wrong,5,4,1004,4,,put both the alphabet soup and the tomato sauce in the basket,False,520,7.8365159034729,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t5_e4.mp4
+I-only,5,5,1005,5,,pick up the book and place it in the back compartment of the caddy,True,159,3.612342596054077,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t5_e5.mp4
+I-wrong,5,5,1005,5,,put both the alphabet soup and the tomato sauce in the basket,False,520,7.785654306411743,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t5_e5.mp4
+I-only,5,6,1006,6,,pick up the book and place it in the back compartment of the caddy,True,150,3.3758957386016846,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t5_e6.mp4
+I-wrong,5,6,1006,6,,put both the alphabet soup and the tomato sauce in the basket,False,520,7.852123022079468,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t5_e6.mp4
+I-only,5,7,1007,7,,pick up the book and place it in the back compartment of the caddy,True,164,3.656630039215088,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t5_e7.mp4
+I-wrong,5,7,1007,7,,put both the alphabet soup and the tomato sauce in the basket,False,520,7.74729585647583,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t5_e7.mp4
+I-only,5,8,1008,8,,pick up the book and place it in the back compartment of the caddy,True,200,4.109729766845703,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t5_e8.mp4
+I-wrong,5,8,1008,8,,put both the alphabet soup and the tomato sauce in the basket,False,520,7.743870973587036,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t5_e8.mp4
+I-only,5,9,1009,9,,pick up the book and place it in the back compartment of the caddy,True,226,4.590659141540527,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t5_e9.mp4
+I-wrong,5,9,1009,9,,put both the alphabet soup and the tomato sauce in the basket,False,520,7.975138902664185,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t5_e9.mp4
+I-only,6,0,1000,0,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,10.308913469314575,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t6_e0.mp4
+I-wrong,6,0,1000,0,,put both the cream cheese box and the butter in the basket,False,520,8.915030717849731,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t6_e0.mp4
+I-only,6,1,1001,1,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.167402267456055,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t6_e1.mp4
+I-wrong,6,1,1001,1,,put both the cream cheese box and the butter in the basket,False,520,9.097092390060425,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t6_e1.mp4
+I-only,6,2,1002,2,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.231985807418823,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t6_e2.mp4
+I-wrong,6,2,1002,2,,put both the cream cheese box and the butter in the basket,False,520,8.83410906791687,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t6_e2.mp4
+I-only,6,3,1003,3,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.144167423248291,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t6_e3.mp4
+I-wrong,6,3,1003,3,,put both the cream cheese box and the butter in the basket,False,520,8.890449285507202,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t6_e3.mp4
+I-only,6,4,1004,4,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.14612627029419,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t6_e4.mp4
+I-wrong,6,4,1004,4,,put both the cream cheese box and the butter in the basket,False,520,8.837167739868164,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t6_e4.mp4
+I-only,6,5,1005,5,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.463279724121094,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t6_e5.mp4
+I-wrong,6,5,1005,5,,put both the cream cheese box and the butter in the basket,False,520,8.820361852645874,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t6_e5.mp4
+I-only,6,6,1006,6,,put the white mug on the plate and put the chocolate pudding to the right of the plate,True,447,9.181427717208862,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t6_e6.mp4
+I-wrong,6,6,1006,6,,put both the cream cheese box and the butter in the basket,False,520,8.869708776473999,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t6_e6.mp4
+I-only,6,7,1007,7,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,8.857168674468994,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t6_e7.mp4
+I-wrong,6,7,1007,7,,put both the cream cheese box and the butter in the basket,False,520,8.94459867477417,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t6_e7.mp4
+I-only,6,8,1008,8,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.33884048461914,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t6_e8.mp4
+I-wrong,6,8,1008,8,,put both the cream cheese box and the butter in the basket,False,520,8.87016749382019,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t6_e8.mp4
+I-only,6,9,1009,9,,put the white mug on the plate and put the chocolate pudding to the right of the plate,False,520,9.313887596130371,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t6_e9.mp4
+I-wrong,6,9,1009,9,,put both the cream cheese box and the butter in the basket,False,520,8.81119418144226,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t6_e9.mp4
+I-only,7,0,1000,0,,put both the alphabet soup and the cream cheese box in the basket,False,520,9.630025863647461,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t7_e0.mp4
+I-wrong,7,0,1000,0,,turn on the stove and put the moka pot on it,False,520,8.973829984664917,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t7_e0.mp4
+I-only,7,1,1001,1,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.699050188064575,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t7_e1.mp4
+I-wrong,7,1,1001,1,,turn on the stove and put the moka pot on it,False,520,8.948208808898926,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t7_e1.mp4
+I-only,7,2,1002,2,,put both the alphabet soup and the cream cheese box in the basket,False,520,9.05027151107788,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t7_e2.mp4
+I-wrong,7,2,1002,2,,turn on the stove and put the moka pot on it,False,520,8.845855236053467,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t7_e2.mp4
+I-only,7,3,1003,3,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.981690168380737,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t7_e3.mp4
+I-wrong,7,3,1003,3,,turn on the stove and put the moka pot on it,False,520,8.864317178726196,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t7_e3.mp4
+I-only,7,4,1004,4,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.723199605941772,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t7_e4.mp4
+I-wrong,7,4,1004,4,,turn on the stove and put the moka pot on it,False,520,8.977033138275146,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t7_e4.mp4
+I-only,7,5,1005,5,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.982467412948608,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t7_e5.mp4
+I-wrong,7,5,1005,5,,turn on the stove and put the moka pot on it,False,520,8.902695417404175,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t7_e5.mp4
+I-only,7,6,1006,6,,put both the alphabet soup and the cream cheese box in the basket,False,520,9.063842535018921,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t7_e6.mp4
+I-wrong,7,6,1006,6,,turn on the stove and put the moka pot on it,False,520,8.716653108596802,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t7_e6.mp4
+I-only,7,7,1007,7,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.795235633850098,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t7_e7.mp4
+I-wrong,7,7,1007,7,,turn on the stove and put the moka pot on it,False,520,8.937368392944336,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t7_e7.mp4
+I-only,7,8,1008,8,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.55074167251587,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t7_e8.mp4
+I-wrong,7,8,1008,8,,turn on the stove and put the moka pot on it,False,520,9.110584259033203,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t7_e8.mp4
+I-only,7,9,1009,9,,put both the alphabet soup and the cream cheese box in the basket,False,520,8.793151378631592,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t7_e9.mp4
+I-wrong,7,9,1009,9,,turn on the stove and put the moka pot on it,False,520,8.957192420959473,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t7_e9.mp4
+I-only,8,0,1000,0,,put both moka pots on the stove,False,520,9.242790222167969,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t8_e0.mp4
+I-wrong,8,0,1000,0,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,8.55777645111084,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t8_e0.mp4
+I-only,8,1,1001,1,,put both moka pots on the stove,False,520,8.83685040473938,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t8_e1.mp4
+I-wrong,8,1,1001,1,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,8.509048700332642,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t8_e1.mp4
+I-only,8,2,1002,2,,put both moka pots on the stove,False,520,9.072353601455688,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t8_e2.mp4
+I-wrong,8,2,1002,2,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,8.747034072875977,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t8_e2.mp4
+I-only,8,3,1003,3,,put both moka pots on the stove,False,520,8.988112688064575,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t8_e3.mp4
+I-wrong,8,3,1003,3,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.000059843063354,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t8_e3.mp4
+I-only,8,4,1004,4,,put both moka pots on the stove,False,520,8.958314180374146,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t8_e4.mp4
+I-wrong,8,4,1004,4,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,8.804866075515747,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t8_e4.mp4
+I-only,8,5,1005,5,,put both moka pots on the stove,False,520,8.721470594406128,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t8_e5.mp4
+I-wrong,8,5,1005,5,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,8.951945543289185,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t8_e5.mp4
+I-only,8,6,1006,6,,put both moka pots on the stove,False,520,8.86371374130249,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t8_e6.mp4
+I-wrong,8,6,1006,6,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,9.090059518814087,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t8_e6.mp4
+I-only,8,7,1007,7,,put both moka pots on the stove,False,520,8.89058542251587,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t8_e7.mp4
+I-wrong,8,7,1007,7,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,8.873614311218262,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t8_e7.mp4
+I-only,8,8,1008,8,,put both moka pots on the stove,False,520,8.978208541870117,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t8_e8.mp4
+I-wrong,8,8,1008,8,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,8.99323320388794,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t8_e8.mp4
+I-only,8,9,1009,9,,put both moka pots on the stove,False,520,9.209141492843628,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t8_e9.mp4
+I-wrong,8,9,1009,9,,put the black bowl in the bottom drawer of the cabinet and close it,False,520,8.94721508026123,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t8_e9.mp4
+I-only,9,0,1000,0,,put the yellow and white mug in the microwave and close it,False,520,10.319085121154785,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t9_e0.mp4
+I-wrong,9,0,1000,0,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,8.912900447845459,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t9_e0.mp4
+I-only,9,1,1001,1,,put the yellow and white mug in the microwave and close it,False,520,9.754831552505493,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t9_e1.mp4
+I-wrong,9,1,1001,1,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.337295532226562,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t9_e1.mp4
+I-only,9,2,1002,2,,put the yellow and white mug in the microwave and close it,False,520,9.05478811264038,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t9_e2.mp4
+I-wrong,9,2,1002,2,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,8.877848625183105,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t9_e2.mp4
+I-only,9,3,1003,3,,put the yellow and white mug in the microwave and close it,False,520,9.147128343582153,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t9_e3.mp4
+I-wrong,9,3,1003,3,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.164450883865356,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t9_e3.mp4
+I-only,9,4,1004,4,,put the yellow and white mug in the microwave and close it,False,520,9.309190511703491,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t9_e4.mp4
+I-wrong,9,4,1004,4,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.267436504364014,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t9_e4.mp4
+I-only,9,5,1005,5,,put the yellow and white mug in the microwave and close it,True,302,6.416027545928955,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t9_e5.mp4
+I-wrong,9,5,1005,5,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.05147409439087,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t9_e5.mp4
+I-only,9,6,1006,6,,put the yellow and white mug in the microwave and close it,False,520,9.083763122558594,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t9_e6.mp4
+I-wrong,9,6,1006,6,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,8.826474666595459,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t9_e6.mp4
+I-only,9,7,1007,7,,put the yellow and white mug in the microwave and close it,False,520,9.251879215240479,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t9_e7.mp4
+I-wrong,9,7,1007,7,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,8.77973198890686,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t9_e7.mp4
+I-only,9,8,1008,8,,put the yellow and white mug in the microwave and close it,False,520,9.173075675964355,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t9_e8.mp4
+I-wrong,9,8,1008,8,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,8.786187410354614,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t9_e8.mp4
+I-only,9,9,1009,9,,put the yellow and white mug in the microwave and close it,False,520,8.904968023300171,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t9_e9.mp4
+I-wrong,9,9,1009,9,,put the white mug on the left plate and put the yellow and white mug on the right plate,False,520,9.201391696929932,/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t9_e9.mp4

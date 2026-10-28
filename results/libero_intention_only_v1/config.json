@@ -1,0 +1,43 @@
+{
+  "episodes_dir": "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/episodes",
+  "v1_episodes": "/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes",
+  "n_pairs": 100,
+  "verdicts": {
+    "B1": {
+      "pass": true,
+      "delta": 0.2,
+      "ci95": [
+        0.12,
+        0.28
+      ],
+      "rule": "success(I-only) - success(empty, v1) CI lower bound > 0"
+    },
+    "B2": {
+      "pass": true,
+      "delta": 0.2,
+      "ci95": [
+        0.12,
+        0.28
+      ],
+      "rule": "success(I-only) - success(I-wrong) CI lower bound > 0"
+    },
+    "descriptive_I-only_minus_correct_language": {
+      "delta": 0.01,
+      "ci95": [
+        -0.07,
+        0.09
+      ],
+      "note": "no superiority claim"
+    }
+  },
+  "videos": {
+    "I-only": {
+      "success": "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t2_e6.mp4",
+      "failure": "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-only_t0_e0.mp4"
+    },
+    "I-wrong": {
+      "success": null,
+      "failure": "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/videos/I-wrong_t0_e0.mp4"
+    }
+  }
+}

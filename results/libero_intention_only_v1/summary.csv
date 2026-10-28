@@ -1,0 +1,5 @@
+condition,source,n_episodes,successes,success_rate,wilson_lo,wilson_hi
+I-only,this run,100,20,0.2,0.1333669333310325,0.2888291655931589
+I-wrong,this run,100,0,0.0,3.469446951953614e-18,0.03699349820698568
+empty,libero_goal_ablation_v1,100,0,0.0,3.469446951953614e-18,0.03699349820698568
+correct,libero_goal_ablation_v1,100,19,0.19,0.12514751509768735,0.27778845379064376
