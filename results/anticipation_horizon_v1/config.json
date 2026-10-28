@@ -1,0 +1,34 @@
+{
+  "manifest": "/media/dhqg/d3/vlia-uet/results/hoi_detection_v1/manifest.jsonl",
+  "cache_dir": "/media/dhqg/d3/vlia_outputs/ladder/siglip-so400m-patch14-384",
+  "encoder": "google/siglip-so400m-patch14-384",
+  "out": "/media/dhqg/d3/vlia-uet/results/anticipation_horizon_v1",
+  "horizons": [
+    2,
+    4,
+    6,
+    8,
+    12,
+    16,
+    24,
+    32,
+    48,
+    64
+  ],
+  "context": 8,
+  "labels": [
+    "what",
+    "why"
+  ],
+  "centerings": [
+    "C2",
+    "C0"
+  ],
+  "bootstrap": 2000,
+  "seed": 0,
+  "video_root_check": true,
+  "overwrite": false,
+  "template": "a first-person photo of a person doing: {label}",
+  "chance5": 0.2,
+  "chance10": 0.1
+}
