@@ -1,270 +1,223 @@
 <div align="center">
 
-# VLIA-UET: Tăng Cường Khả Năng Hiểu Ý Định Người Dùng Cho Robot Cộng Tác Dựa Trên Mô Hình VLA
+# VLIA: Vision–Language–Intention–Action
 
-### *Enhancing User Intention Understanding for Collaborative Robots based on Vision-Language-Action Models*
+### Reading a person's goal from egocentric video, so a robot can act when nobody tells it what to do
 
-[![Status](https://img.shields.io/badge/Status-Active%20Research-2ea44f?style=flat-square)](#current-status)
-[![Backbone](https://img.shields.io/badge/Backbone-SmolVLA%20%7C%20SmolVLM2-8a2be2?style=flat-square)](#smolvla-integration)
-[![Framework](https://img.shields.io/badge/Framework-LeRobot%20%7C%20PyTorch-ff69b4?style=flat-square)](#environment--setup)
-[![Benchmark](https://img.shields.io/badge/Benchmark-EgoIntent%20%7C%20LIBERO--10-blue?style=flat-square)](#preliminary-results)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)](LICENSE)
+[![Status](https://img.shields.io/badge/status-active%20research-2ea44f?style=flat-square)](#roadmap)
+[![Backbone](https://img.shields.io/badge/policy-SmolVLA-8a2be2?style=flat-square)](#connecting-intention-to-the-robot-policy)
+[![Encoder](https://img.shields.io/badge/encoder-SigLIP%20so400m-orange?style=flat-square)](#method)
+[![Benchmarks](https://img.shields.io/badge/benchmarks-EgoIntent%20%7C%20LIBERO--10-blue?style=flat-square)](#results)
+[![Protocol](https://img.shields.io/badge/evaluation-pre--registered-informational?style=flat-square)](#evaluation-protocol)
+[![License](https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square)](LICENSE)
 
-<br/>
-
-**Đồ án tốt nghiệp / Undergraduate Research Thesis — Trường Đại học Công nghệ (VNU-UET)**
-
-*Core Research Focus: Early Goal Disambiguation from Egocentric Video under Shared Sub-actions*
-
----
+Undergraduate thesis project · VNU University of Engineering and Technology (UET), Hanoi
 
 </div>
 
-## 🔬 Recent experimental status (updated)
+---
 
-Tính đến thời điểm hiện tại, dự án đã có các artifact thực nghiệm sau:
+## TL;DR
 
-- Prefix-length ablation theo quan sát sớm từ 2, 4, 6, 8 khung hình với train@k/eval@k và 3 seed được lưu trong [results/prefix_length_ablation_v2/summary.md](results/prefix_length_ablation_v2/summary.md).
-- Phân tích kiểu quyết định predict-vs-defer cơ bản (confidence, margin, entropy) được lưu trong [results/selective_decision_v1/selective_decision_summary.md](results/selective_decision_v1/selective_decision_summary.md).
-- Audit các artifact pilot và split full EgoIntent được lưu trong [results/audit_v4/audit_report.md](results/audit_v4/audit_report.md).
-- Prefix-length train@k/eval@k trên full train/validation split (3 seed, 412 mẫu validation) được lưu trong [results/prefix_length_full_v1/analysis.md](results/prefix_length_full_v1/analysis.md).
-- Candidate test 407 mẫu / 4 video UID đã được khóa protocol trước khi đánh giá; kết quả một lần chạy được lưu trong [results/locked_test_full_v1/summary.md](results/locked_test_full_v1/summary.md), protocol tại [results/test_protocol_full_v1/README.md](results/test_protocol_full_v1/README.md).
+Vision–language–action (VLA) robot policies such as **SmolVLA** only work when someone types an instruction. People who work next to a robot rarely say everything they intend. VLIA adds an **intention module**: from the first few frames of a first-person video, it picks out *why* the person is doing the current step, and then passes that goal to the policy in place of the missing instruction.
 
-Kết luận thực tế, không vượt quá mức có thể khẳng định:
+**Main findings so far** (each number comes from a file under [`results/`](results)):
 
-- Kết quả pilot trước đây (771 mẫu, 2 video validation) đạt `MRR 0.0551–0.0604`; kết quả mới trên full validation (412 mẫu, 4 video) đạt `MRR 0.0429–0.0474`. Đây là các split/gallery khác nhau, nên không so sánh trực tiếp các trị số.
-- Trên full validation, 6 frames có MRR trung bình cao nhất (`0.0474 ± 0.0010`), còn trên candidate test 8 frames cao nhất (`0.0314 ± 0.0035`). Chance MRR trên candidate-test gallery là `0.0318`; vì vậy điểm cao nhất xấp xỉ chance và chưa chứng minh lợi ích rõ ràng của quan sát thêm.
-- Candidate test chỉ gồm 4 video UID / 407 mẫu sau khi loại một UID đã dùng trong pilot validation. Nó không scene-disjoint (có scene garden từng xuất hiện ở pilot validation), và không thể loại trừ việc sử dụng ngoài các artifact local đã kiểm tra. Không xem đây là benchmark pristine hay bằng chứng khái quát hóa.
-- Các baseline quyết định “predict vs defer” hiện chỉ là công cụ hỗ trợ quyết định đơn giản, không phải bằng chứng rằng mô hình đã hiểu được khi nào dữ liệu quan sát đủ để xác nhận ý định.
-- Các lỗi còn lại chủ yếu tập trung ở “same-task confusion”, điều này phù hợp với giả thuyết năng lực phân biệt mục tiêu còn yếu khi các mục tiêu chia sẻ hành vi khởi đầu.
+| # | Finding | Evidence |
+|:-:|---|---|
+| 1 | **The VLA's own backbone does not read human goals.** A readout trained on frozen SmolVLM2 features stays near chance. | 1.13–1.19× chance MRR, and every 95% interval includes 1 ([paper](paper/main.pdf)) |
+| 2 | **A training-free intention module works better.** We use SigLIP-so400m and subtract the scene context of earlier steps, with no trained parameters. | **30.2%** 5-way accuracy on a locked test run once, vs 21.4% for the SigLIP-B/16 baseline (chance 20%) ([`locked_test_final_v1`](results/locked_test_final_v1/summary.md)) |
+| 3 | **The policy depends completely on the goal signal**, which motivates an intention channel. | SmolVLA on LIBERO-10 succeeds in **19/100** episodes with the correct instruction, and in **0/100** with an empty or wrong one ([`libero_goal_ablation_v1`](results/libero_goal_ablation_v1/summary.md)) |
 
-> Lưu ý: Không suy diễn tính hiệu quả thống kê vượt trội hoặc khẳng định novel method dựa trên các kết quả pilot này. Mục tiêu hiện tại là xây dựng một pipeline đánh giá sạch, có thể tái lặp và công khai dữ liệu so sánh prefix-length.
-
-## 📌 Mục lục / Table of Contents
-
-- [1. Giới thiệu & Đặt bài toán (Research Problem)](#1-giới-thiệu--đặt-bài-toán)
-- [2. Giả thuyết nghiên cứu (Core Hypothesis)](#2-giả-thuyết-nghiên-cứu)
-- [3. Câu hỏi nghiên cứu (Research Questions)](#3-câu-hỏi-nghiên-cứu)
-- [4. Phương pháp đề xuất (Methodology)](#4-phương-pháp-đề-xuất)
-- [5. Kết quả thực nghiệm Stage-A (Experimental Results)](#5-kết-quả-thực-nghiệm-stage-a)
-- [6. Phân tích lỗi nội tác vụ (Same-Task Error Analysis)](#6-phân-tích-lỗi-nội-tác-vụ)
-- [7. Quy thức dự đoán sớm (Temporal Anticipation Protocol)](#7-quy-thức-dự-đoán-sớm)
-- [8. Tích hợp SmolVLA & Đánh giá Downstream (Robot Integration)](#8-tích-hợp-smolvla--đánh-giá-downstream)
-- [9. Cấu trúc mã nguồn (Repository Structure)](#9-cấu-trúc-mã-nguồn)
-- [10. Hướng dẫn cài đặt & Thực thi (Quickstart)](#10-hướng-dẫn-cài-đặt--thực-thi)
-- [11. Kế hoạch nghiên cứu tiếp theo (Roadmap)](#11-kế-hoạch-nghiên-cứu-tiếp-theo)
+<p align="center">
+  <img src="docs/assets/results_5way.png" width="92%" alt="5-way accuracy of the baseline and our pipeline versus the number of observed frames">
+  <br><em>Accuracy at choosing the true purpose among 5 candidates from the same video, as a function of the number of observed frames k. Error bars are 95% video-level bootstrap intervals.</em>
+</p>
 
 ---
 
-## 1. Giới thiệu & Đặt bài toán
+## The problem
 
-Trong các kịch bản tương tác người -- robot (Human-Robot Interaction -- HRI), việc chỉ dựa vào câu lệnh ngôn ngữ tĩnh không đủ để robot cộng tác (Cobot) hành động nhịp nhàng. Trong các tác vụ thao tác tay của con người, **cùng một hành vi vật lý ban đầu (sub-action -- WHAT) có thể dẫn tới nhiều đích đến hoàn toàn khác nhau (intentions/goals -- WHY)**.
+> **Early goal disambiguation.** Given only the first *k* ∈ {2, 4, 6, 8} frames of an egocentric manipulation step, choose the true purpose ("WHY") of that step.
 
-```text
-               ┌──► move to shelf  (G1: Cất vào giá)
-pick up cup ───┼──► put into box   (G2: Đóng gói vào hộp)
- (WHAT)        └──► move to tray   (G3: Thu dọn vào khay)
+The task is hard because the distractors are **other purposes from the same video**: same person, same kitchen, same objects. Here is a real example from EgoIntent (a video of kneading dough):
+
+| Observed | Candidates (the model sees all five) |
+|---|---|
+| 8 frames of a hand reaching for a green basin of flour | ✅ **positioning basin** · add salt to flour · prepare to pour water into flour · clean the table surface · forming dough |
+
+Guessing at random gets 1 in 5 right (**20%**). The dataset holds 2,503 labelled steps from 27 videos and 13 scenes (kitchen, workshop, garage, farm…). A separate set of 407 steps from 4 further videos is kept as a locked test.
+
+### Why a VLA needs this
+
+SmolVLA reads a prefix of tokens, `[camera images | language instruction | robot state]`, and generates an action chunk. The instruction is its **only** source of goal information. Remove it and the policy fails every time (0/100 on LIBERO-10). When a person does not say what they want, the robot has to infer the goal from what it sees, and that inferred goal has to enter the policy through the same slot.
+
+---
+
+## Method
+
+```mermaid
+flowchart LR
+    A["First k frames<br/>(egocentric camera)"] --> B["SigLIP-so400m<br/>image encoder<br/>(frozen)"]
+    B --> C["Mean over frames"]
+    C --> D["Subtract scene context:<br/>mean of earlier steps<br/>of the same video"]
+    E["5 candidate purposes<br/>'a first-person photo of<br/>a person doing: {why}'"] --> F["SigLIP-so400m<br/>text encoder<br/>(frozen)"]
+    D --> G{"Cosine similarity<br/>→ pick the best"}
+    F --> G
+    G --> H["Predicted purpose<br/>+ confidence (top-2 margin)"]
+    H -. "next step" .-> I["Intention token<br/>→ SmolVLA prefix"]
 ```
 
-> **Bài toán nghiên cứu trọng tâm:**  
-> *Làm thế nào để phân định sớm mục tiêu thao tác của con người từ video egocentric khi các hành động ban đầu có tính nhập nhằng cao, trước khi quỹ đạo vật lý bộc lộ rõ ràng đích đến?*
+1. **Encode the frames.** Each frame goes through the frozen SigLIP-so400m image encoder, which produces one 1152-d vector per frame. These vectors are averaged.
+2. **Remove what all steps share.** Every step of a video happens in the same room, so raw embeddings mostly encode the scene. We subtract the mean embedding of all *earlier* steps of the same video (strictly causal), which leaves what is changing now. The first step of a video has no earlier steps, so for it we fall back to subtracting the training-set mean.
+3. **Encode the candidates.** Each purpose sentence is wrapped in the template `a first-person photo of a person doing: {why}` and encoded with the SigLIP text encoder.
+4. **Choose.** The model picks the candidate with the highest cosine similarity. The margin between the top two scores serves as a confidence signal, so the robot can **abstain and ask** when it is unsure.
 
-Dự án định vị việc **dự đoán ý định (Intention/Goal Disambiguation)** là đóng góp khoa học chính, trong khi mô hình Vision-Language-Action (VLA) đóng vai trò giao diện tiếp nhận hạ tầng (downstream interface).
+Nothing in this module is trained. The whole configuration was **selected by nested cross-validation** from 90 training-free variants (5 image–text encoders from the SigLIP, SigLIP 2 and CLIP families × frame aggregation × context removal × text template), and the same configuration won in 8 out of 8 outer folds. It was then frozen ([`FROZEN.json`](results/frozen_pipeline_v1/FROZEN.json)) before the test split was opened.
 
 ---
 
-## 2. Giả thuyết nghiên cứu
+## Results
 
-> **Hypothesis:**  
-> Khi nhiều mục tiêu cùng tương thích với một hành vi quan sát được, việc **ràng buộc suy luận mục tiêu (WHY) đi qua biểu diễn hành động con (WHAT)** trên đồ thị tính toán trực tiếp sẽ tạo ra một *semantic information bottleneck* hiệu quả, giúp lọc nhiễu nền và phân biệt các đích đến tốt hơn so với dự đoán trực tiếp hoặc dùng auxiliary loss độc lập.
+### Intention module on EgoIntent
 
-```text
-Video Egocentric Prefix V_{1:t}
-              │
-              ▼
-  Frozen Visual Backbone (SmolVLM2)
-              │
-              ├────────────────────────► WHAT (Hành động con quan sát)
-              │                                    │
-              ▼                                    ▼
-       Direct Path                       Guided Reasoning Path
-              │                                    │
-              └────────────────► WHY ◄─────────────┘
-                         (Đích đến ngữ nghĩa)
-                                  │
-                                  ▼
-                         z_int ∈ R^256 (Intention)
-                                  │
-                                  ▼
-                     Intention Adapter (256 → 960)
-                                  │
-                                  ▼
-                      SmolVLA Multimodal Prefix
+| Setting | k = 2 | k = 4 | k = 6 | k = 8 |
+|---|:-:|:-:|:-:|:-:|
+| Chance | 20.0 | 20.0 | 20.0 | 20.0 |
+| **Cross-validation** (2,503 steps, scene-grouped 8-fold), baseline SigLIP-B/16 | 27.7 | 27.5 | 28.1 | 28.9 |
+| **Cross-validation**, ours (nested selection) | **34.1** | **34.9** | **36.2** | **38.7** |
+| **Locked test** (407 steps, run once), baseline | 20.4 | 21.1 | 22.4 | 21.4 |
+| **Locked test**, ours (frozen) | **21.9** | **24.6** | **27.8** | **30.2** |
+
+5-way accuracy (%). Sources: [`ladder_v1`](results/ladder_v1/summary.md), [`locked_test_final_v1`](results/locked_test_final_v1/summary.md).
+
+On the locked test, ours beats the baseline with a paired bootstrap interval above zero at k = 4, 6 and 8 (for example +8.9 points [+4.4, +14.8] at k = 8). At k = 2 the two are not separable.
+
+### Sanity checks and extra analyses
+
+| Experiment | Result | What it shows |
+|---|---|---|
+| Frames swapped for a video from another scene (locked test, k = 8) | 31.4% → **21.6%** | Accuracy drops to chance, so the module really uses the video and not cues in the sentences |
+| Answer only the 50% most confident queries (CV, k = 8) | 38.7% → **47.4%** | The confidence score is meaningful, so the robot can defer on hard cases ([`selective_frozen_v1`](results/selective_frozen_v1/summary.md)) |
+| Trained readout on frozen SmolVLM2 features | 1.13–1.19× chance MRR, intervals include 1 | The VLA backbone alone does not expose the goal |
+| SmolVLM2 zero-shot scoring of the candidates | 23.5–24.6% | Above chance, but about 4 points below SigLIP ([`e1b_smolvlm2_v2`](results/e1b_smolvlm2_v2)) |
+| SmolVLA on LIBERO-10 with correct / empty / wrong instruction | **19 / 0 / 0** out of 100 | Without a goal signal the policy does nothing useful |
+
+### Negative results we report on purpose
+
+- **Ranking against all purposes is not better than the baseline.** Gallery MRR, which ranks against every purpose in the dataset rather than 5 candidates, is *lower* than the baseline on the locked test at all four prefixes. Subtracting the scene context also removes the cue that tells the model which scene it is in.
+- Several ideas did not help and are left out of the final pipeline: early stopping on a confidence threshold ([`ead_v1`](results/ead_v1)), a kNN cache over training queries ([`knn_cache_v1`](results/knn_cache_v1)), and gating on a hand detector ([`hoi_detection_v1`](results/hoi_detection_v1/GATE.md)).
+
+---
+
+## Evaluation protocol
+
+We put a lot of care into keeping the numbers honest:
+
+- **Pre-registration.** Grids, selection rules and pass/fail verdicts were committed *before* each experiment ran ([`prereg_v2.md`](results/prereg_v2.md), [`prereg_ladder_v1.md`](results/prereg_ladder_v1.md)).
+- **Scene-grouped cross-validation.** A scene never appears in both the training and the held-out fold.
+- **Nested selection.** Every configuration choice is made on training folds only.
+- **Video-level bootstrap.** Confidence intervals resample whole videos (B = 10,000), not individual frames.
+- **One-shot locked test.** The test split was evaluated exactly once, after the pipeline was frozen and the user approved the run explicitly. It will never be reused for model selection.
+- **Controls.** Mismatched-video controls and exact chance levels are reported for every metric.
+
+The locked test contains only 4 videos, so its intervals rest on 4 bootstrap clusters and should be read as exploratory.
+
+---
+
+## Connecting intention to the robot policy
+
+VLIA extends SmolVLA ([`policies/smolvla`](policies/smolvla)) with an optional **intention token**:
+
+```
+prefix = [ image tokens | language tokens | intention token | state token ]  →  SmolVLM2 (16 layers)  →  action expert  →  50-step action chunk
 ```
 
----
+An intention vector `z_int` (for example the 1152-d SigLIP embedding of the inferred purpose) passes through a single linear **Intention Adapter** (`d → 960`) and is inserted right after the language tokens. The feature is behind a flag (`use_intention_token`). When the flag is off, the model gives the same outputs as stock SmolVLA.
 
-## 3. Câu hỏi nghiên cứu
-
-* **RQ1 (Goal Disambiguation):** Mô hình có thể phân định các mục tiêu có chung hành vi khởi đầu từ video egocentric với độ chính xác cao hơn ngẫu nhiên không?
-* **RQ2 (Computational Path Inductive Bias):** Việc đưa $\widehat{\text{WHAT}}$ vào đường suy luận trực tiếp của WHY có thực sự vượt trội hơn dự đoán trực tiếp (Direct Why) và auxiliary loss độc lập không?
-* **RQ3 (Strict Temporal Anticipation):** Hiệu năng dự đoán thay đổi như thế nào khi quan sát bị giới hạn nghiêm ngặt trước thời điểm rẽ nhánh vật lý ($t_{\mathrm{obs}} \le t_{\mathrm{divergence}} - \Delta$)?
-* **RQ4 (Robot Relevance):** Ý định dự đoán có thể chuyển đổi thành tín hiệu điều khiển hữu ích (qua Intention Adapter của SmolVLA hoặc proxy điều phối kỹ năng robot) không?
+Interface tests ([`adapter_dims_v1`](results/adapter_dims_v1/summary.md)) pass for d ∈ {256, 768, 1152}: finite loss, non-zero adapter gradients, correct prefix length and token order, KV-cache inclusion, identical outputs with the flag off, and checkpoint round-trip. These tests show that the implementation is correct. They do not yet show that the robot performs better.
 
 ---
 
-## 4. Phương pháp đề xuất
+## Roadmap
 
-Hệ thống được thiết kế theo quy trình hai pha tinh gọn:
-
-### Pha 1: Predicted-What-Guided Reasoning kết hợp Same-Task Hard-Negatives
-1. Trích xuất đặc trưng khung hình từ mô hình nền thị giác đóng băng `SmolVLM2-500M-Video-Instruct`.
-2. Dự đoán vector hành động con tức thời $\hat{z}_t^{\mathrm{what}}$.
-3. Kết hợp visual context và $\hat{z}_t^{\mathrm{what}}$ qua reasoner có cổng đóng mở (learned gate) để sinh $z_{t,\mathrm{base}}^{\mathrm{why}}$.
-4. Nhánh WHAT được tối ưu bằng hàm mất mát tương phản kết hợp mẫu âm nội tác vụ (Same-task Hard Negative) để tách các trạng thái gần nhau.
-
-### Pha 2: Frozen Residual Reranker với Soft-MRR
-1. Sau khi Pha 1 hội tụ, **đóng băng hoàn toàn** toàn bộ mô hình cơ sở để bảo toàn không gian biểu diễn đã học.
-2. Huấn luyện một mạng thặng dư nhỏ ($\Delta z_t^{\mathrm{why}}$) nhận đầu vào $[z_{t,\mathrm{base}}^{\mathrm{why}}; \hat{z}_t^{\mathrm{what}}]$ bằng hàm mục tiêu **Soft-MRR** (surrogate khả vi của MRR) để tinh chỉnh thứ hạng mà không gây xung đột gradient.
+- [x] Training-free intention module, selected with nested CV and frozen
+- [x] One-shot locked test on EgoIntent
+- [x] LIBERO-10 goal-information ablation (19 / 0 / 0)
+- [x] Intention token interface for SmolVLA, with tests
+- [ ] **Intention replaces instruction.** Retrain SmolVLA on LIBERO with the instruction always empty, so the goal reaches the policy only through the intention token. Success means (a) the intention-only policy clearly beats the empty instruction (0/100), and (b) the correct intention clearly beats the intention of another task.
+- [ ] Improve the intention module using CV only: recency-weighted frames, fusion of scores with and without context removal, hard-negative residual adapter, and a large multimodal LLM baseline (Qwen2.5-VL)
+- [ ] Evaluate on a self-recorded egocentric dataset as a new independent test ([protocol](docs/own_dataset_protocol.md))
+- [ ] End to end: human video → inferred purpose → intention token → robot action
 
 ---
 
-## 5. Kết quả thực nghiệm Stage-A
-
-Thực nghiệm được thực hiện trên benchmark **EgoIntent** (split cố định theo `video_uid`: Train gồm 556 mẫu indoor, Validation gồm 215 mẫu outdoor). Kết quả trung bình qua 3 seed ngẫu nhiên (Mean $\pm$ Std):
-
-| Cấu hình mô hình | Why MRR | Top-1 Accuracy | Top-3 Accuracy | Ghi chú & Đánh giá |
-| :--- | :---: | :---: | :---: | :--- |
-| **Random Baseline** | `0.0420` | `0.0087` | `0.0259` | Xác suất ngẫu nhiên đa nhãn |
-| **Direct Why** | `0.0475 ± 0.0061` | `0.0186 ± 0.0047` | `0.0372 ± 0.0081` | Baseline dự đoán trực tiếp |
-| **Auxiliary What + Why** | `0.0471 ± 0.0030` | `0.0155 ± 0.0054` | `0.0403 ± 0.0054` | Head độc lập không cải thiện |
-| **Predicted-What Guided** | `0.0518 ± 0.0015` | `0.0217 ± 0.0027` | `0.0434 ± 0.0027` | **+8.9%** so với Direct Why |
-| **+ What Hard-Negative** | `0.0540 ± 0.0023` | `0.0279 ± 0.0047` | `0.0419 ± 0.0047` | Phân tách không gian nội tác vụ |
-| **+ Frozen Residual Reranker** | **`0.0551 ± 0.0009`** | **`0.0295 ± 0.0027`** | **`0.0434 ± 0.0027`** | **+15.9%** so với Direct Why |
-| *Baseline tĩnh: Mean-pool 8 frames* | `0.0589 ± 0.0016` | `0.0295 ± 0.0071` | `0.0419 ± 0.0059` | Baseline không cấu trúc |
-| *Diagnostic: Oracle What (Privileged)* | `0.1055 ± 0.0067` | `0.0527 ± 0.0054` | `0.0915 ± 0.0194` | Cận trên lý thuyết (chẩn đoán) |
-
-> [!NOTE]
-> * **Về giả thuyết Computational Path:** Việc chuyển từ Auxiliary Head ($0.0471$) sang Predicted-What Guided ($0.0518$) chứng minh giá trị của nút thắt ngữ nghĩa.
-> * **Tính minh bạch học thuật:** Mô hình tốt nhất ($0.0551$) xấp xỉ mức baseline tĩnh `Mean-pool 8 frames` ($0.0589$) và chưa vượt qua nó trên thước đo tổng thể, nhưng vượt trội ở khả năng phân định các ca khó nội tác vụ.
-> * **Oracle What ($0.1055$):** Khẳng định tiềm năng lớn của phương pháp nếu chất lượng nhận diện hành động con tiếp tục được nâng cao.
-
----
-
-## 6. Phân tích lỗi nội tác vụ
-
-Phân tích chi tiết 626 lỗi Top-1 trên tập kiểm định cho thấy:
-
-```text
-Tổng số lỗi Top-1: 626
-├── Lỗi trong cùng tác vụ (Same-Task Confusion): 510 mẫu (81.5%)  ◄── ĐIỂM NGHẼN CHÍNH
-└── Lỗi khác tác vụ (Cross-Task Confusion):      116 mẫu (18.5%)
-```
-
-Con số **81.5% lỗi nhầm lẫn nội tác vụ** chứng minh rằng mô hình không gặp khó khăn trong việc hiểu ngữ cảnh chung, mà gặp bế tắc ở việc **phân định chi tiết giữa các đích đến cùng chia sẻ hành động ban đầu**. Đây chính là căn cứ thực nghiệm then chốt củng cố cho bài toán Goal Disambiguation.
-
----
-
-## 7. Quy thức dự đoán sớm (Temporal Anticipation)
-
-Để ngăn chặn hiện tượng rò rỉ dữ liệu khi quỹ đạo tay đã bộc lộ đích đến, quy thức đánh giá áp dụng quy tắc loại trừ kết cục (**Outcome Exclusion Rule**):
-
-$$t_{\mathrm{obs}} \le t_{\mathrm{divergence}} - \Delta$$
-
-* $t_{\mathrm{obs}}$: Thời điểm kết thúc cửa sổ quan sát tiền tố.
-* $t_{\mathrm{divergence}}$: Thời điểm vật lý mà tay/vật thể bắt đầu rẽ hướng quỹ đạo rõ ràng hướng về đích đến (xấp xỉ bằng thời điểm nhấc vật thể $t_{\mathrm{lift}}$).
-* $\Delta$: Biên an toàn thời gian tối thiểu ($\Delta \ge 0.5\text{s}$).
-
-Ngoài ra, đồ án ghi nhận các đường cong hiệu năng theo mốc quan sát $10\%, 25\%, 50\%, 75\%$ như một phân tích phụ trợ.
-
----
-
-## 8. Tích hợp SmolVLA & Đánh giá Downstream
-
-### Giao diện Intention Adapter
-* Biểu diễn ý định $z_t^{\mathrm{int}} \in \mathbb{R}^{256}$ được chiếu tuyến tính lên không gian ẩn $d_{\mathrm{VLM}} = 960$ của SmolVLA.
-* Token ý định được chèn ngay trước token trạng thái robot:
-  $$P_{\mathrm{VLIA}} = \left[ E_{\mathrm{image}} ; E_{\mathrm{language}} ; E_{\mathrm{int}} ; E_{\mathrm{state}} \right]$$
-
-### Kết quả kiểm thử kỹ thuật (Unit & Integration Tests)
-Toàn bộ các kiểm thử tính toàn vẹn hệ thống đã hoàn thành:
-- [x] **Gradient flow:** Đạo hàm từ action loss truyền trơn tru về Intention Adapter ($\nabla W > 0$).
-- [x] **KV-cache inference:** Token ý định được cache hợp lệ ngay từ bước forward đầu tiên.
-- [x] **Flow matching consistency:** Không làm thay đổi phân phối huấn luyện action chunking của LeRobot.
-- [x] **Baseline fallback:** Khôi phục nguyên trạng SmolVLA gốc khi không kích hoạt intention.
-
-### Trạng thái Benchmark LIBERO-10
-* Đã loại bỏ các run 6-D cũ bị sai lệch schema cấu hình.
-* **Baseline 7-D chính thức** đạt **24% success rate** trên 100 episodes (đóng vai trò mốc so sánh có kiểm soát).
-* Nhằm tránh rủi ro trễ hạn đồ án và hiện tượng dư thừa ngữ nghĩa (khi prompt ngôn ngữ của LIBERO đã chỉ định mục tiêu), nhánh robot policy được định vị là **Downstream Validation / Skill Dispatching Proxy** thay vì mục tiêu nghiên cứu độc lập.
-
----
-
-## 9. Cấu trúc mã nguồn
+## Repository structure
 
 ```text
 vlia-uet/
-├── config/              # File cấu hình task, split dữ liệu và suite thử nghiệm
-├── datasets/            # Adapter nạp dữ liệu (EgoIntent, Ego4D, ENIGMA-360)
-├── models/              # Các biến thể Intention Encoders (Temporal, Mean-pool)
-├── policies/            # Triển khai SmolVLA và Intention Adapter mở rộng
-│   ├── intention/       # Clean stage-A encoder và module adapter
-│   └── smolvla/         # Modeling, configuration và processor của SmolVLA
-├── results/             # Nhật ký thực nghiệm, bảng số liệu và báo cáo chi tiết
-├── scripts/             # Kịch bản huấn luyện, kiểm thử và vẽ đồ thị
-│   ├── train_matched_oracle_LIBERO7D_FIXED.py  # Script huấn luyện downstream
-│   └── run_what_hardneg_sweep.sh               # Script chạy quét tham số
-├── thesis.tex           # Bản thảo đồ án tốt nghiệp chuẩn LaTeX (5 chương)
-├── requirements.txt     # Danh sách các gói phụ thuộc Python
-└── README.md            # Tài liệu tổng quan dự án
+├── policies/
+│   ├── smolvla/          # SmolVLA with the optional intention token (VLIA)
+│   └── intention/        # Intention Adapter and earlier trained encoders
+├── scripts/              # Feature extraction, CV ladder, locked test, LIBERO ablation, plots
+├── results/              # Every reported number: summary.md / *.csv / INTERPRETATION.md per experiment
+│   ├── frozen_pipeline_v1/   # FROZEN.json: the exact frozen configuration
+│   ├── ladder_v1/            # Nested CV over 90 training-free configurations
+│   ├── locked_test_final_v1/ # One-shot locked test
+│   └── libero_goal_ablation_v1/
+├── datasets/, config/    # Data loaders and experiment configs
+├── docs/                 # Design notes, own-dataset protocol, README assets
+├── thesis_v2/            # Thesis (Vietnamese, LaTeX)
+├── paper/                # Conference paper draft (English, IEEEtran)
+└── tests/
 ```
 
 ---
 
-## 10. Hướng dẫn cài đặt & Thực thi
-
-### 1. Chuẩn bị môi trường
+## Getting started
 
 ```bash
-# Tạo môi trường ảo Python 3.10+
-conda create -n vlia python=3.10 -y
-conda activate vlia
+# 1. Environment
+conda env create -f environment.yml        # or: pip install -r requirements.txt
+conda activate vlia_uet
 
-# Cài đặt các gói phụ thuộc cơ bản
-pip install -r requirements.txt
-
-# Cài đặt LeRobot từ mã nguồn
+# 2. LeRobot (SmolVLA) from source
 git clone https://github.com/huggingface/lerobot.git ~/lerobot
-cd ~/lerobot && pip install -e ".[smolvla]"
+cd ~/lerobot && pip install -e ".[smolvla]" && cd -
+
+# 3. Main entry points (each script documents its arguments)
+python scripts/extract_ladder_embeddings.py --help   # cache SigLIP frame/text embeddings
+python scripts/run_ladder_v1.py                      # nested CV over training-free pipelines
+python scripts/run_selective_frozen.py               # confidence / abstention analysis
+python scripts/libero_goal_ablation.py --help        # LIBERO-10 instruction ablation
+python scripts/plot_readme_results.py                # regenerate the figure above
 ```
 
-### 2. Chạy kiểm tra suy luận Stage-A
-
-```bash
-# Kiểm tra mô hình dự đoán ý định với What Hard-Negative
-python scripts/train_egointent_what_hardneg.py --help
-```
-
-### 3. Kiểm tra tích hợp chính sách SmolVLA
-
-```bash
-# Kiểm tra import và assertion cấu hình LIBERO 7-D
-python scripts/train_matched_oracle_LIBERO7D_FIXED.py --help
-```
+EgoIntent videos are not redistributed here. Download them from the original authors ([arXiv:2603.12147](https://arxiv.org/abs/2603.12147)), then point the manifest paths in the scripts to your local copy.
 
 ---
 
-## 11. Kế hoạch nghiên cứu tiếp theo
+## Documents
 
-1. **Khóa split đánh giá độc lập (Test Set):** Chia tập kiểm thử sạch chưa qua tinh chỉnh trên EgoIntent và báo cáo kèm khoảng tin cậy 95% (Bootstrap CI).
-2. **Stress-test OOD trên 48 video tự quay:** Thực hiện suy luận không đổi trọng số (zero-shot inference) trên tập dữ liệu thao tác tự thu thập để phân tích định tính các ca thành công và thất bại.
-3. **Hoàn thiện bản thảo đồ án tốt nghiệp:** Xuất bản và bảo vệ báo cáo tốt nghiệp dựa trên file [thesis.tex](thesis.tex).
+- 📄 **Paper draft:** [*Is the VLA Backbone Enough to Read Human Goals? Early Goal Disambiguation from Egocentric Video*](paper/main.pdf)
+- 📘 **Thesis** (Vietnamese): [`thesis_v2/`](thesis_v2)
 
----
+## Citation
 
-<div align="center">
+```bibtex
+@misc{vlia2026,
+  title  = {Is the VLA Backbone Enough to Read Human Goals? Early Goal Disambiguation from Egocentric Video},
+  author = {Trang},
+  year   = {2026},
+  note   = {Undergraduate thesis project, VNU University of Engineering and Technology},
+  url    = {https://github.com/sgdfgnhmjnfd/vlia-uet}
+}
+```
 
-**VLIA-UET Research Team**  
-*Khoa Điện tử Viễn thông — Trường Đại học Công nghệ, ĐHQGHN*
+## Acknowledgements
 
-</div>
+This project builds on [LeRobot / SmolVLA](https://github.com/huggingface/lerobot), [SigLIP](https://huggingface.co/google/siglip-so400m-patch14-384), the [EgoIntent](https://arxiv.org/abs/2603.12147) benchmark and [LIBERO](https://libero-project.github.io/). It is supervised at the Faculty of Electronics and Telecommunications, VNU-UET.
+
+## License
+
+[MIT](LICENSE)
