@@ -33,7 +33,7 @@ Hanoi, Vietnam\\
 \maketitle
 
 \begin{abstract}
-Vision--language--action (VLA) policies such as SmolVLA learn the task goal only from a language instruction. On LIBERO-10, SmolVLA succeeds in 19/100 episodes with the correct instruction and in 0/100 when the instruction is empty. A collaborative robot whose partner does not state the goal therefore needs an \emph{intention module} that reads the goal from what the person does. We build such a module for \emph{early goal disambiguation}: from the first $k\in\{2,4,6,8\}$ frames of an egocentric manipulation step, choose the step's purpose among other purposes from the same video. The study proceeds in stages on 2,503 steps (27 videos, 13 scenes) of EgoIntent, with scene-grouped cross-validation and video-level bootstrap intervals. First, a readout trained on frozen features of SmolVLA's own backbone, SmolVLM2, stays near chance (1.13--1.19$\times$ chance MRR, every interval includes 1). Second, a pretrained SigLIP encoder used without training raises 5-way accuracy to 27.5--28.9\% (chance 20\%). Third, a larger SigLIP encoder combined with subtracting the context of earlier steps in the same video reaches 34.1--38.7\%, and the same configuration is selected in all 8 folds. Fourth, evaluated once on a separate test split, this configuration reaches 30.2\% versus 21.4\% for the base pipeline at $k=8$. Fifth, answering only the most confident half of the queries adds 6.9--7.9 points. Finally, we implement the intention as one extra token in SmolVLA's input and verify the interface with implementation tests.
+Vision--language--action (VLA) policies such as SmolVLA learn the task goal only from a language instruction. On LIBERO-10, SmolVLA succeeds in 19/100 episodes with the correct instruction and in 0/100 when the instruction is empty. A collaborative robot whose partner does not state the goal therefore needs an \emph{intention module} that reads the goal from what the person does. We build such a module for \emph{early goal disambiguation}: from the first $k\in\{2,4,6,8\}$ frames of an egocentric manipulation step, choose the step's purpose among other purposes from the same video. The study proceeds in stages on 2,503 steps (27 videos, 13 scenes) of EgoIntent, with scene-grouped cross-validation and video-level bootstrap intervals. First, a readout trained on frozen features of SmolVLA's own backbone, SmolVLM2, stays near chance (1.13--1.19$\times$ chance MRR, every interval includes 1). Second, a pretrained SigLIP encoder used without training raises 5-way accuracy to 27.5--28.9\% (chance 20\%). Third, a larger SigLIP encoder combined with subtracting the context of earlier steps in the same video reaches 34.1--38.7\%, and the same configuration is selected in all 8 folds. Fourth, evaluated once on a separate test split, this configuration reaches 30.2\% versus 21.4\% for the base pipeline at $k=8$. Fifth, answering only the most confident half of the queries adds 6.9--7.9 points. On the robot side, we insert the intention as one extra input token and retrain SmolVLA with an always-empty instruction: given only the intention token, it succeeds in 20/100 episodes, on par with 19/100 for the correct instruction, while a wrong intention gives 0/100. Finally, an anticipation study in real seconds shows that the module predicts the upcoming action above chance up to 20\,s ahead, that viewing more than 4\,s of video does not help, and that most of this ability comes from recognising the current step: it matches a recognise-then-copy baseline, and an AntGPT-style language model reaches 43.8\% on the next step only when given the true action history.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -52,7 +52,8 @@ This paper asks how to build an intention module for a VLA policy and answers it
 \begin{itemize}
 \item \textbf{The VLA backbone does not read human goals.} A readout trained on frozen SmolVLM2 features reaches only 1.13--1.19$\times$ chance MRR on unseen scenes.
 \item \textbf{A training-free intention module.} SigLIP so400m with causal subtraction of earlier-step video context reaches \textbf{30.2\%} 5-way accuracy on a test split evaluated once, versus 21.4\% for base SigLIP and 20\% chance. Its confidence margin supports abstention.
-\item \textbf{An intention channel for SmolVLA.} We show that SmolVLA fails without goal information (19/100 vs 0/100) and implement a tested interface that injects the intention as one input token.
+\item \textbf{An intention token can replace the instruction.} SmolVLA fails without goal information (19/100 vs 0/100); retrained with an empty instruction and the goal given as one intention token, it reaches 20/100, and a wrong intention gives 0/100.
+\item \textbf{An honest anticipation analysis.} Measured in seconds against standard anticipation baselines, the module's look-ahead is mostly recognition of the present; the bottleneck is recognising the current step, not knowing the order of steps.
 \end{itemize}
 
 % ---------------------------------------------------------------------
@@ -69,7 +70,7 @@ This paper asks how to build an intention module for a VLA policy and answers it
 \section{Task, Architecture and Protocol}
 % ---------------------------------------------------------------------
 
-\textbf{Task.} Each manipulation step $i$ has a video segment ending before its outcome and a free-form purpose sentence $y_i$ (WHY). Eight frames are sampled uniformly; the module sees only the first $k$. It consists of a video encoder $f$ and a sentence encoder $g$ and scores a candidate sentence $c$ by
+\textbf{Task.} Each manipulation step $i$ has a video segment ending before its outcome and a free-form purpose sentence $y_i$ (WHY). Eight frames are sampled uniformly over the step, following the sparse segment sampling of TSN~\cite{wang2016tsn}; the module sees only the first $k$. It consists of a video encoder $f$ and a sentence encoder $g$ and scores a candidate sentence $c$ by
 \begin{equation}
 s(i,c)=\cos\!\big(f(x_{i,1:k}),\,g(c)\big).
 \end{equation}
@@ -99,7 +100,7 @@ The main metric is \emph{5-way accuracy}: choose $y_i$ among itself and 4 other 
   \node[draw=orange!70!black,dashed,rounded corners,fit=(a)(pre)(s)(act),inner sep=4pt]{};
   \end{scope}
 \end{tikzpicture}}
-\caption{VLIA. The intention module (top, Stages 1--5) maps an egocentric prefix to an intention vector; the adapter turns it into one input token of SmolVLA (bottom, Stage 6).}
+\caption{VLIA. The intention module (top, Stages 1--5, 7--8) maps an egocentric prefix to an intention vector; the adapter turns it into one input token of SmolVLA (bottom, Stage 6).}
 \label{fig:arch}
 \end{figure}
 
@@ -123,7 +124,9 @@ Stage & Question & Result & Next step \\
 3 & Can training-free choices pass 30\%? & 5-way 34.1--38.7\%, same config 8/8 & Freeze, test once \\
 4 & Does it hold on unseen videos? & 30.2\% vs 21.4\% ($k=8$) & Add abstention \\
 5 & Can it tell when to wait? & $+$6.9--7.9 pts at 50\% coverage & Connect to policy \\
-6 & Does SmolVLA need the goal? & 19/100 vs 0/100; interface tested & Replace instruction \\
+6 & Can an intention token replace the instruction? & 19/100 vs 0/100; token only: 20/100, wrong: 0/100 & Predicted intention \\
+7 & How far ahead, and how much video? & Plateau from $\sim$12\,s; $>$4\,s of video does not help & Compare baselines \\
+8 & Do known improvements help? & No 5-way gain; $\approx$ recognise-then-copy & Better recognition \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -212,17 +215,50 @@ Using the top-1 minus top-2 margin as confidence, with thresholds set from the o
 
 \textbf{Interface.} With 256-, 768- and 1152-d intention vectors, the adapter receives gradients, the input grows by exactly one token placed before the state token, the token is present in the KV cache, the flow-matching loss is finite, checkpoints round-trip, and disabling the token reproduces the original SmolVLA. These tests establish correctness, not a behavioural benefit.
 
+\textbf{Intention instead of instruction.} We retrain SmolVLA with the same data and recipe (25k steps) but with the instruction always empty; the task reaches the policy only as an intention vector, the so400m text embedding of the task description (the same encoder and template as the intention module), projected 1152$\rightarrow$960 and inserted before the state token. Training was resumed twice from saved checkpoints with optimizer state. Evaluated with an empty instruction on the same 100 (task, episode) units, the correct intention succeeds in \textbf{20/100} episodes (Wilson [13.3, 28.9]\%), on par with 19/100 for the language policy with the correct instruction (paired difference $+1$ [$-7$, $+9$] points), while another task's intention gives 0/100 ($+20$ [$+12$, $+28$] points). The tasks it solves are the ones the language policy solves. The intention token therefore carries the goal as well as the instruction did; here it is still the oracle task description, not an intention predicted from video.
+
+\subsection{Stage 7: how far ahead, from how much video?}
+\textbf{Method.} Robot assistance needs the \emph{upcoming} action. Following the anticipation setting of EPIC-KITCHENS~\cite{damen2018epic,furnari2021rulstm}, we concatenate the steps of each video, re-sample the 30\,fps clips at 4 frames/s, and at anchors every 1\,s let the module see the last $C$ seconds (context removal relative to everything before them) and choose the WHAT label of the step that contains $t+H$ among 5 labels of the same video. The same 5,710 anchors (26 videos) and candidates are used for every $C$ and $H$, so settings are compared with paired differences.
+
+\begin{table}[t]
+\caption{Stage 7: 5-way accuracy (\%) of the upcoming action (WHAT) in real seconds; rows: seconds of video seen, columns: seconds ahead. 5,710 anchors, 26 videos, chance 20\%. Last row: share of anchors whose target is still the current step.}
+\label{tab:time}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccc}
+\toprule
+Seen & 0.5\,s & 2\,s & 4\,s & 8\,s & 12\,s & 20\,s \\
+\midrule
+1\,s  & \textbf{36.3} & 34.3 & 32.1 & 29.2 & 26.2 & 25.2 \\
+2\,s  & 35.9 & \textbf{34.4} & \textbf{32.2} & \textbf{30.1} & 26.7 & 25.4 \\
+4\,s  & 35.7 & 34.2 & 31.9 & 29.5 & 26.9 & 25.6 \\
+8\,s  & 34.3 & 33.2 & 30.7 & 28.8 & 27.0 & 25.6 \\
+16\,s & 32.7 & 31.9 & 31.1 & 28.8 & \textbf{27.2} & \textbf{26.1} \\
+\midrule
+same step & 82\% & 41\% & 17\% & 1\% & 0\% & 0\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Result.} Accuracy falls from 35.9\% at 0.5\,s to 26.7\% at 12\,s and is flat from 12 to 20\,s (paired intervals contain 0), still above chance at 20\,s (Table~\ref{tab:time}). Seeing 1, 2 or 4\,s is indistinguishable in 30 of 32 paired comparisons, while 8--16\,s \emph{hurts} short-horizon prediction by 1--3 points: mean pooling mixes the current action with past ones. The original choice of 8 frames over one step ($\approx$2.6\,s) thus lies in the best range. The confidence margin barely changes with the horizon (0.0375 to 0.0351 on the per-step timeline), so the robot cannot tell from it that it is predicting too far ahead.
+
+\textbf{Baselines.} A text-only prior that never sees the video scores 19--20\%, so the candidate sets carry no exploitable bias. A \emph{recognise-then-copy} baseline, which recognises the current step with the same module and picks the candidate closest to it, matches the module at every context and horizon (differences within $\pm$2 points; on the per-step timeline the module is ahead only at 0.6 and 2.6\,s, by 1.4--1.7 points). Copying the \emph{true} current label reaches 41.9\% at 2.6\,s. On the next-step (NEXT) label, an AntGPT-style two-stage model~\cite{zhao2024antgpt}, in which Qwen2.5-VL-3B~\cite{bai2025qwen25vl} reads the WHAT history as text, reaches 43.8\% with the true history but only 27.3--29.2\% with the history recognised from video, below the module's 27.8--32.1\%; fusing the two scores does not help (31.0\% vs 32.1\% at $k=8$). Within-video recognition of the exact current WHAT is only 4--6\% top-1, and this, not knowledge of step order, is the bottleneck.
+
+\subsection{Stage 8: do known improvements help?}
+All on the same folds, with selection on training folds only. Recency-weighted pooling and fusing scores with and without context removal leave 5-way accuracy unchanged (all intervals contain 0) but raise gallery MRR by 10--21\%, recovering the cross-video cue lost by context removal. A residual adapter trained with same-video hard negatives~\cite{robinson2021hard} is \emph{worse} by 2.0--4.0 points; selection always picked the strongest regularisation. Qwen2.5-VL-3B answering the 5-way question zero-shot reaches 30.8\% ($k=2$) and 39.8\% ($k=8$), on par with the module at $k=8$, and fusing it with the module adds 2.2 points only at $k=8$.
+
 % ---------------------------------------------------------------------
 \section{Discussion and Limitations}
 % ---------------------------------------------------------------------
 
-The main lesson is a design one: with about two thousand labelled steps, an intention module cannot learn the visual--linguistic mapping from the VLA backbone's features, while a pretrained aligned encoder provides it for free. Removing the context of earlier steps is a cheap, causal addition that helps exactly in the within-activity setting a collaborative robot faces. The limitations are substantial. The study covers 27 videos in 13 scenes. The test split has only 4 videos, is not scene-disjoint, and shows a clear drop from cross-validation. Context removal lowers cross-video ranking. WHY sentences are free-form and 44.5\% of queries have a near-paraphrase in the same video, which caps exact-match scores. The LIBERO ablation uses one checkpoint and 10 episodes per task, and a predicted intention has not yet been used to drive the policy.
+The main lesson is a design one: with about two thousand labelled steps, an intention module cannot learn the visual--linguistic mapping from the VLA backbone's features, while a pretrained aligned encoder provides it for free. Removing the context of earlier steps is a cheap, causal addition that helps exactly in the within-activity setting a collaborative robot faces. On the policy side, the instruction slot is where intention should enter: one token carries the goal as well as the instruction. For anticipation, the results point to recognition of the current step as the component to improve, since an oracle history makes even a small language model a strong next-step predictor. The limitations are substantial. The study covers 27 videos in 13 scenes. The test split has only 4 videos, is not scene-disjoint, and shows a clear drop from cross-validation. Context removal lowers cross-video ranking. WHY sentences are free-form and 44.5\% of queries have a near-paraphrase in the same video, which caps exact-match scores. The LIBERO experiments use one training seed, one checkpoint and 10 episodes per task, and the intention given to the policy is the oracle task description: a predicted intention has not yet driven the policy, because LIBERO has no matching human video. The anticipation timeline ignores gaps between step clips, and only mean pooling at one frame rate was tested.
 
 % ---------------------------------------------------------------------
 \section{Conclusion and Next Step}
 % ---------------------------------------------------------------------
 
-A readout on the VLA's frozen backbone is near chance at reading human goals, whereas a training-free image--text pipeline with causal context removal reaches 34--39\% 5-way accuracy in cross-validation and 30.2\% on a test split evaluated once, with a usable confidence signal. Since SmolVLA fails without goal information, the next step is to train it with an always-empty instruction so that the goal reaches the policy only through the intention token, and to compare the correct intention against an empty instruction and against another task's intention. Code and result files are at \url{https://github.com/sgdfgnhmjnfd/vlia-uet}.
+A readout on the VLA's frozen backbone is near chance at reading human goals, whereas a training-free image--text pipeline with causal context removal reaches 34--39\% 5-way accuracy in cross-validation and 30.2\% on a test split evaluated once, with a usable confidence signal. SmolVLA retrained with an empty instruction succeeds as often with one intention token (20/100) as with the correct instruction (19/100). The module anticipates upcoming actions above chance up to 20\,s, but mostly by recognising the present. The next steps are to drive the policy with intentions predicted from human video, on data that pairs human video with robot tasks, and to improve recognition of the current step. Code and result files are at \url{https://github.com/sgdfgnhmjnfd/vlia-uet}.
 
 \begin{thebibliography}{99}
 \bibitem{brohan2022rt1} A.~Brohan \emph{et al.}, ``RT-1: Robotics transformer for real-world control at scale,'' arXiv:2212.06817, 2022.
@@ -245,6 +281,11 @@ A readout on the VLA's frozen backbone is near chance at reading human goals, wh
 \bibitem{ragusa2026enigma360} F.~Ragusa, R.~Leonardi, M.~Mazzamuto \emph{et al.}, ``ENIGMA-360: An ego-exo dataset for human behavior understanding in industrial scenarios,'' arXiv:2603.09741, 2026.
 
 \bibitem{liu2023libero} B.~Liu, Y.~Zhu, C.~Gao, Y.~Feng, Q.~Liu, Y.~Zhu, and P.~Stone, ``LIBERO: Benchmarking knowledge transfer for lifelong robot learning,'' in \emph{Proc. NeurIPS}, 2023.
+\bibitem{wang2016tsn} L.~Wang \emph{et al.}, ``Temporal segment networks: Towards good practices for deep action recognition,'' in \emph{Proc. ECCV}, 2016, pp.~20--36.
+\bibitem{damen2018epic} D.~Damen \emph{et al.}, ``Scaling egocentric vision: The EPIC-KITCHENS dataset,'' in \emph{Proc. ECCV}, 2018, pp.~720--736.
+\bibitem{furnari2021rulstm} A.~Furnari and G.~M. Farinella, ``Rolling-unrolling LSTMs for action anticipation from first-person video,'' \emph{IEEE Trans. Pattern Anal. Mach. Intell.}, vol.~43, no.~11, pp.~4021--4036, 2021.
+\bibitem{bai2025qwen25vl} S.~Bai \emph{et al.}, ``Qwen2.5-VL technical report,'' arXiv:2502.13923, 2025.
+\bibitem{robinson2021hard} J.~Robinson, C.-Y. Chuang, S.~Sra, and S.~Jegelka, ``Contrastive learning with hard negative samples,'' in \emph{Proc. ICLR}, 2021.
 \end{thebibliography}
 
 \end{document}
