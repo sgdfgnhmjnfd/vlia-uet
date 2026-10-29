@@ -181,7 +181,7 @@
 {\fontsize{12}{15}\selectfont\setstretch{1.3}
 \textbf{Tóm tắt:} Robot cộng tác làm việc cạnh con người sẽ hữu ích hơn nếu tự đoán được người đó \textit{định làm gì}, thay vì chờ một câu lệnh. Các mô hình Thị giác--Ngôn ngữ--Hành động (VLA) như SmolVLA chỉ biết mục tiêu qua câu lệnh: trên bộ mô phỏng LIBERO-10, SmolVLA thành công 19/100 lượt với câu lệnh đúng nhưng 0/100 lượt khi câu lệnh bị bỏ trống. Đồ án đề xuất kiến trúc VLIA (Vision--Language--Intention--Action), gồm một mô-đun ý định xem vài khung hình đầu của video góc nhìn thứ nhất, chọn ra mục đích của bước thao tác người đang làm, rồi đưa mục đích đó vào SmolVLA dưới dạng một token ý định.
 
-Mô-đun ý định được xây dựng qua các giai đoạn thực nghiệm nối tiếp trên bộ dữ liệu EgoIntent. Thử nghiệm ban đầu trên tập nhỏ cho thấy các mô hình huấn luyện có cấu trúc phức tạp không vượt được cách lấy trung bình khung hình, và 81,5\% lỗi là nhầm giữa các bước trong cùng một tác vụ. Trên 2.503 bước thao tác (27 video, 13 khung cảnh) với kiểm tra chéo theo khung cảnh, lớp đọc huấn luyện trên đặc trưng của chính backbone SmolVLM2 chỉ gần bằng đoán mò. Bộ mã hóa ảnh--văn bản SigLIP dùng nguyên, không huấn luyện, đạt 27,5--28,9\% khi chọn đúng mục đích trong 5 câu của cùng video (đoán mò 20\%). Dùng SigLIP cỡ lớn và trừ đi phần khung cảnh chung của các bước trước, độ chính xác đạt 34,1--38,7\%, và cấu hình này được chọn giống nhau ở cả 8 lần kiểm tra chéo. Trên tập test riêng chỉ chạy một lần, cấu hình đề xuất đạt 30,2\% so với 21,4\% của SigLIP cơ bản khi xem 8 khung hình. Nếu chỉ trả lời một nửa số trường hợp chắc chắn nhất, độ chính xác tăng thêm 6,9--7,9 điểm, nên robot biết khi nào cần hỏi lại. Khi đoán hành động sắp tới chỉ từ 8 khung gần nhất, độ chính xác giảm từ 38,0\% (đoán trước 0,6 giây) rồi đi ngang ở khoảng 25--27\% từ khoảng 12 giây (đo theo giây thật); xem đoạn dài hơn 4 giây không giúp, nhưng độ chắc chắn của mô-đun gần như không đổi theo khoảng đoán trước. Các thử nghiệm cải thiện thêm cho thấy cấu hình đề xuất gần như đã là tốt nhất: huấn luyện thêm một lớp hiệu chỉnh làm kém đi 2--4 điểm, mô hình Qwen2.5-VL-3B không huấn luyện chỉ đạt ngang (39,8\% so với 38,7\% ở 8 khung), còn cộng thêm điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\%. Phía robot, khi câu lệnh luôn để trống và nhiệm vụ chỉ được đưa vào qua token ý định, SmolVLA thành công 20/100 lượt, ngang với 19/100 khi nghe câu lệnh đúng, còn token ý định sai cho 0/100. Như vậy token ý định thay được câu lệnh.
+Mô-đun ý định được xây dựng qua các giai đoạn thực nghiệm nối tiếp trên bộ dữ liệu EgoIntent. Thử nghiệm ban đầu trên tập nhỏ cho thấy các mô hình huấn luyện có cấu trúc phức tạp không vượt được cách lấy trung bình khung hình, và 81,5\% lỗi là nhầm giữa các bước trong cùng một tác vụ. Trên 2.503 bước thao tác (27 video, 13 khung cảnh) với kiểm tra chéo theo khung cảnh, lớp đọc huấn luyện trên đặc trưng của chính backbone SmolVLM2 chỉ gần bằng đoán mò. Bộ mã hóa ảnh--văn bản SigLIP dùng nguyên, không huấn luyện, đạt 27,5--28,9\% khi chọn đúng mục đích trong 5 câu của cùng video (đoán mò 20\%). Dùng SigLIP cỡ lớn và trừ đi phần khung cảnh chung của các bước trước, độ chính xác đạt 34,1--38,7\%, và cấu hình này được chọn giống nhau ở cả 8 lần kiểm tra chéo. Trên tập test riêng chỉ chạy một lần, cấu hình đề xuất đạt 30,2\% so với 21,4\% của SigLIP cơ bản khi xem 8 khung hình. Nếu chỉ trả lời một nửa số trường hợp chắc chắn nhất, độ chính xác tăng thêm 6,9--7,9 điểm, nên robot biết khi nào cần hỏi lại. Khi đoán hành động sắp tới chỉ từ 8 khung gần nhất, độ chính xác giảm từ 38,0\% (đoán trước 0,6 giây) rồi đi ngang ở khoảng 25--27\% từ khoảng 12 giây (đo theo giây thật); xem đoạn dài hơn 4 giây không giúp, còn số khung trong đoạn không ảnh hưởng (2 khung rải trong 4 giây đã đủ), nhưng độ chắc chắn của mô-đun gần như không đổi theo khoảng đoán trước. Các thử nghiệm cải thiện thêm cho thấy cấu hình đề xuất gần như đã là tốt nhất: huấn luyện thêm một lớp hiệu chỉnh làm kém đi 2--4 điểm, mô hình Qwen2.5-VL-3B không huấn luyện chỉ đạt ngang (39,8\% so với 38,7\% ở 8 khung), còn cộng thêm điểm không trừ khung cảnh làm MRR toàn tập tăng 10--21\%. Phía robot, khi câu lệnh luôn để trống và nhiệm vụ chỉ được đưa vào qua token ý định, SmolVLA thành công 20/100 lượt, ngang với 19/100 khi nghe câu lệnh đúng, còn token ý định sai cho 0/100. Như vậy token ý định thay được câu lệnh.
 
 \vspace{6pt}
 \noindent\textbf{\textit{Từ khóa:}} \textit{robot cộng tác, dự đoán ý định, mô hình VLA, video góc nhìn thứ nhất.}\par}
@@ -1548,7 +1548,7 @@ $48\to64$ (15,4$\to$20,5)& $+2{,}2$ [$+1{,}0$; $+3{,}5$] & & $+0{,}4$ [$-0{,}4$;
 \subsection{Đo lại theo giây thật: xem bao lâu và đoán xa bao nhiêu}
 \label{sec:stage7_seconds}
 
-\textbf{Câu hỏi.} Ở trên, mỗi bước có 8 khung lấy cách đều, nên ``$H$ khung'' dài hay ngắn tùy độ dài của bước, và mô-đun luôn xem đúng 8 khung. Cách lấy 8 khung này theo nguyên lý lấy mẫu thưa, cách đều của TSN \citep{wang2016tsn}, nhưng con số 8 chưa được chọn dựa trên kết quả. Phần này trả lời hai câu hỏi: tính theo giây thật thì mô-đun đoán trước được bao xa, và cho mô-đun xem đoạn video dài hơn có giúp không?
+\textbf{Câu hỏi.} Ở trên, mỗi bước có 8 khung lấy cách đều, nên ``$H$ khung'' dài hay ngắn tùy độ dài của bước, và mô-đun luôn xem đúng 8 khung. Cách lấy 8 khung này theo nguyên lý lấy mẫu thưa, cách đều của TSN \citep{wang2016tsn}, nhưng con số 8 chưa được chọn dựa trên kết quả; ảnh hưởng của riêng số khung được kiểm tra ở giai đoạn 9 (\cref{sec:stage9a}). Phần này trả lời hai câu hỏi: tính theo giây thật thì mô-đun đoán trước được bao xa, và cho mô-đun xem đoạn video dài hơn có giúp không?
 
 \textbf{Cách làm.} Video gốc quay ở 30 khung/giây. Mỗi đoạn video được lấy lại đều \textit{4 khung mỗi giây}, không phụ thuộc độ dài bước, rồi mã hóa bằng SigLIP lớn. Các bước của một video được nối theo thứ tự thành một dòng thời gian. Cứ mỗi giây lấy một thời điểm $t$, và mọi cấu hình dùng chung các thời điểm này (5.710 thời điểm trên 26 video; một video bị bỏ vì ngắn hơn 36 giây). Tại $t$, mô-đun xem $C$ giây gần nhất ($C\in\{1,2,4,8,16\}$, tức 4 đến 64 khung), lấy trung bình và trừ khung cảnh của phần trước đó như C2. Nó phải chọn hành động của bước chứa thời điểm $t+H$ ($H$ từ 0,5 đến 20 giây) trong 5 câu cùng video. Năm câu ứng viên giống nhau với mọi $C$, nên các độ dài quan sát so được trực tiếp với nhau.
 
@@ -1719,10 +1719,59 @@ Cấu hình F của giai đoạn 3 gần như đã là tốt nhất cho phép ch
 \end{ketqua}
 
 % ---------------------------------------------------------------------
+\section{Giai đoạn 9: Số khung hình hay độ dài đoạn nhìn}
+\label{sec:stage9}
+
+Giai đoạn 7 đo theo giây thật, nhưng ở đó số khung và độ dài đoạn nhìn luôn đi cùng nhau: xem 2 giây là 8 khung, xem 4 giây là 16 khung. Vì vậy chưa trả lời được câu hỏi ``nếu lấy 12 hay 24 khung thì sao'': kết quả thay đổi là do \textit{số khung} hay do \textit{độ dài đoạn nhìn}? Giai đoạn này tách hai yếu tố đó, đồng thời xem lại khâu nhận ra hành động hiện tại, nút thắt đã thấy ở giai đoạn 8. Các luật đánh giá được ghi trước khi chạy.
+
+\subsection{Tách số khung khỏi độ dài đoạn nhìn}
+\label{sec:stage9a}
+
+\textbf{Cách làm.} Dùng lại các khung đã lấy ở 4 khung/giây của giai đoạn 7, cùng 5.710 thời điểm và cùng 5 câu ứng viên. Cố định độ dài đoạn nhìn $W\in\{2,4,8\}$ giây, rồi trong đoạn đó lấy $N$ khung cách đều, luôn gồm khung mới nhất, với $N$ từ 2 đến $4W$ ($N=4W$ là lấy mọi khung, trùng với giai đoạn 7). Ngoài ra, chạy thêm đúng 12 và 24 khung liền nhau (3 và 6 giây). Phép kiểm tra đầu vào: với $N=4W$, kết quả phải trùng giai đoạn 7, và đã trùng. Luật đặt trước: số khung được coi là \textit{có ảnh hưởng} nếu, ở một độ dài $W$ nào đó và khi đoán trước không quá 2 giây, hai mức $N$ liền nhau khác nhau rõ từ 1 điểm trở lên.
+
+\begin{table}[ht]
+\centering
+\caption{Giai đoạn 9a: cố định độ dài đoạn nhìn $W$, thay số khung $N$ lấy trong đoạn đó. Ô ghi tỉ lệ chọn đúng hành động sắp tới trong 5 câu cùng video khi đoán trước 0,5 / 2 giây (\%, 5.710 thời điểm, 26 video, đoán mò 20\%).}
+\label{tab:stage9a}
+\small
+\begin{tabular}{lccccc}
+\toprule
+& \multicolumn{5}{c}{Số khung $N$ lấy trong đoạn} \\
+\cmidrule(lr){2-6}
+Độ dài đoạn $W$ & 2 & 4 & 8 & 16 & 32 \\
+\midrule
+2 giây & 36,7 / 34,2 & 36,3 / 34,5 & 35,9 / 34,4 & --- & --- \\
+4 giây & \textbf{36,8} / \textbf{34,7} & 36,3 / 34,1 & 36,0 / 34,1 & 35,7 / 34,2 & --- \\
+8 giây & 35,9 / 33,6 & 35,4 / 33,8 & 34,7 / 33,3 & 34,3 / 33,2 & 34,3 / 33,2 \\
+\midrule
+\multicolumn{6}{l}{Liền nhau: 12 khung (3 giây) 36,0 / 34,5; \quad 24 khung (6 giây) 35,4 / 33,1} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Kết quả.} Theo luật đặt trước, \textit{độ dài đoạn nhìn quyết định, số khung thì không}. Trong cùng một đoạn, không có cặp $N$ liền nhau nào khác nhau rõ từ 1 điểm khi đoán trước 0,5--2 giây (\cref{tab:stage9a}). Chỉ 2 khung rải trong 4 giây đã đạt 36,8\%, ngang với 16 khung (35,7\%). Ngược lại, kéo đoạn nhìn từ 4 lên 8 giây làm giảm khoảng 1 điểm ở mọi $N$. Câu hỏi 12 và 24 khung có câu trả lời trực tiếp: 12 khung cho đúng bằng 8 khung ($+0{,}0$ điểm [$-0{,}9$; $+0{,}9$] khi đoán trước 0,5 giây), còn 24 khung kém 16 khung $1{,}1$ điểm [$-2{,}2$; $-0{,}2$] khi đoán trước 2 giây. Mức giảm này là do đoạn nhìn dài hơn (6 so với 4 giây), không phải do thêm khung.
+
+Kết quả này khớp với nhận xét gốc của TSN \citep{wang2016tsn}: các khung gần nhau gần như giống hệt nhau, nên lấy thưa là đủ. Với mô-đun lấy trung bình như F, thêm khung trong cùng một đoạn chỉ là lấy trung bình thêm các ảnh gần giống nhau, còn kéo dài đoạn thì trộn thêm các hành động đã qua. Ý nghĩa thực tế cho robot: mỗi lần cập nhật chỉ cần mã hóa vài khung, thay vì hàng chục.
+
+\subsection{Đo lại khâu nhận ra hành động hiện tại}
+\label{sec:stage9b}
+
+Giai đoạn 8 thấy F nhận đúng câu WHAT của bước hiện tại, trong tất cả các bước của video, chỉ 4--6\%. Cần biết con số này thấp đến đâu so với độ khó của bài. Mỗi video có trung vị 85 câu WHAT khác nhau (ít nhất 17, nhiều nhất 120) trên trung vị 99 bước, nên đoán mò chỉ đúng khoảng 1,2\%; 4,0--6,2\% (ở $k=2$ đến 8) là gấp 3--5 lần đoán mò. So theo nội dung câu thay cho theo đúng dòng chỉ tăng khoảng 0,3 điểm, nên con số này không bị đánh giá thấp. Câu đúng nằm trong 5 câu điểm cao nhất của F ở 18,6--23,5\% số bước, và trong 10 câu cao nhất ở 31,2--38,8\%. Đây cũng là \textit{trần} cho mọi cách chọn lại trong danh sách rút gọn của F: nếu chỉ xét 5 câu đầu, khâu nhận ra không thể vượt 23,5\% ở $k=8$.
+
+\subsection{Vì sao không dùng các mô hình video góc nhìn thứ nhất}
+\label{sec:stage9d}
+
+Một hướng tự nhiên để nhận ra hành động tốt hơn là thay SigLIP bằng mô hình video--chữ học trên video góc nhìn thứ nhất như EgoVLP \citep{lin2022egovlp} hoặc LaViLa \citep{zhao2023lavila}. Đồ án đã kiểm tra và quyết định \textit{không} dùng, vì một lý do chính. EgoIntent được dựng từ 32 video Ego4D, và mã video của nó chính là mã Ego4D. Cả LaViLa lẫn EgoVLP đều học trước trên Ego4D (LaViLa trên lời tường thuật của Ego4D, EgoVLP trên EgoClip dựng từ Ego4D), và không công bố đã loại những video nào. Như vậy các video của EgoIntent, kể cả tập test riêng, có thể đã được các mô hình này xem cùng lời mô tả khi học trước: kết quả trên EgoIntent sẽ không còn đáng tin. SigLIP học trên ảnh--chú thích lấy từ web, không học trên Ego4D, nên không có rủi ro này. Ngoài ra, cả ba mô hình đều cần phiên bản PyTorch và thư viện cũ (torch 1.10--1.13), không chạy chung môi trường với SmolVLA. Muốn dùng chúng một cách công bằng, trước hết phải đối chiếu 32 mã video của EgoIntent với danh sách video học trước của từng mô hình.
+
+\begin{ketqua}[Kết luận giai đoạn 9]
+Số khung hình không quan trọng bằng độ dài đoạn nhìn. Trong cùng một đoạn, 2, 4, 8 hay 16 khung cho kết quả như nhau, và 12 khung bằng đúng 8 khung. Đoạn nhìn dài hơn 4 giây làm kém đi khoảng 1 điểm. Như vậy, nguyên lý lấy mẫu thưa, cách đều của TSN áp dụng được, và robot chỉ cần mã hóa vài khung cho mỗi lần đoán. Khâu nhận ra hành động hiện tại đạt gấp 3--5 lần đoán mò, nhưng chỉ 23,5\% số bước có câu đúng trong 5 câu đầu, nên mọi cách chọn lại trong danh sách này đều bị giới hạn. Các mô hình video học trên Ego4D không được dùng vì có nguy cơ đã thấy chính dữ liệu kiểm tra.
+\end{ketqua}
+
+% ---------------------------------------------------------------------
 \section{Tổng hợp các giai đoạn}
 \label{sec:summary}
 
-\Cref{tab:summary} tóm tắt các giai đoạn. Mạch chung: tự huấn luyện trên dữ liệu nhỏ không đủ (giai đoạn 0--1); dùng mô hình đã liên kết sẵn ảnh với chữ cho tín hiệu rõ (giai đoạn 2); trừ phần khung cảnh chung và dùng bộ mã hóa lớn hơn vượt ngưỡng 30\% (giai đoạn 3) và giữ được ưu thế trên video mới (giai đoạn 4); độ chắc chắn cho robot biết khi nào hỏi lại (giai đoạn 5); chỗ cần đưa ý định vào robot là chỗ của câu lệnh (giai đoạn 6); từ 8 khung gần nhất, mô-đun đoán trước được hành động sắp tới, với phần có ích nhất trong khoảng 7--8 giây (giai đoạn 7); và các cách cải thiện thêm không vượt rõ cấu hình đã chốt, trừ việc kết hợp hai cách tính điểm giúp xếp hạng toàn tập (giai đoạn 8).
+\Cref{tab:summary} tóm tắt các giai đoạn. Mạch chung: tự huấn luyện trên dữ liệu nhỏ không đủ (giai đoạn 0--1); dùng mô hình đã liên kết sẵn ảnh với chữ cho tín hiệu rõ (giai đoạn 2); trừ phần khung cảnh chung và dùng bộ mã hóa lớn hơn vượt ngưỡng 30\% (giai đoạn 3) và giữ được ưu thế trên video mới (giai đoạn 4); độ chắc chắn cho robot biết khi nào hỏi lại (giai đoạn 5); chỗ cần đưa ý định vào robot là chỗ của câu lệnh (giai đoạn 6); từ 8 khung gần nhất, mô-đun đoán trước được hành động sắp tới, độ chính xác giảm dần đến khoảng 12 giây rồi đi ngang (giai đoạn 7); các cách cải thiện thêm không vượt rõ cấu hình đã chốt, trừ việc kết hợp hai cách tính điểm giúp xếp hạng toàn tập (giai đoạn 8); và độ dài đoạn nhìn, chứ không phải số khung, quyết định kết quả (giai đoạn 9).
 
 \begin{table}[ht]
 \centering
@@ -1742,6 +1791,7 @@ GĐ & Cách làm & Kết quả chính & Quyết định \\
 6 & Token ý định trong SmolVLA; LIBERO & 7/7 kiểm thử đạt; lệnh đúng 19/100, rỗng 0/100; chỉ token ý định 20/100, ý định sai 0/100 & Thay ý định đúng bằng ý định đoán từ video \\
 7 & Đoán hành động sau $H$ khung, $H$ từ 0,6 đến 20,5 s & 38,0\% (0,6 s) xuống 27,7\% (7,7 s); theo giây thật đi ngang từ 12 s; xem dài hơn 4 s không giúp; độ chênh gần như không đổi & Ngưỡng hành động phải tính cả khoảng đoán trước \\
 8 & Gộp khung, lớp hiệu chỉnh, Qwen2.5-VL-3B, đoán NEXT, so với cách làm cơ sở & Chọn 1/5 không tăng rõ; hiệu chỉnh $-$2,0--4,0 điểm; MRR $+$10--21\%; NEXT 27,8--32,1\%; đoán trước gần bằng ``nhận ra rồi chép'' & Giữ F, thêm điểm không trừ khung cảnh khi xếp hạng toàn tập \\
+9 & Cố định đoạn nhìn, thay số khung; đo lại khâu nhận ra & 2--16 khung như nhau (36,8\% với 2 khung/4 s); 12 khung $=$ 8 khung; đoạn $>$4 s kém $\sim$1 điểm; nhận ra bước hiện tại 4--6\% (đoán mò 1,2\%) & Chỉ cần vài khung; không dùng mô hình học trên Ego4D \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1832,7 +1882,8 @@ So với mục tiêu ở \cref{sec:muctieu}, mục tiêu thứ nhất (xây dự
   \item \textbf{Chỉ thử một mô hình ngôn ngữ--thị giác nhỏ.} Qwen2.5-VL-3B với một câu hỏi cố định, ở hai giá trị $k$; bản 7B không vừa GPU 16 GB.
   \item \textbf{Câu đồng nghĩa bị tính là sai.} 44,5\% số bước có một câu khác trong cùng video gần như cùng nghĩa, nên điểm tuyệt đối bị chặn trên.
   \item \textbf{Thí nghiệm LIBERO nhỏ.} Một hạt giống huấn luyện, một checkpoint, 10 lượt mỗi nhiệm vụ, trong mô phỏng; bản token ý định và bản câu lệnh là hai mô hình huấn luyện riêng.
-  \item \textbf{Dòng thời gian ở giai đoạn 7 bỏ qua khoảng trống giữa các bước.} Phép đo theo giây thật đã thay cho cách suy thời gian từ độ dài bước, nhưng các đoạn video của từng bước được nối liền nhau, nên khoảng trống giữa hai bước (nếu có) không được tính. Chỉ thử một mật độ 4 khung/giây và một cách gộp là lấy trung bình.
+  \item \textbf{Dòng thời gian ở giai đoạn 7 bỏ qua khoảng trống giữa các bước.} Phép đo theo giây thật đã thay cho cách suy thời gian từ độ dài bước, nhưng các đoạn video của từng bước được nối liền nhau, nên khoảng trống giữa hai bước (nếu có) không được tính. Chỉ thử một mật độ gốc 4 khung/giây (lấy thưa hơn trong đó ở giai đoạn 9) và một cách gộp là lấy trung bình.
+  \item \textbf{Chưa so với mô hình video học trên Ego4D.} EgoIntent dựng từ video Ego4D, nên LaViLa và EgoVLP có nguy cơ đã thấy dữ liệu kiểm tra khi học trước; việc đối chiếu mã video chưa được làm (\cref{sec:stage9d}).
 \end{itemize}
 
 \mucnho{Hướng phát triển}
@@ -2125,6 +2176,9 @@ R. Zhang, W. Zhang, R. Fang, et al., ``Tip-Adapter: Training-free adaption of CL
 
 \bibitem{zhao2024antgpt}
 Q. Zhao, S. Wang, C. Zhang, et al., ``AntGPT: Can large language models help long-term action anticipation from videos?'', \emph{International Conference on Learning Representations (ICLR)}, 2024.
+
+\bibitem{zhao2023lavila}
+Y. Zhao, I. Misra, P. Kr\"ahenb\"uhl, R. Girdhar, ``Learning video representations from large language models'', \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 2023, pp. 6586--6597.
 
 \bibitem{zhao2021calibrate}
 Z. Zhao, E. Wallace, S. Feng, D. Klein, S. Singh, ``Calibrate before use: Improving few-shot performance of language models'', \emph{Proceedings of the International Conference on Machine Learning (ICML)}, PMLR 139, 2021, pp. 12697--12706.
