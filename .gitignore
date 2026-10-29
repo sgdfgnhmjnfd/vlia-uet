@@ -86,3 +86,9 @@ results/scene_cv_v1/text_embeddings.pt
 *.out
 *.bbl
 *.blg
+
+# Thesis and paper drafts are kept outside this public repo until submission
+thesis_v2/
+paper/
+thesis.tex
+thesis/
