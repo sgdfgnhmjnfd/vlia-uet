@@ -23,6 +23,10 @@ Subcommands
             it), copy_true (true current label). Video-bootstrap 95% CIs and
             paired consecutive-H and consecutive-C differences.
             -> results/time_horizon_v1/
+  frames    Stage 9a (`results/prereg_stage9_prediction.md`): WHAT, windows of
+            W s with N evenly strided frames (newest included) and contiguous
+            3 s / 6 s contexts, same anchors and candidates as `run`; gate:
+            N = 4W reproduces time_horizon_v1. -> results/stage9a_frames/
 
 Typical run on the lab machine (GPU free):
   export HF_HOME=/media/dhqg/d3/hf_cache HF_HUB_OFFLINE=1
@@ -309,6 +313,137 @@ def cmd_run(args) -> int:
     return 0
 
 
+# ======================================================================
+# frames (Stage 9a, CPU): frame count vs window length
+# ======================================================================
+
+FRAMES_WINDOWS = {2: (2, 4, 8), 4: (2, 4, 8, 16), 8: (2, 4, 8, 16, 32)}  # W seconds -> N frames
+FRAMES_CONTIGUOUS = (3, 6)  # seconds, every frame (12 and 24 frames at 4 fps)
+FRAMES_HORIZONS = (0.5, 2, 4, 8)  # same literals as HORIZONS: candidate seeds use f"{h}"
+
+
+def strided_query(emb, a, w, n, mu):
+    """N frames of the w-frame window ending at a, stride w/N, newest included; C2 ref = frames before the window."""
+    start = a - w + 1
+    ref = emb[:start].mean(axis=0) if start > 0 else mu
+    sel = a - (w // n) * np.arange(n)[::-1]
+    return normalize(normalize(emb[sel] - ref).mean(axis=0))
+
+
+def cmd_frames(args) -> int:
+    out = ROOT / "results/stage9a_frames"
+    if (out / "summary.csv").exists() and not args.overwrite:
+        raise FileExistsError(f"{out}/summary.csv exists (use --overwrite)")
+    rows = read_rows(MANIFEST)
+    order = videos_in_order(rows)
+    cache = {}
+    for v in sorted(order):
+        z = np.load(args.cache / f"{v}.npz")
+        cache[v] = {"emb": normalize(z["emb"].astype(np.float32)), "row": z["row"], "rate": float(z["rate"])}
+    rate = {c["rate"] for c in cache.values()}
+    assert rate == {4.0}, rate
+    rate = 4.0
+    mu = normalize(np.concatenate([c["emb"] for c in cache.values()])).mean(axis=0)
+    # same vocabulary as `run` (WHAT and WHY) so text embeddings are identical
+    vocab = sorted({r[k] for r in rows for k in ("what", "why")})
+    temb = AH.encode_texts(ENCODER_ID, vocab, device=args.device)
+    tix = {t: i for i, t in enumerate(vocab)}
+    # anchors of `run` with its default grid -> identical query set
+    max_c, max_h, step = int(round(max(CONTEXTS) * rate)), int(round(max(HORIZONS) * rate)), int(round(rate))
+    n_h = {h: int(round(h * rate)) for h in FRAMES_HORIZONS}
+    configs = [(w, n) for w, ns in FRAMES_WINDOWS.items() for n in ns]
+    configs += [(c, int(c * rate)) for c in FRAMES_CONTIGUOUS]
+    recs, dropped = [], []
+    for v in sorted(cache):
+        emb, row = cache[v]["emb"], cache[v]["row"]
+        anchors = range(max_c - 1, len(emb) - max_h, step)
+        if len(anchors) == 0:
+            dropped.append(v)
+            continue
+        distinct = sorted({rows[i]["what"] for i in order[v]})
+        for w, n in configs:
+            wf = int(w * rate)
+            for a in anchors:
+                q = query_vec(emb, a, wf, mu) if n == wf else strided_query(emb, a, wf, n, mu)
+                for h in FRAMES_HORIZONS:
+                    target = rows[int(row[a + n_h[h]])]["what"]
+                    cand = candidates(v, a, h, target, distinct)
+                    if cand is None:
+                        continue
+                    s = temb[[tix[t] for t in cand]] @ q
+                    recs.append((w, n, h, v, a, float((s[0] > s[1:]).all())))
+    if dropped:
+        print(f"dropped {len(dropped)} videos shorter than {max_c + max_h} frames: {dropped}", flush=True)
+    w_a = np.array([r[0] for r in recs], float)
+    n_a = np.array([r[1] for r in recs])
+    h_a = np.array([r[2] for r in recs], float)
+    vid_a = np.array([r[3] for r in recs])
+    anc_a = np.array([r[4] for r in recs])
+    hit = np.array([r[5] for r in recs])
+    summary = []
+    for w, n in configs:
+        for h in FRAMES_HORIZONS:
+            m = (w_a == w) & (n_a == n) & (h_a == h)
+            p, lo, hi = boot(hit[m], vid_a[m])
+            summary.append({"window_s": w, "n_frames": n, "contiguous": n == int(w * rate), "horizon_s": h,
+                            "n_queries": int(m.sum()), "n_videos": len(np.unique(vid_a[m])),
+                            "ours_acc5": p, "ours_lo": lo, "ours_hi": hi})
+    # gate: every frame of W reproduces time_horizon_v1 with C = W
+    ref = {(float(r["context_s"]), float(r["horizon_s"])): float(r["ours_acc5"])
+           for r in csv.DictReader((ROOT / "results/time_horizon_v1/summary.csv").open()) if r["label"] == "WHAT"}
+    bad = {(r["window_s"], r["horizon_s"]): (r["ours_acc5"], ref[(r["window_s"], r["horizon_s"])])
+           for r in summary if r["window_s"] in FRAMES_WINDOWS and r["contiguous"]
+           and abs(r["ours_acc5"] - ref[(r["window_s"], r["horizon_s"])]) > 1e-9}
+    print(f"GATE N=4W reproduces time_horizon_v1: {'PASS' if not bad else 'FAIL ' + str(bad)}", flush=True)
+    if bad:
+        raise SystemExit("gate failed: frames does not reproduce time_horizon_v1; stopping")
+
+    def pair(c0, c1, h):
+        sel = []
+        for w, n in (c0, c1):
+            m = (w_a == w) & (n_a == n) & (h_a == h)
+            sel.append(dict(zip(zip(vid_a[m], anc_a[m]), hit[m])))
+        ks = sorted(set(sel[0]) & set(sel[1]))
+        a0 = np.array([sel[0][k] for k in ks])
+        a1 = np.array([sel[1][k] for k in ks])
+        d = boot(a1 - a0, np.array([k[0] for k in ks]))
+        return {"horizon_s": h, "from_window_s": c0[0], "from_n": c0[1], "to_window_s": c1[0], "to_n": c1[1],
+                "n": len(ks), "acc_from": a0.mean(), "acc_to": a1.mean(), "diff": d[0], "diff_lo": d[1],
+                "diff_hi": d[2], "clear": bool(d[1] > 0 or d[2] < 0)}
+
+    paired = []
+    for w, ns in FRAMES_WINDOWS.items():
+        for n0, n1 in zip(ns, ns[1:]):
+            paired += [pair((w, n0), (w, n1), h) for h in FRAMES_HORIZONS]
+    paired += [pair((2, 8), (3, 12), h) for h in FRAMES_HORIZONS]
+    paired += [pair((4, 16), (6, 24), h) for h in FRAMES_HORIZONS]
+    rule_hits = [p for p in paired if p["from_window_s"] == p["to_window_s"] and p["horizon_s"] <= 2
+                 and p["clear"] and abs(p["diff"]) >= 0.01]
+    reading = "frame count matters" if rule_hits else "window length, not frame count, decides"
+    out.mkdir(parents=True, exist_ok=True)
+    for name, rws in (("summary.csv", summary), ("paired_N.csv", paired)):
+        with (out / name).open("w", newline="", encoding="utf-8") as handle:
+            wr = csv.DictWriter(handle, fieldnames=list(rws[0]))
+            wr.writeheader()
+            wr.writerows(rws)
+    (out / "config.json").write_text(json.dumps({
+        "rate": rate, "windows_s_to_n": {str(k): list(v) for k, v in FRAMES_WINDOWS.items()},
+        "contiguous_s": list(FRAMES_CONTIGUOUS), "horizons_s": list(FRAMES_HORIZONS), "label": "WHAT",
+        "anchors": "as time_horizon_v1 run (frame 63 .. len-80, every 4 frames)", "centering": "C2",
+        "encoder": ENCODER_ID, "B": B, "dropped_videos": dropped, "gate": "PASS",
+        "reading_rule_hits": rule_hits, "reading": reading, "test_split_read": False}, indent=2, default=float))
+    for r in summary:
+        print(f"W={r['window_s']}s N={r['n_frames']:>2} H={r['horizon_s']:>3}s n={r['n_queries']} "
+              f"ours {100 * r['ours_acc5']:.1f} [{100 * r['ours_lo']:.1f}; {100 * r['ours_hi']:.1f}]", flush=True)
+    for p in paired:
+        print(f"H={p['horizon_s']:>3}s W{p['from_window_s']}/N{p['from_n']} -> W{p['to_window_s']}/N{p['to_n']}: "
+              f"{100 * p['acc_from']:.1f} -> {100 * p['acc_to']:.1f} diff {100 * p['diff']:+.1f} "
+              f"[{100 * p['diff_lo']:+.1f}; {100 * p['diff_hi']:+.1f}]{' CLEAR' if p['clear'] else ''}")
+    print(f"reading: {reading}", flush=True)
+    print(f"saved {out}", flush=True)
+    return 0
+
+
 def plot(summary, path):
     import matplotlib
 
@@ -346,13 +481,19 @@ def cmd_selftest(args) -> int:
     c1, c2 = candidates("v", 10, 2, "c", d), candidates("v", 10, 2, "c", d)
     assert c1 == c2 and c1[0] == "c" and len(set(c1)) == 5, "candidates must be seeded and distinct"
     assert candidates("v", 10, 2, "a", ["a", "b"]) is None
+    # 9a: every frame of the window equals the contiguous query; strided keeps the newest frame
+    assert np.allclose(strided_query(emb, 20, 8, 8, mu), query_vec(emb, 20, 8, mu)), "N=W must equal query_vec"
+    ref = emb[:13].mean(axis=0)
+    assert np.allclose(strided_query(emb, 20, 8, 2, mu), normalize(normalize(emb[[16, 20]] - ref).mean(axis=0))), \
+        "N=2 of 8: frames a-4, a; ref = frames before the window"
+    assert np.allclose(strided_query(emb, 20, 8, 4, mu), normalize(normalize(emb[[14, 16, 18, 20]] - ref).mean(axis=0)))
     print("selftest passed")
     return 0
 
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("cmd", choices=["selftest", "extract", "run"])
+    p.add_argument("cmd", choices=["selftest", "extract", "run", "frames"])
     p.add_argument("--cache", type=Path, default=CACHE)
     p.add_argument("--rate", type=float, default=4.0, help="frames per second (extract)")
     p.add_argument("--batch-size", type=int, default=32)
@@ -364,12 +505,12 @@ def main() -> int:
     args = p.parse_args()
     if args.cmd != "selftest" and not PREREG.exists():
         raise SystemExit(f"missing preregistration {PREREG}")
-    if args.cmd == "run" and args.device == "cuda":
+    if args.cmd in ("run", "frames") and args.device == "cuda":
         import torch
 
         if not torch.cuda.is_available():
             args.device = "cpu"
-    return {"selftest": cmd_selftest, "extract": cmd_extract, "run": cmd_run}[args.cmd](args)
+    return {"selftest": cmd_selftest, "extract": cmd_extract, "run": cmd_run, "frames": cmd_frames}[args.cmd](args)
 
 
 if __name__ == "__main__":
