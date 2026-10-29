@@ -1,0 +1,84 @@
+{
+  "budgets": [
+    0.1,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "diag_budget": 0.25,
+  "gammas": [
+    0.0,
+    0.25,
+    0.5,
+    1.0,
+    2.0
+  ],
+  "gamma_by_fold": {
+    "0": 1.0,
+    "1": 0.5,
+    "2": 0.5,
+    "3": 0.5,
+    "4": 0.5,
+    "5": 0.5,
+    "6": 0.5,
+    "7": 0.5
+  },
+  "qwen_seconds_per_query": 2.951939437201294,
+  "quantile": "np.quantile linear on training-fold margins, use if margin < t",
+  "b100": "every query fused (t = +inf)",
+  "bootstrap": {
+    "B": 10000,
+    "seed": 0,
+    "cluster": "video_uid"
+  },
+  "gates": {
+    "G1": {
+      "2": {
+        "got": 0.3407910507391131,
+        "expected": 0.3407910507391131,
+        "pass": true
+      },
+      "8": {
+        "got": 0.38713543747503,
+        "expected": 0.38713543747503,
+        "pass": true
+      }
+    },
+    "G2": {
+      "gamma_rows_match": true,
+      "2": {
+        "got": 0.34198961246504195,
+        "expected": 0.34198961246504195,
+        "pass": true
+      },
+      "8": {
+        "got": 0.4091090691170595,
+        "expected": 0.4091090691170595,
+        "pass": true
+      }
+    }
+  },
+  "verdicts": {
+    "C1": {
+      "pass": false,
+      "delta": 0.007990411506192568,
+      "ci95": [
+        -0.0021900403891216232,
+        0.018337978471743992
+      ],
+      "rule": "k=8, b=25%: cascade - F > 0, CI lower bound > 0"
+    },
+    "C2": {
+      "pass": false,
+      "cascade_minus_F": 0.007990411506192568,
+      "full_fusion_minus_F": 0.021973631642029565,
+      "kept_fraction": 0.3636363636363636,
+      "rule": "k=8, b=25%: (cascade - F) >= 0.5 * (full fusion - F), point estimates"
+    }
+  },
+  "preregistration_sha256": {
+    "results/prereg_stage10_cascade.md": "6d4e9c14190b99f27286dc8b14aaca63e62b08bf6722d885ce3a65631fa18417"
+  },
+  "git_commit": "bd22c545d807881360b72097bcc6758a83514da8",
+  "test_split_read": false
+}
