@@ -1803,10 +1803,43 @@ Số khung hình không quan trọng bằng độ dài đoạn nhìn. Trong cùn
 \end{ketqua}
 
 % ---------------------------------------------------------------------
+\section{Giai đoạn 10: Chỉ hỏi Qwen khi F phân vân}
+\label{sec:stage10}
+
+\textbf{Câu hỏi.} Giai đoạn 8c cho thấy cộng điểm F với Qwen2.5-VL-3B tăng 2,2 điểm khi đã xem hết bước, nhưng Qwen mất khoảng 3 giây cho mỗi lần hỏi. Nếu robot chỉ hỏi Qwen ở những bước F phân vân, liệu có giữ được phần lớn mức tăng với ít thời gian hơn không? Giai đoạn 5 đã cho thấy độ chênh điểm của F báo được lúc F dễ sai, nên đây là cách tự nhiên để chọn lúc cần hỏi.
+
+\textbf{Cách làm.} Dùng lại đúng điểm Qwen đã lưu ở giai đoạn 8c, không chạy mô hình mới. Với mỗi bước, độ chênh điểm của F là hiệu giữa câu điểm cao nhất và câu thứ hai. Trong từng lần kiểm tra chéo, ngưỡng được đặt sao cho một tỉ lệ $b$ số bước của các phần dùng để chọn có độ chênh dưới ngưỡng ($b\in\{10, 25, 50, 100\}\%$). Bước nào có độ chênh dưới ngưỡng thì dùng điểm kết hợp F $+$ Qwen, còn lại chỉ dùng F; $b=100\%$ chính là phép kết hợp đầy đủ của giai đoạn 8c. Phép kiểm tra đầu vào: F và phép kết hợp đầy đủ trùng đúng kết quả giai đoạn 8c (34,08/38,71\% và 34,20/40,91\%). Hai luật đặt trước, ở $k=8$ và $b=25\%$: C1, cách này phải hơn F rõ; C2, nó phải giữ ít nhất một nửa mức tăng của phép kết hợp đầy đủ.
+
+\begin{table}[ht]
+\centering
+\caption{Giai đoạn 10: chỉ hỏi Qwen ở tỉ lệ $b$ số bước có độ chênh điểm của F thấp nhất, $k=8$ (chọn đúng mục đích trong 5 câu cùng video, \%, 2.503 bước, đoán mò 20\%). Thời gian Qwen tính trung bình cho mỗi bước.}
+\label{tab:stage10}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+Tỉ lệ hỏi Qwen & Chọn đúng & Thời gian Qwen & So với F [CI 95\%] & So với hỏi mọi bước [CI 95\%] \\
+\midrule
+0\% (chỉ F) & 38,7 & 0 s & --- & $-2{,}2$ [$-4{,}4$; $-0{,}1$] \\
+10\% & 38,8 & 0,29 s & $+0{,}0$ [$-0{,}5$; $+0{,}6$] & $-2{,}2$ [$-4{,}2$; $-0{,}2$] \\
+25\% & 39,5 & 0,73 s & $+0{,}8$ [$-0{,}2$; $+1{,}8$] & $-1{,}4$ [$-3{,}1$; $+0{,}2$] \\
+50\% & 40,4 & 1,48 s & $+1{,}7$ [$-0{,}0$; $+3{,}4$] & $-0{,}5$ [$-1{,}2$; $+0{,}1$] \\
+100\% (giai đoạn 8c) & \textbf{40,9} & 2,95 s & $+2{,}2$ [$+0{,}1$; $+4{,}4$] & --- \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\textbf{Kết quả.} Cả hai luật đều không đạt (\cref{tab:stage10}). Hỏi Qwen ở 25\% số bước chỉ tăng 0,8 điểm (khoảng tin cậy chứa 0), tức giữ được 36\% mức tăng của việc hỏi ở mọi bước. Độ chính xác tăng gần như tỉ lệ thuận với số lần hỏi. Lý do thấy được khi tách hai nhóm ở $b=25\%$: trong nhóm F phân vân, Qwen giúp tăng 3,2 điểm (33,7 lên 36,9\%), nhưng trong nhóm F chắc chắn nó vẫn giúp tăng 1,8 điểm (40,4 lên 42,2\%). Như vậy phần Qwen bổ sung không chỉ nằm ở những bước F phân vân, nên độ chênh điểm của F không chọn được đúng lúc cần hỏi. Ở $k=2$, mọi mức đều ngang F, đúng như giai đoạn 8c.
+
+\begin{ketqua}[Kết luận giai đoạn 10]
+Chỉ hỏi Qwen khi F phân vân không giữ được mức tăng: ở 25\% số bước, độ chính xác chỉ tăng 0,8 điểm và không rõ ràng. Qwen giúp cả ở những bước F đã chắc chắn, nên mức tăng gần như tỉ lệ với số lần hỏi. Vì vậy, trong thời gian thực robot nên dùng F; còn khi có thời gian, ví dụ đã xem hết bước và chưa cần hành động ngay, có thể hỏi thêm Qwen ở mọi bước để được thêm khoảng 2 điểm.
+\end{ketqua}
+
+% ---------------------------------------------------------------------
 \section{Tổng hợp các giai đoạn}
 \label{sec:summary}
 
-\Cref{tab:summary} tóm tắt các giai đoạn. Mạch chung: tự huấn luyện trên dữ liệu nhỏ không đủ (giai đoạn 0--1); dùng mô hình đã liên kết sẵn ảnh với chữ cho tín hiệu rõ (giai đoạn 2); trừ phần khung cảnh chung và dùng bộ mã hóa lớn hơn vượt ngưỡng 30\% (giai đoạn 3) và giữ được ưu thế trên video mới (giai đoạn 4); độ chắc chắn cho robot biết khi nào hỏi lại (giai đoạn 5); chỗ cần đưa ý định vào robot là chỗ của câu lệnh (giai đoạn 6); từ 8 khung gần nhất, mô-đun đoán trước được hành động sắp tới, độ chính xác giảm dần đến khoảng 12 giây rồi đi ngang (giai đoạn 7); các cách cải thiện thêm không vượt rõ cấu hình đã chốt, trừ việc kết hợp hai cách tính điểm giúp xếp hạng toàn tập (giai đoạn 8); và độ dài đoạn nhìn, chứ không phải số khung, quyết định kết quả (giai đoạn 9).
+\Cref{tab:summary} tóm tắt các giai đoạn. Mạch chung: tự huấn luyện trên dữ liệu nhỏ không đủ (giai đoạn 0--1); dùng mô hình đã liên kết sẵn ảnh với chữ cho tín hiệu rõ (giai đoạn 2); trừ phần khung cảnh chung và dùng bộ mã hóa lớn hơn vượt ngưỡng 30\% (giai đoạn 3) và giữ được ưu thế trên video mới (giai đoạn 4); độ chắc chắn cho robot biết khi nào hỏi lại (giai đoạn 5); chỗ cần đưa ý định vào robot là chỗ của câu lệnh (giai đoạn 6); từ 8 khung gần nhất, mô-đun đoán trước được hành động sắp tới, độ chính xác giảm dần đến khoảng 12 giây rồi đi ngang (giai đoạn 7); các cách cải thiện thêm không vượt rõ cấu hình đã chốt, trừ việc kết hợp hai cách tính điểm giúp xếp hạng toàn tập (giai đoạn 8); độ dài đoạn nhìn, chứ không phải số khung, quyết định kết quả (giai đoạn 9); và chỉ hỏi Qwen khi F phân vân không giữ được mức tăng của việc hỏi mọi bước (giai đoạn 10).
 
 \begin{table}[ht]
 \centering
@@ -1827,6 +1860,7 @@ GĐ & Cách làm & Kết quả chính & Quyết định \\
 7 & Đoán hành động sau $H$ khung, $H$ từ 0,6 đến 20,5 s & 38,0\% (0,6 s) xuống 27,7\% (7,7 s); theo giây thật đi ngang từ 12 s; xem dài hơn 4 s không giúp; độ chênh gần như không đổi & Ngưỡng hành động phải tính cả khoảng đoán trước \\
 8 & Gộp khung, lớp hiệu chỉnh, Qwen2.5-VL-3B, đoán NEXT, so với cách làm cơ sở & Chọn 1/5 không tăng rõ; hiệu chỉnh $-$2,0--4,0 điểm; MRR $+$10--21\%; NEXT 27,8--32,1\%; đoán trước gần bằng ``nhận ra rồi chép'' & Giữ F, thêm điểm không trừ khung cảnh khi xếp hạng toàn tập \\
 9 & Cố định đoạn nhìn, thay số khung; đo lại khâu nhận ra & 2--16 khung như nhau (36,8\% với 2 khung/4 s); 12 khung $=$ 8 khung; đoạn $>$4 s kém $\sim$1 điểm; nhận ra bước hiện tại 4--6\% (đoán mò 1,2\%), Qwen chọn lại lên 8,3\% nhưng NEXT không hơn F (30,1 so với 32,1\%) & Chỉ cần vài khung; nhận ra hành động cần tốt hơn nhiều lần; không dùng mô hình học trên Ego4D \\
+10 & Chỉ hỏi Qwen khi độ chênh điểm của F thấp & Hỏi 25\% số bước: $+$0,8 điểm (không rõ), giữ 36\% mức tăng; Qwen giúp cả khi F chắc chắn & Thời gian thực dùng F; hỏi Qwen mọi bước khi có thời gian \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1931,7 +1965,7 @@ So với mục tiêu ở \cref{sec:muctieu}, mục tiêu thứ nhất (xây dự
   \item Làm cho độ chắc chắn biết theo khoảng đoán trước, vì giai đoạn 7 cho thấy độ chênh điểm gần như không đổi khi phải đoán xa: ví dụ ngưỡng hành động riêng cho từng khoảng đoán trước, hoặc chỉ hành động trong khoảng 10 giây đầu.
   \item Cải thiện khâu nhận ra hành động hiện tại, vì giai đoạn 8e cho thấy với chuỗi hành động đúng, cách hai bước kiểu AntGPT \citep{zhao2024antgpt} đạt 43,8\% nhưng với chuỗi do máy nhận ra chỉ còn 27--29\%. Giai đoạn 9c cho thấy chọn lại bằng Qwen2.5-VL-3B chỉ nâng khâu này từ 6,2\% lên 8,3\%, chưa đủ; cần nhận ra tốt hơn nhiều lần, ví dụ bằng mô hình video góc nhìn thứ nhất sau khi đã loại các video trùng với Ego4D, hoặc bằng dữ liệu tự thu có nhãn hành động.
   \item Cho mô-đun xem đoạn lịch sử dài hơn 8 khung khi đoán bước tiếp theo, vì giai đoạn 8 cho thấy độ chính xác đoán NEXT còn cách mức trần khoảng 6 điểm ở $k=8$.
-  \item Dùng kết hợp F với mô hình ngôn ngữ--thị giác (giai đoạn 8) như một bước kiểm tra lại khi đã xem hết bước, và thử bản lớn hơn khi có GPU đủ bộ nhớ.
+  \item Dùng kết hợp F với mô hình ngôn ngữ--thị giác (giai đoạn 8) như một bước kiểm tra lại khi đã xem hết bước, và thử bản lớn hơn khi có GPU đủ bộ nhớ. Giai đoạn 10 cho thấy độ chênh điểm của F không chọn được đúng lúc cần hỏi, nên cần một tín hiệu khác để quyết định khi nào gọi mô hình chậm.
   \item Không đi tiếp hướng huấn luyện thêm trên SigLIP với dữ liệu hiện có: giai đoạn 0 và 8 đều cho thấy nó làm kém đi; chỉ quay lại khi có thêm dữ liệu.
 \end{itemize}
 
