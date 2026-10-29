@@ -1,0 +1,12 @@
+{
+  "encoder": "google/siglip-so400m-patch14-384",
+  "centering": "C2",
+  "B": 10000,
+  "test_split_read": false,
+  "what_recognition_top1_in_video": {
+    "2": 0.03995205753096284,
+    "4": 0.04834198961246504,
+    "6": 0.052736715940870954,
+    "8": 0.06192568917299241
+  }
+}

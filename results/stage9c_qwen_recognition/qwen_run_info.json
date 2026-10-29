@@ -1,0 +1,7 @@
+{
+  "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "question": "These frames are from a first-person video of one step of a task. Which action is the person doing in this step? Options: {options} Answer with one letter.",
+  "probe": 0,
+  "n_scored": 5006,
+  "seconds_per_query": 1.3517089856894933
+}

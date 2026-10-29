@@ -1,0 +1,45 @@
+{
+  "rate": 4.0,
+  "windows_s_to_n": {
+    "2": [
+      2,
+      4,
+      8
+    ],
+    "4": [
+      2,
+      4,
+      8,
+      16
+    ],
+    "8": [
+      2,
+      4,
+      8,
+      16,
+      32
+    ]
+  },
+  "contiguous_s": [
+    3,
+    6
+  ],
+  "horizons_s": [
+    0.5,
+    2,
+    4,
+    8
+  ],
+  "label": "WHAT",
+  "anchors": "as time_horizon_v1 run (frame 63 .. len-80, every 4 frames)",
+  "centering": "C2",
+  "encoder": "google/siglip-so400m-patch14-384",
+  "B": 2000,
+  "dropped_videos": [
+    "ca6e9ec9-46ac-4a02-8034-7c31157dc52c"
+  ],
+  "gate": "PASS",
+  "reading_rule_hits": [],
+  "reading": "window length, not frame count, decides",
+  "test_split_read": false
+}

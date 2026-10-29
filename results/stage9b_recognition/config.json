@@ -1,0 +1,49 @@
+{
+  "encoder": "google/siglip-so400m-patch14-384",
+  "aggregation": "A0",
+  "centering": "C2",
+  "gallery": "all steps of the same video",
+  "B": 10000,
+  "stored_reference": "results/lit_baselines_next/config.json",
+  "gate": "PASS",
+  "distinct_what_per_video": {
+    "median": 85.0,
+    "min": 17,
+    "max": 120,
+    "per_video": [
+      74,
+      98,
+      92,
+      72,
+      120,
+      69,
+      90,
+      70,
+      54,
+      67,
+      84,
+      81,
+      86,
+      98,
+      95,
+      97,
+      92,
+      85,
+      17,
+      95,
+      85,
+      83,
+      82,
+      86,
+      24,
+      77,
+      90
+    ]
+  },
+  "steps_per_video": {
+    "median": 99.0,
+    "min": 19,
+    "max": 125
+  },
+  "test_split_read": false
+}

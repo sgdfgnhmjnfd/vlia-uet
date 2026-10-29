@@ -1,0 +1,28 @@
+{
+  "rate": 4.0,
+  "contexts_s": [
+    1,
+    2,
+    4,
+    8,
+    16
+  ],
+  "horizons_s": [
+    0.5,
+    1,
+    2,
+    4,
+    8,
+    12,
+    16,
+    20
+  ],
+  "anchor_step_s": 1.0,
+  "centering": "C2",
+  "encoder": "google/siglip-so400m-patch14-384",
+  "B": 2000,
+  "dropped_videos": [
+    "ca6e9ec9-46ac-4a02-8034-7c31157dc52c"
+  ],
+  "test_split_read": false
+}

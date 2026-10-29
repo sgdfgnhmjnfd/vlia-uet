@@ -1,0 +1,9 @@
+{
+  "n_distinct_next": 2009,
+  "n_queries": 2503,
+  "n_valid5": 2503,
+  "frac_next_equals_following_step_WHAT": 0.018982229402261713,
+  "n_last_steps": 27,
+  "template": "T1",
+  "encoder": "google/siglip-so400m-patch14-384"
+}

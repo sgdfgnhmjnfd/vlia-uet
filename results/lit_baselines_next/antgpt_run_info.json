@@ -1,0 +1,7 @@
+{
+  "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "device": "cuda",
+  "n_queries": 2503,
+  "seconds_per_query": 0.10681485589993017,
+  "eta_full_hours": 0.22279798693127104
+}
