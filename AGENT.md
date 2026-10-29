@@ -1,42 +1,24 @@
-# Ghi chú cho Agent / Cộng tác viên
+# Notes for agents and collaborators
 
-- Repo tuân theo cấu trúc module chuẩn Hugging Face LeRobot (xem `policies/smolvla/`).
-- Mỗi giai đoạn trong `docs/ROADMAP.md` có 1 script tương ứng trong `scripts/` — không gộp logic nhiều giai đoạn vào 1 file.
-- Checkpoint/dataset lớn KHÔNG commit vào git (xem `.gitignore`) — dùng `scripts/push_to_hub.py` để lưu trên Hugging Face Hub.
-- Before modifying `policies/smolvla/modeling_smolvla.py` (Phase 4), review the Prefix Embedding architecture in `docs/ROADMAP.md` to preserve the dynamic prefix structure (`L_prefix -> L_prefix + 1` intention token).
-- Before resuming training, always run `scripts/tools/verify_checkpoint.py` to validate checkpoint paths and mounts.
+This repo holds the code and evidence for the VLIA thesis (intention module + SmolVLA intention token). Read `README.md` first: it lists every stage, its script and its results folder.
 
-Cấu trúc repo chuẩn (y như Hugging Face Transformers/LeRobot)
-policy/                                             ← giữ nguyên policy base (như LeRobot)
-  ├── scripts/                                       ← giữ nguyên script train/inference base
-  └── policies/smolvla/                            ← phần bạn sẽ modify (cơ chế multi-step & intention)
-      ├── configuration_smolvla.py
-      ├── modeling_smolvla.py
-      ├── tokenization_smolvla.py
-      └── ...
+## Layout rules
 
-docs/
-  ├── ROADMAP.md                                     ← giữ nguyên — đây là "bản thiết kế" của bạn
-  └── multi_step_env.md                              ← document về multi-step environment
+- Active scripts live in `scripts/`, one script (or one subcommand) per stage, each with a synthetic self-test (`scripts/test_*.py` or a `selftest` subcommand). Legacy scripts are in `scripts/archive/`; do not import from there.
+- `results/` is evidence for the thesis. Never move, rename or rewrite a results folder or a number in it. New experiments get a new folder.
+- `policies/smolvla/` follows the LeRobot module layout. The intention token is behind `use_intention_token`; with the flag off the model must match stock SmolVLA.
+- Large checkpoints and datasets are not committed (see `.gitignore`). Thesis and paper drafts are also kept out of this public repo until submission.
 
-datasets/
-scripts/
-  ├── push_to_hub.py
-  ├── tools/verify_checkpoint.py                     ← quan trọng: trước khi train hãy chạy script này
-  └── run_exp_multi_step.sh
+## Lab machine (`dhqg-Precision-3680`)
 
-Lưu ý quan trọng:
+- Main checkout: `~/vlia-uet` (= `/media/dhqg/d3/vlia-uet`). Its local `main` may hold unpushed work. **Never switch branches there.** Run side experiments in a separate worktree, for example `git -C /media/dhqg/d3/vlia-uet worktree add --detach /media/dhqg/d3/vlia-lit origin/main`.
+- Always `export HF_HOME=/media/dhqg/d3/hf_cache HF_HUB_OFFLINE=1`. The home disk is nearly full: keep at least 500 MB free on `/`, write logs to `/media/dhqg/d3/logs/` and outputs to `/media/dhqg/d3/vlia_outputs/`.
+- Python for analysis: `/home/dhqg/anaconda3/envs/lerobot/bin/python`. For LIBERO training and rollouts: `/home/dhqg/lerobot/.venv/bin/python` with cwd `/home/dhqg/lerobot` (see `venv_env` in `scripts/run_v3_chain.sh`). Do not pip install into either.
+- One GPU job at a time. Check `nvidia-smi` before starting anything on the GPU.
 
-🧠 Phase 4 (Prefix Embedding) đã có trong modeling_smolvla.py
+## Evaluation rules
 
-Các file核心 bạn cần tập trung là:
-docs/ROADMAP.md — xem cấu trúc multi-step & intention
-policies/smolvla/modeling_smolvla.py — xem cách intention token nối vào prefix
-scripts/tools/verify_checkpoint.py — chạy trước khi resume training
-
-💡 Bạn muốn tôi hỗ trợ thêm phần nào?
-
-Kiểm tra lại cấu trúc Prefix Embedding
-Chạy verify_checkpoint.py
-Thay đổi model architecture cho multi-step?
-Hay bắt đầu với script train/inference cho multi-step?
+- **Never read or score the EgoIntent locked test split.** It was used once (`results/locked_test_final_v1/`) and is closed.
+- Write the rules (grid, selection, pass/fail) in `results/prereg_*.md` and commit them before running. Record any deviation next to the results (for example `DEVIATIONS.md`).
+- Use scene-grouped cross-validation, nested selection and the video-level bootstrap already implemented in `scripts/frozen_eval_lib.py` and `scripts/v3_common.py`. Reproduce the reference numbers (gates) before reporting anything new.
+- Every number in a document must trace to a file under `results/`.

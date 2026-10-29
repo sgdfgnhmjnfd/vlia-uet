@@ -1,3 +1,5 @@
+> **Archived 2026-10-29.** Early planning note, kept for history. It no longer describes the current method; see the top-level README.
+
 # VLIA Research Roadmap: Early Robot-Relevant Goal Disambiguation
 
 ## 1. Research Focus & Problem Formulation
