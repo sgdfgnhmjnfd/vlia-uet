@@ -1719,10 +1719,10 @@ Cấu hình F của giai đoạn 3 gần như đã là tốt nhất cho phép ch
 \end{ketqua}
 
 % ---------------------------------------------------------------------
-\section{Giai đoạn 9: Số khung hình hay độ dài đoạn nhìn}
+\section{Giai đoạn 9: Số khung hình, độ dài đoạn nhìn và khâu nhận ra hành động}
 \label{sec:stage9}
 
-Giai đoạn 7 đo theo giây thật, nhưng ở đó số khung và độ dài đoạn nhìn luôn đi cùng nhau: xem 2 giây là 8 khung, xem 4 giây là 16 khung. Vì vậy chưa trả lời được câu hỏi ``nếu lấy 12 hay 24 khung thì sao'': kết quả thay đổi là do \textit{số khung} hay do \textit{độ dài đoạn nhìn}? Giai đoạn này tách hai yếu tố đó, đồng thời xem lại khâu nhận ra hành động hiện tại, nút thắt đã thấy ở giai đoạn 8. Các luật đánh giá được ghi trước khi chạy.
+Giai đoạn 7 đo theo giây thật, nhưng ở đó số khung và độ dài đoạn nhìn luôn đi cùng nhau: xem 2 giây là 8 khung, xem 4 giây là 16 khung. Vì vậy chưa trả lời được câu hỏi ``nếu lấy 12 hay 24 khung thì sao'': kết quả thay đổi là do \textit{số khung} hay do \textit{độ dài đoạn nhìn}? Giai đoạn này tách hai yếu tố đó, đồng thời xem lại và thử cải thiện khâu nhận ra hành động hiện tại, nút thắt đã thấy ở giai đoạn 8. Các luật đánh giá được ghi trước khi chạy.
 
 \subsection{Tách số khung khỏi độ dài đoạn nhìn}
 \label{sec:stage9a}
@@ -1758,13 +1758,48 @@ Kết quả này khớp với nhận xét gốc của TSN \citep{wang2016tsn}: c
 
 Giai đoạn 8 thấy F nhận đúng câu WHAT của bước hiện tại, trong tất cả các bước của video, chỉ 4--6\%. Cần biết con số này thấp đến đâu so với độ khó của bài. Mỗi video có trung vị 85 câu WHAT khác nhau (ít nhất 17, nhiều nhất 120) trên trung vị 99 bước, nên đoán mò chỉ đúng khoảng 1,2\%; 4,0--6,2\% (ở $k=2$ đến 8) là gấp 3--5 lần đoán mò. So theo nội dung câu thay cho theo đúng dòng chỉ tăng khoảng 0,3 điểm, nên con số này không bị đánh giá thấp. Câu đúng nằm trong 5 câu điểm cao nhất của F ở 18,6--23,5\% số bước, và trong 10 câu cao nhất ở 31,2--38,8\%. Đây cũng là \textit{trần} cho mọi cách chọn lại trong danh sách rút gọn của F: nếu chỉ xét 5 câu đầu, khâu nhận ra không thể vượt 23,5\% ở $k=8$.
 
+\subsection{Nhận ra hành động tốt hơn rồi mới đoán bước tiếp theo}
+\label{sec:stage9c}
+
+\textbf{Cách làm.} Giai đoạn 8 cho thấy mô hình ngôn ngữ đoán bước tiếp theo đúng 43,8\% nếu biết chuỗi hành động đúng, nhưng chỉ 29,2\% với chuỗi do F nhận ra. Phần này thử sửa đúng khâu nhận ra. Với mỗi bước, F chọn trước 5 câu WHAT khác nhau có điểm cao nhất trong video (danh sách rút gọn). Sau đó Qwen2.5-VL-3B \textit{nhìn} các khung của bước và chọn lại 1 trong 5 câu đó, theo đúng cách hỏi trắc nghiệm của giai đoạn 8c (ảnh 448 điểm, hỏi hai lần với thứ tự đảo ngược). Có hai cách lấy nhãn: lấy câu Qwen chọn (\textit{Qwen chọn lại}), hoặc cộng điểm của F và Qwen sau khi chuẩn hóa, với trọng số chọn trong từng lần kiểm tra chéo (\textit{F $+$ Qwen}). Chuỗi hành động mới được đưa vào đúng cách hỏi AntGPT cũ, không đổi câu hỏi, số bước lịch sử hay 5 câu ứng viên. Hai luật đặt trước: R1, khâu nhận ra phải tốt hơn F rõ ở $k=8$; A1, dự đoán bước tiếp theo bằng chuỗi mới phải tốt hơn F rõ ở $k=8$.
+
+\begin{table}[ht]
+\centering
+\caption{Giai đoạn 9c: Qwen2.5-VL-3B chọn lại trong 5 câu đầu của F. Trên: nhận đúng câu WHAT của bước hiện tại trong tất cả các bước của video (\%, đoán mò khoảng 1,2\%). Dưới: đoán bước tiếp theo trong 5 câu cùng video ở $k=8$ (\%, đoán mò 20\%). [ ]: hiệu so với F, khoảng tin cậy 95\%.}
+\label{tab:stage9c}
+\small
+\begin{tabular}{lcc}
+\toprule
+\multicolumn{3}{l}{\textit{Nhận ra bước hiện tại}} \\
+Cách làm & $k=2$ & $k=8$ \\
+\midrule
+Trần (câu đúng nằm trong 5 câu đầu) & 18,6 & 23,5 \\
+F & 4,0 & 6,2 \\
+Qwen chọn lại & 4,6 \;($+0{,}6$ [$-0{,}5$; $+1{,}5$]) & 8,2 \;($+2{,}0$ [$+0{,}8$; $+3{,}3$]) \\
+F $+$ Qwen & 4,3 \;($+0{,}3$ [$-0{,}5$; $+1{,}2$]) & \textbf{8,3} \;($+2{,}1$ [$+1{,}0$; $+3{,}3$]) \\
+\midrule
+\multicolumn{3}{l}{\textit{Đoán bước tiếp theo ($k=8$)}} \\
+Cách làm & Chọn đúng & So với F \\
+\midrule
+F & \textbf{32,1} & --- \\
+AntGPT, chuỗi cũ do F nhận ra & 29,2 & $-2{,}9$ [$-4{,}9$; $-0{,}7$] \\
+AntGPT, chuỗi Qwen chọn lại & 30,2 & $-1{,}8$ [$-3{,}5$; $-0{,}1$] \\
+AntGPT, chuỗi F $+$ Qwen & 30,1 & $-2{,}0$ [$-4{,}1$; $+0{,}5$] \\
+F $+$ AntGPT (chuỗi F $+$ Qwen) & 32,6 & $+0{,}5$ [$-0{,}9$; $+1{,}9$] \\
+AntGPT, chuỗi đúng (chẩn đoán) & 43,8 & $+11{,}7$ [$+9{,}1$; $+14{,}3$] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Kết quả.} R1 đạt: khi xem đủ 8 khung, Qwen chọn lại làm khâu nhận ra tăng rõ từ 6,2\% lên 8,3\% ($+2{,}1$ điểm, khoảng tin cậy từ $+1{,}0$), tức tăng khoảng một phần ba. Khi mới xem 2 khung thì không tăng rõ. A1 không đạt: với chuỗi mới, AntGPT đoán bước tiếp theo 30,1--30,2\%, hơn chuỗi cũ khoảng 1 điểm nhưng vẫn kém F, và cộng với F cũng chỉ ngang F (32,6\% so với 32,1\%). Lý do nằm ở khoảng cách còn lại: với 8,3\%, hơn 9 trên 10 bước trong chuỗi vẫn bị nhận sai, trong khi mô hình ngôn ngữ chỉ phát huy khi chuỗi gần như đúng (43,8\%). Danh sách rút gọn của F cũng đặt trần 23,5\%, nên mọi cách chọn lại trong 5 câu đầu, dù hoàn hảo, vẫn để sai hơn ba phần tư số bước. Như vậy, muốn đoán bước tiếp theo nhờ thứ tự các bước, khâu nhận ra cần tốt hơn nhiều lần chứ không chỉ vài điểm; một mô hình thị giác--ngôn ngữ nhỏ dùng nguyên là chưa đủ.
+
 \subsection{Vì sao không dùng các mô hình video góc nhìn thứ nhất}
 \label{sec:stage9d}
 
 Một hướng tự nhiên để nhận ra hành động tốt hơn là thay SigLIP bằng mô hình video--chữ học trên video góc nhìn thứ nhất như EgoVLP \citep{lin2022egovlp} hoặc LaViLa \citep{zhao2023lavila}. Đồ án đã kiểm tra và quyết định \textit{không} dùng, vì một lý do chính. EgoIntent được dựng từ 32 video Ego4D, và mã video của nó chính là mã Ego4D. Cả LaViLa lẫn EgoVLP đều học trước trên Ego4D (LaViLa trên lời tường thuật của Ego4D, EgoVLP trên EgoClip dựng từ Ego4D), và không công bố đã loại những video nào. Như vậy các video của EgoIntent, kể cả tập test riêng, có thể đã được các mô hình này xem cùng lời mô tả khi học trước: kết quả trên EgoIntent sẽ không còn đáng tin. SigLIP học trên ảnh--chú thích lấy từ web, không học trên Ego4D, nên không có rủi ro này. Ngoài ra, cả ba mô hình đều cần phiên bản PyTorch và thư viện cũ (torch 1.10--1.13), không chạy chung môi trường với SmolVLA. Muốn dùng chúng một cách công bằng, trước hết phải đối chiếu 32 mã video của EgoIntent với danh sách video học trước của từng mô hình.
 
 \begin{ketqua}[Kết luận giai đoạn 9]
-Số khung hình không quan trọng bằng độ dài đoạn nhìn. Trong cùng một đoạn, 2, 4, 8 hay 16 khung cho kết quả như nhau, và 12 khung bằng đúng 8 khung. Đoạn nhìn dài hơn 4 giây làm kém đi khoảng 1 điểm. Như vậy, nguyên lý lấy mẫu thưa, cách đều của TSN áp dụng được, và robot chỉ cần mã hóa vài khung cho mỗi lần đoán. Khâu nhận ra hành động hiện tại đạt gấp 3--5 lần đoán mò, nhưng chỉ 23,5\% số bước có câu đúng trong 5 câu đầu, nên mọi cách chọn lại trong danh sách này đều bị giới hạn. Các mô hình video học trên Ego4D không được dùng vì có nguy cơ đã thấy chính dữ liệu kiểm tra.
+Số khung hình không quan trọng bằng độ dài đoạn nhìn. Trong cùng một đoạn, 2, 4, 8 hay 16 khung cho kết quả như nhau, và 12 khung bằng đúng 8 khung. Đoạn nhìn dài hơn 4 giây làm kém đi khoảng 1 điểm. Như vậy, nguyên lý lấy mẫu thưa, cách đều của TSN áp dụng được, và robot chỉ cần mã hóa vài khung cho mỗi lần đoán. Khâu nhận ra hành động hiện tại đạt gấp 3--5 lần đoán mò. Cho Qwen2.5-VL-3B chọn lại trong 5 câu đầu của F làm khâu này tăng rõ từ 6,2\% lên 8,3\%, nhưng vẫn quá thấp để mô hình ngôn ngữ đoán bước tiếp theo tốt hơn F (30,1\% so với 32,1\%); và vì chỉ 23,5\% số bước có câu đúng trong 5 câu đầu, mọi cách chọn lại trong danh sách này đều bị giới hạn. Các mô hình video học trên Ego4D không được dùng vì có nguy cơ đã thấy chính dữ liệu kiểm tra.
 \end{ketqua}
 
 % ---------------------------------------------------------------------
@@ -1791,7 +1826,7 @@ GĐ & Cách làm & Kết quả chính & Quyết định \\
 6 & Token ý định trong SmolVLA; LIBERO & 7/7 kiểm thử đạt; lệnh đúng 19/100, rỗng 0/100; chỉ token ý định 20/100, ý định sai 0/100 & Thay ý định đúng bằng ý định đoán từ video \\
 7 & Đoán hành động sau $H$ khung, $H$ từ 0,6 đến 20,5 s & 38,0\% (0,6 s) xuống 27,7\% (7,7 s); theo giây thật đi ngang từ 12 s; xem dài hơn 4 s không giúp; độ chênh gần như không đổi & Ngưỡng hành động phải tính cả khoảng đoán trước \\
 8 & Gộp khung, lớp hiệu chỉnh, Qwen2.5-VL-3B, đoán NEXT, so với cách làm cơ sở & Chọn 1/5 không tăng rõ; hiệu chỉnh $-$2,0--4,0 điểm; MRR $+$10--21\%; NEXT 27,8--32,1\%; đoán trước gần bằng ``nhận ra rồi chép'' & Giữ F, thêm điểm không trừ khung cảnh khi xếp hạng toàn tập \\
-9 & Cố định đoạn nhìn, thay số khung; đo lại khâu nhận ra & 2--16 khung như nhau (36,8\% với 2 khung/4 s); 12 khung $=$ 8 khung; đoạn $>$4 s kém $\sim$1 điểm; nhận ra bước hiện tại 4--6\% (đoán mò 1,2\%) & Chỉ cần vài khung; không dùng mô hình học trên Ego4D \\
+9 & Cố định đoạn nhìn, thay số khung; đo lại khâu nhận ra & 2--16 khung như nhau (36,8\% với 2 khung/4 s); 12 khung $=$ 8 khung; đoạn $>$4 s kém $\sim$1 điểm; nhận ra bước hiện tại 4--6\% (đoán mò 1,2\%), Qwen chọn lại lên 8,3\% nhưng NEXT không hơn F (30,1 so với 32,1\%) & Chỉ cần vài khung; nhận ra hành động cần tốt hơn nhiều lần; không dùng mô hình học trên Ego4D \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1894,7 +1929,7 @@ So với mục tiêu ở \cref{sec:muctieu}, mục tiêu thứ nhất (xây dự
 \textbf{Song song, cải thiện mô-đun ý định} (chỉ bằng kiểm tra chéo, không dùng lại tập test riêng):
 \begin{itemize}
   \item Làm cho độ chắc chắn biết theo khoảng đoán trước, vì giai đoạn 7 cho thấy độ chênh điểm gần như không đổi khi phải đoán xa: ví dụ ngưỡng hành động riêng cho từng khoảng đoán trước, hoặc chỉ hành động trong khoảng 10 giây đầu.
-  \item Cải thiện khâu nhận ra hành động hiện tại, vì giai đoạn 8e cho thấy với chuỗi hành động đúng, cách hai bước kiểu AntGPT \citep{zhao2024antgpt} đạt 43,8\% nhưng với chuỗi do máy nhận ra chỉ còn 27--29\%.
+  \item Cải thiện khâu nhận ra hành động hiện tại, vì giai đoạn 8e cho thấy với chuỗi hành động đúng, cách hai bước kiểu AntGPT \citep{zhao2024antgpt} đạt 43,8\% nhưng với chuỗi do máy nhận ra chỉ còn 27--29\%. Giai đoạn 9c cho thấy chọn lại bằng Qwen2.5-VL-3B chỉ nâng khâu này từ 6,2\% lên 8,3\%, chưa đủ; cần nhận ra tốt hơn nhiều lần, ví dụ bằng mô hình video góc nhìn thứ nhất sau khi đã loại các video trùng với Ego4D, hoặc bằng dữ liệu tự thu có nhãn hành động.
   \item Cho mô-đun xem đoạn lịch sử dài hơn 8 khung khi đoán bước tiếp theo, vì giai đoạn 8 cho thấy độ chính xác đoán NEXT còn cách mức trần khoảng 6 điểm ở $k=8$.
   \item Dùng kết hợp F với mô hình ngôn ngữ--thị giác (giai đoạn 8) như một bước kiểm tra lại khi đã xem hết bước, và thử bản lớn hơn khi có GPU đủ bộ nhớ.
   \item Không đi tiếp hướng huấn luyện thêm trên SigLIP với dữ liệu hiện có: giai đoạn 0 và 8 đều cho thấy nó làm kém đi; chỉ quay lại khi có thêm dữ liệu.
