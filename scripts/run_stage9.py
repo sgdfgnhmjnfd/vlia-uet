@@ -155,7 +155,8 @@ def f_gallery(data, ks, device):
 
 def write_csv(path, rows):
     with path.open("w", newline="", encoding="utf-8") as handle:
-        w = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        fields = list(dict.fromkeys(f for r in rows for f in r))
+        w = csv.DictWriter(handle, fieldnames=fields, restval="")
         w.writeheader()
         w.writerows(rows)
 
