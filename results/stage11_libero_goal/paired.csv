@@ -1,0 +1,13 @@
+episodes,rule,comparison,delta,ci95_lo,ci95_hi,n_pairs
+e0-9,G1,I-goal - I-wrong,0.19,0.11975000000000022,0.27,100
+e0-9,G2,I-para - I-wrong,0.19,0.12,0.27,100
+e0-9,descriptive,I-goal - I-only,-0.01,-0.09,0.07,100
+e0-9,descriptive,I-para - I-only,-0.01,-0.08,0.06,100
+e0-9,descriptive,I-only - correct,0.01,-0.07,0.09,100
+e0-9,descriptive,I-only - empty,0.2,0.12,0.28,100
+e0-29,G1,I-goal - I-wrong,0.13666666666666666,0.09666666666666666,0.17666666666666667,300
+e0-29,G2,I-para - I-wrong,0.16333333333333333,0.12,0.21,300
+e0-29,descriptive,I-goal - I-only,-0.02666666666666667,-0.07333333333333333,0.016666666666666666,300
+e0-29,descriptive,I-para - I-only,0.0,-0.04,0.04,300
+e0-29,descriptive,I-only - correct,-0.01,-0.056666666666666664,0.03666666666666667,300
+e0-29,descriptive,I-only - empty,0.17333333333333334,0.13,0.21666666666666667,300

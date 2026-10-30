@@ -415,7 +415,8 @@ def analyze_stage11(own) -> int:
               "|---:|---:|---:|---:|---:|---:|---:|---|---|"]
     for t, r in enumerate(task_rows):
         g, p = diag[t], diag[N_TASKS + t]
-        lines.append(f"| {t} | " + " | ".join(f"{r[c + '_successes']}/{r[c + '_n']}" for c in conds) +
+        lines.append(f"| {t} | " + " | ".join(f"{r[c + '_successes']}/{r[c + '_n']}" for c in
+                                             ("I-only", "I-goal", "I-para", "I-wrong", "correct", "empty")) +
                      f" | {g['cos_to_own_original']:.3f} / {g['rank_of_own_task']} | {p['cos_to_own_original']:.3f} / {p['rank_of_own_task']} |")
     lines += ["", "## Verdicts (e = 0..29, paired bootstrap over (task, episode), B=10000, seed 0)", ""]
     lines += [f"- {k} {v['rule']}: {v['delta']:+.3f} [{v['ci95'][0]:+.3f}, {v['ci95'][1]:+.3f}] → {'PASS' if v['pass'] else 'FAIL'}"

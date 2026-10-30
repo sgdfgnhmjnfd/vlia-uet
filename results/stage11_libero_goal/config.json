@@ -1,0 +1,56 @@
+{
+  "vlia_episodes": "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/episodes",
+  "baseline_episodes": "/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes",
+  "vlia_checkpoint": "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000/pretrained_model",
+  "baseline_checkpoint": "/media/dhqg/d1/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000/pretrained_model",
+  "task_embeddings": "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/task_embeddings_v2.npz",
+  "phrasings": "/media/dhqg/d3/vlia-libero2/results/stage11_libero_goal/phrasings.json",
+  "n_pairs": {
+    "e0-9": 100,
+    "e0-29": 300
+  },
+  "seconds_per_episode_mean": {
+    "I-only": 8.759522035121918,
+    "I-wrong": 9.158071959813435,
+    "I-goal": 8.960530189673106,
+    "I-para": 8.804027082920074,
+    "correct": 8.863525501887004,
+    "empty": 9.272830036481222
+  },
+  "seed_rule": "seed = 1000 + episode, init_state_id = episode",
+  "bootstrap": {
+    "B": 10000,
+    "seed": 0,
+    "unit": "(task, episode) pair"
+  },
+  "gate_R2": {
+    "counts": {
+      "I-only": 20,
+      "I-wrong": 0,
+      "correct": 19,
+      "empty": 0
+    },
+    "pass": true
+  },
+  "verdicts": {
+    "G1": {
+      "pass": true,
+      "delta": 0.13666666666666666,
+      "ci95": [
+        0.09666666666666666,
+        0.17666666666666667
+      ],
+      "rule": "success(I-goal) - success(I-wrong) CI lower bound > 0"
+    },
+    "G2": {
+      "pass": true,
+      "delta": 0.16333333333333333,
+      "ci95": [
+        0.12,
+        0.21
+      ],
+      "rule": "success(I-para) - success(I-wrong) CI lower bound > 0"
+    }
+  },
+  "git_commit": "467acddb23d4ceaec2453a428b2d5afd06b43ed3"
+}
