@@ -30,7 +30,8 @@ import numpy as np
 CONDITIONS = ("correct", "empty", "wrong")
 # prereg v3 Stage 4 (VLIA intention-only checkpoint): empty language + z_int
 # Stage 11: I-goal / I-para use the goal / para phrasing of the task as z_int text
-INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para")
+# Stage 12: E2E uses the description of the task F predicted from a demo video (--e2e-tokens)
+INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para", "E2E")
 STAGE11_VLIA = ("I-only", "I-wrong", "I-goal", "I-para")
 STAGE11_BASE = ("correct", "empty")
 STAGE4_E0_9 = {"I-only": 20, "I-wrong": 0, "correct": 19, "empty": 0}  # gate R2
@@ -43,8 +44,11 @@ def wrong_task(t: int) -> int:
     return (t + 5) % N_TASKS
 
 
-def intention_text(c: str, t: int, original: dict, phrasings: dict | None) -> str:
-    """Text whose T1 embedding is the intention vector of condition c on task t."""
+def intention_text(c: str, t: int, original: dict, phrasings: dict | None, e: int | None = None,
+                   e2e_tokens: dict | None = None) -> str:
+    """Text whose T1 embedding is the intention vector of condition c on task t (episode e for E2E)."""
+    if c == "E2E":
+        return e2e_tokens[f"{t},{e}"]
     if c == "I-only":
         return original[t]
     if c == "I-wrong":
@@ -116,6 +120,7 @@ def run(own, rest) -> int:
             table = {str(t): torch.tensor(e, dtype=torch.float32) for t, e in zip(emb["tasks"], emb["emb"])}
             current_z = {"z": None}
             phrasings = json.loads(Path(own.phrasings).read_text()) if own.phrasings else None
+            e2e_tokens = json.loads(Path(own.e2e_tokens).read_text())["tokens"] if own.e2e_tokens else None
             inner_select = policy.select_action
 
             def select_with_intention(batch, *a, **kw):
@@ -153,9 +158,11 @@ def run(own, rest) -> int:
             if path.exists():
                 continue
             instr = {"correct": original[t], "empty": "", "wrong": original[wrong_task(t)],
-                     "I-only": "", "I-wrong": "", "I-goal": "", "I-para": ""}[c]
+                     "I-only": "", "I-wrong": "", "I-goal": "", "I-para": "", "E2E": ""}[c]
             if is_vlia:
-                z_task = intention_text(c, t, original, phrasings)
+                if c == "E2E" and f"{t},{e}" not in e2e_tokens:  # unit without a query demo
+                    continue
+                z_task = intention_text(c, t, original, phrasings, e, e2e_tokens)
                 current_z["z"] = table[z_task]
             env = task_envs[t]
             sub = env.envs[0]
@@ -448,6 +455,7 @@ def main() -> int:
     ap.add_argument("--vlia-checkpoint", default="/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000/pretrained_model")
     ap.add_argument("--baseline-checkpoint", default="/media/dhqg/d1/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000/pretrained_model")
     ap.add_argument("--git-commit", default="")
+    ap.add_argument("--e2e-tokens")
     ap.add_argument("--v1-episodes", default="/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes")
     own, rest = ap.parse_known_args()
     if own.analyze:
