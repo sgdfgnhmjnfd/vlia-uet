@@ -31,7 +31,9 @@ CONDITIONS = ("correct", "empty", "wrong")
 # prereg v3 Stage 4 (VLIA intention-only checkpoint): empty language + z_int
 # Stage 11: I-goal / I-para use the goal / para phrasing of the task as z_int text
 # Stage 12: E2E uses the description of the task F predicted from a demo video (--e2e-tokens)
-INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para", "E2E")
+# Stage 13: E2E-human is the same with a human clip; its own file names keep the E2E episodes intact
+INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para", "E2E", "E2E-human")
+E2E_CONDITIONS = ("E2E", "E2E-human")
 STAGE11_VLIA = ("I-only", "I-wrong", "I-goal", "I-para")
 STAGE11_BASE = ("correct", "empty")
 STAGE4_E0_9 = {"I-only": 20, "I-wrong": 0, "correct": 19, "empty": 0}  # gate R2
@@ -47,7 +49,7 @@ def wrong_task(t: int) -> int:
 def intention_text(c: str, t: int, original: dict, phrasings: dict | None, e: int | None = None,
                    e2e_tokens: dict | None = None) -> str:
     """Text whose T1 embedding is the intention vector of condition c on task t (episode e for E2E)."""
-    if c == "E2E":
+    if c in E2E_CONDITIONS:
         return e2e_tokens[f"{t},{e}"]
     if c == "I-only":
         return original[t]
@@ -158,9 +160,9 @@ def run(own, rest) -> int:
             if path.exists():
                 continue
             instr = {"correct": original[t], "empty": "", "wrong": original[wrong_task(t)],
-                     "I-only": "", "I-wrong": "", "I-goal": "", "I-para": "", "E2E": ""}[c]
+                     "I-only": "", "I-wrong": "", "I-goal": "", "I-para": "", "E2E": "", "E2E-human": ""}[c]
             if is_vlia:
-                if c == "E2E" and f"{t},{e}" not in e2e_tokens:  # unit without a query demo
+                if c in E2E_CONDITIONS and f"{t},{e}" not in e2e_tokens:  # unit without a query demo
                     continue
                 z_task = intention_text(c, t, original, phrasings, e, e2e_tokens)
                 current_z["z"] = table[z_task]
