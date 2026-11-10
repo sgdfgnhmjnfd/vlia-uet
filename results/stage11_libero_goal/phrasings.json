@@ -1,0 +1,26 @@
+{
+  "goal": {
+    "0": "I want the alphabet soup and the tomato sauce to end up in the basket",
+    "1": "I want the cream cheese box and the butter inside the basket",
+    "2": "I want the stove switched on and the moka pot sitting on it",
+    "3": "I want the black bowl stored in the bottom drawer of the cabinet, with the drawer shut",
+    "4": "I want the white mug on the left plate and the yellow and white mug on the right plate",
+    "5": "I want the book stored in the back compartment of the caddy",
+    "6": "I want the white mug on the plate and the chocolate pudding just to the right of it",
+    "7": "I want the alphabet soup and the cream cheese box to end up in the basket",
+    "8": "I want both moka pots sitting on the stove",
+    "9": "I want the yellow and white mug inside the microwave with the door closed"
+  },
+  "para": {
+    "0": "place the alphabet soup and the tomato sauce into the basket",
+    "1": "move the cream cheese box and the butter into the basket",
+    "2": "switch on the stove and place the moka pot on top of it",
+    "3": "place the black bowl into the cabinet's bottom drawer and shut it",
+    "4": "set the white mug on the left plate and the yellow and white mug on the right plate",
+    "5": "take the book and put it into the rear compartment of the caddy",
+    "6": "place the white mug on the plate and set the chocolate pudding to the plate's right",
+    "7": "place the alphabet soup and the cream cheese box into the basket",
+    "8": "place the two moka pots on the stove",
+    "9": "place the yellow and white mug into the microwave and shut the door"
+  }
+}
