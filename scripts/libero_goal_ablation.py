@@ -32,7 +32,8 @@ CONDITIONS = ("correct", "empty", "wrong")
 # Stage 11: I-goal / I-para use the goal / para phrasing of the task as z_int text
 # Stage 12: E2E uses the description of the task F predicted from a demo video (--e2e-tokens)
 # Stage 13: E2E-human is the same with a human clip; its own file names keep the E2E episodes intact
-INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para", "E2E", "E2E-human")
+# Stage 13 amendment 1: I-tok runs the token of every other task k (files I-tok{k}_t{t}_e{e}.json)
+INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para", "E2E", "E2E-human", "I-tok")
 E2E_CONDITIONS = ("E2E", "E2E-human")
 STAGE11_VLIA = ("I-only", "I-wrong", "I-goal", "I-para")
 STAGE11_BASE = ("correct", "empty")
@@ -46,9 +47,31 @@ def wrong_task(t: int) -> int:
     return (t + 5) % N_TASKS
 
 
+def parse_tasks(spec: str) -> list[int]:
+    """'0-9' or '1,3,5' -> sorted task ids."""
+    out = set()
+    for part in spec.split(","):
+        a, _, b = part.partition("-")
+        out.update(range(int(a), int(b or a) + 1))
+    return sorted(out)
+
+
+def expand_conditions(conditions, t: int, token_tasks) -> list[str]:
+    """I-tok -> I-tok{k} for every k in token_tasks except t (I-only) and (t+5) mod 10 (I-wrong)."""
+    out = []
+    for c in conditions:
+        if c == "I-tok":
+            out += [f"I-tok{k}" for k in token_tasks if k != t and k != wrong_task(t)]
+        else:
+            out.append(c)
+    return out
+
+
 def intention_text(c: str, t: int, original: dict, phrasings: dict | None, e: int | None = None,
                    e2e_tokens: dict | None = None) -> str:
     """Text whose T1 embedding is the intention vector of condition c on task t (episode e for E2E)."""
+    if c.startswith("I-tok"):
+        return original[int(c[len("I-tok"):])]
     if c in E2E_CONDITIONS:
         return e2e_tokens[f"{t},{e}"]
     if c == "I-only":
@@ -145,13 +168,14 @@ def run(own, rest) -> int:
             {"original": original, "wrong_map": {t: wrong_task(t) for t in range(N_TASKS)}}, indent=2))
 
         jobs = []
+        token_tasks = parse_tasks(own.token_tasks)
         if own.probe:
-            jobs = [(conditions[0], 0, e) for e in range(own.probe)]
+            jobs = [(expand_conditions(conditions[:1], 0, token_tasks)[0], 0, e) for e in range(own.probe)]
         else:
             # condition-interleaved order so a partial run stays paired
-            for t in range(N_TASKS):
+            for t in parse_tasks(own.tasks):
                 for e in range(own.episodes_per_task):
-                    for c in conditions:
+                    for c in expand_conditions(conditions, t, token_tasks):
                         jobs.append((c, t, e))
         t_start = time.time()
         n_done = 0
@@ -159,8 +183,9 @@ def run(own, rest) -> int:
             path = ep_dir / f"{c}_t{t}_e{e}.json"
             if path.exists():
                 continue
-            instr = {"correct": original[t], "empty": "", "wrong": original[wrong_task(t)],
-                     "I-only": "", "I-wrong": "", "I-goal": "", "I-para": "", "E2E": "", "E2E-human": ""}[c]
+            instr = "" if c.startswith("I-tok") else {
+                "correct": original[t], "empty": "", "wrong": original[wrong_task(t)],
+                "I-only": "", "I-wrong": "", "I-goal": "", "I-para": "", "E2E": "", "E2E-human": ""}[c]
             if is_vlia:
                 if c in E2E_CONDITIONS and f"{t},{e}" not in e2e_tokens:  # unit without a query demo
                     continue
@@ -190,6 +215,8 @@ def run(own, rest) -> int:
             rec = {"condition": c, "task": t, "episode": e, "seed": SEED0 + e, "init_state_id": e,
                    "instruction": instr, "z_int_task": (z_task if is_vlia else None), "success": success, "n_steps": n_steps, "seconds": secs,
                    "video": str(video) if frames else None}
+            if c.startswith("I-tok"):
+                rec["token_task"] = int(c[len("I-tok"):])
             path.write_text(json.dumps(rec))
             n_done += 1
             el = time.time() - t_start
@@ -458,6 +485,8 @@ def main() -> int:
     ap.add_argument("--baseline-checkpoint", default="/media/dhqg/d1/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000/pretrained_model")
     ap.add_argument("--git-commit", default="")
     ap.add_argument("--e2e-tokens")
+    ap.add_argument("--token-tasks", default="0-9", help="I-tok: token tasks k (k != t, k != (t+5) mod 10)")
+    ap.add_argument("--tasks", default="0-9", help="scene tasks t to run")
     ap.add_argument("--v1-episodes", default="/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes")
     own, rest = ap.parse_known_args()
     if own.analyze:

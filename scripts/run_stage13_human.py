@@ -19,6 +19,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import libero_goal_ablation as G  # noqa: E402
+import token_matrix as TM  # noqa: E402
 from run_stage12_e2e import (  # noqa: E402
     ask_threshold, cluster_bootstrap, e2e_ask, encode, normalize, query_vec, strict_correct, top2)
 
@@ -419,16 +420,17 @@ def cmd_analyze(args) -> int:
     for r in sel50:
         conf[r["task"], r["pred10"]] += 1
     us = units()
-    conds = ("E2E-human", "I-only", "I-wrong")
-    by = {}
-    for c in conds:
-        for t, e in us:
-            r = json.loads((EVAL / f"episodes/{c}_t{t}_e{e}.json").read_text())
-            assert r["seed"] == 1000 + e and r["init_state_id"] == e
-            by[(c, t, e)] = r
-    for t, e in us:
-        assert by[("E2E-human", t, e)]["z_int_task"] == plan["tokens"][f"{t},{e}"], (t, e)
-    succ = {c: np.array([float(by[(c, t, e)]["success"]) for t, e in us]) for c in conds}
+    # Amendment 1: E2E-human is read from the seed-0 token matrix (no E2E-human rollouts).
+    # The E2E-human rollout path of libero_goal_ablation.py is kept for reference only.
+    mat = TM.load_matrix(0)
+    looked = TM.lookup(mat, plan["tokens"], original)
+    succ = {"E2E-human": np.array([looked[f"{t},{e}"] for t, e in us]),
+            "I-only": np.array([mat[t, t, e] for t, e in us]),
+            "I-wrong": np.array([mat[t, G.wrong_task(t), e] for t, e in us])}
+    seed1 = None
+    if TM.matrix_path(1).exists():  # descriptive seed-1 E2E-human by the same look-up
+        m1 = TM.load_matrix(1)
+        seed1 = {"E2E-human": int(sum(TM.lookup(m1, plan["tokens"], original).values())), "I-only": int(sum(m1[t, t, e] for t, e in us)), "n": len(us)}
     ask = np.array([plan["ask"][f"{t},{e}"] for t, e in us])
     right = np.array([plan["correct"][f"{t},{e}"] for t, e in us])
     clip = np.array([plan["clip"][f"{t},{e}"] for t, e in us])
@@ -502,8 +504,9 @@ def cmd_analyze(args) -> int:
         "ask_rate": float(ask.mean()), "decoder": emeta["decoder"], "rotate_degrees": smeta["rotate_degrees"],
         "clips": {v: {k: m[k] for k in ("fps", "n_frames", "duration", "shape") if k in m} for v, m in emeta["clips"].items()},
         "E1_gate_max_abs_diff": smeta["E1_max_abs_diff"],
-        "seconds_per_episode": float(np.mean([by[("E2E-human", t, e)]["seconds"] for t, e in us])),
-        "D1": {"same_success_rate_when_F_right": agree, "n_units_F_right": int(right.sum())},
+        "robot_source": "token matrix look-up (amendment 1), seed 0", "seed1_lookup": seed1,
+        "D1": {"same_success_rate_when_F_right": agree, "n_units_F_right": int(right.sum()),
+               "note": "identical by construction under the look-up; run-to-run noise is gate L1 of results/token_matrix"},
         "E2E_human_by_F_right": {"F_right": {"n": int(right.sum()), "successes": int(succ["E2E-human"][right].sum())},
                                  "F_wrong": {"n": int((~right).sum()), "successes": int(succ["E2E-human"][~right].sum())}},
         "p2_persons": persons, "verdicts": verdicts}, indent=2))
