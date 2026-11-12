@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Stage 15 unattended chain (resumable; re-run after an interruption, finished steps are skipped):
-#   waits for a free GPU, then extract (agent, wrist) -> cv agent -> plan -> smoke -> E2E-sup rollouts p25, p50
-#   -> cv wrist -> analyze. Stops at the first failed gate. Status: /media/dhqg/d3/logs/stage15_status.txt
+#   waits for a free GPU, then extract agent -> cv agent -> plan -> smoke -> E2E-sup rollouts p25, p50 -> analyze
+#   (main results) -> extract wrist -> cv wrist -> analyze. Stops at the first failed gate. Status: /media/dhqg/d3/logs/stage15_status.txt
 set -uo pipefail
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 LOG=/media/dhqg/d3/logs
@@ -37,10 +37,8 @@ while pgrep -f "train_intention_only_LIBERO7D|libero_goal_ablation.py --out" > /
 say "GPU free"
 free_root
 S15 selftest > $LOG/stage15_selftest.log 2>&1 || { say "selftest FAILED"; exit 1; }
-for cam in agent wrist; do
-  S15 extract --camera $cam >> $LOG/stage15_extract_$cam.log 2>&1 || { say "extract $cam FAILED"; exit 1; }
-  say "extract $cam done"
-done
+S15 extract --camera agent >> $LOG/stage15_extract_agent.log 2>&1 || { say "extract agent FAILED"; exit 1; }
+say "extract agent done"
 free_root
 if [ ! -f $W/oof_agent.npz ]; then
   S15 cv --camera agent > $LOG/stage15_cv_agent.log 2>&1 || { say "cv agent FAILED (see stage15_cv_agent.log)"; exit 1; }
@@ -69,6 +67,10 @@ for p in 25 50; do
      --eval.n_episodes=1 --eval.batch_size=1 --rename_map "$RENAME" >> $LOG/stage15_rollouts.log 2>&1) || { say "rollouts p$p FAILED"; exit 1; }
   say "rollouts p$p done"
 done
+S15 analyze > $LOG/stage15_analyze.log 2>&1 || { say "analyze (agent) FAILED"; exit 1; }
+say "MAIN RESULTS READY (agent view + robot); wrist view next"
+S15 extract --camera wrist >> $LOG/stage15_extract_wrist.log 2>&1 || { say "extract wrist FAILED"; exit 1; }
+say "extract wrist done"
 if [ ! -f $W/oof_wrist.npz ]; then
   S15 cv --camera wrist > $LOG/stage15_cv_wrist.log 2>&1 || { say "cv wrist FAILED"; exit 1; }
 fi
