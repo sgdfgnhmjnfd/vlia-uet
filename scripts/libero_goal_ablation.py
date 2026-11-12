@@ -33,7 +33,11 @@ CONDITIONS = ("correct", "empty", "wrong")
 # Stage 12: E2E uses the description of the task F predicted from a demo video (--e2e-tokens)
 # Stage 13: E2E-human is the same with a human clip; its own file names keep the E2E episodes intact
 # Stage 13 amendment 1: I-tok runs the token of every other task k (files I-tok{k}_t{t}_e{e}.json)
-INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para", "E2E", "E2E-human", "I-tok")
+# Stage 14: E2E-gen / E2E-gen-blank / E2E-gen-p50 use a sentence written by the VLM (--e2e-tokens, keyed by condition);
+#           its vector is the T1 embedding of that sentence (pass --task-embeddings gen_embeddings.npz).
+#           Units listed under "reuse" are not rolled out (they reuse another episode).
+GEN_CONDITIONS = ("E2E-gen", "E2E-gen-blank", "E2E-gen-p50")
+INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para", "E2E", "E2E-human", "I-tok") + GEN_CONDITIONS
 E2E_CONDITIONS = ("E2E", "E2E-human")
 STAGE11_VLIA = ("I-only", "I-wrong", "I-goal", "I-para")
 STAGE11_BASE = ("correct", "empty")
@@ -74,11 +78,18 @@ def intention_text(c: str, t: int, original: dict, phrasings: dict | None, e: in
         return original[int(c[len("I-tok"):])]
     if c in E2E_CONDITIONS:
         return e2e_tokens[f"{t},{e}"]
+    if c in GEN_CONDITIONS:
+        return e2e_tokens[c][f"{t},{e}"]
     if c == "I-only":
         return original[t]
     if c == "I-wrong":
         return original[wrong_task(t)]
     return phrasings[{"I-goal": "goal", "I-para": "para"}[c]][str(t)]
+
+
+def reused(c: str, t: int, e: int, reuse: dict) -> bool:
+    """Stage 14: a unit listed under reuse[c] is not rolled out (e.g. E2E-gen-p50 with the p = 25 sentence)."""
+    return f"{t},{e}" in set(reuse.get(c, ()))
 
 
 def wilson(k: int, n: int, z: float = 1.959963984540054) -> tuple[float, float]:
@@ -146,6 +157,7 @@ def run(own, rest) -> int:
             current_z = {"z": None}
             phrasings = json.loads(Path(own.phrasings).read_text()) if own.phrasings else None
             e2e_tokens = json.loads(Path(own.e2e_tokens).read_text())["tokens"] if own.e2e_tokens else None
+            e2e_reuse = json.loads(Path(own.e2e_tokens).read_text()).get("reuse", {}) if own.e2e_tokens else {}
             inner_select = policy.select_action
 
             def select_with_intention(batch, *a, **kw):
@@ -183,11 +195,13 @@ def run(own, rest) -> int:
             path = ep_dir / f"{c}_t{t}_e{e}.json"
             if path.exists():
                 continue
-            instr = "" if c.startswith("I-tok") else {
+            instr = "" if (c.startswith("I-tok") or c in GEN_CONDITIONS) else {
                 "correct": original[t], "empty": "", "wrong": original[wrong_task(t)],
                 "I-only": "", "I-wrong": "", "I-goal": "", "I-para": "", "E2E": "", "E2E-human": ""}[c]
             if is_vlia:
                 if c in E2E_CONDITIONS and f"{t},{e}" not in e2e_tokens:  # unit without a query demo
+                    continue
+                if c in GEN_CONDITIONS and (f"{t},{e}" not in e2e_tokens[c] or (not own.probe and reused(c, t, e, e2e_reuse))):
                     continue
                 z_task = intention_text(c, t, original, phrasings, e, e2e_tokens)
                 current_z["z"] = table[z_task]
