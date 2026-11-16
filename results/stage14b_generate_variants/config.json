@@ -1,0 +1,153 @@
+{
+ "git_commit": "e0600154831c1e7e76f4fa25fb38ec46fe2557c5",
+ "writer": "Qwen/Qwen2.5-VL-3B-Instruct",
+ "encoder": "google/siglip-so400m-patch14-384",
+ "scorer": "Stage 14 analyze_libero (plain text, no template), strict top-1",
+ "prompts": {
+  "G0": "These frames show the start of someone doing a household task with objects on a table. In one short sentence, say what they want the objects to end up like. Start with \"I want\".",
+  "G1": "These frames, in time order, show a robot arm starting a tabletop task. Look at which object the gripper moves towards or holds, and where things are being moved. In one short sentence, say what the final arrangement of the objects should be. Name the objects and the place. Start with 'I want'.",
+  "G2_list": "List the objects on the table and the furniture or containers, as a short comma-separated list.",
+  "G2": "Objects in the scene: {list}. These frames, in time order, show a robot arm starting a tabletop task. In one short sentence, say what the final arrangement of the objects should be, using the names above. Start with 'I want'.",
+  "O1": "These frames, in time order, show a robot arm starting a tabletop task. Look at which object the gripper moves towards or holds, and where things are being moved. In one short sentence, say what the final arrangement of the objects should be. Name the objects and the place. Objects in the scene: {names}. Start with 'I want'."
+ },
+ "scene_names": {
+  "0": [
+   "LIVING_ROOM_SCENE2",
+   "living room table, alphabet soup, cream cheese, tomato sauce, ketchup, orange juice, milk, butter, basket"
+  ],
+  "1": [
+   "LIVING_ROOM_SCENE2",
+   "living room table, alphabet soup, cream cheese, tomato sauce, ketchup, orange juice, milk, butter, basket"
+  ],
+  "2": [
+   "KITCHEN_SCENE3",
+   "kitchen table, flat stove, chefmate 8 frypan, moka pot"
+  ],
+  "3": [
+   "KITCHEN_SCENE4",
+   "kitchen table, white cabinet, wine rack, akita black bowl, wine bottle"
+  ],
+  "4": [
+   "LIVING_ROOM_SCENE5",
+   "living room table, porcelain mug, red coffee mug, white yellow mug, two plates"
+  ],
+  "5": [
+   "STUDY_SCENE1",
+   "study table, desk caddy, black book, white yellow mug"
+  ],
+  "6": [
+   "LIVING_ROOM_SCENE6",
+   "living room table, porcelain mug, red coffee mug, plate, chocolate pudding"
+  ],
+  "7": [
+   "LIVING_ROOM_SCENE1",
+   "living room table, alphabet soup, cream cheese, tomato sauce, ketchup, basket"
+  ],
+  "8": [
+   "KITCHEN_SCENE8",
+   "kitchen table, flat stove, two moka pots"
+  ],
+  "9": [
+   "KITCHEN_SCENE6",
+   "kitchen table, microwave, porcelain mug, white yellow mug"
+  ]
+ },
+ "max_new_tokens": 40,
+ "max_new_tokens_list": 60,
+ "chosen": {
+  "G": "G2",
+  "G+obj": "O1",
+  "mean_cal_accuracy_p25_p50": {
+   "G0": 0.4125,
+   "G1": 0.40625,
+   "G2": 0.43125
+  },
+  "O1_mean": 0.51875,
+  "rule": "highest mean of the p=25 and p=50 calibration accuracies; ties to the lower number; G3 not run (does not fit on the GPU)",
+  "n_calibration": 80
+ },
+ "rules": {
+  "GB-1": {
+   "rule": "hit(G2) - hit(G0) at p=25, paired CI lower bound > 0",
+   "delta": 0.013377926421404682,
+   "ci95": [
+    -0.03678929765886288,
+    0.06354515050167224
+   ],
+   "pass": false
+  },
+  "GB-2": {
+   "rule": "accuracy(G2) at p=50, CI lower bound > 30%",
+   "accuracy": 0.3979933110367893,
+   "ci95": [
+    0.36454849498327757,
+    0.431438127090301
+   ],
+   "pass": true
+  },
+  "GB-3": {
+   "rule": "hit(G2) - hit(G2-blank) at p=50, paired CI lower bound > 0",
+   "delta": 0.2976588628762542,
+   "ci95": [
+    0.22742474916387959,
+    0.36789297658862874
+   ],
+   "pass": true
+  }
+ },
+ "descriptive": [
+  {
+   "comparison": "O1 - G2",
+   "p": 0,
+   "delta": 0.05016722408026756,
+   "ci95_lo": -0.020066889632107024,
+   "ci95_hi": 0.12040133779264214
+  },
+  {
+   "comparison": "O1 - G2",
+   "p": 10,
+   "delta": 0.10033444816053512,
+   "ci95_lo": 0.043478260869565216,
+   "ci95_hi": 0.15719063545150502
+  },
+  {
+   "comparison": "O1 - G2",
+   "p": 25,
+   "delta": 0.14046822742474915,
+   "ci95_lo": 0.08695652173913043,
+   "ci95_hi": 0.1939799331103679
+  },
+  {
+   "comparison": "O1 - G2",
+   "p": 50,
+   "delta": 0.046822742474916385,
+   "ci95_lo": -0.006688963210702341,
+   "ci95_hi": 0.10033444816053512
+  },
+  {
+   "comparison": "O1 - G2",
+   "p": 75,
+   "delta": -0.0033444816053511705,
+   "ci95_lo": -0.06020066889632107,
+   "ci95_hi": 0.056856187290969896
+  },
+  {
+   "comparison": "O1 - G2",
+   "p": 100,
+   "delta": 0.010033444816053512,
+   "ci95_lo": -0.046822742474916385,
+   "ci95_hi": 0.06688963210702341
+  }
+ ],
+ "gpu_minutes": {
+  "G0_cal": 5.6265096743901575,
+  "G1_cal": 6.670039331912994,
+  "G2_cal": 6.813494427998861,
+  "O1_cal": 6.572981444994609,
+  "G2_test": 56.16417358716329,
+  "O1_test": 67.39833305279414
+ },
+ "gpu_minutes_total": 149.24553151925406,
+ "n_test_units": 299,
+ "n_calibration": 80
+}

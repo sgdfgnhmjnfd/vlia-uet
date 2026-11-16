@@ -1,0 +1,1795 @@
+task,demo,p,sentence,nearest_task,true_task,cos_true
+0,0,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,0,0.5456496315179425
+0,0,10,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,0,25,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,0,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,0,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,0,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,1,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,0,0.5456496315179425
+0,1,10,I want the robot to pick up the tomato sauce bottle from the table.,7,0,0.5511613869667148
+0,1,25,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,1,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,1,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,1,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,2,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,0,0.5456496315179425
+0,2,10,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,2,25,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,2,50,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,2,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,2,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,3,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,3,10,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,3,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,3,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,3,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,3,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,4,0,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,4,10,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,4,25,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,4,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,4,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,4,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,5,0,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,5,10,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,5,25,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,5,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,5,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,5,100,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,6,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,6,10,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,6,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,6,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,6,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,6,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,7,0,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,7,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,7,25,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,7,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,7,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,7,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,8,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,0,0.5456496315179425
+0,8,10,I want the robot to pick up the tomato sauce bottle from the table.,7,0,0.5511613869667148
+0,8,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,8,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,8,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,8,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,9,0,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,9,10,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,9,25,I want the robot arm to pick up the orange juice box from the table.,7,0,0.4868042134131692
+0,9,50,I want the robot arm to pick up the can of soda from the table.,2,0,0.43989612112167636
+0,9,75,I want the robot arm to pick up the can of soda from the table.,2,0,0.43989612112167636
+0,9,100,I want the robot arm to pick up the can of soda from the table.,2,0,0.43989612112167636
+0,10,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,0,0.5456496315179425
+0,10,10,I want the robot arm to pick up the tomato sauce bottle from the table.,7,0,0.5456496315179425
+0,10,25,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,10,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,10,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,10,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,11,0,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,11,10,I want the robot arm to move towards the can of tomato sauce on the table.,7,0,0.5375401834714698
+0,11,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,11,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,11,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,11,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,12,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,12,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,12,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,12,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,12,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,12,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,13,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,13,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,13,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,13,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,13,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,13,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,14,0,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,14,10,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,14,25,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,14,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,14,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,14,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,15,0,I want the robot arm to pick up the tomato sauce can from the table.,7,0,0.5476333584062196
+0,15,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,15,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,15,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,15,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,15,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,16,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,16,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,16,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,16,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,16,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,16,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,17,0,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,17,10,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,17,25,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,17,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,17,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,17,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,18,0,I want the robot arm to pick up the alphabet soup from the table.,7,0,0.587869280111023
+0,18,10,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,18,25,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,18,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,18,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,18,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,19,0,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,19,10,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,19,25,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,19,50,I want the robot to move the can of tomato sauce from the table into the basket.,7,0,0.6225214978319287
+0,19,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,19,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,20,0,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,20,10,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,20,25,I want the robot arm to move towards the milk carton and pick it up.,7,0,0.4649668350709938
+0,20,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,20,75,I want the robot arm to move towards the tomato sauce and hold it.,7,0,0.5700884212903208
+0,20,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,21,0,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,21,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,21,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,21,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,21,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,21,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,22,0,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,22,10,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,22,25,I want the robot arm to move towards the tomato sauce can on the table.,7,0,0.5533444641626628
+0,22,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,22,75,I want the robot arm to move towards the tomato sauce can and pick it up.,7,0,0.5743873879519472
+0,22,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,23,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,23,10,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,23,25,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,23,50,I want the robot to pick up the can of alphabet soup from the table.,7,0,0.6200158879370954
+0,23,75,I want the robot to pick up the can of alphabet soup from the table.,7,0,0.6200158879370954
+0,23,100,I want the robot to pick up the can of alphabet soup from the table.,7,0,0.6200158879370954
+0,24,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,0,0.5456496315179425
+0,24,10,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,24,25,I want the robot arm to pick up the ketchup bottle from the table.,7,0,0.4937489980957884
+0,24,50,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,24,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,24,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,25,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,25,10,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,25,25,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,25,50,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,25,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,25,100,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,26,0,I want the robot arm to pick up the tomato sauce can from the table.,7,0,0.5476333584062196
+0,26,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,26,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,26,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,26,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,26,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,27,0,I want the robot arm to pick up the tomato sauce from the table.,7,0,0.5553776271293552
+0,27,10,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,27,25,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,27,50,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,27,75,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,27,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,28,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,28,10,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,28,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+0,28,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,28,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,28,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,0,0.6059273025666293
+0,29,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,0,0.5456496315179425
+0,29,10,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,29,25,I want the robot to pick up the tomato sauce from the table.,7,0,0.5609146127189351
+0,29,50,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,29,75,I want the robot to pick up the can of tomato sauce from the table.,7,0,0.5448854926116091
+0,29,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,0,0.5355969424974973
+1,0,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,0,10,I want the robot to pick up the can of alphabet soup from the table.,7,1,0.5261043227319335
+1,0,25,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,0,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,0,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,0,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,1,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,1,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,1,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,1,50,I want the robot arm to pick up the orange juice box from the table.,7,1,0.575583985382333
+1,1,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,1,100,I want the robot arm to pick up the orange juice box from the table.,7,1,0.575583985382333
+1,2,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,2,10,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,2,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,2,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,2,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,2,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,3,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,1,0.5491078093420888
+1,3,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,3,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,3,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,3,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,3,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,4,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,4,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,4,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,4,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,4,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,4,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,5,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,5,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,5,25,I want the robot arm to move towards the tomato sauce can and pick it up.,7,1,0.5653797514368453
+1,5,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,5,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,5,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,6,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,6,10,I want the robot arm to move towards the can of tomato sauce on the table.,7,1,0.5473245088425115
+1,6,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,6,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,6,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,6,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,7,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,7,10,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,7,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,7,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,7,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,7,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,8,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,8,10,I want the robot to pick up the can of alphabet soup from the table.,7,1,0.5261043227319335
+1,8,25,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,8,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,8,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,8,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,9,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,9,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,9,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,9,50,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,9,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,9,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,10,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,10,10,I want the robot to pick up the can of alphabet soup from the table.,7,1,0.5261043227319335
+1,10,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,10,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,10,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,10,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,11,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,11,10,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,11,25,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,11,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,11,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,11,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,12,0,I want the robot arm to pick up the tomato sauce can from the table.,7,1,0.5565905089635638
+1,12,10,I want the robot to pick up the tomato sauce can from the table.,7,1,0.5671647565369198
+1,12,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,12,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,12,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,12,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,13,0,I want the robot to pick up the tomato sauce from the table.,7,1,0.5582811637303305
+1,13,10,I want the robot to pick up the tomato sauce from the table.,7,1,0.5582811637303305
+1,13,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,13,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,13,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,13,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,14,0,I want the robot arm to pick up the orange juice box from the table.,7,1,0.575583985382333
+1,14,10,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,14,25,I want the robot arm to move towards the milk carton and pick it up.,7,1,0.6118719743326859
+1,14,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,14,75,I want the robot arm to move towards the tomato sauce can on the table.,7,1,0.5543398430227996
+1,14,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,15,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,15,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,15,25,I want the robot arm to move towards the tomato sauce on the table.,7,1,0.5368112470599002
+1,15,50,I want the robot arm to move towards the tomato sauce on the table.,7,1,0.5368112470599002
+1,15,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,15,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,16,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,16,10,I want the robot to pick up the tomato sauce from the table.,7,1,0.5582811637303305
+1,16,25,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,16,50,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,16,75,I want the robot arm to move towards the tomato sauce and hold it.,7,1,0.5593148267454363
+1,16,100,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,17,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,17,10,I want the robot to pick up the tomato sauce from the table.,7,1,0.5582811637303305
+1,17,25,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,17,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,17,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,17,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,18,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,18,10,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,18,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,18,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,18,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,18,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,19,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,19,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,19,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,19,50,I want the robot arm to pick up the orange juice box from the table.,7,1,0.575583985382333
+1,19,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,19,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,20,0,I want the robot arm to pick up the tomato sauce can from the table.,7,1,0.5565905089635638
+1,20,10,I want the robot arm to pick up the ketchup bottle from the table.,7,1,0.5503647607188522
+1,20,25,I want the robot arm to move towards the tomato sauce and hold it.,7,1,0.5593148267454363
+1,20,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,20,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,20,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,21,0,I want the robot arm to pick up the orange juice box from the table.,7,1,0.575583985382333
+1,21,10,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,21,25,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,21,50,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,21,75,I want the robot arm to move towards the orange juice box and pick it up.,7,1,0.5861458494776144
+1,21,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,22,0,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,22,10,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,22,25,I want the robot arm to move towards the tomato sauce bottle on the table.,2,1,0.5398302925344184
+1,22,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,22,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,22,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,23,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,23,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,23,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,23,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,23,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,23,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,24,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,24,10,I want the robot to pick up the can of tomato sauce from the table.,7,1,0.5614189645561825
+1,24,25,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,24,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,24,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,24,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,25,0,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,25,10,I want the robot arm to move towards the can of alphabet soup on the table.,7,1,0.5052428008469674
+1,25,25,I want the robot arm to move towards the can of alphabet soup on the table.,7,1,0.5052428008469674
+1,25,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,25,75,I want the robot arm to move towards the can of alphabet soup on the table.,7,1,0.5052428008469674
+1,25,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,26,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,26,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,26,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,26,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,26,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,26,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,27,0,I want the robot to pick up the tomato sauce from the table.,7,1,0.5582811637303305
+1,27,10,I want the robot to pick up the tomato sauce from the table.,7,1,0.5582811637303305
+1,27,25,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,27,50,I want the robot arm to pick up the ketchup bottle from the table.,7,1,0.5503647607188522
+1,27,75,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,27,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,28,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,28,10,I want the robot arm to pick up the can of alphabet soup from the table.,7,1,0.5134533061275854
+1,28,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,28,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,28,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,28,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,29,0,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,29,10,I want the robot arm to pick up the tomato sauce from the table.,7,1,0.5434803886847499
+1,29,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,29,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,29,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+1,29,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,1,0.5484319377126039
+2,0,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,0,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,0,25,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,0,50,I want the robot arm to move towards the moka pot on the kitchen table.,2,2,0.7652095208174652
+2,0,75,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,0,100,I want the robot arm to move the moka pot onto the flat stove.,2,2,0.799733553940206
+2,1,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,1,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,1,25,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,1,50,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,1,75,I want the robot arm to move the frying pan from the table to the stove.,2,2,0.6654861233037415
+2,1,100,I want the robot arm to move the moka pot onto the flat stove.,2,2,0.799733553940206
+2,2,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,2,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,2,25,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,2,50,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,2,75,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,2,100,I want the robot arm to move the moka pot onto the flat stove.,2,2,0.799733553940206
+2,3,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,3,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,3,25,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,3,50,I want the robot arm to move towards the moka pot on the kitchen table.,2,2,0.7652095208174652
+2,3,75,I want the robot arm to move the stove burner into position on the table.,2,2,0.6894879005014216
+2,3,100,I want the robot arm to move the moka pot onto the flat stove.,2,2,0.799733553940206
+2,4,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,4,10,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,4,25,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,4,50,I want the robot arm to move the moka pot from the table to the flat stove.,2,2,0.7813958778410279
+2,4,75,I want the robot arm to move the moka pot from the table to the flat stove.,2,2,0.7813958778410279
+2,4,100,I want the robot arm to move the flat stove onto the kitchen table.,2,2,0.6864709463623276
+2,5,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,5,10,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,5,25,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,5,50,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,5,75,I want the robot arm to move the moka pot onto the flat stove.,2,2,0.799733553940206
+2,5,100,I want the robot arm to move the moka pot onto the flat stove.,2,2,0.799733553940206
+2,6,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,6,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,6,25,I want the robot arm to move the moka pot from the table to the flat stove.,2,2,0.7813958778410279
+2,6,50,I want the robot arm to move the flat stove onto the kitchen table.,2,2,0.6864709463623276
+2,6,75,I want the robot arm to move the flat stove onto the kitchen table.,2,2,0.6864709463623276
+2,6,100,I want the robot arm to move the frying pan from the table to the stove.,2,2,0.6654861233037415
+2,7,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,7,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,7,25,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,7,50,I want the robot arm to move the frying pan from the table to the stove.,2,2,0.6654861233037415
+2,7,75,I want the robot to move the frying pan from the table to the stove.,2,2,0.667334383805765
+2,7,100,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,8,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,8,10,I want the robot arm to move the moka pot from the table to the flat stove.,2,2,0.7813958778410279
+2,8,25,I want the robot arm to move the moka pot closer to the flat stove.,2,2,0.7954240630543121
+2,8,50,I want the robot arm to move the moka pot closer to the flat stove.,2,2,0.7954240630543121
+2,8,75,I want the robot arm to move the moka pot closer to the flat stove.,2,2,0.7954240630543121
+2,8,100,I want the robot arm to move the moka pot from the table to the flat stove.,2,2,0.7813958778410279
+2,9,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,9,10,I want the robot arm to move the moka pot from the countertop to the stove.,2,2,0.7853022683196794
+2,9,25,I want the robot arm to move the moka pot from the countertop to the stove.,2,2,0.7853022683196794
+2,9,50,I want the robot arm to move the moka pot from the countertop to the stove.,2,2,0.7853022683196794
+2,9,75,I want the robot arm to move the moka pot from the countertop to the stove.,2,2,0.7853022683196794
+2,9,100,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,10,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,10,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,10,25,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,10,50,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,10,75,I want the robot arm to move the frying pan from the table to the stove.,2,2,0.6654861233037415
+2,10,100,I want the robot arm to move the stove burner into position on the table.,2,2,0.6894879005014216
+2,11,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,11,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,11,25,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,11,50,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,11,75,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,11,100,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,12,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,12,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,12,25,I want the robot arm to move the moka pot from the table to the flat stove.,2,2,0.7813958778410279
+2,12,50,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,12,75,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,12,100,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,13,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,13,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,13,25,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,13,50,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,13,75,I want the robot arm to move the moka pot onto the flat stove.,2,2,0.799733553940206
+2,13,100,I want the robot arm to move the moka pot from the table to the flat stove.,2,2,0.7813958778410279
+2,14,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,14,10,I want the robot arm to move the moka pot from the countertop to the stove.,2,2,0.7853022683196794
+2,14,25,I want the robot arm to move the moka pot from the countertop to the stove.,2,2,0.7853022683196794
+2,14,50,I want the robot arm to move towards the moka pot on the table.,2,2,0.7586329532532067
+2,14,75,I want the robot arm to move the stove burner towards the moka pot on the table.,2,2,0.7530963878586282
+2,14,100,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,15,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,15,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,15,25,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,15,50,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,15,75,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,15,100,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,16,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,16,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,16,25,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,16,50,I want the robot to move the frying pan from the table to the stove.,2,2,0.667334383805765
+2,16,75,I want the robot arm to move the stove burner onto the table.,2,2,0.6883799515555948
+2,16,100,I want the robot arm to move the stove burner onto the table.,2,2,0.6883799515555948
+2,17,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,17,10,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,17,25,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,17,50,I want the robot arm to move the frying pan from the table to the stove.,2,2,0.6654861233037415
+2,17,75,I want the robot arm to move the stove burner into position on the table.,2,2,0.6894879005014216
+2,17,100,I want the robot arm to move the frying pan from the table to the stove.,2,2,0.6654861233037415
+2,18,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,18,10,I want the robot arm to move the moka pot from the countertop to the stove.,2,2,0.7853022683196794
+2,18,25,I want the robot arm to move the moka pot from the countertop to the stove.,2,2,0.7853022683196794
+2,18,50,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,18,75,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,18,100,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,19,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,19,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,19,25,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,19,50,I want the robot arm to move the frying pan from the table to the stove.,2,2,0.6654861233037415
+2,19,75,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,19,100,I want the robot arm to move the stove burner onto the table.,2,2,0.6883799515555948
+2,20,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,20,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,20,25,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,20,50,I want the robot arm to move the moka pot closer to the flat stove.,2,2,0.7954240630543121
+2,20,75,I want the robot arm to move the moka pot closer to the flat stove.,2,2,0.7954240630543121
+2,20,100,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,21,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,21,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,21,25,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,21,50,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,21,75,I want the robot arm to move the moka pot closer to the flat stove.,2,2,0.7954240630543121
+2,21,100,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,22,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,22,10,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,22,25,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,22,50,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,22,75,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,22,100,I want the robot arm to move towards the moka pot on the table.,2,2,0.7586329532532067
+2,23,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,23,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,23,25,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,23,50,I want the robot arm to move the stove burner towards the moka pot on the table.,2,2,0.7530963878586282
+2,23,75,I want the robot arm to move the stove burner onto the table.,2,2,0.6883799515555948
+2,23,100,I want the robot arm to move the moka pot onto the flat stove.,2,2,0.799733553940206
+2,24,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,24,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,24,25,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,24,50,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,24,75,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,24,100,I want the robot arm to move the moka pot from the table to the flat stove.,2,2,0.7813958778410279
+2,25,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,25,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,25,25,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,25,50,I want the robot arm to move the frying pan from the table to the stove.,2,2,0.6654861233037415
+2,25,75,I want the robot arm to move the frying pan from the table to the stove.,2,2,0.6654861233037415
+2,25,100,I want the robot arm to move the moka pot from the table to the flat stove.,2,2,0.7813958778410279
+2,26,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,26,10,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,26,25,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,26,50,I want the robot arm to move the frying pan from the table to the stove.,2,2,0.6654861233037415
+2,26,75,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,26,100,I want the robot arm to move the moka pot onto the flat stove.,2,2,0.799733553940206
+2,27,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,27,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,27,25,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,27,50,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,27,75,I want the robot arm to move the stove burner into position on the table.,2,2,0.6894879005014216
+2,27,100,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,28,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,28,10,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,28,25,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,28,50,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,28,75,I want the robot arm to move the moka pot closer to the flat stove.,2,2,0.7954240630543121
+2,28,100,I want the robot arm to move the moka pot from the countertop to the flat stove.,2,2,0.7829282454932156
+2,29,0,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,29,10,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,29,25,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,29,50,I want the robot arm to move the moka pot from the kitchen table to the flat stove.,2,2,0.7795760464403771
+2,29,75,I want the robot arm to move the moka pot closer to the stove.,2,2,0.7967361017428831
+2,29,100,I want the robot arm to move the moka pot from the table to the flat stove.,2,2,0.7813958778410279
+3,0,0,I want the gripper to move towards the wine bottle on the table.,2,3,0.5387921536422847
+3,0,10,I want the robot arm to move the wine bottle from the drawer to the wine rack.,2,3,0.5908388424645598
+3,0,25,I want the robot arm to move the wine bottle from the drawer to the table.,2,3,0.5970550157558404
+3,0,50,I want the robot arm to move the wine bottle from the drawer to the countertop.,2,3,0.5973088938834463
+3,0,75,I want the robot arm to pick up the wine bottle from the table and place it on the wine rack.,2,3,0.5330692535543775
+3,0,100,I want the robot arm to pick up the wine bottle from the table and place it on the wine rack.,2,3,0.5330692535543775
+3,1,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,1,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,1,25,I want the robot arm to move the wine bottle from the drawer to the table.,2,3,0.5970550157558404
+3,1,50,I want the robot arm to move the wine bottle from the table to the drawer.,2,3,0.5865320521323085
+3,1,75,I want the robot arm to move the wine bottle from the drawer onto the table.,3,3,0.6051137725883016
+3,1,100,I want the robot arm to move the wine bottle from the drawer onto the table.,3,3,0.6051137725883016
+3,2,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,2,10,I want the robot arm to move towards the wine bottle on the kitchen table.,2,3,0.5342177599066267
+3,2,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,2,50,I want the robot arm to move its gripper towards the wine bottle on the kitchen table.,2,3,0.5281806630083807
+3,2,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,2,100,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,3,0,I want the robot arm to move the wine bottle from the drawer to the countertop.,2,3,0.5973088938834463
+3,3,10,I want the robot arm to move its gripper towards the wine bottle on the kitchen table.,2,3,0.5281806630083807
+3,3,25,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,3,50,I want the robot arm to move its gripper towards the wine bottle on the kitchen table.,2,3,0.5281806630083807
+3,3,75,I want the robot arm to move the wine bottle from the cabinet to the table.,2,3,0.592319795204472
+3,3,100,I want the robot arm to move the wine bottle from the cabinet to the table.,2,3,0.592319795204472
+3,4,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,4,10,I want the robot arm to move its gripper towards the wine bottle on the kitchen table.,2,3,0.5281806630083807
+3,4,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,4,50,I want the robot arm to move its gripper towards the wine bottle on the table.,2,3,0.5224774806584055
+3,4,75,I want the robot arm to move its gripper towards the wine bottle on the table.,2,3,0.5224774806584055
+3,4,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,5,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,5,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,5,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,5,50,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,5,75,I want the robot arm to move the wine bottle from the table to the drawer.,2,3,0.5865320521323085
+3,5,100,I want the robot arm to move the wine bottle from the table to the drawer.,2,3,0.5865320521323085
+3,6,0,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,6,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,6,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,6,50,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,6,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,6,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,7,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,7,10,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,7,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,7,50,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,7,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,7,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,8,0,I want the robot arm to move towards the wine bottle on the kitchen table.,2,3,0.5342177599066267
+3,8,10,I want the robot arm to move its gripper towards the wine bottle on the table.,2,3,0.5224774806584055
+3,8,25,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,8,50,I want the robot arm to move its gripper towards the wine bottle on the table.,2,3,0.5224774806584055
+3,8,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,8,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,9,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,9,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,9,25,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,9,50,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,9,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,9,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,10,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,10,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,10,25,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,10,50,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,10,75,I want the robot arm to move its gripper towards the wine bottle on the table.,2,3,0.5224774806584055
+3,10,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,11,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,11,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,11,25,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,11,50,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,11,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,11,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,12,0,I want the robot arm to move the wine bottle from the floor to the wine rack on the kitchen table.,2,3,0.5383115410411636
+3,12,10,I want the robot arm to move the wine bottle from the floor to the wine rack.,2,3,0.5296550288413449
+3,12,25,I want the robot arm to move its gripper towards the wine bottle on the table.,2,3,0.5224774806584055
+3,12,50,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,12,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,12,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,13,0,I want the robot arm to move the wine bottle from the countertop to the wine rack.,2,3,0.5402153652937884
+3,13,10,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,13,25,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,13,50,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,13,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,13,100,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,14,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,14,10,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,14,25,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,14,50,I want the robot arm to move its gripper towards the wine bottle on the kitchen table.,2,3,0.5281806630083807
+3,14,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,14,100,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,15,0,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,15,10,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,15,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,15,50,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,15,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,15,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,16,0,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,16,10,I want the robot arm to move its gripper towards the wine bottle on the table.,2,3,0.5224774806584055
+3,16,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,16,50,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,16,75,I want the robot arm to pick up the wine bottle from the table.,2,3,0.521981487740911
+3,16,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,17,0,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,17,10,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,17,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,17,50,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,17,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,17,100,I want the robot arm to pick up the wine bottle from the table.,2,3,0.521981487740911
+3,18,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,18,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,18,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,18,50,I want the robot arm to move its gripper towards the wine bottle on the table.,2,3,0.5224774806584055
+3,18,75,I want the robot arm to move the bowl from the table to the drawer.,3,3,0.7078112330940962
+3,18,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,19,0,I want the gripper to move towards the wine bottle on the kitchen table.,2,3,0.5421052183533843
+3,19,10,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,19,25,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,19,50,I want the robot arm to move its gripper towards the wine bottle on the kitchen table.,2,3,0.5281806630083807
+3,19,75,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,19,100,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,20,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,20,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,20,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,20,50,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,20,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,20,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,21,0,I want the robot arm to move the wine bottle from the floor to the wine rack on the kitchen table.,2,3,0.5383115410411636
+3,21,10,I want the robot arm to move the wine bottle from the floor into the wine rack.,2,3,0.5330423500494477
+3,21,25,I want the robot arm to move the wine bottle from the floor into the wine rack.,2,3,0.5330423500494477
+3,21,50,I want the robot arm to move the wine bottle from the floor into the wine rack.,2,3,0.5330423500494477
+3,21,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,21,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,22,0,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,22,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,22,25,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,22,50,I want the robot arm to move its gripper towards the wine bottle on the kitchen table.,2,3,0.5281806630083807
+3,22,75,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,22,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,23,0,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,23,10,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,23,25,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,23,50,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,23,75,I want the robot arm to move the wine bottle from the table to the drawer.,2,3,0.5865320521323085
+3,23,100,I want the robot arm to move the wine bottle from the table to the drawer.,2,3,0.5865320521323085
+3,24,0,I want the robot arm to move the wine bottle from the drawer onto the table.,3,3,0.6051137725883016
+3,24,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,24,25,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,24,50,I want the robot arm to move the wine bottle from the drawer to the table.,2,3,0.5970550157558404
+3,24,75,I want the robot arm to move the wine bottle from the table to the drawer.,2,3,0.5865320521323085
+3,24,100,I want the robot arm to move the wine bottle from the table to the drawer.,2,3,0.5865320521323085
+3,25,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,25,10,I want the robot arm to move towards the wine bottle on the kitchen table.,2,3,0.5342177599066267
+3,25,25,I want the robot arm to move its gripper towards the wine bottle on the kitchen table.,2,3,0.5281806630083807
+3,25,50,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,25,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,25,100,I want the robot arm to move the bowl from the table to the drawer.,3,3,0.7078112330940962
+3,26,0,I want the gripper to move towards the wine bottle on the kitchen table.,2,3,0.5421052183533843
+3,26,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,26,25,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,26,50,I want the robot arm to move its gripper towards the wine bottle on the table.,2,3,0.5224774806584055
+3,26,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,26,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,27,0,I want the robot arm to move the wine bottle from the kitchen table to the white cabinet.,2,3,0.5902131010504218
+3,27,10,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,27,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,27,50,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,27,75,I want the robot arm to pick up the wine bottle from the table and place it on the kitchen counter.,2,3,0.5378880240159521
+3,27,100,I want the robot arm to move the bowl from the table to the cabinet.,3,3,0.7134276031280227
+3,28,0,I want the robot arm to move the wine bottle from the kitchen table to the wine rack.,2,3,0.5370810818416283
+3,28,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,28,25,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,28,50,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,28,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,28,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,29,0,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,29,10,I want the robot arm to move towards the wine bottle on the table.,2,3,0.5328089740153827
+3,29,25,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,29,50,I want the robot arm to move its gripper towards the wine bottle on the table.,2,3,0.5224774806584055
+3,29,75,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+3,29,100,I want the robot arm to move the wine bottle from the table to the wine rack.,2,3,0.5350028910076463
+4,0,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,0,10,I want the robot to move its gripper towards the red coffee mug on the table.,2,4,0.5635634881603565
+4,0,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,0,50,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,0,75,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,0,100,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,1,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,1,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,1,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,1,50,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,1,75,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,1,100,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,2,0,I want the robot arm to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6730895179174874
+4,2,10,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,2,25,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,2,50,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,2,75,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,2,100,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,3,0,I want the robot arm to pick up the red coffee mug from the table.,2,4,0.5621735596694399
+4,3,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,3,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,3,50,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,3,75,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,3,100,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,4,0,I want the robot to move the red coffee mug closer to the center of the table.,2,4,0.5798952695971653
+4,4,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,4,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,4,50,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,4,75,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,4,100,I want the robot to move the red coffee mug closer to the white yellow mug on the left side of the table.,4,4,0.6966694366734298
+4,5,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,5,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,5,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,5,50,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,5,75,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,5,100,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,6,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,6,10,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,6,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,6,50,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,6,75,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,6,100,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,7,0,I want the robot arm to move the red coffee mug closer to the other mugs on the table.,6,4,0.6154144178530692
+4,7,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,7,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,7,50,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,7,75,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,7,100,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,8,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,8,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,8,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,8,50,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,8,75,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,8,100,I want the robot to move the red coffee mug closer to the white yellow mug on the table.,9,4,0.6926883584676656
+4,9,0,I want the robot arm to move towards the red coffee mug and pick it up.,2,4,0.577672640853494
+4,9,10,I want the robot to move its gripper towards the red coffee mug on the table.,2,4,0.5635634881603565
+4,9,25,I want the robot to move its gripper towards the red coffee mug on the table.,2,4,0.5635634881603565
+4,9,50,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,9,75,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,9,100,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,10,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,10,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,10,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,10,50,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,10,75,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,10,100,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,11,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,11,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,11,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,11,50,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,11,75,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,11,100,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,12,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,12,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,12,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,12,50,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,12,75,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,12,100,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,13,0,I want the robot arm to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6730895179174874
+4,13,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,13,25,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,13,50,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,13,75,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,13,100,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,14,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,14,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,14,25,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,14,50,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,14,75,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,14,100,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,15,0,I want the robot arm to move towards the red coffee mug on the table.,2,4,0.5691599563691119
+4,15,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,15,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,15,50,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,15,75,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,15,100,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,16,0,I want the robot arm to move the red coffee mug closer to the other mugs on the table.,6,4,0.6154144178530692
+4,16,10,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,16,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,16,50,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,16,75,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,16,100,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,17,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,17,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,17,25,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,17,50,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,17,75,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,17,100,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,18,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,18,10,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,18,25,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,18,50,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,18,75,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,18,100,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,19,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,19,10,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,19,25,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,19,50,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,19,75,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,19,100,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,20,0,I want the robot arm to pick up the red coffee mug from the table.,2,4,0.5621735596694399
+4,20,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,20,25,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,20,50,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,20,75,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,20,100,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,21,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,21,10,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,21,25,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,21,50,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,21,75,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,21,100,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,22,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,22,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,22,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,22,50,I want the robot to move the red coffee mug closer to the white yellow mug on the left side of the table.,4,4,0.6966694366734298
+4,22,75,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,22,100,I want the robot to move the yellow mug closer to the red coffee mug.,9,4,0.6713406206803241
+4,23,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,23,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,23,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,23,50,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,23,75,I want the robot to move the red coffee mug closer to the white yellow mug on the left side of the table.,4,4,0.6966694366734298
+4,23,100,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,24,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,24,10,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,24,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,24,50,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,24,75,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,24,100,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,25,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,25,10,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,25,25,I want the robot to move the white mug closer to the red mug on the table.,6,4,0.661237072582844
+4,25,50,I want the robot to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6700013294675882
+4,25,75,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,25,100,I want the robot to move the red coffee mug closer to the white yellow mug on the left side of the table.,4,4,0.6966694366734298
+4,26,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,26,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,26,25,I want the robot to pick up the white and yellow mug from the table.,9,4,0.6945303151220483
+4,26,50,I want the robot to move the white and yellow mug closer to the red coffee mug.,9,4,0.7064408728113756
+4,26,75,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,26,100,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,27,0,I want the robot arm to move the red coffee mug closer to the other mugs on the table.,6,4,0.6154144178530692
+4,27,10,I want the robot to move its gripper towards the red coffee mug on the table.,2,4,0.5635634881603565
+4,27,25,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,27,50,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,27,75,I want the robot arm to move the red coffee mug closer to the white yellow mug on the living room table.,9,4,0.6730895179174874
+4,27,100,I want the robot to move the red coffee mug closer to the white yellow mug.,9,4,0.6947844878554692
+4,28,0,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,28,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,28,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,28,50,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,28,75,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,28,100,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,29,0,I want the robot arm to pick up the red coffee mug from the table.,2,4,0.5621735596694399
+4,29,10,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,29,25,I want the robot to pick up the red coffee mug from the table.,2,4,0.5598106392816216
+4,29,50,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+4,29,75,I want the robot to move the red coffee mug closer to the other mugs on the table.,6,4,0.6157626090759112
+4,29,100,I want the robot to move the white yellow mug closer to the red coffee mug.,9,4,0.7030865343044872
+5,0,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,0,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,0,25,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,0,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,0,75,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,0,100,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,1,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,1,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,1,25,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,1,50,I want the robot arm to move the black book closer to the mug on the study table.,6,5,0.5586235076311539
+5,1,75,I want the robot arm to move the black book into the desk caddy.,5,5,0.6758336836512335
+5,1,100,I want the robot arm to move the black book into the desk caddy.,5,5,0.6758336836512335
+5,2,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,2,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,2,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,2,50,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,2,75,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,2,100,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,3,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,3,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,3,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,3,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,3,75,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,3,100,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,4,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,4,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,4,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,4,50,I want the robot arm to move the black book closer to the coffee maker.,2,5,0.595045575995585
+5,4,75,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,4,100,I want the robot arm to move the black book from the desk caddy to the study table.,5,5,0.6515089131243632
+5,5,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,5,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,5,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,5,50,I want the robot arm to move the black book closer to the coffee maker.,2,5,0.595045575995585
+5,5,75,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,5,100,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,6,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,6,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,6,25,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,6,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,6,75,I want the robot arm to pick up the black book from the desk caddy and place it on the study table.,5,5,0.6594026042394753
+5,6,100,I want the robot arm to pick up the black book from the desk caddy and place it on the study table.,5,5,0.6594026042394753
+5,7,0,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,7,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,7,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,7,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,7,75,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,7,100,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,8,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,8,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,8,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,8,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,8,75,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,8,100,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,9,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,9,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,9,25,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,9,50,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,9,75,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,9,100,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,10,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,10,10,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,10,25,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,10,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,10,75,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,10,100,I want the robot arm to move the black book into the desk caddy.,5,5,0.6758336836512335
+5,11,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,11,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,11,25,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,11,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,11,75,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,11,100,I want the robot arm to move the black book from the desk caddy to the study table.,5,5,0.6515089131243632
+5,12,0,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,12,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,12,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,12,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,12,75,I want the robot arm to move the black book into the desk caddy.,5,5,0.6758336836512335
+5,12,100,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,13,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,13,10,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,13,25,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,13,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,13,75,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,13,100,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,14,0,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,14,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,14,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,14,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,14,75,I want the robot arm to move the black book into the desk caddy.,5,5,0.6758336836512335
+5,14,100,I want the robot arm to move the black book into the desk caddy.,5,5,0.6758336836512335
+5,15,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,15,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,15,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,15,50,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,15,75,I want the robot arm to move the black book from the desk caddy to the study table.,5,5,0.6515089131243632
+5,15,100,I want the robot arm to move the black book into the desk caddy.,5,5,0.6758336836512335
+5,16,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,16,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,16,25,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,16,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,16,75,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,16,100,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,17,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,17,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,17,25,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,17,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,17,75,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,17,100,I want the robot arm to move the black book into the desk caddy.,5,5,0.6758336836512335
+5,18,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,18,10,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,18,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,18,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,18,75,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,18,100,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,19,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,19,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,19,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,19,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,19,75,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,19,100,I want the robot arm to pick up the black book from the desk caddy and place it on the study table.,5,5,0.6594026042394753
+5,20,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,20,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,20,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,20,50,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,20,75,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,20,100,I want the robot arm to move the black book into the desk caddy.,5,5,0.6758336836512335
+5,21,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,21,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,21,25,I want the robot arm to move the black book closer to the coffee mug on the study table.,6,5,0.5595415245979298
+5,21,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,21,75,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,21,100,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,22,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,22,10,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,22,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,22,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,22,75,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,22,100,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,23,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,23,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,23,25,I want the robot arm to move the black book closer to the coffee cup on the study table.,2,5,0.5572060973685451
+5,23,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,23,75,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,23,100,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,24,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,24,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,24,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,24,50,I want the robot arm to move the black book into the desk caddy.,5,5,0.6758336836512335
+5,24,75,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,24,100,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,25,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,25,10,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,25,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,25,50,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,25,75,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,25,100,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,26,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,26,10,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,26,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,26,50,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,26,75,I want the robot arm to move the black book from the desk caddy to the study table.,5,5,0.6515089131243632
+5,26,100,I want the robot arm to move the black book into the desk caddy.,5,5,0.6758336836512335
+5,27,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,27,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,27,25,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,27,50,I want the robot arm to move the black book closer to the coffee maker.,2,5,0.595045575995585
+5,27,75,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,27,100,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,28,0,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,28,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,28,25,I want the robot arm to move the black book from the study table to the desk caddy.,5,5,0.6507501256122601
+5,28,50,I want the robot arm to move the black book closer to the coffee cup on the study table.,2,5,0.5572060973685451
+5,28,75,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,28,100,I want the robot arm to pick up the black book from the study table.,7,5,0.5901650982150746
+5,29,0,I want the robot arm to move the mug from the table to the desk caddy.,6,5,0.5717015676341969
+5,29,10,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,29,25,I want the robot arm to move towards the black book on the study table.,2,5,0.5741204122867063
+5,29,50,I want the robot arm to move its gripper towards the black book on the study table.,5,5,0.5946326223040124
+5,29,75,I want the robot arm to move the black book from the desk caddy to the study table.,5,5,0.6515089131243632
+5,29,100,I want the robot arm to pick up the black book from the desk caddy and place it on the study table.,5,5,0.6594026042394753
+6,0,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,0,10,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,0,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,0,50,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,0,75,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,0,100,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,1,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,1,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,1,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,1,50,I want the robot arm to pick up the white mug from the table.,6,6,0.6845810737063649
+6,1,75,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,1,100,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,2,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,2,10,I want the robot to move its gripper towards the red coffee mug on the table.,2,6,0.6199813801812655
+6,2,25,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,2,50,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,2,75,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,2,100,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,3,0,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,3,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,3,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,3,50,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,3,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,3,100,I want the robot arm to move the chocolate pudding from the table to the red coffee mug.,6,6,0.7254406242733712
+6,4,0,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,4,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,4,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,4,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,4,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,4,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,5,0,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,5,10,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,5,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,5,50,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,5,75,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,5,100,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,6,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,6,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,6,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,6,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,6,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,6,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,7,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,7,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,7,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,7,50,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,7,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,7,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,8,0,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,8,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,8,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,8,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,8,75,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,8,100,I want the robot arm to move the chocolate pudding from the table to the plate.,6,6,0.7142578162390743
+6,9,0,I want the robot arm to move towards the red coffee mug on the table.,2,6,0.6366772364958105
+6,9,10,I want the robot to move the red coffee mug closer to the white mug on the table.,6,6,0.6722477622246487
+6,9,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,9,50,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,9,75,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,9,100,I want the robot arm to move the red coffee mug closer to the white mug on the saucer.,6,6,0.6680656269323975
+6,10,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,10,10,I want the robot to move its gripper towards the red coffee mug on the table.,2,6,0.6199813801812655
+6,10,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,10,50,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,10,75,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,10,100,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,11,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,11,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,11,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,11,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,11,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,11,100,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,12,0,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,12,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,12,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,12,50,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,12,75,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,12,100,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,13,0,I want the robot arm to move the red coffee mug from the table to the plate on the table.,6,6,0.6752063323526272
+6,13,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,13,25,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,13,50,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,13,75,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,13,100,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,14,0,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,14,10,I want the robot to move the red coffee mug closer to the white mug on the table.,6,6,0.6722477622246487
+6,14,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,14,50,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,14,75,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,14,100,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,15,0,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,15,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,15,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,15,50,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,15,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,15,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,16,0,I want the robot arm to move towards the red coffee mug and hold it.,2,6,0.6291151705197673
+6,16,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,16,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,16,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,16,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,16,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,17,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,17,10,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,17,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,17,50,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,17,75,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,17,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,18,0,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,18,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,18,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,18,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,18,75,I want the robot arm to move the chocolate pudding from the table to the plate.,6,6,0.7142578162390743
+6,18,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,19,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,19,10,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,19,25,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,19,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,19,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,19,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,20,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,20,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,20,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,20,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,20,75,I want the robot arm to move towards the red coffee mug and place it on the table.,2,6,0.6515431331629854
+6,20,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,21,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,21,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,21,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,21,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,21,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,21,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,22,0,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,22,10,I want the robot to move the chocolate pudding from the table to the plate.,6,6,0.7223616685130188
+6,22,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,22,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,22,75,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,22,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,23,0,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,23,10,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,23,25,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,23,50,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,23,75,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,23,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,24,0,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,24,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,24,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,24,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,24,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,24,100,I want the robot arm to move the chocolate pudding from the table to the white mug on the coaster.,6,6,0.7850958975992286
+6,25,0,I want the robot arm to move the red coffee mug closer to the plate on the living room table.,6,6,0.6748895585677335
+6,25,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,25,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,25,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,25,75,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,25,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,26,0,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,26,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,26,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,26,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,26,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,26,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,27,0,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,27,10,I want the robot to move its gripper towards the red coffee mug on the table.,2,6,0.6199813801812655
+6,27,25,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,27,50,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,27,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,27,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,28,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,28,10,I want the robot to move the red coffee mug closer to the white mug on the table.,6,6,0.6722477622246487
+6,28,25,I want the robot to pick up the red coffee mug from the table.,2,6,0.6538329769998596
+6,28,50,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,28,75,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,28,100,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,29,0,I want the robot arm to pick up the red coffee mug from the table.,2,6,0.6445665140292293
+6,29,10,I want the robot to pick up the chocolate pudding from the table.,6,6,0.7145067737420532
+6,29,25,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,29,50,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,29,75,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+6,29,100,I want the robot arm to pick up the chocolate pudding from the table.,6,6,0.7035204109035047
+7,0,0,I want the robot arm to move towards the tomato sauce on the table.,7,7,0.6405223068500058
+7,0,10,I want the robot arm to move towards the tomato sauce bottle on the table.,2,7,0.6113479037628797
+7,0,25,I want the robot arm to pick up the tomato sauce can from the table.,7,7,0.6615826759888316
+7,0,50,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,0,75,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,0,100,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,1,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,7,0.6351261310468883
+7,1,10,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,1,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,1,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,1,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,1,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,2,0,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,2,10,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,2,25,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,2,50,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,2,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,2,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,3,0,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,3,10,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,3,25,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,3,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,3,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,3,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,4,0,I want the robot to pick up the tomato sauce from the table.,7,7,0.6672266883200015
+7,4,10,I want the robot to pick up the ketchup bottle from the table.,7,7,0.6551710747007423
+7,4,25,I want the robot arm to pick up the ketchup bottle from the table.,7,7,0.6479358206443733
+7,4,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,4,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,4,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,5,0,I want the robot arm to pick up the tomato sauce from the table.,7,7,0.6546544032534638
+7,5,10,I want the robot to pick up the tomato sauce from the table.,7,7,0.6672266883200015
+7,5,25,I want the robot arm to move towards the tomato sauce can and hold it.,7,7,0.6466020213642846
+7,5,50,I want the robot arm to pick up the tomato sauce bottle from the table.,7,7,0.6351261310468883
+7,5,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,5,100,I want the robot arm to pick up the alphabet soup from the table.,7,7,0.7456468364707614
+7,6,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,7,0.6351261310468883
+7,6,10,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,6,25,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,6,50,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,6,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,6,100,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,7,0,I want the robot arm to pick up the alphabet soup from the table.,7,7,0.7456468364707614
+7,7,10,I want the robot to pick up the alphabet soup can from the table.,7,7,0.7694120038707111
+7,7,25,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,7,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,7,75,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,7,100,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,8,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,7,0.6351261310468883
+7,8,10,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,8,25,I want the robot to pick up the tomato sauce from the table.,7,7,0.6672266883200015
+7,8,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,8,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,8,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,9,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,7,0.6351261310468883
+7,9,10,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,9,25,I want the robot to pick up the can of tomato soup from the table.,7,7,0.698751100414686
+7,9,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,9,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,9,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,10,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,10,10,I want the robot to pick up the ketchup bottle from the table.,7,7,0.6551710747007423
+7,10,25,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,10,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,10,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,10,100,I want the robot arm to move the can of tomato sauce from the table to the basket.,7,7,0.6985495096766696
+7,11,0,I want the robot arm to pick up the tomato sauce can from the table.,7,7,0.6615826759888316
+7,11,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,11,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,11,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,11,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,11,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,12,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,7,0.6351261310468883
+7,12,10,I want the robot to pick up the ketchup bottle from the table.,7,7,0.6551710747007423
+7,12,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,12,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,12,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,12,100,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,13,0,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,13,10,I want the robot to pick up the tomato sauce can from the table.,7,7,0.6706759490652903
+7,13,25,I want the robot to pick up the tomato sauce can from the table.,7,7,0.6706759490652903
+7,13,50,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,13,75,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,13,100,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,14,0,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,14,10,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,14,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,14,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,14,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,14,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,15,0,I want the robot arm to pick up the tomato sauce can from the table.,7,7,0.6615826759888316
+7,15,10,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,15,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,15,50,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,15,75,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,15,100,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,16,0,I want the robot arm to pick up the alphabet soup from the table.,7,7,0.7456468364707614
+7,16,10,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,16,25,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,16,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,16,75,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,16,100,I want the robot arm to move towards the alphabet soup can and pick it up.,7,7,0.7351907643040579
+7,17,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,7,0.6351261310468883
+7,17,10,I want the robot to pick up the ketchup bottle from the table.,7,7,0.6551710747007423
+7,17,25,I want the robot to pick up the ketchup bottle from the table.,7,7,0.6551710747007423
+7,17,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,17,75,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,17,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,18,0,I want the robot arm to pick up the tomato sauce can from the table.,7,7,0.6615826759888316
+7,18,10,I want the robot to pick up the ketchup bottle from the table.,7,7,0.6551710747007423
+7,18,25,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,18,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,18,75,I want the robot arm to pick up the tomato sauce can from the table.,7,7,0.6615826759888316
+7,18,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,19,0,I want the robot arm to pick up the tomato sauce from the table.,7,7,0.6546544032534638
+7,19,10,I want the robot to pick up the ketchup bottle from the table.,7,7,0.6551710747007423
+7,19,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,19,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,19,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,19,100,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,20,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,7,0.6351261310468883
+7,20,10,I want the robot to pick up the ketchup bottle from the table.,7,7,0.6551710747007423
+7,20,25,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,20,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,20,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,20,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,21,0,I want the robot arm to pick up the tomato sauce from the table.,7,7,0.6546544032534638
+7,21,10,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,21,25,I want the robot to pick up the tomato sauce can from the table.,7,7,0.6706759490652903
+7,21,50,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,21,75,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,21,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,22,0,I want the robot arm to pick up the tomato sauce bottle from the table.,7,7,0.6351261310468883
+7,22,10,I want the robot arm to pick up the tomato sauce bottle from the table.,7,7,0.6351261310468883
+7,22,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,22,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,22,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,22,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,23,0,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,23,10,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,23,25,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,23,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,23,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,23,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,24,0,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,24,10,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,24,25,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,24,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,24,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,24,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,25,0,I want the robot arm to pick up the alphabet soup from the table.,7,7,0.7456468364707614
+7,25,10,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,25,25,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,25,50,I want the robot arm to pick up the can of alphabet soup from the table.,7,7,0.7422345253507424
+7,25,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,25,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,26,0,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,26,10,I want the robot to pick up the tomato sauce bottle from the table.,7,7,0.6465787445317339
+7,26,25,I want the robot arm to pick up the tomato sauce bottle from the table.,7,7,0.6351261310468883
+7,26,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,26,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,26,100,I want the robot arm to pick up the tomato sauce can from the table.,7,7,0.6615826759888316
+7,27,0,I want the robot arm to pick up the tomato sauce from the table.,7,7,0.6546544032534638
+7,27,10,I want the robot arm to move towards the tomato sauce bottle on the table.,2,7,0.6113479037628797
+7,27,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,27,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,27,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,27,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,28,0,I want the robot arm to pick up the alphabet soup from the table and place it into the basket.,7,7,0.7897404986584872
+7,28,10,I want the robot to pick up the can of tomato sauce from the table.,7,7,0.6771352855200508
+7,28,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,28,50,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,28,75,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,28,100,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,29,0,I want the robot arm to pick up the tomato sauce from the table.,7,7,0.6546544032534638
+7,29,10,I want the robot to pick up the tomato sauce from the table.,7,7,0.6672266883200015
+7,29,25,I want the robot arm to pick up the can of tomato sauce from the table.,7,7,0.6651824511606592
+7,29,50,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,29,75,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+7,29,100,I want the robot arm to pick up the alphabet soup can from the table.,7,7,0.748866679757947
+8,0,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,0,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,0,25,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,0,50,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,0,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,0,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,1,0,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,1,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,1,25,I want the robot to move the right moka pot from the kitchen table to the flat stove.,2,8,0.6997189092740428
+8,1,50,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,1,75,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,1,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,2,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,2,10,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,2,25,I want the robot to move the right moka pot from the table to the flat stove.,2,8,0.7002191632125329
+8,2,50,I want the robot to move the right moka pot from the table to the stove.,2,8,0.7092182697258687
+8,2,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,2,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,3,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,3,10,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,3,25,I want the robot to move the right moka pot closer to the stove.,2,8,0.7358371824482054
+8,3,50,I want the robot to move the right moka pot from the table to the stove.,2,8,0.7092182697258687
+8,3,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,3,100,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,4,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,4,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,4,25,I want the robot arm to move towards the left moka pot and lift it up.,2,8,0.6686784782930346
+8,4,50,I want the robot arm to move towards the first moka pot on the kitchen table.,2,8,0.6855524657983796
+8,4,75,I want the robot arm to move towards the first moka pot on the kitchen table.,2,8,0.6855524657983796
+8,4,100,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,5,0,I want the robot arm to move the left moka pot from the kitchen table to the flat stove.,2,8,0.7029409539621615
+8,5,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,5,25,I want the robot to move the right moka pot from the table to the stove.,2,8,0.7092182697258687
+8,5,50,I want the robot arm to move the right moka pot from the kitchen table to the flat stove.,2,8,0.6964755565591596
+8,5,75,I want the robot to move the right moka pot from the table to the stove.,2,8,0.7092182697258687
+8,5,100,I want the robot to move the right moka pot from the table to the stove.,2,8,0.7092182697258687
+8,6,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,6,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,6,25,I want the robot to move the right moka pot from the table to the stove.,2,8,0.7092182697258687
+8,6,50,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,6,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,6,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,7,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,7,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,7,25,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,7,50,I want the robot to move the right moka pot from the kitchen table to the flat stove.,2,8,0.6997189092740428
+8,7,75,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,7,100,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,8,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,8,10,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,8,25,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,8,50,I want the robot to move the right moka pot from the table to the stove.,2,8,0.7092182697258687
+8,8,75,I want the robot to move the first moka pot from the table to the stove.,2,8,0.7205866336159004
+8,8,100,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,9,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,9,10,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,9,25,I want the robot arm to move towards the left moka pot and hold it.,2,8,0.6776234143286128
+8,9,50,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,9,75,I want the robot arm to move towards the first moka pot on the kitchen table.,2,8,0.6855524657983796
+8,9,100,I want the robot arm to move towards the first moka pot on the kitchen table.,2,8,0.6855524657983796
+8,10,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,10,10,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,10,25,I want the robot to move the right moka pot from the kitchen table to the flat stove.,2,8,0.6997189092740428
+8,10,50,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,10,75,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,10,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,11,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,11,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,11,25,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,11,50,I want the robot arm to move towards the first moka pot on the kitchen table.,2,8,0.6855524657983796
+8,11,75,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,11,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,12,0,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,12,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,12,25,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,12,50,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,12,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,12,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,13,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,13,10,I want the robot to move the right moka pot from the table to the stove.,2,8,0.7092182697258687
+8,13,25,I want the robot arm to move towards the left moka pot and pick it up.,2,8,0.6730300151507278
+8,13,50,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,13,75,I want the robot arm to move towards the first moka pot on the left side of the table and pick it up.,2,8,0.6591698612054562
+8,13,100,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,14,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,14,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,14,25,I want the robot arm to move towards the left moka pot and lift it up.,2,8,0.6686784782930346
+8,14,50,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,14,75,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,14,100,I want the robot arm to move towards the first moka pot on the kitchen table.,2,8,0.6855524657983796
+8,15,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,15,10,I want the robot to move the right moka pot from the kitchen table to the flat stove.,2,8,0.6997189092740428
+8,15,25,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,15,50,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,15,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,15,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,16,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,16,10,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,16,25,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,16,50,I want the robot to move the right moka pot from the kitchen table to the flat stove.,2,8,0.6997189092740428
+8,16,75,I want the robot to move the first moka pot from the table to the stove.,2,8,0.7205866336159004
+8,16,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,17,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,17,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,17,25,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,17,50,I want the robot arm to move towards the first moka pot on the kitchen table.,2,8,0.6855524657983796
+8,17,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,17,100,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,18,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,18,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,18,25,I want the robot arm to move towards the left moka pot and pick it up.,2,8,0.6730300151507278
+8,18,50,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,18,75,I want the robot to move the left moka pot from the kitchen table to the flat stove.,2,8,0.7053874127645556
+8,18,100,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,19,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,19,10,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,19,25,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,19,50,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,19,75,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,19,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,20,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,20,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,20,25,I want the robot to move the right moka pot from the table to the flat stove.,2,8,0.7002191632125329
+8,20,50,I want the robot arm to move towards the first moka pot on the kitchen table.,2,8,0.6855524657983796
+8,20,75,I want the robot arm to move towards the left moka pot and hold it.,2,8,0.6776234143286128
+8,20,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,21,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,21,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,21,25,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,21,50,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,21,75,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,21,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,22,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,22,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,22,25,I want the robot arm to move towards the left moka pot and hold it.,2,8,0.6776234143286128
+8,22,50,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,22,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,22,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,23,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,23,10,I want the robot to move the right moka pot from the kitchen table to the flat stove.,2,8,0.6997189092740428
+8,23,25,I want the robot to move the left moka pot closer to the stove.,2,8,0.7369728802689692
+8,23,50,I want the robot to pick up the first moka pot from the kitchen table and place it on the flat stove.,2,8,0.717023132133924
+8,23,75,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,23,100,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,24,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,24,10,I want the robot to move the right moka pot from the kitchen table to the flat stove.,2,8,0.6997189092740428
+8,24,25,I want the robot to move the right moka pot from the table to the stove.,2,8,0.7092182697258687
+8,24,50,I want the robot arm to move towards the left moka pot and pick it up.,2,8,0.6730300151507278
+8,24,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,24,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,25,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,25,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,25,25,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,25,50,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,25,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,25,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,26,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,26,10,I want the robot to move its gripper towards the left moka pot on the kitchen table.,2,8,0.6444176881322223
+8,26,25,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,26,50,I want the robot arm to move towards the first moka pot on the kitchen table.,2,8,0.6855524657983796
+8,26,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,26,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,27,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,27,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,27,25,I want the robot arm to move towards the left moka pot and pick it up.,2,8,0.6730300151507278
+8,27,50,I want the robot to move the right moka pot from the table to the stove.,2,8,0.7092182697258687
+8,27,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,27,100,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,28,0,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,28,10,I want the robot arm to move towards the left moka pot on the kitchen table.,2,8,0.6844394510432332
+8,28,25,I want the robot to move the right moka pot from the kitchen table to the flat stove.,2,8,0.6997189092740428
+8,28,50,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+8,28,75,I want the robot arm to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7080230338526594
+8,28,100,I want the robot to move the first moka pot from the kitchen table to the flat stove.,2,8,0.7135593045017907
+9,0,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,0,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,0,25,I want the robot to move its gripper towards the white yellow mug on the kitchen table.,9,9,0.7059835481684349
+9,0,50,I want the robot to pick up the white yellow mug from the table.,9,9,0.7380818648705934
+9,0,75,I want the robot arm to move the white yellow mug into the microwave.,9,9,0.7988918129588062
+9,0,100,I want the robot arm to move the white yellow mug into the microwave.,9,9,0.7988918129588062
+9,1,0,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,1,10,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,1,25,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,1,50,I want the robot to move the white yellow mug closer to the porcelain mug on the kitchen table.,9,9,0.7493821079440353
+9,1,75,I want the robot arm to move towards the white yellow mug and then place it on the kitchen table.,9,9,0.7413376816003541
+9,1,100,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,2,0,I want the gripper to move towards the white yellow mug on the kitchen table.,9,9,0.6913551929523478
+9,2,10,I want the robot to move its gripper towards the white yellow mug on the kitchen table.,9,9,0.7059835481684349
+9,2,25,I want the robot to move its gripper towards the white yellow mug on the kitchen table.,9,9,0.7059835481684349
+9,2,50,I want the robot to pick up the white-yellow mug from the table.,9,9,0.7031423400593702
+9,2,75,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,2,100,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,3,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,3,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,3,25,I want the robot to move its gripper towards the white yellow mug on the kitchen table.,9,9,0.7059835481684349
+9,3,50,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,3,75,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,3,100,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,4,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,4,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,4,25,I want the robot to move the white mug closer to the coffee machine.,2,9,0.6455324669192066
+9,4,50,I want the robot arm to move towards the white and yellow mug on the kitchen table.,9,9,0.7404975934662859
+9,4,75,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,4,100,I want the robot arm to move towards the white and yellow mug on the kitchen table.,9,9,0.7404975934662859
+9,5,0,I want the robot arm to move the white yellow mug from the kitchen table to the microwave.,9,9,0.7712249792690997
+9,5,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,5,25,I want the robot to move the white yellow mug closer to the porcelain mug on the kitchen table.,9,9,0.7493821079440353
+9,5,50,I want the robot arm to move the white yellow mug closer to the porcelain mug on the kitchen table.,4,9,0.7268154395790829
+9,5,75,I want the robot arm to move towards the white and yellow mug on the kitchen table.,9,9,0.7404975934662859
+9,5,100,I want the robot arm to move the white and yellow mug closer to the microwave.,9,9,0.7941766373748704
+9,6,0,I want the robot to move the white mug from the kitchen table to the microwave.,6,9,0.6857152749975758
+9,6,10,I want the robot to move the white mug closer to the black mug on the kitchen table.,6,9,0.6448911004864379
+9,6,25,I want the robot to move the white mug closer to the coffee machine.,2,9,0.6455324669192066
+9,6,50,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,6,75,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,6,100,I want the robot arm to move towards the white yellow mug and then place it on the kitchen table.,9,9,0.7413376816003541
+9,7,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,7,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,7,25,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,7,50,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,7,75,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,7,100,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,8,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,8,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,8,25,I want the robot to move the white yellow mug closer to the porcelain mug on the kitchen table.,9,9,0.7493821079440353
+9,8,50,I want the robot to pick up the white mug from the table.,6,9,0.6506957238925333
+9,8,75,I want the robot arm to move the white yellow mug closer to the microwave.,9,9,0.7924904165505965
+9,8,100,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,9,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,9,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,9,25,I want the robot to pick up the white-yellow mug from the kitchen table.,9,9,0.7159693306369646
+9,9,50,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,9,75,I want the robot arm to move the white yellow mug from the kitchen table to the microwave.,9,9,0.7712249792690997
+9,9,100,I want the robot arm to move the white yellow mug closer to the coffee machine.,9,9,0.7224780194388297
+9,10,0,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,10,10,I want the robot to move the white yellow mug closer to the microwave.,9,9,0.7918758481169408
+9,10,25,I want the robot to move the white mug closer to the black mug on the table.,6,9,0.6393341644020797
+9,10,50,I want the robot to pick up the white yellow mug from the table.,9,9,0.7380818648705934
+9,10,75,I want the robot arm to move the white yellow mug from the kitchen table to the microwave.,9,9,0.7712249792690997
+9,10,100,I want the robot arm to move the white yellow mug closer to the microwave.,9,9,0.7924904165505965
+9,11,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,11,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,11,25,I want the robot to move its gripper towards the white yellow mug on the kitchen table.,9,9,0.7059835481684349
+9,11,50,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,11,75,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,11,100,I want the robot arm to move the white yellow mug closer to the microwave.,9,9,0.7924904165505965
+9,12,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,12,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,12,25,I want the robot to pick up the white-yellow mug from the table.,9,9,0.7031423400593702
+9,12,50,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,12,75,I want the robot arm to move the white yellow mug into the microwave.,9,9,0.7988918129588062
+9,12,100,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,13,0,I want the robot arm to move the white yellow mug from the kitchen table to the microwave.,9,9,0.7712249792690997
+9,13,10,I want the robot to move the white yellow mug closer to the microwave.,9,9,0.7918758481169408
+9,13,25,I want the robot to move the white yellow mug closer to the microwave.,9,9,0.7918758481169408
+9,13,50,I want the robot arm to move towards the white yellow mug and then lift it up.,9,9,0.7333605348949243
+9,13,75,I want the robot arm to move towards the microwave and open it.,2,9,0.6018866547391837
+9,13,100,I want the robot arm to move towards the white yellow mug and then lift it up.,9,9,0.7333605348949243
+9,14,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,14,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,14,25,I want the robot to move the white yellow mug closer to the porcelain mug on the kitchen table.,9,9,0.7493821079440353
+9,14,50,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,14,75,I want the robot arm to move the white yellow mug from the table to the microwave.,9,9,0.7715277474925185
+9,14,100,I want the robot arm to move towards the white and yellow mug on the kitchen table.,9,9,0.7404975934662859
+9,15,0,I want the robot arm to move towards the white mug on the kitchen table.,6,9,0.6447944152445866
+9,15,10,I want the robot to move its gripper towards the white-yellow mug on the kitchen table.,9,9,0.6955837873415415
+9,15,25,I want the robot to move its gripper towards the white-yellow mug on the kitchen table.,9,9,0.6955837873415415
+9,15,50,I want the robot arm to move the white yellow mug closer to the porcelain mug on the kitchen table.,4,9,0.7268154395790829
+9,15,75,I want the robot arm to move the white yellow mug closer to the microwave.,9,9,0.7924904165505965
+9,15,100,I want the robot arm to move towards the white yellow mug and then place it on the kitchen table.,9,9,0.7413376816003541
+9,16,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,16,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,16,25,I want the robot to move its gripper towards the white-yellow mug on the kitchen table.,9,9,0.6955837873415415
+9,16,50,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,16,75,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,16,100,I want the robot arm to move the white yellow mug from the kitchen table to the microwave.,9,9,0.7712249792690997
+9,17,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,17,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,17,25,I want the robot to move the white yellow mug closer to the porcelain mug on the kitchen table.,9,9,0.7493821079440353
+9,17,50,I want the robot to move the white yellow mug closer to the coffee machine.,9,9,0.7327357535429031
+9,17,75,I want the robot to pick up the white-yellow mug from the table.,9,9,0.7031423400593702
+9,17,100,I want the robot to move the white yellow mug closer to the microwave.,9,9,0.7918758481169408
+9,18,0,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,18,10,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,18,25,I want the robot to move the white yellow mug closer to the coffee machine.,9,9,0.7327357535429031
+9,18,50,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,18,75,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,18,100,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,19,0,I want the robot arm to move towards the white and yellow mug on the kitchen table.,9,9,0.7404975934662859
+9,19,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,19,25,I want the robot to move its gripper towards the porcelain mug on the kitchen table.,2,9,0.6068555939997151
+9,19,50,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,19,75,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,19,100,I want the robot arm to move towards the white yellow mug and place it on the kitchen table.,9,9,0.7404127139626615
+9,20,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,20,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,20,25,I want the robot to move the white yellow mug closer to the coffee machine.,9,9,0.7327357535429031
+9,20,50,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,20,75,I want the robot arm to move towards the white yellow mug and then place it on the kitchen table.,9,9,0.7413376816003541
+9,20,100,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,21,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,21,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,21,25,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,21,50,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,21,75,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,21,100,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,22,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,22,10,I want the robot to move its gripper towards the white yellow mug on the kitchen table.,9,9,0.7059835481684349
+9,22,25,I want the robot to move its gripper towards the white yellow mug on the kitchen table.,9,9,0.7059835481684349
+9,22,50,I want the robot to move the white yellow mug closer to the porcelain mug on the kitchen table.,9,9,0.7493821079440353
+9,22,75,I want the robot arm to move the white yellow mug closer to the porcelain mug on the kitchen table.,4,9,0.7268154395790829
+9,22,100,I want the robot arm to move the white yellow mug closer to the porcelain mug on the kitchen table.,4,9,0.7268154395790829
+9,23,0,I want the robot arm to move towards the white mug on the kitchen table.,6,9,0.6447944152445866
+9,23,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,23,25,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,23,50,I want the robot to pick up the white mug from the table.,6,9,0.6506957238925333
+9,23,75,I want the robot to move the yellow mug closer to the microwave.,9,9,0.7675050906237451
+9,23,100,I want the robot arm to move the white yellow mug closer to the microwave.,9,9,0.7924904165505965
+9,24,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,24,10,I want the robot to move the white mug closer to the microwave.,9,9,0.7008686823671876
+9,24,25,I want the robot to move the white mug closer to the coffee machine.,2,9,0.6455324669192066
+9,24,50,I want the robot arm to move towards the white yellow mug and then lift it up.,9,9,0.7333605348949243
+9,24,75,I want the robot arm to move the white yellow mug closer to the microwave.,9,9,0.7924904165505965
+9,24,100,I want the robot arm to move the white yellow mug closer to the microwave.,9,9,0.7924904165505965
+9,25,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,25,10,I want the robot to move the white yellow mug closer to the coffee machine.,9,9,0.7327357535429031
+9,25,25,I want the robot to move the white yellow mug closer to the porcelain mug on the kitchen table.,9,9,0.7493821079440353
+9,25,50,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,25,75,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,25,100,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,26,0,I want the robot arm to move the white mug from the kitchen table to the microwave.,6,9,0.6769012721042453
+9,26,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,26,25,I want the robot to move its gripper towards the white-yellow mug on the kitchen table.,9,9,0.6955837873415415
+9,26,50,I want the robot arm to move towards the white yellow mug and place it on the kitchen table.,9,9,0.7404127139626615
+9,26,75,I want the robot arm to move towards the white yellow mug and place it on the kitchen table.,9,9,0.7404127139626615
+9,26,100,I want the robot arm to move towards the white yellow mug and place it on the kitchen table.,9,9,0.7404127139626615
+9,27,0,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,27,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,27,25,I want the robot to move the white mug closer to the microwave.,9,9,0.7008686823671876
+9,27,50,I want the robot to move the white mug closer to the microwave.,9,9,0.7008686823671876
+9,27,75,I want the robot to move the white mug closer to the microwave.,9,9,0.7008686823671876
+9,27,100,I want the robot arm to move towards the white and yellow mug on the kitchen table.,9,9,0.7404975934662859
+9,28,0,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,28,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,28,25,I want the robot to move its gripper towards the white mug on the table.,6,9,0.619814954670882
+9,28,50,I want the robot to pick up the white mug from the table.,6,9,0.6506957238925333
+9,28,75,I want the robot arm to move towards the porcelain mug on the kitchen table.,6,9,0.6221833523703841
+9,28,100,I want the robot arm to move the white yellow mug closer to the microwave.,9,9,0.7924904165505965
+9,29,0,I want the robot to move the white yellow mug from the kitchen table to the microwave.,9,9,0.7759736483729752
+9,29,10,I want the robot arm to move towards the white yellow mug on the kitchen table.,9,9,0.728446087420378
+9,29,25,I want the robot to move the white yellow mug closer to the porcelain mug on the kitchen table.,9,9,0.7493821079440353
+9,29,50,I want the robot arm to move towards the white yellow mug and lift it slightly.,9,9,0.7370076562933301
+9,29,75,I want the robot arm to move the white yellow mug closer to the microwave.,9,9,0.7924904165505965
+9,29,100,I want the robot arm to move the white yellow mug closer to the microwave.,9,9,0.7924904165505965

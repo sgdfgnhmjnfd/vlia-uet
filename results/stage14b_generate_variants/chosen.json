@@ -1,0 +1,12 @@
+{
+ "G": "G2",
+ "G+obj": "O1",
+ "mean_cal_accuracy_p25_p50": {
+  "G0": 0.4125,
+  "G1": 0.40625,
+  "G2": 0.43125
+ },
+ "O1_mean": 0.51875,
+ "rule": "highest mean of the p=25 and p=50 calibration accuracies; ties to the lower number; G3 not run (does not fit on the GPU)",
+ "n_calibration": 80
+}
