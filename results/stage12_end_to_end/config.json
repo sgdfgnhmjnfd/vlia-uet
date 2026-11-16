@@ -1,0 +1,69 @@
+{
+  "git_commit": "19a752e21a45b2faeec8e00915337a2db135cfd7",
+  "vlia_checkpoint": "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000/pretrained_model",
+  "token_table": "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/task_embeddings_v2.npz",
+  "encoder": "google/siglip-so400m-patch14-384",
+  "tau": 0.010561074356263286,
+  "n_calibration": 80,
+  "ask_rate": 0.1705685618729097,
+  "rotate180": false,
+  "demos_per_task": {
+    "0": 33,
+    "1": 49,
+    "2": 41,
+    "3": 35,
+    "4": 38,
+    "5": 41,
+    "6": 36,
+    "7": 43,
+    "8": 29,
+    "9": 34
+  },
+  "n_context_episodes": 1314,
+  "E1_gate_max_abs_diff": 3.8929283618927e-07,
+  "seconds_per_episode": 8.928858107149003,
+  "D1": {
+    "tokens_equal_when_F_right": true,
+    "same_success_rate_when_F_right": 0.9282296650717703,
+    "n": 209
+  },
+  "E2E_by_F_right": {
+    "F_right": {
+      "n": 209,
+      "E2E_successes": 35
+    },
+    "F_wrong": {
+      "n": 90,
+      "E2E_successes": 0
+    }
+  },
+  "verdicts": {
+    "P1": {
+      "pass": true,
+      "accuracy": 0.6989966555183946,
+      "ci95": [
+        0.41,
+        0.97
+      ],
+      "rule": "accuracy p=25 CI lower bound > 10%"
+    },
+    "P2": {
+      "pass": false,
+      "delta": 0.05016722408026756,
+      "ci95": [
+        -0.04013377926421405,
+        0.18120805369127516
+      ],
+      "rule": "accuracy p=25 - p=0 CI lower bound > 0"
+    },
+    "E1": {
+      "pass": true,
+      "delta": 0.10702341137123746,
+      "ci95": [
+        0.07023411371237458,
+        0.14715719063545152
+      ],
+      "rule": "success(E2E) - success(I-wrong) CI lower bound > 0"
+    }
+  }
+}

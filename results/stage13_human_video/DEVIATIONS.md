@@ -1,0 +1,5 @@
+# Stage 13: deviations from the plan
+
+1. **`labels.csv` is not committed with the pre-registration.** The pre-registration was committed on 2026-11-10, before the videos and `labels.csv` reached the machine. The copy of `labels.csv` will be committed later, in a separate commit, before any scoring.
+2. **Within-scene chance level.** The plan states "11/27 = 40.7%". The mean of 1/|scene| over the 27 clips of scenes A–D is (9 · 1/3 + 18 · 1/2) / 27 = **12/27 = 44.4%**. The analysis computes the chance level per clip, so it reports 44.4%, and the descriptive comparison "within-scene accuracy at p = 50% against chance" uses 44.4%. This was found by the self-test on 2026-11-10, before any video existed.
+3. **Decoder** (fake-data test, 2026-11-10). `cv2` 4.13.0 in `PY` works and is the decoder used. It applies the phone rotation metadata automatically: a fake clip tagged `rotate=90` decodes as 320 × 240 instead of 240 × 320. Gate O1 is still decided from the contact sheet, and the `--rotate` option of `score` fixes any rotation that is left. Plain `ffmpeg -metadata:s:v:0 rotate=90` at encode time did not write the tag; a remux with `-c copy` did.

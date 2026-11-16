@@ -29,7 +29,19 @@ import numpy as np
 
 CONDITIONS = ("correct", "empty", "wrong")
 # prereg v3 Stage 4 (VLIA intention-only checkpoint): empty language + z_int
-INTENTION_CONDITIONS = ("I-only", "I-wrong")
+# Stage 11: I-goal / I-para use the goal / para phrasing of the task as z_int text
+# Stage 12: E2E uses the description of the task F predicted from a demo video (--e2e-tokens)
+# Stage 13: E2E-human is the same with a human clip; its own file names keep the E2E episodes intact
+# Stage 13 amendment 1: I-tok runs the token of every other task k (files I-tok{k}_t{t}_e{e}.json)
+# Stage 14: E2E-gen / E2E-gen-blank / E2E-gen-p50 use a sentence written by the VLM (--e2e-tokens, keyed by condition);
+#           its vector is the T1 embedding of that sentence (pass --task-embeddings gen_embeddings.npz).
+#           Units listed under "reuse" are not rolled out (they reuse another episode).
+GEN_CONDITIONS = ("E2E-gen", "E2E-gen-blank", "E2E-gen-p50")
+INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para", "E2E", "E2E-human", "I-tok") + GEN_CONDITIONS
+E2E_CONDITIONS = ("E2E", "E2E-human")
+STAGE11_VLIA = ("I-only", "I-wrong", "I-goal", "I-para")
+STAGE11_BASE = ("correct", "empty")
+STAGE4_E0_9 = {"I-only": 20, "I-wrong": 0, "correct": 19, "empty": 0}  # gate R2
 ROOT = Path(__file__).resolve().parents[1]
 N_TASKS = 10
 SEED0 = 1000
@@ -37,6 +49,47 @@ SEED0 = 1000
 
 def wrong_task(t: int) -> int:
     return (t + 5) % N_TASKS
+
+
+def parse_tasks(spec: str) -> list[int]:
+    """'0-9' or '1,3,5' -> sorted task ids."""
+    out = set()
+    for part in spec.split(","):
+        a, _, b = part.partition("-")
+        out.update(range(int(a), int(b or a) + 1))
+    return sorted(out)
+
+
+def expand_conditions(conditions, t: int, token_tasks) -> list[str]:
+    """I-tok -> I-tok{k} for every k in token_tasks except t (I-only) and (t+5) mod 10 (I-wrong)."""
+    out = []
+    for c in conditions:
+        if c == "I-tok":
+            out += [f"I-tok{k}" for k in token_tasks if k != t and k != wrong_task(t)]
+        else:
+            out.append(c)
+    return out
+
+
+def intention_text(c: str, t: int, original: dict, phrasings: dict | None, e: int | None = None,
+                   e2e_tokens: dict | None = None) -> str:
+    """Text whose T1 embedding is the intention vector of condition c on task t (episode e for E2E)."""
+    if c.startswith("I-tok"):
+        return original[int(c[len("I-tok"):])]
+    if c in E2E_CONDITIONS:
+        return e2e_tokens[f"{t},{e}"]
+    if c in GEN_CONDITIONS:
+        return e2e_tokens[c][f"{t},{e}"]
+    if c == "I-only":
+        return original[t]
+    if c == "I-wrong":
+        return original[wrong_task(t)]
+    return phrasings[{"I-goal": "goal", "I-para": "para"}[c]][str(t)]
+
+
+def reused(c: str, t: int, e: int, reuse: dict) -> bool:
+    """Stage 14: a unit listed under reuse[c] is not rolled out (e.g. E2E-gen-p50 with the p = 25 sentence)."""
+    return f"{t},{e}" in set(reuse.get(c, ()))
 
 
 def wilson(k: int, n: int, z: float = 1.959963984540054) -> tuple[float, float]:
@@ -102,6 +155,9 @@ def run(own, rest) -> int:
             emb = np.load(own.task_embeddings)
             table = {str(t): torch.tensor(e, dtype=torch.float32) for t, e in zip(emb["tasks"], emb["emb"])}
             current_z = {"z": None}
+            phrasings = json.loads(Path(own.phrasings).read_text()) if own.phrasings else None
+            e2e_tokens = json.loads(Path(own.e2e_tokens).read_text())["tokens"] if own.e2e_tokens else None
+            e2e_reuse = json.loads(Path(own.e2e_tokens).read_text()).get("reuse", {}) if own.e2e_tokens else {}
             inner_select = policy.select_action
 
             def select_with_intention(batch, *a, **kw):
@@ -124,13 +180,14 @@ def run(own, rest) -> int:
             {"original": original, "wrong_map": {t: wrong_task(t) for t in range(N_TASKS)}}, indent=2))
 
         jobs = []
+        token_tasks = parse_tasks(own.token_tasks)
         if own.probe:
-            jobs = [(conditions[0], 0, e) for e in range(own.probe)]
+            jobs = [(expand_conditions(conditions[:1], 0, token_tasks)[0], 0, e) for e in range(own.probe)]
         else:
             # condition-interleaved order so a partial run stays paired
-            for t in range(N_TASKS):
+            for t in parse_tasks(own.tasks):
                 for e in range(own.episodes_per_task):
-                    for c in conditions:
+                    for c in expand_conditions(conditions, t, token_tasks):
                         jobs.append((c, t, e))
         t_start = time.time()
         n_done = 0
@@ -138,10 +195,15 @@ def run(own, rest) -> int:
             path = ep_dir / f"{c}_t{t}_e{e}.json"
             if path.exists():
                 continue
-            instr = {"correct": original[t], "empty": "", "wrong": original[wrong_task(t)],
-                     "I-only": "", "I-wrong": ""}[c]
+            instr = "" if (c.startswith("I-tok") or c in GEN_CONDITIONS) else {
+                "correct": original[t], "empty": "", "wrong": original[wrong_task(t)],
+                "I-only": "", "I-wrong": "", "I-goal": "", "I-para": "", "E2E": "", "E2E-human": ""}[c]
             if is_vlia:
-                z_task = original[t] if c == "I-only" else original[wrong_task(t)]
+                if c in E2E_CONDITIONS and f"{t},{e}" not in e2e_tokens:  # unit without a query demo
+                    continue
+                if c in GEN_CONDITIONS and (f"{t},{e}" not in e2e_tokens[c] or (not own.probe and reused(c, t, e, e2e_reuse))):
+                    continue
+                z_task = intention_text(c, t, original, phrasings, e, e2e_tokens)
                 current_z["z"] = table[z_task]
             env = task_envs[t]
             sub = env.envs[0]
@@ -167,6 +229,8 @@ def run(own, rest) -> int:
             rec = {"condition": c, "task": t, "episode": e, "seed": SEED0 + e, "init_state_id": e,
                    "instruction": instr, "z_int_task": (z_task if is_vlia else None), "success": success, "n_steps": n_steps, "seconds": secs,
                    "video": str(video) if frames else None}
+            if c.startswith("I-tok"):
+                rec["token_task"] = int(c[len("I-tok"):])
             path.write_text(json.dumps(rec))
             n_done += 1
             el = time.time() - t_start
@@ -320,6 +384,105 @@ def analyze_intention(own) -> int:
     return 0
 
 
+def analyze_stage11(own) -> int:
+    """Stage 11: I-goal / I-para vs I-wrong (G1, G2) and descriptive deltas, e = 0..29; gate R2 on e = 0..9."""
+    import csv
+
+    res = Path(own.results)
+    res.mkdir(parents=True, exist_ok=True)
+    vlia = [json.loads(p.read_text()) for p in sorted((Path(own.out) / "episodes").glob("*.json"))]
+    base = [json.loads(p.read_text()) for p in sorted(Path(own.v1_episodes).glob("*.json"))]
+    by = {(r["condition"], r["task"], r["episode"]): r for r in vlia if r["condition"] in STAGE11_VLIA}
+    by.update({(r["condition"], r["task"], r["episode"]): r for r in base if r["condition"] in STAGE11_BASE})
+    conds = STAGE11_VLIA + STAGE11_BASE
+    units = sorted({(t, e) for (_, t, e) in by if all((c, t, e) in by for c in conds)})
+    for t, e in units:  # pairing must be on identical seeds / init states
+        assert len({(by[(c, t, e)]["seed"], by[(c, t, e)]["init_state_id"]) for c in conds}) == 1, (t, e)
+    phrasings = json.loads(Path(own.phrasings).read_text())
+    original = {int(k): v for k, v in json.loads((Path(own.out) / "instructions.json").read_text())["original"].items()}
+    for c in STAGE11_VLIA:  # the recorded intention text must be the pre-registered one
+        for t, e in units:
+            assert by[(c, t, e)]["z_int_task"] == intention_text(c, t, original, phrasings), (c, t, e)
+    sets = {"e0-9": [u for u in units if u[1] < 10], "e0-29": units}
+    succ = {k: {c: np.array([float(by[(c, t, e)]["success"]) for t, e in u]) for c in conds} for k, u in sets.items()}
+    r2 = {c: int(succ["e0-9"][c].sum()) for c in STAGE4_E0_9}
+    r2_pass = len(sets["e0-9"]) == 100 and r2 == STAGE4_E0_9
+    print(f"GATE R2 e=0..9 counts {r2} (n={len(sets['e0-9'])}) expected {STAGE4_E0_9}: {'PASS' if r2_pass else 'FAIL'}")
+    if not r2_pass:
+        raise SystemExit("STOP: R2 failed")
+    rows = []
+    for k, u in sets.items():
+        for c in conds:
+            n, x = len(u), int(succ[k][c].sum())
+            lo, hi = wilson(x, n)
+            rows.append({"episodes": k, "condition": c, "successes": x, "n": n, "success_rate": x / n,
+                         "wilson_lo": lo, "wilson_hi": hi})
+    comps = [("G1", "I-goal", "I-wrong"), ("G2", "I-para", "I-wrong"), ("descriptive", "I-goal", "I-only"),
+             ("descriptive", "I-para", "I-only"), ("descriptive", "I-only", "correct"), ("descriptive", "I-only", "empty")]
+    paired, verdict = [], {}
+    for k in sets:
+        for rule, a, b in comps:
+            d, lo, hi = paired_bootstrap(succ[k][a] - succ[k][b])
+            paired.append({"episodes": k, "rule": rule, "comparison": f"{a} - {b}", "delta": d, "ci95_lo": lo,
+                           "ci95_hi": hi, "n_pairs": len(sets[k])})
+            if k == "e0-29" and rule != "descriptive":
+                verdict[rule] = {"pass": lo > 0, "delta": d, "ci95": [lo, hi],
+                                 "rule": f"success({a}) - success({b}) CI lower bound > 0"}
+    task_rows = []
+    for t in range(N_TASKS):
+        row = {"task": t}
+        for c in conds:
+            v = [by[(c, tt, e)]["success"] for tt, e in units if tt == t]
+            row[f"{c}_successes"], row[f"{c}_n"] = int(sum(v)), len(v)
+        task_rows.append(row)
+    emb = np.load(own.task_embeddings)
+    table = dict(zip(map(str, emb["tasks"]), emb["emb"].astype(np.float64)))
+    orig = np.stack([table[original[t]] for t in range(N_TASKS)])
+    diag = []
+    for key, c in (("goal", "I-goal"), ("para", "I-para")):
+        for t in range(N_TASKS):
+            sims = orig @ table[phrasings[key][str(t)]]
+            diag.append({"phrasing": key, "task": t, "text": phrasings[key][str(t)], "cos_to_own_original": float(sims[t]),
+                         "rank_of_own_task": int(1 + (sims > sims[t]).sum()),
+                         "nearest_task": int(np.argmax(sims)), "successes": task_rows[t][f"{c}_successes"],
+                         "I-only_successes": task_rows[t]["I-only_successes"], "n": task_rows[t][f"{c}_n"]})
+    for name, tab in (("summary.csv", rows), ("paired.csv", paired), ("per_task.csv", task_rows),
+                      ("text_diagnostic.csv", diag)):
+        with (res / name).open("w", newline="") as h:
+            w = csv.DictWriter(h, fieldnames=list(tab[0]))
+            w.writeheader()
+            w.writerows(tab)
+    secs = {c: float(np.mean([by[(c, t, e)]["seconds"] for t, e in units])) for c in conds}
+    lines = ["# LIBERO-10: intention phrased as a goal (Stage 11)", "",
+             f"Paired (task, episode) units: {len(sets['e0-9'])} (e = 0..9), {len(units)} (e = 0..29).", "",
+             "| episodes | condition | successes / n | rate | Wilson 95% |", "|---|---|---:|---:|---|"]
+    lines += [f"| {r['episodes']} | {r['condition']} | {r['successes']} / {r['n']} | {r['success_rate']:.3f} | "
+              f"[{r['wilson_lo']:.3f}, {r['wilson_hi']:.3f}] |" for r in rows]
+    lines += ["", "| episodes | rule | comparison | delta [95% CI] |", "|---|---|---|---|"]
+    lines += [f"| {r['episodes']} | {r['rule']} | {r['comparison']} | {r['delta']:+.3f} [{r['ci95_lo']:+.3f}, {r['ci95_hi']:+.3f}] |"
+              for r in paired]
+    lines += ["", "| task | I-only | I-goal | I-para | I-wrong | correct | empty | goal cos / rank | para cos / rank |",
+              "|---:|---:|---:|---:|---:|---:|---:|---|---|"]
+    for t, r in enumerate(task_rows):
+        g, p = diag[t], diag[N_TASKS + t]
+        lines.append(f"| {t} | " + " | ".join(f"{r[c + '_successes']}/{r[c + '_n']}" for c in
+                                             ("I-only", "I-goal", "I-para", "I-wrong", "correct", "empty")) +
+                     f" | {g['cos_to_own_original']:.3f} / {g['rank_of_own_task']} | {p['cos_to_own_original']:.3f} / {p['rank_of_own_task']} |")
+    lines += ["", "## Verdicts (e = 0..29, paired bootstrap over (task, episode), B=10000, seed 0)", ""]
+    lines += [f"- {k} {v['rule']}: {v['delta']:+.3f} [{v['ci95'][0]:+.3f}, {v['ci95'][1]:+.3f}] → {'PASS' if v['pass'] else 'FAIL'}"
+              for k, v in verdict.items()]
+    (res / "summary.md").write_text("\n".join(lines) + "\n")
+    (res / "config.json").write_text(json.dumps({
+        "vlia_episodes": str(Path(own.out) / "episodes"), "baseline_episodes": own.v1_episodes,
+        "vlia_checkpoint": own.vlia_checkpoint, "baseline_checkpoint": own.baseline_checkpoint,
+        "task_embeddings": own.task_embeddings, "phrasings": own.phrasings, "n_pairs": {k: len(u) for k, u in sets.items()},
+        "seconds_per_episode_mean": secs, "seed_rule": "seed = 1000 + episode, init_state_id = episode",
+        "bootstrap": {"B": 10000, "seed": 0, "unit": "(task, episode) pair"}, "gate_R2": {"counts": r2, "pass": r2_pass},
+        "verdicts": verdict, "git_commit": own.git_commit}, indent=2))
+    print(json.dumps(verdict, indent=2))
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", required=True)
@@ -330,12 +493,22 @@ def main() -> int:
     ap.add_argument("--conditions", default=",".join(CONDITIONS))
     ap.add_argument("--task-embeddings", default="/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/task_embeddings.npz")
     ap.add_argument("--analyze-intention", action="store_true")
+    ap.add_argument("--analyze-stage11", action="store_true")
+    ap.add_argument("--phrasings", default=str(ROOT / "results/stage11_libero_goal/phrasings.json"))
+    ap.add_argument("--vlia-checkpoint", default="/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000/pretrained_model")
+    ap.add_argument("--baseline-checkpoint", default="/media/dhqg/d1/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000/pretrained_model")
+    ap.add_argument("--git-commit", default="")
+    ap.add_argument("--e2e-tokens")
+    ap.add_argument("--token-tasks", default="0-9", help="I-tok: token tasks k (k != t, k != (t+5) mod 10)")
+    ap.add_argument("--tasks", default="0-9", help="scene tasks t to run")
     ap.add_argument("--v1-episodes", default="/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes")
     own, rest = ap.parse_known_args()
     if own.analyze:
         return analyze(own)
     if own.analyze_intention:
         return analyze_intention(own)
+    if own.analyze_stage11:
+        return analyze_stage11(own)
     return run(own, rest)
 
 

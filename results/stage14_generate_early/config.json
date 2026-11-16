@@ -1,0 +1,197 @@
+{
+  "git_commit": "66ca9be3fb1a4fc399fcd90658477cf316369737",
+  "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "prompts": {
+    "ego": "These frames are from a first-person video of a person doing one step of a task. In one short sentence, say what the person wants to achieve in this step. Start with \"I want to\".",
+    "libero": "These frames show the start of someone doing a household task with objects on a table. In one short sentence, say what they want the objects to end up like. Start with \"I want\"."
+  },
+  "max_new_tokens": 40,
+  "template": "a first-person photo of a person doing: {why}",
+  "encoder": "google/siglip-so400m-patch14-384",
+  "vlia_checkpoint": "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000/pretrained_model",
+  "gpu_queue_order": [
+    "Stage 15 (finished)",
+    "probe",
+    "gen-libero p=0,10,25,50,75,100 + blank",
+    "plan",
+    "smoke",
+    "E2E-gen p=25",
+    "E2E-gen-blank",
+    "E2E-gen-p50 (changed units)",
+    "gen-ego k=8,2,4 + blank",
+    "analyze",
+    "then token matrix Part 1 / Part 2 and seed 1 (not restarted by this task)"
+  ],
+  "generation_info": {
+    "gen_ego_info": {
+      "seconds_per_query": 1.1107410440842311,
+      "n_queries": 672
+    },
+    "gen_libero_info": {
+      "seconds_per_query": 1.8222961909555548,
+      "n": 1306
+    }
+  },
+  "seconds_per_episode": 9.2233612169472,
+  "n_rollouts": 823,
+  "E1_max_abs_diff": 3.501772880554199e-07,
+  "blank_libero": "I want the objects on the table to be organized and placed in their designated spots after completing the task.",
+  "verdicts": {
+    "GA4": {
+      "pass": false,
+      "accuracy": 0.4180602006688963,
+      "ci95": [
+        0.3879598662207358,
+        0.44816053511705684
+      ],
+      "rule": "open-ended 10-way at p=100 CI lower bound > 50%"
+    },
+    "GA5": {
+      "pass": true,
+      "accuracy": 0.36454849498327757,
+      "ci95": [
+        0.3311036789297659,
+        0.3979933110367893
+      ],
+      "rule": "open-ended 10-way at p=50 CI lower bound > 30%"
+    },
+    "GA6": {
+      "pass": true,
+      "delta": 0.12374581939799331,
+      "ci95": [
+        0.09364548494983277,
+        0.15384615384615385
+      ],
+      "rule": "hit(p=100) - hit(p=25) CI lower bound > 0"
+    },
+    "GA3": {
+      "pass": false,
+      "delta": 0.010033444816053512,
+      "ci95": [
+        -0.010033444816053512,
+        0.030100334448160536
+      ],
+      "rule": "success(E2E-gen) - success(I-wrong) CI lower bound > 0 (paired_bootstrap, 299 units)"
+    },
+    "GA1": {
+      "pass": true,
+      "accuracy": 0.3116260487415102,
+      "ci95": [
+        0.2757481149785487,
+        0.34920369205698804
+      ],
+      "rule": "open-ended 5-way k=8 CI lower bound > 20%"
+    },
+    "GA2": {
+      "pass": true,
+      "delta": 0.1222532960447463,
+      "ci95": [
+        0.087863595056597,
+        0.15933482767682614
+      ],
+      "rule": "video - blank, k=8, CI lower bound > 0"
+    }
+  },
+  "robot": {
+    "paired": [
+      {
+        "rule": "GA3",
+        "comparison": "E2E-gen - I-wrong",
+        "delta": 0.010033444816053512,
+        "ci95_lo": -0.010033444816053512,
+        "ci95_hi": 0.030100334448160536,
+        "n": 299
+      },
+      {
+        "rule": "descriptive",
+        "comparison": "E2E-gen - I-only",
+        "delta": -0.15384615384615385,
+        "ci95_lo": -0.19732441471571907,
+        "ci95_hi": -0.11036789297658862,
+        "n": 299
+      },
+      {
+        "rule": "descriptive",
+        "comparison": "E2E-gen - Stage12 E2E",
+        "delta": -0.09698996655518395,
+        "ci95_lo": -0.13377926421404682,
+        "ci95_hi": -0.06020066889632107,
+        "n": 299
+      },
+      {
+        "rule": "descriptive",
+        "comparison": "E2E-gen - E2E-gen-blank",
+        "delta": 0.006688963210702341,
+        "ci95_lo": -0.013377926421404682,
+        "ci95_hi": 0.026755852842809364,
+        "n": 299
+      },
+      {
+        "rule": "descriptive",
+        "comparison": "E2E-gen-p50 - E2E-gen",
+        "delta": 0.013377926421404682,
+        "ci95_lo": -0.006688963210702341,
+        "ci95_hi": 0.033444816053511704,
+        "n": 299
+      },
+      {
+        "rule": "descriptive",
+        "comparison": "E2E-gen-p50 - I-wrong",
+        "delta": 0.023411371237458192,
+        "ci95_lo": 0.0,
+        "ci95_hi": 0.046822742474916385,
+        "n": 299
+      }
+    ],
+    "episodes": {
+      "E2E-gen": {
+        "reused": 0,
+        "new": 299
+      },
+      "E2E-gen-blank": {
+        "reused": 0,
+        "new": 299
+      },
+      "E2E-gen-p50": {
+        "reused": 74,
+        "new": 225
+      }
+    },
+    "snap": "pending ([Errno 2] No such file or directory: '/media/dhqg/d3/vlia_outputs/token_matrix/matrix_seed0.npz')",
+    "by_text_match": {
+      "0.0": {
+        "n": 211,
+        "E2E_gen_successes": 0
+      },
+      "1.0": {
+        "n": 88,
+        "E2E_gen_successes": 6
+      }
+    },
+    "by_cos_tertile": [
+      {
+        "tertile": 0,
+        "n": 100,
+        "cos_true_min": 0.49300237699154115,
+        "cos_true_max": 0.5924401282822065,
+        "E2E_gen_successes": 0
+      },
+      {
+        "tertile": 1,
+        "n": 100,
+        "cos_true_min": 0.5936767539266419,
+        "cos_true_max": 0.6684581274393371,
+        "E2E_gen_successes": 1
+      },
+      {
+        "tertile": 2,
+        "n": 99,
+        "cos_true_min": 0.6684581274393371,
+        "cos_true_max": 0.8147174719108033,
+        "E2E_gen_successes": 5
+      }
+    ],
+    "text_match_p25": 0.29431438127090304
+  },
+  "analyze_seconds": 110.51226258277893
+}
