@@ -1,0 +1,13 @@
+align,quantity,onset_offset_s,never,boot_never_share,boot_lo,boot_hi
+start_s,tau_S,,True,0.991,-2.5,-1.0
+start_s,tau_M,0.5,False,0.001,0.0,1.0
+start_s,tau_F+,1.25,False,0.2695,0.5,1.75
+start_s,tau_gain (F+ - S > 0),1.0,False,0.156,0.043750000000001066,1.5
+start_s,F+ >= 80%,,True,,,
+start_s,lead of F+ over S (s),>= 0.75 (S never stably above chance; F+ from +1.25 s),,,,
+t_on,tau_S,,True,0.991,-1.0,-0.75
+t_on,tau_M,0.5,False,0.004,0.0,1.0
+t_on,tau_F+,1.0,False,0.1375,0.25,3.0
+t_on,tau_gain (F+ - S > 0),1.0,False,0.0425,0.0,3.0
+t_on,F+ >= 80%,,True,,,
+t_on,lead of F+ over S (s),>= 2.00 (S never stably above chance; F+ from +1.00 s),,,,
