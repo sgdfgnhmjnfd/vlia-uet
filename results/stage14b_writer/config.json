@@ -1,0 +1,332 @@
+{
+ "git_commit": "5cf36320a9f01124a1ca4f069ed4274df90644c6",
+ "architecture": "SigLIP so400m frames -> learned pos + MLP(1152-960-960) -> SmolVLM2-500M LlamaModel (32 blocks, d=960), last 4 blocks + norm trained",
+ "fallback_used": false,
+ "lm": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+ "trainable_parameters": 41368896,
+ "lr": {
+  "connector": 0.001,
+  "decoder": 2e-05
+ },
+ "batch": 32,
+ "max_epochs": 30,
+ "patience": 3,
+ "max_new_tokens": 24,
+ "ego_epochs_per_fold": [
+  8,
+  6,
+  7,
+  6,
+  4,
+  6,
+  8,
+  5
+ ],
+ "ego_best_epoch": [
+  4,
+  2,
+  3,
+  2,
+  0,
+  2,
+  4,
+  1
+ ],
+ "libero_epochs_per_fold": [
+  19,
+  21,
+  19,
+  23,
+  16
+ ],
+ "libero_best_epoch": [
+  15,
+  17,
+  15,
+  19,
+  12
+ ],
+ "unseen_epochs": 20,
+ "gpu_minutes": 35.121237929662065,
+ "ego_rules": {
+  "W-1": {
+   "rule": "why: 5-way at k=8, CI lower bound > 20%",
+   "value": 0.22013583699560527,
+   "ci95": [
+    0.19929901291588448,
+    0.23705817302827945
+   ],
+   "pass": false
+  },
+  "W-2": {
+   "rule": "why: W - W-blank, k=8, 5-way, CI lower bound > 0",
+   "delta": 0.012385137834598482,
+   "ci95": [
+    -0.0051813471502590676,
+    0.031410616572210275
+   ],
+   "pass": false
+  },
+  "W-3": {
+   "rule": "why: W - nearest-train, k=8, 5-way, CI lower bound > 0",
+   "delta": 0.010787055533359968,
+   "ci95": [
+    -0.013587847694467598,
+    0.029458825773170907
+   ],
+   "pass": false
+  }
+ },
+ "libero_rules": {
+  "W-4": {
+   "rule": "W accuracy at p=25 (379 demos), CI lower bound > 50%",
+   "value": 0.8390501319261213,
+   "ci95": [
+    0.8021108179419525,
+    0.8734168865435347
+   ],
+   "pass": true
+  },
+  "W-5": {
+   "rule": "W - best Qwen variant (O1) at p=25, 299 units, CI lower bound > 0",
+   "delta": 0.36789297658862874,
+   "ci95": [
+    0.3110367892976589,
+    0.4280936454849498
+   ],
+   "pass": true,
+   "qwen_acc_p25": {
+    "G0": 0.29431438127090304,
+    "G2": 0.3076923076923077,
+    "O1": 0.44816053511705684
+   },
+   "all_variants": [
+    {
+     "comparison": "W - Qwen G0",
+     "p": 25,
+     "delta": 0.5217391304347826,
+     "ci95_lo": 0.46153846153846156,
+     "ci95_hi": 0.5819397993311036
+    },
+    {
+     "comparison": "W - Qwen G2",
+     "p": 25,
+     "delta": 0.5083612040133779,
+     "ci95_lo": 0.451505016722408,
+     "ci95_hi": 0.568561872909699
+    },
+    {
+     "comparison": "W - Qwen O1",
+     "p": 25,
+     "delta": 0.36789297658862874,
+     "ci95_lo": 0.3110367892976589,
+     "ci95_hi": 0.4280936454849498
+    }
+   ]
+  }
+ },
+ "first10_ego": [
+  {
+   "sample_id": "indoor/art_studio/draw/step1",
+   "scene": "art_studio",
+   "fold": 7,
+   "tag": "why",
+   "true": "align reference for painting",
+   "W_k8": "prepare to apply tape",
+   "Qwen_k8": "I want to color the drawing."
+  },
+  {
+   "sample_id": "indoor/art_studio/draw/step10",
+   "scene": "art_studio",
+   "fold": 7,
+   "tag": "why",
+   "true": "refining paint texture",
+   "W_k8": "prepare to apply tape",
+   "Qwen_k8": "I want to add more details to the drawing on the right side of the table."
+  },
+  {
+   "sample_id": "indoor/art_studio/draw/step11",
+   "scene": "art_studio",
+   "fold": 7,
+   "tag": "why",
+   "true": "remove excess paint",
+   "W_k8": "prepare to apply tape",
+   "Qwen_k8": "I want to add more details to the drawing on the right side of the table."
+  },
+  {
+   "sample_id": "indoor/art_studio/draw/step12",
+   "scene": "art_studio",
+   "fold": 7,
+   "tag": "why",
+   "true": "verify paint state before proceeding",
+   "W_k8": "prepare to apply tape",
+   "Qwen_k8": "I want to continue painting the dog's face on the sketchbook."
+  },
+  {
+   "sample_id": "indoor/art_studio/draw/step13",
+   "scene": "art_studio",
+   "fold": 7,
+   "tag": "why",
+   "true": "blend paint",
+   "W_k8": "prepare to apply tape",
+   "Qwen_k8": "I want to continue painting the cat's face on the sketchbook."
+  },
+  {
+   "sample_id": "indoor/art_studio/draw/step14",
+   "scene": "art_studio",
+   "fold": 7,
+   "tag": "why",
+   "true": "assessing painting progress",
+   "W_k8": "prepare to apply tape",
+   "Qwen_k8": "I want to continue painting the dog's face on the drawing."
+  },
+  {
+   "sample_id": "indoor/art_studio/draw/step15",
+   "scene": "art_studio",
+   "fold": 7,
+   "tag": "why",
+   "true": "checking reference details",
+   "W_k8": "prepare to apply tape",
+   "Qwen_k8": "I want to continue painting the dog's fur on the drawing."
+  },
+  {
+   "sample_id": "indoor/art_studio/draw/step16",
+   "scene": "art_studio",
+   "fold": 7,
+   "tag": "why",
+   "true": "checking tape adhesion",
+   "W_k8": "prepare to apply tape",
+   "Qwen_k8": "I want to paint the dog's face."
+  },
+  {
+   "sample_id": "indoor/art_studio/draw/step17",
+   "scene": "art_studio",
+   "fold": 7,
+   "tag": "why",
+   "true": "check paint dryness or texture",
+   "W_k8": "prepare to apply tape",
+   "Qwen_k8": "I want to finish painting the dog's face."
+  },
+  {
+   "sample_id": "indoor/art_studio/draw/step18",
+   "scene": "art_studio",
+   "fold": 7,
+   "tag": "why",
+   "true": "stabilize artwork",
+   "W_k8": "prepare to apply tape",
+   "Qwen_k8": "I want to take a photo of the drawing."
+  }
+ ],
+ "first10_libero": [
+  {
+   "task": 0,
+   "demo": 0,
+   "p": 0,
+   "fold": 4,
+   "true_description": "put both the alphabet soup and the tomato sauce in the basket",
+   "written": "I want the cream cheese and the butter in the basket",
+   "nearest_task": 1,
+   "object_place_ok": 0,
+   "novel": 0
+  },
+  {
+   "task": 0,
+   "demo": 1,
+   "p": 0,
+   "fold": 0,
+   "true_description": "put both the alphabet soup and the tomato sauce in the basket",
+   "written": "I want the soup can and the tomato sauce in the basket",
+   "nearest_task": 7,
+   "object_place_ok": 1,
+   "novel": 0
+  },
+  {
+   "task": 0,
+   "demo": 2,
+   "p": 0,
+   "fold": 3,
+   "true_description": "put both the alphabet soup and the tomato sauce in the basket",
+   "written": "I want the basket to hold the cream cheese box and the butter",
+   "nearest_task": 1,
+   "object_place_ok": 0,
+   "novel": 0
+  },
+  {
+   "task": 0,
+   "demo": 3,
+   "p": 0,
+   "fold": 2,
+   "true_description": "put both the alphabet soup and the tomato sauce in the basket",
+   "written": "I want the soup can and the tomato sauce in the basket",
+   "nearest_task": 7,
+   "object_place_ok": 1,
+   "novel": 0
+  },
+  {
+   "task": 0,
+   "demo": 4,
+   "p": 0,
+   "fold": 2,
+   "true_description": "put both the alphabet soup and the tomato sauce in the basket",
+   "written": "I want the cream cheese and the butter in the basket",
+   "nearest_task": 1,
+   "object_place_ok": 0,
+   "novel": 0
+  },
+  {
+   "task": 0,
+   "demo": 5,
+   "p": 0,
+   "fold": 0,
+   "true_description": "put both the alphabet soup and the tomato sauce in the basket",
+   "written": "I want the soup can and the cream cheese in the basket",
+   "nearest_task": 7,
+   "object_place_ok": 0,
+   "novel": 0
+  },
+  {
+   "task": 0,
+   "demo": 6,
+   "p": 0,
+   "fold": 3,
+   "true_description": "put both the alphabet soup and the tomato sauce in the basket",
+   "written": "I want the soup can and the tomato sauce in the basket",
+   "nearest_task": 7,
+   "object_place_ok": 1,
+   "novel": 0
+  },
+  {
+   "task": 0,
+   "demo": 7,
+   "p": 0,
+   "fold": 1,
+   "true_description": "put both the alphabet soup and the tomato sauce in the basket",
+   "written": "I want the cream cheese and the butter in the basket",
+   "nearest_task": 1,
+   "object_place_ok": 0,
+   "novel": 0
+  },
+  {
+   "task": 0,
+   "demo": 8,
+   "p": 0,
+   "fold": 2,
+   "true_description": "put both the alphabet soup and the tomato sauce in the basket",
+   "written": "I want the soup can and the tomato sauce in the basket",
+   "nearest_task": 7,
+   "object_place_ok": 1,
+   "novel": 0
+  },
+  {
+   "task": 0,
+   "demo": 9,
+   "p": 0,
+   "fold": 3,
+   "true_description": "put both the alphabet soup and the tomato sauce in the basket",
+   "written": "I want the soup can and the tomato sauce in the basket",
+   "nearest_task": 7,
+   "object_place_ok": 1,
+   "novel": 0
+  }
+ ]
+}
