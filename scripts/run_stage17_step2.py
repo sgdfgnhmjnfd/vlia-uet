@@ -150,6 +150,119 @@ def cmd_analyze(args) -> int:
     return 0
 
 
+C_GRID_AFTER = [round(0.25 * i, 2) for i in range(9)]  # 0 .. 2.0 s after start_s
+TAU_FEATS = ("S", "M", "F+", "H", "F+H")
+
+
+def cut_feats(m, t, z, has, zc, cut):
+    """Stage 16 cut-based query plus H and F+H on the same observed frames (no-crop frame -> full-frame embedding)."""
+    f, info = S16.query_cut(m, t, z, cut)
+    if f is None:
+        return None
+    r = min(1.0, m["t_on"] - 0.25, cut)
+    obs = S16.pick16(np.where((t > r + 1e-9) & (t <= cut + 1e-9))[0])
+    assert len(obs) == 0 or t[obs].max() <= cut + 1e-9
+    h = np.where(has[obs][:, None], zc[obs], z[obs]).mean(0) if len(obs) else f["S"]
+    f["H"] = h
+    f["F+H"] = np.concatenate([f["F+"], h])
+    return f
+
+
+def per_clip_tau(ok_row):
+    o = S16.stable_onset(np.asarray(ok_row, bool))
+    return (C_GRID_AFTER[o], False) if o is not None else (C_GRID_AFTER[-1], True)
+
+
+def cmd_tau(args) -> int:
+    from multiprocessing import Pool
+
+    meta = S16.load_meta()
+    E = S16.load_emb(meta)
+    shared = [v for v in meta if meta[v]["table"] in S16.SHARED]
+    Hc = {}
+    for v in meta:
+        e = np.load(EMB / f"{v}.npz")
+        zc = np.zeros((len(e["times"]), 1152), np.float32)
+        zc[e["has_crop"]] = e["z_crop"]
+        Hc[v] = (e["has_crop"], zc)
+    jobs = []
+    for c in C_GRID_AFTER:
+        for t in S16.SHARED:
+            vs = [v for v in shared if meta[v]["table"] == t]
+            F = [cut_feats(meta[v], E[v]["times"], E[v]["z"], *Hc[v], meta[v]["start"] + c) for v in vs]
+            assert all(x is not None for x in F)
+            tasks = sorted(set(meta[v]["task"] for v in vs))
+            y = np.array([tasks.index(meta[v]["task"]) for v in vs])
+            persons = np.array([meta[v]["person"] for v in vs])
+            reps = np.array([meta[v]["rep"] for v in vs])
+            for feat in TAU_FEATS:
+                jobs.append(((c, t, feat), np.stack([x[feat] for x in F]).astype(np.float64), y, persons, reps, len(tasks), vs, tasks))
+    with Pool(int(os.environ.get("S17_PROCS", "4"))) as pool:
+        outs = pool.map(_lopo_job, jobs)
+    corr = {f: np.zeros((len(shared), len(C_GRID_AFTER)), int) for f in TAU_FEATS}
+    pos = {v: i for i, v in enumerate(shared)}
+    for (key, X, y, persons, reps, k, vs, tasks), pr in zip(jobs, outs):
+        c, t, feat = key
+        j = C_GRID_AFTER.index(c)
+        for v, cc in zip(vs, pr):
+            corr[feat][pos[v], j] = int(tasks[cc] == meta[v]["task"])
+    strata = np.array([meta[v]["table"] for v in shared])
+    tau = {f: np.array([per_clip_tau(corr[f][i])[0] for i in range(len(shared))]) for f in TAU_FEATS}
+    nost = {f: np.array([per_clip_tau(corr[f][i])[1] for i in range(len(shared))]) for f in TAU_FEATS}
+    rows, onset_rows, curve = [], [], []
+    idxB = S16.strat_boot_idx(strata, 10000, seed=0)
+    for t in S16.SHARED + ("pooled",):
+        m_ = np.ones(len(shared), bool) if t == "pooled" else strata == t
+        row = {"table": t, "n": int(m_.sum())}
+        for f in TAU_FEATS:
+            row[f"tau_median_{f}"] = float(np.median(tau[f][m_]))
+            row[f"no_stable_{f}"] = int(nost[f][m_].sum())
+        d = tau["F+H"] - tau["F+"]
+        if t == "pooled":
+            bm = np.median(d[idxB], axis=1)
+        else:
+            sub = np.where(m_)[0]
+            rng = np.random.default_rng(0)
+            bm = np.median(d[sub][rng.integers(0, len(sub), size=(10000, len(sub)))], axis=1)
+        row.update({"median_diff_FH_minus_F": float(np.median(d[m_])), "diff_ci_lo": float(np.quantile(bm, 0.025)),
+                    "diff_ci_hi": float(np.quantile(bm, 0.975)), "mean_diff": float(d[m_].mean()),
+                    "clips_FH_earlier": int((d[m_] < 0).sum()), "clips_FH_later": int((d[m_] > 0).sum())})
+        rows.append(row)
+        # Stage 16 onset (Wilson lower > chance, stable), with bootstrap interval
+        chance = float(np.mean([1 / len(S16.TABLES[x]) for x in strata[m_]]))
+        sub = np.where(m_)[0]
+        idx = S16.strat_boot_idx(strata[sub], 2000, seed=1)
+        for f in TAU_FEATS:
+            k = corr[f][sub].sum(0)
+            lo = np.array([S16.wilson(k[j], len(sub))[1] for j in range(len(C_GRID_AFTER))])
+            o = S16.stable_onset(lo > chance)
+            for j, c in enumerate(C_GRID_AFTER):
+                a, l_, h_ = S16.wilson(k[j], len(sub))
+                curve.append({"table": t, "feature": f, "offset_s": c, "acc": a, "ci_lo": l_, "ci_hi": h_, "chance": chance})
+            bo = []
+            for b in range(2000):
+                kk = corr[f][sub][idx[b]].sum(0)
+                lob = np.array([S16.wilson(kk[j], len(sub))[1] for j in range(len(C_GRID_AFTER))])
+                ob = S16.stable_onset(lob > chance)
+                bo.append(np.nan if ob is None else C_GRID_AFTER[ob])
+            bo = np.array(bo)
+            onset_rows.append({"table": t, "feature": f, "onset_s": None if o is None else C_GRID_AFTER[o],
+                               "boot_lo": float(np.nanquantile(bo, 0.025)) if (~np.isnan(bo)).any() else None,
+                               "boot_hi": float(np.nanquantile(bo, 0.975)) if (~np.isnan(bo)).any() else None,
+                               "boot_never_share": float(np.isnan(bo).mean())})
+    S16.write_csv(RES / "stable_tau.csv", rows)
+    S16.write_csv(RES / "onset_after_contact.csv", onset_rows)
+    S16.write_csv(RES / "curve_after_contact.csv", curve)
+    pooled = rows[-1]
+    verdict = "PASS" if pooled["diff_ci_hi"] < 0 else "FAIL"
+    with (RES / "rules.md").open("a") as fh:
+        fh.write(f"\n## H4-c (exploratory, run 18/11 after Step 2)\n\n| rule | value | 95% CI | verdict |\n|---|---:|---|---|\n"
+                 f"| H4-c: median per-clip tau(F+H) - tau(F+), pooled A-D | {pooled['median_diff_FH_minus_F']:+.2f} s | "
+                 f"[{pooled['diff_ci_lo']:+.2f}, {pooled['diff_ci_hi']:+.2f}] | {verdict} (upper bound < 0 required) |\n")
+    print(json.dumps({"stable_tau": rows, "onset": onset_rows}, indent=1))
+    return 0
+
+
 def _lopo_job(job):
     import torch
 
@@ -174,6 +287,7 @@ def main() -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("embed").set_defaults(fn=cmd_embed)
     sub.add_parser("analyze").set_defaults(fn=cmd_analyze)
+    sub.add_parser("tau").set_defaults(fn=cmd_tau)
     a = ap.parse_args()
     return a.fn(a)
 

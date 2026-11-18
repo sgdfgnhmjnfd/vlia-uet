@@ -59,3 +59,24 @@ G0 failed under the pre-registered settings. Everything below is exploratory: it
 4. **Pause.** VLIA paused right after checkpoint_010000 and resumed from step 10000 with data-order fix B active. Lost = 0; steps 10000–10010 were recomputed. See `pause_check.md`.
 5. **Analysis run.** The first analysis run used one process with all torch threads, about 14 cores. VLIA slowed by about 4% (1.93 vs 1.85 s/step), within the 10% limit, but the run was slow, so I stopped it after 15 minutes. It was rerun with the same code in 6 single-thread processes (10 s). No result of the stopped run was used.
 6. **Statistical note.** The H4-a paired bootstrap lower bound is exactly 0.000 (+9.9 points [0.0, 19.8]), so H4-a is "FAIL" by the rule (> 0 required). Exact McNemar: 12 clips correct only with F+H and 4 correct only with F+, p = 0.077.
+
+## H4-c (exploratory, Trang's ok 18/11). Written before running.
+
+- **Inputs, unchanged:** the existing embeddings (Stage 16 full-frame cache and the config (ii) hand-crop cache). No new configuration or threshold. The no-crop frame rule is the same as Step 2 (full-frame embedding of that frame). CPU only, nice 19, 4 processes; the GPU and VLIA are not touched.
+- **Grid:** cut = start_s + c, c ∈ {0, 0.25, …, 2.0} (9 cutoffs). Queries are the Stage 16 cut-based ones: reference [0, min(1, t_on − 0.25, cut)], observed frames in (r, cut], at most 16. H and F+H use the same observed frames. One Stage 16 LOPO model (within table) per cutoff and per feature set (S, M, F+, H, F+H).
+- **Per-clip τ (the prereg H4-c):**
+  - τ is the earliest c from which the clip's prediction is correct at every later cutoff of the grid;
+  - a clip with no such c gets τ = 2.0 and is counted as "no stable recognition";
+  - the statistic is the median over clips of τ(F+H) − τ(F+), with a bootstrap 95% CI (clips resampled within table, 10,000, seed 0);
+  - "earlier" means the CI upper bound is < 0.
+- **Pooled / per-table onset (the Stage 16 definition):** the earliest cutoff at which the Wilson lower bound of accuracy is > chance at that and every later cutoff, with a bootstrap 95% interval (2,000 resamples of clips within table, seed 1). Pooled chance is 0.444; per table it is 1/k.
+- **Reporting:** per table (A–D) and pooled; per-clip τ medians for each feature set, the share with no stable recognition, and the paired median difference with its CI.
+
+### H4-c results (18/11; CPU, 4 processes, nice 19, 65 s)
+
+- **Pre-registered statistic:** the pooled median per-clip τ(F+H) − τ(F+) is 0.00 s [0.00, 0.00], so **FAIL**. The median sits at 0 because many clips tie (the same τ for both, often 2.0, "no stable recognition").
+- **Descriptive only, not pre-registered:**
+  - the mean difference is −0.27 s;
+  - F+H is stable earlier in 28 clips and later in 4 (sign test, two-sided p = 2 × 10⁻⁵);
+  - clips with no stable recognition: F+ 34/81, F+H 21/81, H 17/81.
+- **Stage 16 onset** (pooled, Wilson lower bound > chance, stable): F+ +1.25 s [0.5, 1.75], the same value as Stage 16; F+H +0.25 s [0, 0.75]; H 0.0 s [0, 0.25].
