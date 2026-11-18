@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """E1 zero-shot SigLIP image-text alignment on train/validation only."""
 from __future__ import annotations
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import argparse
 import csv
@@ -47,7 +50,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--embedding-cache",
         type=Path,
-        default=Path("/media/dhqg/d3/vlia_outputs/e1"),
+        default=Path(f"{_D3}/vlia_outputs/e1"),
     )
     parser.add_argument("--hand-model", type=Path)
     parser.add_argument("--device", default=None)

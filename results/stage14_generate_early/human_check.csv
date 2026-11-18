@@ -1,51 +1,51 @@
 sample_id,true_why,sentence_k8,rating
-indoor/art_studio/draw/step15,checking reference details,I want to continue painting the dog's fur on the drawing.,
-indoor/art_studio/draw/step21,evaluate painting status,I want to finish painting the dog's portrait on the canvas.,
-indoor/art_studio/draw/step28,masking off a section of the artwork,I want to tape down the painting.,
-indoor/art_studio/draw/step46,secure palette position,I want to paint on the paper.,
-indoor/art_studio/draw/step59,clear workspace debris,I want to cut the paper.,
-indoor/art_studio/draw/step73,masking painting sections,I want to secure the paper in place using the blue tape.,
-indoor/art_studio/draw/step85,mask painting sections,I want to tape down the paper.,
-indoor/bedroom/clean_windows/step19,clean window glass,I want to clean the window.,
-indoor/bedroom/clean_windows/step96,prepare to clean the window track,I want to clean the window.,
-indoor/bedroom/sort_clothes/step20,folding the towel,I want to fold the bottom of the duvet.,
-indoor/bedroom/sort_clothes/step4,documenting laundry state,I want to check the laundry on the phone.,
-indoor/clothing_closet/iron_clothes/step31,prepare fabric for ironing,I want to iron the pillowcase.,
-indoor/garage/assemble_wheels/step51,cleaning hands,I want to clean the wrench.,
-indoor/garage/assemble_wheels/step56,prepare wheel hub surface,I want to remove the wheel hub.,
-indoor/garage/repair_car/step42,disassemble suspension assembly,I want to remove the brake caliper.,
-indoor/garage/repair_car/step6,gather necessary tools or parts for repair,I want to put the screw driver in the drawer.,
-indoor/garage/repair_car/step81,free right hand for socket use,I want to remove the brake caliper from the wheel hub.,
-indoor/hallway/paint_wall/step44,complete the cut-in work around fixtures,I want to clean the air conditioner filter.,
-indoor/hallway/paint_wall/step53,cover wall area near vent,I want to paint the ceiling white.,
-indoor/kitchen/knead_dough/step91,preparing dough,I want to knead the dough.,
-indoor/kitchen/make_cakes/step21,prepare to add ingredient to processor,I want to open the peanut butter jar.,
-indoor/kitchen/make_cakes/step65,filling the muffin tin cups with the base,I want to put the mixture into the baking tray.,
-indoor/kitchen/wash_dishes/step95,rinse cup before loading,I want to fill the cup with water.,
-indoor/laundry_room/wash_clothes/step44,loading clothes into washer,I want to put the red shirt into the washing machine.,
-indoor/laundry_room/wash_clothes/step57,enter garage,I want to close the closet door.,
-indoor/living_room/eat/step14,flavor bread for eating,I want to put the scrambled egg on the omelette.,
-indoor/living_room/eat/step40,consume remaining food,I want to put the food on the plate.,
-indoor/living_room/eat/step44,free hand for eating,I want to pour the oil on the pan.,
-indoor/living_room/eat/step69,clearing the table surface,I want to pour water into the pan.,
-indoor/living_room/eat/step78,serve beverage,I want to drink the juice.,
-indoor/living_room/organize_dishes/step9,washing dishes,I want to pour water into the cup.,
-indoor/workshop/assemble_mower/step4,inspecting engine hose connection,I want to remove the spark plug.,
-indoor/workshop/assemble_mower/step59,reassembling the engine housing,I want to remove the spark plug from the lawn mower.,
-indoor/workshop/assemble_mower/step60,installing the engine cover,I want to remove the spark plug from the lawn mower.,
-indoor/workshop/assemble_mower/step94,secure engine component,I want to remove the spark plug from the lawn mower.,
-indoor/workshop/assemble_wood/step23,positioning components for assembly,I want to nail the wood on the table.,
-indoor/workshop/assemble_wood/step62,aligning wood components for assembly,I want to nail the wood together.,
-indoor/workshop/assemble_wood/step75,prepare to fasten joint,I want to glue the wood together.,
-indoor/workshop/layout/step35,laying out a grid on the plywood,I want to measure the wood.,
-indoor/workshop/layout/step44,marking a straight line on the plywood,I want to measure the wood.,
-indoor/workshop/make_crafts/step33,attach tape to paper piece,I want to cut out the shape on the paper.,
-outdoor/deck/measure/step37,locate specific height for marking,I want to measure the height of the window frame.,
-outdoor/deck/measure/step51,verify frame dimensions,I want to measure the height of the window frame.,
-outdoor/farm/farm_work/step2,watering the soil along the garden bed border,I want to clean the gravel bed with the hose.,
-outdoor/farm/farm_work/step33,secure the bed liner edge,I want to adjust the position of the black plastic sheet on the ground.,
-outdoor/farm/farm_work/step54,retrieve the glue gun and supplies,I want to pick up the cordless drill.,
-outdoor/farm/farm_work/step73,secure the polythene sheeting to the structure,I want to secure the wooden frame to the ground using nails.,
-outdoor/farm/pick_fruits/step66,harvesting a lemon,I want to pick a lemon from the tree.,
-outdoor/space/draw_flowers/step20,color the center of the flower design,I want to draw a flower on the floor.,
-outdoor/space/draw_flowers/step96,completing the white outline of the petal,I want to draw a dot on the rangoli.,
+indoor/art_studio/draw/step15,checking reference details,I want to continue painting the dog's fur on the drawing.,wrong
+indoor/art_studio/draw/step21,evaluate painting status,I want to finish painting the dog's portrait on the canvas.,partly
+indoor/art_studio/draw/step28,masking off a section of the artwork,I want to tape down the painting.,partly
+indoor/art_studio/draw/step46,secure palette position,I want to paint on the paper.,wrong
+indoor/art_studio/draw/step59,clear workspace debris,I want to cut the paper.,wrong
+indoor/art_studio/draw/step73,masking painting sections,I want to secure the paper in place using the blue tape.,partly
+indoor/art_studio/draw/step85,mask painting sections,I want to tape down the paper.,partly
+indoor/bedroom/clean_windows/step19,clean window glass,I want to clean the window.,partly
+indoor/bedroom/clean_windows/step96,prepare to clean the window track,I want to clean the window.,partly
+indoor/bedroom/sort_clothes/step20,folding the towel,I want to fold the bottom of the duvet.,wrong
+indoor/bedroom/sort_clothes/step4,documenting laundry state,I want to check the laundry on the phone.,partly
+indoor/clothing_closet/iron_clothes/step31,prepare fabric for ironing,I want to iron the pillowcase.,partly
+indoor/garage/assemble_wheels/step51,cleaning hands,I want to clean the wrench.,partly
+indoor/garage/assemble_wheels/step56,prepare wheel hub surface,I want to remove the wheel hub.,wrong
+indoor/garage/repair_car/step42,disassemble suspension assembly,I want to remove the brake caliper.,partly
+indoor/garage/repair_car/step6,gather necessary tools or parts for repair,I want to put the screw driver in the drawer.,correct
+indoor/garage/repair_car/step81,free right hand for socket use,I want to remove the brake caliper from the wheel hub.,wrong
+indoor/hallway/paint_wall/step44,complete the cut-in work around fixtures,I want to clean the air conditioner filter.,correct
+indoor/hallway/paint_wall/step53,cover wall area near vent,I want to paint the ceiling white.,wrong
+indoor/kitchen/knead_dough/step91,preparing dough,I want to knead the dough.,correct
+indoor/kitchen/make_cakes/step21,prepare to add ingredient to processor,I want to open the peanut butter jar.,wrong
+indoor/kitchen/make_cakes/step65,filling the muffin tin cups with the base,I want to put the mixture into the baking tray.,partly
+indoor/kitchen/wash_dishes/step95,rinse cup before loading,I want to fill the cup with water.,partly
+indoor/laundry_room/wash_clothes/step44,loading clothes into washer,I want to put the red shirt into the washing machine.,correct
+indoor/laundry_room/wash_clothes/step57,enter garage,I want to close the closet door.,wrong
+indoor/living_room/eat/step14,flavor bread for eating,I want to put the scrambled egg on the omelette.,wrong
+indoor/living_room/eat/step40,consume remaining food,I want to put the food on the plate.,correct
+indoor/living_room/eat/step44,free hand for eating,I want to pour the oil on the pan.,wrong
+indoor/living_room/eat/step69,clearing the table surface,I want to pour water into the pan.,wrong
+indoor/living_room/eat/step78,serve beverage,I want to drink the juice.,partly
+indoor/living_room/organize_dishes/step9,washing dishes,I want to pour water into the cup.,wrong
+indoor/workshop/assemble_mower/step4,inspecting engine hose connection,I want to remove the spark plug.,wrong
+indoor/workshop/assemble_mower/step59,reassembling the engine housing,I want to remove the spark plug from the lawn mower.,wrong
+indoor/workshop/assemble_mower/step60,installing the engine cover,I want to remove the spark plug from the lawn mower.,wrong
+indoor/workshop/assemble_mower/step94,secure engine component,I want to remove the spark plug from the lawn mower.,wrong
+indoor/workshop/assemble_wood/step23,positioning components for assembly,I want to nail the wood on the table.,partly
+indoor/workshop/assemble_wood/step62,aligning wood components for assembly,I want to nail the wood together.,correct
+indoor/workshop/assemble_wood/step75,prepare to fasten joint,I want to glue the wood together.,wrong
+indoor/workshop/layout/step35,laying out a grid on the plywood,I want to measure the wood.,correct
+indoor/workshop/layout/step44,marking a straight line on the plywood,I want to measure the wood.,correct
+indoor/workshop/make_crafts/step33,attach tape to paper piece,I want to cut out the shape on the paper.,partly
+outdoor/deck/measure/step37,locate specific height for marking,I want to measure the height of the window frame.,correct
+outdoor/deck/measure/step51,verify frame dimensions,I want to measure the height of the window frame.,partly
+outdoor/farm/farm_work/step2,watering the soil along the garden bed border,I want to clean the gravel bed with the hose.,partly
+outdoor/farm/farm_work/step33,secure the bed liner edge,I want to adjust the position of the black plastic sheet on the ground.,wrong
+outdoor/farm/farm_work/step54,retrieve the glue gun and supplies,I want to pick up the cordless drill.,partly
+outdoor/farm/farm_work/step73,secure the polythene sheeting to the structure,I want to secure the wooden frame to the ground using nails.,partly
+outdoor/farm/pick_fruits/step66,harvesting a lemon,I want to pick a lemon from the tree.,correct
+outdoor/space/draw_flowers/step20,color the center of the flower design,I want to draw a flower on the floor.,partly
+outdoor/space/draw_flowers/step96,completing the white outline of the petal,I want to draw a dot on the rangoli.,wrong

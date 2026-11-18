@@ -17,6 +17,9 @@ Output per encoder: <out-root>/<encoder_name>/
   text_T0.npy / text_T1.npy (U, D) float32, meta.json (truncation counts, ...)
 """
 from __future__ import annotations
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import argparse
 import hashlib
@@ -147,7 +150,7 @@ def frame_hash(frames: np.ndarray) -> str:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=ROOT / "results/hoi_detection_v1/manifest.jsonl")
-    parser.add_argument("--out-root", type=Path, default=Path("/media/dhqg/d3/vlia_outputs/ladder"))
+    parser.add_argument("--out-root", type=Path, default=Path(f"{_D3}/vlia_outputs/ladder"))
     parser.add_argument("--encoders", nargs="+", default=list(ENCODERS))
     parser.add_argument("--limit", type=int, default=0, help="throughput probe on the first N samples")
     parser.add_argument("--batch-size", type=int, default=32, help="text batch size (E1 used 32)")

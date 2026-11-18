@@ -1,3 +1,6 @@
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 from pathlib import Path
 import argparse
 import json
@@ -1178,7 +1181,7 @@ def main():
         "--temporal-cache",
         type=Path,
         default=Path(
-            "/media/dhqg/d1/datasets/"
+            f"{_D1}/datasets/"
             "egointent/cache/"
             "temporal_intention_v1"
         ),
@@ -1188,7 +1191,7 @@ def main():
         "--stage-a-cache",
         type=Path,
         default=Path(
-            "/media/dhqg/d1/datasets/"
+            f"{_D1}/datasets/"
             "egointent/cache/"
             "stage_a_v0"
         ),
@@ -1198,7 +1201,7 @@ def main():
         "--why-pca",
         type=Path,
         default=Path(
-            "/media/dhqg/d1/vlia_outputs/"
+            f"{_D1}/vlia_outputs/"
             "stage_a_clean_v1/"
             "why_pca_960_to_256.pt"
         ),
@@ -1208,7 +1211,7 @@ def main():
         "--output-dir",
         type=Path,
         default=Path(
-            "/media/dhqg/d1/vlia_outputs/"
+            f"{_D1}/vlia_outputs/"
             "temporal_progression_v1"
         ),
     )

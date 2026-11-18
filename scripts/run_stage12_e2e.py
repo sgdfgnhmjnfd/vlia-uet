@@ -5,6 +5,9 @@ Subcommands: selftest | extract | score | plan | analyze. Pre-registration: resu
 Rollouts run through scripts/libero_goal_ablation.py (condition E2E, --e2e-tokens results/.../e2e_tokens.json).
 """
 from __future__ import annotations
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import argparse
 import csv
@@ -35,11 +38,11 @@ CAM = "observation.images.image"
 ENCODER = "google/siglip-so400m-patch14-384"
 TEMPLATES = {"T1": "a first-person photo of a person doing: {why}", "T0": "{why}"}
 SNAP_GLOB = str(Path.home() / ".cache/huggingface/lerobot/hub/datasets--lerobot--libero/snapshots/*/")
-WORK = Path("/media/dhqg/d3/vlia_outputs/stage12")
+WORK = Path(f"{_D3}/vlia_outputs/stage12")
 RES = ROOT / "results/stage12_end_to_end"
-TABLE = "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/task_embeddings_v2.npz"
-EVAL = Path("/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval")
-VLIA = "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000/pretrained_model"
+TABLE = f"{_D3}/vlia_outputs/libero_intention_only_v1/task_embeddings_v2.npz"
+EVAL = Path(f"{_D3}/vlia_outputs/libero_intention_only_v1/eval")
+VLIA = f"{_D3}/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000/pretrained_model"
 
 
 def normalize(x):

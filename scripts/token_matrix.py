@@ -4,11 +4,14 @@
 Entry (t, k, e): k = t -> I-only, k = (t+5) mod 10 -> I-wrong, else I-tok{k}. Every rollout: empty instruction,
 init_state_id = e, seed 1000 + e.
 
-  build   --seed S [--eval-dir DIR]   -> /media/dhqg/d3/vlia_outputs/token_matrix/matrix_seed{S}.npz
+  build   --seed S [--eval-dir DIR]   -> $VLIA_DATA_ROOT/vlia_outputs/token_matrix/matrix_seed{S}.npz
   analyze                             -> results/token_matrix/
   lookup  --tokens JSON [--seed S]    -> per-unit successes of a (t, e) -> description map
 """
 from __future__ import annotations
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import argparse
 import csv
@@ -24,10 +27,10 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import libero_goal_ablation as G  # noqa: E402
 
 N_TASKS, N_EP = 10, 30
-OUT = Path("/media/dhqg/d3/vlia_outputs/libero_intention_only_v1")
+OUT = Path(f"{_D3}/vlia_outputs/libero_intention_only_v1")
 EVAL_DIRS = {0: OUT / "eval", 1: OUT / "eval_seed1"}
 CKPTS = {s: str(OUT / f"train/intention_only/seed_{s}/checkpoint_025000/pretrained_model") for s in (0, 1)}
-WORK = Path("/media/dhqg/d3/vlia_outputs/token_matrix")
+WORK = Path(f"{_D3}/vlia_outputs/token_matrix")
 RES = ROOT / "results/token_matrix"
 PAIRS = ((0, 1), (1, 0), (7, 5), (5, 7), (5, 9), (9, 5))
 STAGE12_TOKENS = ROOT / "results/stage12_end_to_end/e2e_tokens.json"

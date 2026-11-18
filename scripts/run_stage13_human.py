@@ -3,9 +3,12 @@
 
 Subcommands: selftest | extract | score | plan | analyze. Pre-registration: results/prereg_stage13_human_video.md.
 Rollouts run through scripts/libero_goal_ablation.py (condition E2E-human, --e2e-tokens .../e2e_human_tokens.json).
-Videos, frames and contact sheets stay under /media/dhqg/d3 and are never committed.
+Videos, frames and contact sheets stay under $VLIA_DATA_ROOT and are never committed.
 """
 from __future__ import annotations
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import argparse
 import csv
@@ -34,13 +37,13 @@ SCENE_OF = {t: s for s, ts in SCENE_TASKS.items() for t in ts}
 CONTEXTS = ("C-scene", "C0", "C-libero")
 TEMPLATES = {"T1": "a first-person photo of a person doing: {why}", "T0": "{why}"}
 ENCODER = "google/siglip-so400m-patch14-384"
-VIDEOS = Path("/media/dhqg/d3/datasets/own_libero10")
-WORK = Path("/media/dhqg/d3/vlia_outputs/stage13")
+VIDEOS = Path(f"{_D3}/datasets/own_libero10")
+WORK = Path(f"{_D3}/vlia_outputs/stage13")
 RES = ROOT / "results/stage13_human_video"
-TABLE = "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/task_embeddings_v2.npz"
-LIBERO_CTX = Path("/media/dhqg/d3/vlia_outputs/stage12/scores.npz")
-EVAL = Path("/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval")
-VLIA = "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000/pretrained_model"
+TABLE = f"{_D3}/vlia_outputs/libero_intention_only_v1/task_embeddings_v2.npz"
+LIBERO_CTX = Path(f"{_D3}/vlia_outputs/stage12/scores.npz")
+EVAL = Path(f"{_D3}/vlia_outputs/libero_intention_only_v1/eval")
+VLIA = f"{_D3}/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000/pretrained_model"
 STAGE12_SUMMARY = ROOT / "results/stage12_end_to_end/summary.csv"
 
 

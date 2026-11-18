@@ -17,9 +17,13 @@ condition. Run with ~/lerobot/.venv (the env of the 24% reference eval), cwd
 
 Resumable: one JSON per (condition, task, episode) under DIR/episodes/.
 """
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import argparse
 import json
+import re
 import math
 import sys
 import time
@@ -33,12 +37,23 @@ CONDITIONS = ("correct", "empty", "wrong")
 # Stage 12: E2E uses the description of the task F predicted from a demo video (--e2e-tokens)
 # Stage 13: E2E-human is the same with a human clip; its own file names keep the E2E episodes intact
 # Stage 13 amendment 1: I-tok runs the token of every other task k (files I-tok{k}_t{t}_e{e}.json)
+# Stage 15: E2E-sup-p{p} / E2E-sup-human-p{p} use the supervised label (--e2e-tokens, keyed by condition);
+#           units listed under "reuse" (label = true task) are not rolled out, they reuse the I-only episode
 # Stage 14: E2E-gen / E2E-gen-blank / E2E-gen-p50 use a sentence written by the VLM (--e2e-tokens, keyed by condition);
 #           its vector is the T1 embedding of that sentence (pass --task-embeddings gen_embeddings.npz).
 #           Units listed under "reuse" are not rolled out (they reuse another episode).
 GEN_CONDITIONS = ("E2E-gen", "E2E-gen-blank", "E2E-gen-p50")
-INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para", "E2E", "E2E-human", "I-tok") + GEN_CONDITIONS
+INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para", "E2E", "E2E-human", "I-tok", "E2E-sup") + GEN_CONDITIONS
 E2E_CONDITIONS = ("E2E", "E2E-human")
+SUP_RE = re.compile(r"^E2E-sup(-human)?-p\d+$")
+
+
+def is_sup(c: str) -> bool:
+    return bool(SUP_RE.match(c))
+
+
+def base_condition(c: str) -> str:
+    return "E2E-sup" if is_sup(c) else c
 STAGE11_VLIA = ("I-only", "I-wrong", "I-goal", "I-para")
 STAGE11_BASE = ("correct", "empty")
 STAGE4_E0_9 = {"I-only": 20, "I-wrong": 0, "correct": 19, "empty": 0}  # gate R2
@@ -78,13 +93,18 @@ def intention_text(c: str, t: int, original: dict, phrasings: dict | None, e: in
         return original[int(c[len("I-tok"):])]
     if c in E2E_CONDITIONS:
         return e2e_tokens[f"{t},{e}"]
-    if c in GEN_CONDITIONS:
+    if is_sup(c) or c in GEN_CONDITIONS:
         return e2e_tokens[c][f"{t},{e}"]
     if c == "I-only":
         return original[t]
     if c == "I-wrong":
         return original[wrong_task(t)]
     return phrasings[{"I-goal": "goal", "I-para": "para"}[c]][str(t)]
+
+
+def skip_sup(c: str, t: int, e: int, reuse: dict) -> bool:
+    """Stage 15: a unit whose supervised label is the true task reuses the I-only episode (no rollout)."""
+    return f"{t},{e}" in set(reuse.get(c, ()))
 
 
 def reused(c: str, t: int, e: int, reuse: dict) -> bool:
@@ -149,7 +169,7 @@ def run(own, rest) -> int:
         if is_vlia:
             from policies.smolvla.modeling_smolvla import VLIASmolVLAPolicy
 
-            assert set(conditions) <= set(INTENTION_CONDITIONS), conditions
+            assert {base_condition(c) for c in conditions} <= set(INTENTION_CONDITIONS), conditions
             policy = VLIASmolVLAPolicy.from_pretrained(cfg.policy.pretrained_path)
             policy.to(cfg.policy.device)
             emb = np.load(own.task_embeddings)
@@ -195,11 +215,13 @@ def run(own, rest) -> int:
             path = ep_dir / f"{c}_t{t}_e{e}.json"
             if path.exists():
                 continue
-            instr = "" if (c.startswith("I-tok") or c in GEN_CONDITIONS) else {
+            instr = "" if (c.startswith("I-tok") or is_sup(c) or c in GEN_CONDITIONS) else {
                 "correct": original[t], "empty": "", "wrong": original[wrong_task(t)],
                 "I-only": "", "I-wrong": "", "I-goal": "", "I-para": "", "E2E": "", "E2E-human": ""}[c]
             if is_vlia:
                 if c in E2E_CONDITIONS and f"{t},{e}" not in e2e_tokens:  # unit without a query demo
+                    continue
+                if is_sup(c) and (f"{t},{e}" not in e2e_tokens[c] or (not own.probe and skip_sup(c, t, e, e2e_reuse))):
                     continue
                 if c in GEN_CONDITIONS and (f"{t},{e}" not in e2e_tokens[c] or (not own.probe and reused(c, t, e, e2e_reuse))):
                     continue
@@ -491,17 +513,17 @@ def main() -> int:
     ap.add_argument("--analyze", action="store_true")
     ap.add_argument("--results")
     ap.add_argument("--conditions", default=",".join(CONDITIONS))
-    ap.add_argument("--task-embeddings", default="/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/task_embeddings.npz")
+    ap.add_argument("--task-embeddings", default=f"{_D3}/vlia_outputs/libero_intention_only_v1/task_embeddings.npz")
     ap.add_argument("--analyze-intention", action="store_true")
     ap.add_argument("--analyze-stage11", action="store_true")
     ap.add_argument("--phrasings", default=str(ROOT / "results/stage11_libero_goal/phrasings.json"))
-    ap.add_argument("--vlia-checkpoint", default="/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000/pretrained_model")
-    ap.add_argument("--baseline-checkpoint", default="/media/dhqg/d1/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000/pretrained_model")
+    ap.add_argument("--vlia-checkpoint", default=f"{_D3}/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000/pretrained_model")
+    ap.add_argument("--baseline-checkpoint", default=f"{_D1}/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000/pretrained_model")
     ap.add_argument("--git-commit", default="")
     ap.add_argument("--e2e-tokens")
     ap.add_argument("--token-tasks", default="0-9", help="I-tok: token tasks k (k != t, k != (t+5) mod 10)")
     ap.add_argument("--tasks", default="0-9", help="scene tasks t to run")
-    ap.add_argument("--v1-episodes", default="/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes")
+    ap.add_argument("--v1-episodes", default=f"{_D3}/vlia_outputs/libero_goal_ablation_v1/episodes")
     own, rest = ap.parse_known_args()
     if own.analyze:
         return analyze(own)

@@ -1,4 +1,7 @@
 from __future__ import annotations
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import copy
 
@@ -93,7 +96,7 @@ PRETRAINED = "lerobot/smolvla_base"
 # train_matched_oracle_LIBERO7D_FIXED.py; only the intention_only path differs.
 INTENTION_DIM = 1152
 TASK_EMBEDDINGS = Path(
-    "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/task_embeddings.npz"
+    f"{_D3}/vlia_outputs/libero_intention_only_v1/task_embeddings.npz"
 )
 
 
@@ -124,7 +127,7 @@ class TaskIntentionDataset(torch.utils.data.Dataset):
         return getattr(self.base, name)
 
 LIBERO_SCHEMA_SOURCE = (
-    "/media/dhqg/d3/lerobot_outputs/"
+    f"{_D3}/lerobot_outputs/"
     "smolvla_libero/checkpoints/025000/pretrained_model"
 )
 
@@ -142,7 +145,7 @@ RENAME_MAP = {
 
 DEFAULT_OUTPUT_ROOT = Path(
 
-    "/media/dhqg/d1/vlia_outputs/"
+    f"{_D1}/vlia_outputs/"
 
     "oracle_matched"
 

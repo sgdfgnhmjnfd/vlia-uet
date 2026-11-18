@@ -13,6 +13,9 @@ correctness only.
     PYTHONPATH=. python scripts/test_adapter_dims.py --out results/adapter_dims_v1
 """
 from __future__ import annotations
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import argparse
 import json
@@ -35,7 +38,7 @@ from policies.smolvla.modeling_smolvla import VLIAFlowMatching  # noqa: E402
 DIMS = (256, 768, 1152)
 TOL = 1e-6
 CKPT_CONFIG = Path(
-    "/media/dhqg/d1/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000/pretrained_model/config.json"
+    f"{_D1}/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000/pretrained_model/config.json"
 )
 TESTS = (
     "finite_loss",
@@ -171,7 +174,7 @@ def run_dim(d: int) -> dict:
     del upstream, off
 
     # 7: checkpoint round trip
-    tmp_root = Path("/media/dhqg/d3/tmp")
+    tmp_root = Path(f"{_D3}/tmp")
     tmp_root.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(dir=tmp_root) as tmp:
         path = Path(tmp) / f"vlia_d{d}.pt"

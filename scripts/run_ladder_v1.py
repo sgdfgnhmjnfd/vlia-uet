@@ -25,6 +25,9 @@ Implementation choices not fixed by the preregistration (recorded in config.json
     K-way rows count as misses, as in E1.
 """
 from __future__ import annotations
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import argparse
 import csv
@@ -43,9 +46,9 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import run_prefix_length_ablation as P  # noqa: E402
 import run_scene_cv as CV  # noqa: E402
 
-LADDER_ROOT = Path("/media/dhqg/d3/vlia_outputs/ladder")
+LADDER_ROOT = Path(f"{_D3}/vlia_outputs/ladder")
 MANIFEST = ROOT / "results/hoi_detection_v1/manifest.jsonl"
-MINILM_CACHE = Path("/media/dhqg/d3/vlia_outputs/e1/text_embeddings.pt")
+MINILM_CACHE = Path(f"{_D3}/vlia_outputs/e1/text_embeddings.pt")
 TEXT_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 ENCODERS = (
     "siglip-base-patch16-224",

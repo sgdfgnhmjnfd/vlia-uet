@@ -7,6 +7,9 @@ Rollouts run through scripts/libero_goal_ablation.py (conditions E2E-gen, E2E-ge
 --e2e-tokens results/stage14_generate_early/e2e_gen_tokens.json --task-embeddings <WORK>/gen_embeddings.npz).
 """
 from __future__ import annotations
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import argparse
 import csv
@@ -36,10 +39,10 @@ PROMPT_LIB = ('These frames show the start of someone doing a household task wit
 MAX_NEW = 40
 TEMPLATE = "a first-person photo of a person doing: {why}"
 ENCODER = "google/siglip-so400m-patch14-384"
-WORK = Path("/media/dhqg/d3/vlia_outputs/stage14")
-S12_FRAMES = Path("/media/dhqg/d3/vlia_outputs/stage12/frames")
+WORK = Path(f"{_D3}/vlia_outputs/stage14")
+S12_FRAMES = Path(f"{_D3}/vlia_outputs/stage12/frames")
 RES = ROOT / "results/stage14_generate_early"
-OUT = Path("/media/dhqg/d3/vlia_outputs/libero_intention_only_v1")
+OUT = Path(f"{_D3}/vlia_outputs/libero_intention_only_v1")
 EVAL = OUT / "eval"
 TABLE = OUT / "task_embeddings_v2.npz"
 VLIA = OUT / "train/intention_only/seed_0/checkpoint_025000/pretrained_model"
@@ -179,7 +182,7 @@ def write_json(path: Path, rec: dict):
 # ----------------------------------------------------------------------
 
 def libero_units() -> list[tuple[int, int]]:
-    n = json.loads((Path("/media/dhqg/d3/vlia_outputs/stage12/score_meta.json")).read_text())["demos_per_task"]
+    n = json.loads((Path(f"{_D3}/vlia_outputs/stage12/score_meta.json")).read_text())["demos_per_task"]
     return [(t, d) for t in range(N_TASKS) for d in range(N_UNIT) if d < int(n[str(t)])]
 
 
@@ -612,7 +615,7 @@ def analyze_ego(enc) -> dict | None:
             out.append({"k": "8 (blank)", "n_steps": len(ev), "open_ended_5way": float(hb.mean())})
             verdicts["GA2"] = {"pass": d[1] > 0, "delta": d[0], "ci95": [d[1], d[2]], "rule": "video - blank, k=8, CI lower bound > 0"}
     # Stage 3 multiple-choice answers on the same steps (strict top-1 of the letter scores)
-    s3 = Path("/media/dhqg/d3/vlia_outputs/v3_mllm/scores")
+    s3 = Path(f"{_D3}/vlia_outputs/v3_mllm/scores")
     for k in (2, 8):
         f = [s3 / f"{sid[i].replace('/', '__')}__k{k}.json" for i in ev]
         if all(p.exists() for p in f):

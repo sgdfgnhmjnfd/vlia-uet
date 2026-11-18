@@ -1,4 +1,7 @@
 from __future__ import annotations
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import copy
 
@@ -89,7 +92,7 @@ from vlia_data.libero_oracle_dataset import (
 PRETRAINED = "lerobot/smolvla_base"
 
 LIBERO_SCHEMA_SOURCE = (
-    "/media/dhqg/d3/lerobot_outputs/"
+    f"{_D3}/lerobot_outputs/"
     "smolvla_libero/checkpoints/025000/pretrained_model"
 )
 
@@ -107,7 +110,7 @@ RENAME_MAP = {
 
 DEFAULT_OUTPUT_ROOT = Path(
 
-    "/media/dhqg/d1/vlia_outputs/"
+    f"{_D1}/vlia_outputs/"
 
     "oracle_matched"
 

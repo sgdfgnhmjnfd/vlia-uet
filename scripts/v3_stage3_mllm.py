@@ -11,6 +11,9 @@ Analysis (--analyze, CPU): V3 (5-way lift CI lower bound > 1 at k=2 and k=8,
 fractional tie credit), paired delta vs F, control, nested gamma fusion (V4).
 """
 from __future__ import annotations
+import os as _os  # data folders: set VLIA_DATA_ROOT (and VLIA_DATA_ROOT_D1 if different)
+_D3 = _os.environ.get("VLIA_DATA_ROOT", "/media/dhqg/d3")
+_D1 = _os.environ.get("VLIA_DATA_ROOT_D1", _D3)
 
 import argparse
 import json
@@ -307,7 +310,7 @@ def analyze(args) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--score-dir", default="/media/dhqg/d3/vlia_outputs/v3_mllm")
+    ap.add_argument("--score-dir", default=f"{_D3}/vlia_outputs/v3_mllm")
     ap.add_argument("--probe", type=int, default=0)
     ap.add_argument("--stride", type=int, default=1)
     ap.add_argument("--analyze", action="store_true")
