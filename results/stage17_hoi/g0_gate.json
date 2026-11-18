@@ -1,0 +1,29 @@
+{
+ "primary_rates": {
+  "all": 0.47160493827160493,
+  "A": 0.5637860082304527,
+  "B": 0.49382716049382713,
+  "C": 0.46296296296296297,
+  "D": 0.38271604938271603,
+  "E": 0.345679012345679
+ },
+ "gate_rates_pass": false,
+ "eye_check_clips": [
+  "t0_r1_p2",
+  "t0_r2_p1",
+  "t0_r3_p1",
+  "t1_r3_p1",
+  "t2_r2_p2",
+  "t2_r3_p3",
+  "t4_r3_p1",
+  "t5_r3_p2",
+  "t7_r2_p3",
+  "t8_r1_p2"
+ ],
+ "settings": {
+  "static_image_mode": true,
+  "max_num_hands": 2,
+  "model_complexity": 1,
+  "min_detection_confidence": 0.5
+ }
+}

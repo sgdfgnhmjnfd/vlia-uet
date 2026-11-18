@@ -1,0 +1,5 @@
+# Stage 17: deviations and notes
+
+1. **MediaPipe version.** mediapipe 1.2.3, the current release, no longer has the legacy `solutions.hands.Hands` API with the pre-registered settings. Its Tasks API needs a separately downloaded model file. mediapipe **0.10.21** was installed instead, in the separate venv `/media/dhqg/d3/venv_mp` (Trang's ok, 18/11). That version still has the legacy API and its bundled model, and the settings are unchanged. The venv also holds opencv 4.11 (pulled in by mediapipe) and numpy 1.26. pip reports a numpy-version conflict with pandas and opencv-headless 5.1, which are installed but not used.
+2. **VLIA was not training at the start of the session.** The machine had rebooted at 10:02. VLIA was restarted at 10:06 with Trang's ok. It resumed from checkpoint_002500 with data-order fix B active: the loss at step 2,510 equals the earlier runs, 0.471761.
+3. **G0 CPU load.** G0 ran on 4 cores (taskset 12–15), nice 19, for about 2 minutes. The training speed was 1.85 s/step before and about 2.0 s/step during G0, read from the 60 s progress log with its 10-step granularity. That is within the 10% limit, up to this measurement precision.
