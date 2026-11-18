@@ -1,0 +1,83 @@
+{
+ "scope": "exploratory, outside prereg",
+ "config": "G0b (ii): MediaPipe Hands conf 0.3 on 2x2 tiles",
+ "H_no_crop_rule": "full-frame embedding of the same frame (Trang 18/11), not the prereg training-mean imputation",
+ "R0": {
+  "S": 0.41975308641975306,
+  "M": 0.6790123456790124,
+  "F+": 0.7407407407407407
+ },
+ "R0_pass": true,
+ "fallback": [
+  {
+   "p": 25,
+   "table": "A",
+   "observed_frames": 183,
+   "fallback_full_frame": 20,
+   "fallback_share": 0.1092896174863388
+  },
+  {
+   "p": 25,
+   "table": "B",
+   "observed_frames": 123,
+   "fallback_full_frame": 46,
+   "fallback_share": 0.37398373983739835
+  },
+  {
+   "p": 25,
+   "table": "C",
+   "observed_frames": 156,
+   "fallback_full_frame": 18,
+   "fallback_share": 0.11538461538461539
+  },
+  {
+   "p": 25,
+   "table": "D",
+   "observed_frames": 117,
+   "fallback_full_frame": 8,
+   "fallback_share": 0.06837606837606838
+  },
+  {
+   "p": 50,
+   "table": "A",
+   "observed_frames": 353,
+   "fallback_full_frame": 31,
+   "fallback_share": 0.08781869688385269
+  },
+  {
+   "p": 50,
+   "table": "B",
+   "observed_frames": 232,
+   "fallback_full_frame": 68,
+   "fallback_share": 0.29310344827586204
+  },
+  {
+   "p": 50,
+   "table": "C",
+   "observed_frames": 279,
+   "fallback_full_frame": 32,
+   "fallback_share": 0.11469534050179211
+  },
+  {
+   "p": 50,
+   "table": "D",
+   "observed_frames": 224,
+   "fallback_full_frame": 34,
+   "fallback_share": 0.15178571428571427
+  },
+  {
+   "p": 25,
+   "table": "pooled",
+   "observed_frames": 579,
+   "fallback_full_frame": 92,
+   "fallback_share": 0.15889464594127806
+  },
+  {
+   "p": 50,
+   "table": "pooled",
+   "observed_frames": 1088,
+   "fallback_full_frame": 165,
+   "fallback_share": 0.15165441176470587
+  }
+ ]
+}

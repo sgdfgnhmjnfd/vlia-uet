@@ -50,3 +50,12 @@ G0 failed under the pre-registered settings. Everything below is exploratory: it
   - 4 true false positives: the orange butter box (t1_r3_p2, 1 frame) and a shoe on the floor (t5_r1_p2, 3 frames);
   - 4 real but non-acting hands: another person's hand at the top edge (t7_r3_p3, 3 frames) and a resting hand at the bottom edge (t6_r3_p2, 1 frame).
 - **Status:** this is an exploratory pass, not the pre-registered G0. Step 2 waits for Trang's ok, because it needs the GPU.
+
+## Step 2 (exploratory; Trang's ok 18/11)
+
+1. **Outside the prereg.** Config (ii) passed only in G0b, after the pre-registered G0 failed, and on the held-out tables D–E it reaches 55.6% < 60%. All Step 2 numbers are exploratory.
+2. **Frames with no hand crop.** On such a frame the full-frame embedding of the same frame is used (Trang, 18/11), not the prereg's training-mean imputation. Share of observed frames that fell back to the full frame: pooled 15.9% at p25 and 15.2% at p50. By table at p25: A 10.9, B 37.4, C 11.5, D 6.8. By table at p50: A 8.8, B 29.3, C 11.5, D 15.2. Crops cover 61.9% of all grid frames (39.2% detected, 22.8% carried forward for at most 1 s).
+3. **Scope.** Trang asked for F+ vs F+H at p25 and p50, so H4-c (the per-clip stable-recognition time) was not run. H alone is reported as H4-b.
+4. **Pause.** VLIA paused right after checkpoint_010000 and resumed from step 10000 with data-order fix B active. Lost = 0; steps 10000–10010 were recomputed. See `pause_check.md`.
+5. **Analysis run.** The first analysis run used one process with all torch threads, about 14 cores. VLIA slowed by about 4% (1.93 vs 1.85 s/step), within the 10% limit, but the run was slow, so I stopped it after 15 minutes. It was rerun with the same code in 6 single-thread processes (10 s). No result of the stopped run was used.
+6. **Statistical note.** The H4-a paired bootstrap lower bound is exactly 0.000 (+9.9 points [0.0, 19.8]), so H4-a is "FAIL" by the rule (> 0 required). Exact McNemar: 12 clips correct only with F+H and 4 correct only with F+, p = 0.077.

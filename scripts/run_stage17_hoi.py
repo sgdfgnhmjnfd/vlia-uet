@@ -307,14 +307,71 @@ def cmd_g0b_sheets(args) -> int:
     return 0
 
 
+def crop_box(boxes, W, H):
+    """Union of hand boxes -> square of 2.0x its larger side around its centre, clipped to the frame, side >= 128."""
+    x0 = min(b["box"][0] for b in boxes); y0 = min(b["box"][1] for b in boxes)
+    x1 = max(b["box"][2] for b in boxes); y1 = max(b["box"][3] for b in boxes)
+    cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+    s = max(128.0, 2.0 * max(x1 - x0, y1 - y0))
+    a, b = max(0, int(round(cx - s / 2))), max(0, int(round(cy - s / 2)))
+    c, d = min(W, int(round(cx + s / 2))), min(H, int(round(cy + s / 2)))
+    return a, b, c, d
+
+
+def cmd_crops(args) -> int:
+    """Step 2a (CPU): per 4 fps grid frame a hand crop (384x384) from the config's detections; the last box is carried
+    forward for at most 1.0 s. Saved per clip as uint8 npz under WORK/crops_<config>/ (not in git)."""
+    import cv2
+
+    meta = S16.load_meta()
+    det_dir = WORK / f"det_g0b_{args.config}"
+    out_dir = WORK / f"crops_{args.config}"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    log = []
+    for v, m in meta.items():
+        out = out_dir / f"{v}.npz"
+        d = json.loads((det_dir / f"{v}.json").read_text())
+        t = np.array(d["times"])
+        W, H = d["size"]
+        boxes, src, last, last_t = [], [], None, -1e9
+        for i, ti in enumerate(t):
+            if d["det"][i]:
+                last, last_t = crop_box(d["det"][i], W, H), ti
+                boxes.append(last); src.append(1)
+            elif last is not None and ti - last_t <= 1.0 + 1e-9:
+                boxes.append(last); src.append(2)
+            else:
+                boxes.append(None); src.append(0)
+        has = np.array([b is not None for b in boxes])
+        log.append({"video_id": v, "table": m["table"], "person": m["person"], "n_frames": len(t),
+                    "share_with_crop": float(has.mean()), "share_detected": float(np.mean(np.array(src) == 1)),
+                    "share_carried": float(np.mean(np.array(src) == 2))})
+        if out.exists():
+            continue
+        frames = read_grid(S16.DATA / m["file"], t[has])
+        crops = np.stack([cv2.resize(fr[b[1]:b[3], b[0]:b[2]], (384, 384), interpolation=cv2.INTER_AREA)
+                          for fr, b in zip(frames, [b for b in boxes if b is not None])]) if has.any() else np.zeros((0, 384, 384, 3), np.uint8)
+        tmp = out.with_suffix(".tmp.npz")
+        np.savez(tmp, times=t, has_crop=has, source=np.array(src), boxes=np.array([b if b else (-1, -1, -1, -1) for b in boxes]), crops=crops)
+        os.replace(tmp, out)
+        print(v, "crops", int(has.sum()), "/", len(t), flush=True)
+    S16.write_csv(RES / f"crop_coverage_{args.config}.csv", log)
+    print("CROPS DONE")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
+    p = None
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("g0").set_defaults(fn=cmd_g0)
     p = sub.add_parser("g0b")
     p.add_argument("--config", required=True, choices=("i", "ii", "iii", "iv"))
     p.set_defaults(fn=cmd_g0b)
     sub.add_parser("g0b-summary").set_defaults(fn=cmd_g0b_summary)
+    p = sub.add_parser("crops")
+    p.add_argument("--config", required=True)
+    p.set_defaults(fn=cmd_crops)
     p = sub.add_parser("g0b-sheets")
     p.add_argument("--config", required=True)
     p.set_defaults(fn=cmd_g0b_sheets)
