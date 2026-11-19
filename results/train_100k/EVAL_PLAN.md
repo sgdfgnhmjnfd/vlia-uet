@@ -3,7 +3,7 @@
 **Rules:**
 - GPU only after VLIA training has finished. Training is never paused for evaluation; `run_final_eval_100k.sh` refuses while a process is on the GPU.
 - Reused units (`unit_sentences.json`) are not rolled out; they take the 25k `correct` (baseline) or `I-only` (VLIA) episode of the same unit.
-- **Final VLIA milestone:** the last checkpoint reached before 22:00 on 22/11 (100k if training finishes, otherwise 75k / 50k). It is chosen by this rule only.
+- **Final VLIA milestone:** the last checkpoint reached before 22:00 on 30/11 (freeze moved from 22/11 on 19/11) (100k if training finishes, otherwise 75k / 50k). It is chosen by this rule only.
 
 ## (1) Token vs instruction at 25k
 
@@ -57,3 +57,23 @@ bash scripts/run_final_eval_100k.sh vlia /media/dhqg/d3/vlia_outputs/train_100k/
 **Analysis:** `scripts/analyze_train100k.py`
 - (1): `--vlia` = 25k VLIA episodes + `eval/vlia_25000`; `--base` = 25k baseline episodes + `eval/baseline_25000`.
 - (2): `--vlia eval/vlia_<FINAL>`, `--vlia-25k` = the 25k folders, `--base` = 25k baseline episodes (labelled as 25k).
+
+## Update 19/11 10:05 (Trang): submission deadline 6/12, baseline 100k only if time remains
+
+- **Baseline 25k is kept** for all comparisons above (1)–(3).
+- **VLIA 100k continues.**
+- **(4) Optional, only after VLIA 100k and (1)–(3) are done:** train the SmolVLA baseline to 100k on the lab GPU, then evaluate it.
+  - The run is started fresh, `train_matched_oracle_LIBERO7D_FIXED.py --condition baseline`, same arguments as VLIA 100k, with resumable data order. The run is preceded by gate T0 for the baseline (about 5 min of GPU).
+  - Baseline rows at 100k: correct, empty, L-para, L-goal, L-E2E, L-sup-p25, L-gen-p25 (1,590 episodes, about 4.4 h). Baseline learning curve: `correct` at 25k / 50k / 75k (about 1 h).
+  - After that, T1 and the token-vs-instruction pairs can also be reported at 100k vs 100k.
+- **Schedule (continuous running, 1.85 s/step):**
+
+  | step | when |
+  |---|---|
+  | VLIA 100k done | about 04:00 on 21/11 |
+  | evaluations (1)–(3) | about 04:00–13:30 on 21/11 |
+  | baseline T0 + 100k training (51 h) | about 13:30 on 21/11 → 16:30 on 23/11 |
+  | baseline 100k evaluation + curve | about 23:00 on 23/11 |
+
+  With about 10 h off each night, baseline training ends about 25/11 and its evaluation about 26/11. Both are well before 6/12.
+- **Needs Trang's decision first:** `run_train100k_chain.sh` has the freeze hard-coded at 22:00 on 22/11. A baseline run started on 21/11 would be stopped by it, so the freeze must be moved (proposed: 22:00 on 30/11) before the baseline is started.

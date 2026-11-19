@@ -8,7 +8,7 @@
 #     the two most recent. Nothing else is deleted.
 #   - pause (e.g. for Stage 16): `touch OUT/PAUSE` -> training stops right after the next complete checkpoint;
 #     `rm OUT/PAUSE` -> the chain resumes by itself.
-#   - freeze: at 22:00 on 22/11/2026 training is stopped (FROZEN written); the milestone is then chosen by the rule.
+#   - freeze: at 22:00 on 30/11/2026 (moved from 22/11 by Trang on 19/11) training is stopped (FROZEN written); the milestone is then chosen by the rule.
 #   - T1: seconds per step from steps 10..1,000 and the projected finish (24 h/day and 14 h/day) go to the chain log
 #     and STATE.md. Milestones 25k/50k/75k/100k get one line in STATE.md.
 # Logs: /media/dhqg/d3/logs/train100k_<model>.log (training), train100k_<model>_chain.log (this chain).
@@ -29,7 +29,7 @@ CK=$OUT/$COND/seed_0
 LOG=/media/dhqg/d3/logs/train100k_$MODEL.log
 CLOG=/media/dhqg/d3/logs/train100k_${MODEL}_chain.log
 STATE=/media/dhqg/d3/vlia_outputs/ke_hoach_cuoi/STATE.md
-FREEZE=$(date -d '2026-11-22 22:00' +%s)
+FREEZE=$(date -d '2026-11-30 22:00' +%s)
 mkdir -p $OUT /media/dhqg/d3/tmp /media/dhqg/d3/logs
 say() { echo "$(date '+%F %T') $*" | tee -a $CLOG; }
 state() { [ -f $STATE ] && echo "$(date '+%F %T') | Part 4 | train100k $MODEL | $* | $OUT | -" >> $STATE; }
