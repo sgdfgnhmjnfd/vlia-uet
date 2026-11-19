@@ -1,38 +1,59 @@
-# Final 100k evaluation: what runs and when (written 19/11/2026)
+# Final evaluation plan (rewritten 19/11/2026, Trang: no rented GPU, no baseline 100k)
 
-**Episodes to roll out per model.** Reused units are not rolled out (`unit_sentences.json`).
+**Rules:**
+- GPU only after VLIA training has finished. Training is never paused for evaluation; `run_final_eval_100k.sh` refuses while a process is on the GPU.
+- Reused units (`unit_sentences.json`) are not rolled out; they take the 25k `correct` (baseline) or `I-only` (VLIA) episode of the same unit.
+- **Final VLIA milestone:** the last checkpoint reached before 22:00 on 22/11 (100k if training finishes, otherwise 75k / 50k). It is chosen by this rule only.
 
-| model | row | episodes |
+## (1) Token vs instruction at 25k
+
+| checkpoint | rows | episodes |
 |---|---|---:|
-| VLIA | I-only | 300 |
-| VLIA | I-wrong | 300 |
-| VLIA | I-para | 300 |
-| VLIA | I-goal | 300 |
-| VLIA | E2E | 299 |
-| VLIA | E2E-sup-p25 | 1 |
-| VLIA | E2E-gen-p25 | 299 |
-| **VLIA total** | | **1,799 (about 5.0 h)** |
-| baseline | correct | 300 |
-| baseline | empty | 300 |
-| baseline | L-para | 300 |
-| baseline | L-goal | 300 |
-| baseline | L-E2E | 90 |
-| baseline | L-sup-p25 | 1 |
-| baseline | L-gen-p25 | 299 |
-| **baseline total** | | **1,590 (about 4.4 h)** |
+| baseline `checkpoint_025000` | L-para 300, L-goal 300, L-E2E 90, L-sup-p25 1, L-gen-p25 299 | 990 (≈ 2.8 h) |
+| VLIA `checkpoint_025000` | E2E-gen-p25 299 | 299 (≈ 0.8 h) |
 
-- **Learning curve:** 10 episodes per task per model at each milestone before the final one, about 0.3 h per model per milestone.
-- **Total GPU time:** about 9.4 h for the final rows, plus about 2 h for the curves (25k / 50k / 75k).
+Pairs are on the same units, with the 25k rows that already exist:
 
-**Schedule.** These are times, not results; the milestone follows the freeze rule only.
+| token row (VLIA 25k) | instruction row (baseline 25k) | units |
+|---|---|---:|
+| I-para | L-para | 300 |
+| I-goal | L-goal | 300 |
+| E2E | L-E2E | 299 |
+| E2E-sup-p25 | L-sup-p25 | 299 |
+| E2E-gen-p25 (new) | L-gen-p25 | 299 |
+
+## (2) VLIA at the final milestone
+
+| rows | episodes |
+|---|---:|
+| I-only 300, I-wrong 300, I-para 300, I-goal 300, E2E 299, E2E-sup-p25 1, E2E-gen-p25 299 | 1,799 (≈ 5.0 h) |
+
+- Each row is compared with the same VLIA row at 25k, on the same units (paired bootstrap).
+- Rules T1–T5 are computed at the final milestone. T1 uses the baseline `empty` row at 25k, labelled "baseline 25k" because the step count differs.
+- `correct` / `empty` are not rerun.
+
+## (3) Learning curve (VLIA only)
+
+- I-only, 10 episodes per task at 50k and 75k: 200 episodes (≈ 0.6 h).
+- The 25k point is the existing I-only e0–9 (20/100); the final point is I-only e0–9 from (2).
+
+## Schedule (times, not results)
 
 - **VLIA training:** 100k at about 04:00 on 21/11 if run continuously (1.85 s/step). With about 10 h off each night, about 10:00 on 22/11.
-- **Baseline (rented GPU):** not started yet (19/11 09:50). It must reach the common milestone before the freeze at 22:00 on 22/11. At the lab's speed, 100k needs about 51 h, so it would have to start before about 19:00 on 20/11.
-- **Evaluation (lab GPU, after training stops; the script refuses while training runs):**
-  - VLIA rows: about 5 h.
-  - VLIA curve at 25k / 50k / 75k: about 1 h.
-  - Baseline rows: about 4.4 h, after its checkpoint is copied back and its sha256 is checked.
-  - Baseline curve: about 1 h.
-- **Tables:** about 12 h after the later of (VLIA training done, baseline checkpoint on the lab). If the baseline arrives by 22:00 on 22/11, the tables are ready about 23/11 morning.
-- **If the schedule passes 24/11:** cut rows from the end of the plan order (L-gen-p25, E2E-gen-p25, L-sup-p25, E2E-sup-p25, …), never by results.
-- **Caution:** the VLIA rows should be run at the common milestone. If the baseline can only reach 50k / 75k by the freeze, VLIA is evaluated at that milestone too, so do not start the VLIA 100k rows before the milestone is known.
+- **Evaluation:** about 9.2 h of GPU time in all, in this order: (1) baseline 25k, (1) VLIA 25k, (2) VLIA final, (3) curve. If training finishes at about 04:00 on 21/11, the tables are ready at about 13:30 on 21/11.
+- **If time runs short:** stop only at the end of a row and cut from the end of the order, never by results.
+
+## Commands (run only after Trang says go)
+
+```
+cd /media/dhqg/d3/vlia-100k
+bash scripts/run_final_eval_100k.sh baseline /media/dhqg/d1/vlia_outputs/oracle_matched_LIBERO7D_FIXED/baseline/seed_0/checkpoint_025000 L-para,L-goal,L-E2E,L-sup-p25,L-gen-p25
+bash scripts/run_final_eval_100k.sh vlia /media/dhqg/d3/vlia_outputs/libero_intention_only_v1/train/intention_only/seed_0/checkpoint_025000 E2E-gen-p25
+bash scripts/run_final_eval_100k.sh vlia /media/dhqg/d3/vlia_outputs/train_100k/vlia/intention_only/seed_0/checkpoint_<FINAL>
+bash scripts/run_final_eval_100k.sh vlia /media/dhqg/d3/vlia_outputs/train_100k/vlia/intention_only/seed_0/checkpoint_050000 --curve
+bash scripts/run_final_eval_100k.sh vlia /media/dhqg/d3/vlia_outputs/train_100k/vlia/intention_only/seed_0/checkpoint_075000 --curve
+```
+
+**Analysis:** `scripts/analyze_train100k.py`
+- (1): `--vlia` = 25k VLIA episodes + `eval/vlia_25000`; `--base` = 25k baseline episodes + `eval/baseline_25000`.
+- (2): `--vlia eval/vlia_<FINAL>`, `--vlia-25k` = the 25k folders, `--base` = 25k baseline episodes (labelled as 25k).
