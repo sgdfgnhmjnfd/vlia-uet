@@ -19,6 +19,7 @@ import numpy as np
 import torch
 
 from torch.utils.data import DataLoader
+from vlia_data.resumable_sampler import ResumableRandomSampler  # 100k: resumable data order
 
 from lerobot.configs import PreTrainedConfig
 from lerobot.configs.types import (
@@ -1470,6 +1471,9 @@ def main():
 
     )
 
+    # 100k: same draws as shuffle=True with this generator; on resume the data order continues (see resumable_sampler.py)
+    train_sampler = ResumableRandomSampler(dataset, loader_generator)
+
     loader = DataLoader(
 
         dataset,
@@ -1480,7 +1484,7 @@ def main():
 
         ),
 
-        shuffle=True,
+        sampler=train_sampler,
 
         num_workers=(
 
@@ -2129,6 +2133,12 @@ def main():
         "=" * 72
 
     )
+
+    # 100k: continue the data order after a resume (indices only); the epoch counter follows the data
+    if step > 0:
+        _ep_done, _skip = train_sampler.fast_forward(step, len(loader), args.batch_size)
+        epoch = _ep_done
+        print(f"data order: resume at step {step}: replay {_ep_done} finished epochs, skip {_skip} batches of the current epoch")
 
     while step < args.steps:
 

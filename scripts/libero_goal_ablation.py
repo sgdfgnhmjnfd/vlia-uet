@@ -39,6 +39,10 @@ CONDITIONS = ("correct", "empty", "wrong")
 GEN_CONDITIONS = ("E2E-gen", "E2E-gen-blank", "E2E-gen-p50")
 INTENTION_CONDITIONS = ("I-only", "I-wrong", "I-goal", "I-para", "E2E", "E2E-human", "I-tok") + GEN_CONDITIONS
 E2E_CONDITIONS = ("E2E", "E2E-human")
+# 100k final evaluation (prereg_train100k.md): rows whose sentence is read per unit from
+# results/train_100k/unit_sentences.json (--unit-sentences). Units marked "reuse" are not rolled out.
+UNIT_VLIA = ("E2E-sup-p25", "E2E-gen-p25")  # VLIA: token = T1 embedding of the unit's sentence, empty instruction
+UNIT_BASE = ("L-para", "L-goal", "L-E2E", "L-sup-p25", "L-gen-p25")  # baseline: the unit's sentence as the instruction
 STAGE11_VLIA = ("I-only", "I-wrong", "I-goal", "I-para")
 STAGE11_BASE = ("correct", "empty")
 STAGE4_E0_9 = {"I-only": 20, "I-wrong": 0, "correct": 19, "empty": 0}  # gate R2
@@ -85,6 +89,28 @@ def intention_text(c: str, t: int, original: dict, phrasings: dict | None, e: in
     if c == "I-wrong":
         return original[wrong_task(t)]
     return phrasings[{"I-goal": "goal", "I-para": "para"}[c]][str(t)]
+
+
+def unit_inputs(c: str, t: int, e: int, original: dict, phrasings, e2e_tokens, e2e_reuse, unit_rows, probe: int = 0):
+    """(instruction, token text or None, skip reason or None) that the rollout of row c on unit (t, e) uses.
+    The single place where both are decided; --dry-run prints exactly this."""
+    k = f"{t},{e}"
+    if c in UNIT_VLIA or c in UNIT_BASE:
+        u = (unit_rows or {}).get(c, {}).get(k)
+        if u is None:
+            return None, None, "unit not in this row"
+        if u["reuse"]:
+            return None, None, f"reuses {u['reuse']}"
+        return u["instruction"], (u["token_text"] if c in UNIT_VLIA else None), None
+    if c in E2E_CONDITIONS and k not in e2e_tokens:
+        return None, None, "unit without a query demo"
+    if c in GEN_CONDITIONS and (k not in e2e_tokens[c] or (not probe and reused(c, t, e, e2e_reuse))):
+        return None, None, "reused / missing"
+    instr = "" if (c.startswith("I-tok") or c in GEN_CONDITIONS) else {
+        "correct": original[t], "empty": "", "wrong": original[wrong_task(t)],
+        "I-only": "", "I-wrong": "", "I-goal": "", "I-para": "", "E2E": "", "E2E-human": ""}[c]
+    z = None if c in CONDITIONS else intention_text(c, t, original, phrasings, e, e2e_tokens)
+    return instr, z, None
 
 
 def reused(c: str, t: int, e: int, reuse: dict) -> bool:
@@ -149,7 +175,7 @@ def run(own, rest) -> int:
         if is_vlia:
             from policies.smolvla.modeling_smolvla import VLIASmolVLAPolicy
 
-            assert set(conditions) <= set(INTENTION_CONDITIONS), conditions
+            assert set(conditions) <= set(INTENTION_CONDITIONS) | set(UNIT_VLIA), conditions
             policy = VLIASmolVLAPolicy.from_pretrained(cfg.policy.pretrained_path)
             policy.to(cfg.policy.device)
             emb = np.load(own.task_embeddings)
@@ -167,7 +193,8 @@ def run(own, rest) -> int:
 
             policy.select_action = select_with_intention
         else:
-            assert set(conditions) <= set(CONDITIONS), conditions
+            assert set(conditions) <= set(CONDITIONS) | set(UNIT_BASE), conditions
+            phrasings, e2e_tokens, e2e_reuse = None, None, {}
             policy = make_policy(cfg=cfg.policy, env_cfg=cfg.env, rename_map=cfg.rename_map)
         policy.eval()
         pre, post = make_pre_post_processors(
@@ -176,6 +203,7 @@ def run(own, rest) -> int:
                                     "rename_observations_processor": {"rename_map": cfg.rename_map}})
         env_pre, env_post = make_env_pre_post_processors(env_cfg=cfg.env, policy_cfg=cfg.policy)
         original = {t: task_envs[t].envs[0].task_description for t in range(N_TASKS)}
+        unit_rows = json.loads(Path(own.unit_sentences).read_text())["rows"] if own.unit_sentences else None
         (out / "instructions.json").write_text(json.dumps(
             {"original": original, "wrong_map": {t: wrong_task(t) for t in range(N_TASKS)}}, indent=2))
 
@@ -195,15 +223,10 @@ def run(own, rest) -> int:
             path = ep_dir / f"{c}_t{t}_e{e}.json"
             if path.exists():
                 continue
-            instr = "" if (c.startswith("I-tok") or c in GEN_CONDITIONS) else {
-                "correct": original[t], "empty": "", "wrong": original[wrong_task(t)],
-                "I-only": "", "I-wrong": "", "I-goal": "", "I-para": "", "E2E": "", "E2E-human": ""}[c]
+            instr, z_task, skip = unit_inputs(c, t, e, original, phrasings, e2e_tokens, e2e_reuse, unit_rows, own.probe)
+            if skip:
+                continue
             if is_vlia:
-                if c in E2E_CONDITIONS and f"{t},{e}" not in e2e_tokens:  # unit without a query demo
-                    continue
-                if c in GEN_CONDITIONS and (f"{t},{e}" not in e2e_tokens[c] or (not own.probe and reused(c, t, e, e2e_reuse))):
-                    continue
-                z_task = intention_text(c, t, original, phrasings, e, e2e_tokens)
                 current_z["z"] = table[z_task]
             env = task_envs[t]
             sub = env.envs[0]
@@ -231,7 +254,9 @@ def run(own, rest) -> int:
                    "video": str(video) if frames else None}
             if c.startswith("I-tok"):
                 rec["token_task"] = int(c[len("I-tok"):])
-            path.write_text(json.dumps(rec))
+            tmp = path.with_suffix(".tmp")  # atomic: a power cut never leaves a truncated episode file
+            tmp.write_text(json.dumps(rec))
+            tmp.replace(path)
             n_done += 1
             el = time.time() - t_start
             print(f"[{n_done}] {c} t{t} e{e} success={success} {secs:.1f}s "
@@ -483,6 +508,33 @@ def analyze_stage11(own) -> int:
     return 0
 
 
+def dry_run(own) -> int:
+    """No env, no model: for each row the first 3 runnable units, with the instruction and the token text exactly as
+    unit_inputs() gives them, plus the token vector's norm and first values from --task-embeddings."""
+    original = {int(k): v for k, v in json.loads((ROOT / "results/libero_goal_ablation_v1/instructions.json").read_text())["original"].items()}
+    phrasings = json.loads(Path(own.phrasings).read_text()) if own.phrasings else None
+    ej = json.loads(Path(own.e2e_tokens).read_text()) if own.e2e_tokens else {}
+    e2e_tokens, e2e_reuse = ej.get("tokens"), ej.get("reuse", {})
+    unit_rows = json.loads(Path(own.unit_sentences).read_text())["rows"] if own.unit_sentences else None
+    emb = np.load(own.task_embeddings)
+    table = dict(zip(map(str, emb["tasks"]), emb["emb"]))
+    for c in own.conditions.split(","):
+        shown, skipped = 0, {}
+        for t in parse_tasks(own.tasks):
+            for e in range(own.episodes_per_task):
+                instr, z, skip = unit_inputs(c, t, e, original, phrasings, e2e_tokens, e2e_reuse, unit_rows)
+                if skip:
+                    skipped[skip] = skipped.get(skip, 0) + 1
+                    continue
+                if shown < 3:
+                    tok = "-" if z is None else (f"{z!r} |z|={np.linalg.norm(table[z]):.4f} z[:3]={np.round(table[z][:3], 4).tolist()}"
+                                                  if z in table else f"{z!r} MISSING FROM TABLE")
+                    print(f"[dry-run] {c:12s} t{t} e{e}  instruction={instr!r}  token={tok}")
+                    shown += 1
+        print(f"[dry-run] {c:12s} skipped: {skipped or 0}")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", required=True)
@@ -502,7 +554,11 @@ def main() -> int:
     ap.add_argument("--token-tasks", default="0-9", help="I-tok: token tasks k (k != t, k != (t+5) mod 10)")
     ap.add_argument("--tasks", default="0-9", help="scene tasks t to run")
     ap.add_argument("--v1-episodes", default="/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes")
+    ap.add_argument("--unit-sentences", default=None, help="results/train_100k/unit_sentences.json (100k rows)")
+    ap.add_argument("--dry-run", action="store_true", help="print instruction and token of the first 3 units per row; no env, no model")
     own, rest = ap.parse_known_args()
+    if own.dry_run:
+        return dry_run(own)
     if own.analyze:
         return analyze(own)
     if own.analyze_intention:
