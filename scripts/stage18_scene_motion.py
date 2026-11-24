@@ -9,7 +9,7 @@ Sources of copied code (read with `git show`, no checkout):
     (origin/claude/stage15-supervised-early); outer folds from results/stage15_supervised_early/config.json there.
   * EgoIntent folds: scripts/run_scene_cv.assign_folds (8 scene-grouped folds, as run_ladder_v1.Data).
 
-CPU only. Subcommands: labels, selftest, ego, libero, table.
+CPU only. Subcommands: labels, selftest, ego, libero, table, check18b (Stage 18b, prereg_18b.md).
 """
 from __future__ import annotations
 
@@ -700,6 +700,84 @@ def cmd_table(_args) -> int:
 
 
 # ----------------------------------------------------------------------
+# Stage 18b: within-video split, train accuracy, permuted-label sanity (prereg_18b.md)
+# ----------------------------------------------------------------------
+def cmd_check18b(_args) -> int:
+    t0 = time.time()
+    rows, Z, y, vids, _, _ = ego_data()
+    K = len(KEEP)
+    metric = lambda a, b: bal_acc(a, b, K)  # noqa: E731
+    uv = np.unique(vids)
+    gid = np.searchsorted(uv, vids)
+    W = video_boot_weights(uv, seed=0)
+    y_perm = y[np.random.default_rng(0).permutation(len(y))]
+    jobs = [("S", 0), ("M", 50), ("S+M", 50), ("M", 100), ("S+M", 100)]
+    out, boots, choices = [], {}, {}
+
+    def add(test, feat, p, yt, yh):
+        bb = boot_bal(yt, yh, gid, W, K)
+        boots[(test, feat, p)] = bb
+        maj = np.bincount(yt, minlength=K).argmax()
+        out.append({"test": test, "feature": feat, "p": p, "n": len(yt), "acc": float(np.mean(yh == yt)),
+                    "bal_acc": bal_acc(yt, yh, K), "macro_f1": macro_f1(yt, yh, K), "ci_lo": ci(bb)[0],
+                    "ci_hi": ci(bb)[1], "chance": 1 / K, "majority": float(np.mean(yt == maj))})
+
+    for test, yy in (("a_within_video", y), ("c_permuted", y_perm)):
+        outer = strat_folds(yy, 5, 0)
+        for feat, p in jobs:
+            X = ego_matrix(Z, feat, EGO_P.get(p, 1), vids)
+            path = WORK / f"b18_{test[0]}_{feat.replace('+', 'p')}_p{p}.json"
+            probs, ch = nested(X, yy, outer, lambda tr: strat_folds(yy[tr], 4, 1 + _held(outer, tr)),
+                               K, metric, path)
+            choices[f"{test}|{feat}|{p}"] = ch
+            add(test, feat, p, yy, probs.argmax(1))
+            log(f"18b {test} {feat} p{p}: bal_acc {out[-1]['bal_acc']:.3f} ({time.time() - t0:.0f}s)")
+        if test == "a_within_video":
+            state(f"18b (a) done in {time.time() - t0:.0f}s")
+    for feat, p in jobs:
+        X = ego_matrix(Z, feat, EGO_P.get(p, 1), vids)
+        add("b_train_fit_C100", feat, p, y, fit_predict(X, y, X, max(C_GRID), K).argmax(1))
+    bad = [r for r in out if r["test"] == "c_permuted" and r["ci_lo"] > 1 / K]
+    d = boots[("a_within_video", "S+M", 50)] - boots[("a_within_video", "S", 0)]
+    a = {(r["feature"], r["p"]): r for r in out if r["test"] == "a_within_video"}
+    lo = a[("S+M", 50)]["ci_lo"]
+    if bad:
+        verdict = "STOP: permuted labels above chance -> likely code bug: " + ", ".join(
+            f"{r['feature']} p{r['p']}" for r in bad)
+    elif lo >= 0.20:
+        same = ci(d)[0] <= 0 <= ci(d)[1]
+        verdict = ("Features carry verb information; Stage 18 chance level is due to new scenes. "
+                   + ("S ~ S+M: within-video learning is mainly scene/objects, not motion."
+                      if same else "Motion adds information over the first frame."))
+    else:
+        verdict = ("Frozen SigLIP + linear classifier is not enough to recognise EgoIntent verbs even in seen scenes; "
+                   "change features (temporal video features), not the split.")
+    R = RES
+    with (R / "kiem_trong_video.csv").open("w", newline="") as f:
+        w = csv.DictWriter(f, list(out[0]))
+        w.writeheader()
+        w.writerows(out)
+    md = ["# Stage 18b (side check, descriptive): EgoIntent verbs, within-video split", "",
+          "Balanced accuracy, %, 95% CI by video bootstrap (10,000, seed 0). Chance 10.0, majority-class acc 25.5.", "",
+          "| test | feature | p | acc | bal_acc [95% CI] | macro-F1 |", "|---|---|---:|---:|---|---:|"]
+    md += [f"| {r['test']} | {r['feature']} | {r['p']} | {100 * r['acc']:.1f} | {100 * r['bal_acc']:.1f} "
+           f"[{100 * r['ci_lo']:.1f}, {100 * r['ci_hi']:.1f}] | {100 * r['macro_f1']:.1f} |" for r in out]
+    md += ["", f"(a) (S+M p50) - S paired: {100 * float(np.mean(d)):+.1f} [{100 * ci(d)[0]:+.1f}, {100 * ci(d)[1]:+.1f}]",
+           "", f"**Reading (prereg_18b rules):** {verdict}"]
+    (R / "kiem_trong_video.md").write_text("\n".join(md) + "\n")
+    atomic_json(WORK / "b18_choices.json", choices)
+    state(f"18b done in {time.time() - t0:.0f}s: {verdict[:80]}")
+    print("\n".join(md))
+    return 1 if bad else 0
+
+
+def _held(outer, tr):
+    f = sorted(set(np.unique(outer).tolist()) - set(outer[tr].tolist()))
+    assert len(f) == 1
+    return f[0]
+
+
+# ----------------------------------------------------------------------
 # selftest (synthetic data)
 # ----------------------------------------------------------------------
 def cmd_selftest(_args) -> int:
@@ -770,12 +848,12 @@ def main() -> int:
     import torch
     torch.set_num_threads(int(os.environ.get("OMP_NUM_THREADS", "2")))
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["labels", "selftest", "ego", "libero", "table"])
+    ap.add_argument("cmd", choices=["labels", "selftest", "ego", "libero", "table", "check18b"])
     a = ap.parse_args()
     WORK.mkdir(parents=True, exist_ok=True)
     RES.mkdir(parents=True, exist_ok=True)
     return {"labels": cmd_labels, "selftest": cmd_selftest, "ego": cmd_ego, "libero": cmd_libero,
-            "table": cmd_table}[a.cmd](a)
+            "table": cmd_table, "check18b": cmd_check18b}[a.cmd](a)
 
 
 if __name__ == "__main__":
