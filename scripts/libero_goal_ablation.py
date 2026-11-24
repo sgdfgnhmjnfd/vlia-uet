@@ -43,6 +43,11 @@ E2E_CONDITIONS = ("E2E", "E2E-human")
 # results/train_100k/unit_sentences.json (--unit-sentences). Units marked "reuse" are not rolled out.
 UNIT_VLIA = ("E2E-sup-p25", "E2E-gen-p25")  # VLIA: token = T1 embedding of the unit's sentence, empty instruction
 UNIT_BASE = ("L-para", "L-goal", "L-E2E", "L-sup-p25", "L-gen-p25")  # baseline: the unit's sentence as the instruction
+# Bosung 20/11 (results/bosung_2026-11-20/prereg.md): closed-loop C row. Token = description of the task C predicted at
+# p = 25 (--e2e-tokens e2e_sup_cl_tokens.json, keyed by condition); empty instruction; NO unit is skipped or reused.
+CL_CONDITIONS = ("E2E-sup-p25-CL",)
+# New episodes of these rows / of a non-default --seed-base may only be written below BOSUNG_OUT (never into old folders).
+BOSUNG_OUT = "/media/dhqg/d3/vlia_outputs/bosung_2026-11-20"
 STAGE11_VLIA = ("I-only", "I-wrong", "I-goal", "I-para")
 STAGE11_BASE = ("correct", "empty")
 STAGE4_E0_9 = {"I-only": 20, "I-wrong": 0, "correct": 19, "empty": 0}  # gate R2
@@ -102,6 +107,10 @@ def unit_inputs(c: str, t: int, e: int, original: dict, phrasings, e2e_tokens, e
         if u["reuse"]:
             return None, None, f"reuses {u['reuse']}"
         return u["instruction"], (u["token_text"] if c in UNIT_VLIA else None), None
+    if c in CL_CONDITIONS:
+        if not e2e_tokens or k not in e2e_tokens.get(c, {}):
+            return None, None, "unit not in this row"
+        return "", e2e_tokens[c][k], None
     if c in E2E_CONDITIONS and k not in e2e_tokens:
         return None, None, "unit without a query demo"
     if c in GEN_CONDITIONS and (k not in e2e_tokens[c] or (not probe and reused(c, t, e, e2e_reuse))):
@@ -155,6 +164,7 @@ def run(own, rest) -> int:
     from lerobot.utils.random_utils import set_seed
 
     out = Path(own.out)
+    check_out(own)
     ep_dir = out / ("probe" if own.probe else "episodes")
     vid_dir = out / ("probe_videos" if own.probe else "videos")
     ep_dir.mkdir(parents=True, exist_ok=True)
@@ -175,7 +185,7 @@ def run(own, rest) -> int:
         if is_vlia:
             from policies.smolvla.modeling_smolvla import VLIASmolVLAPolicy
 
-            assert set(conditions) <= set(INTENTION_CONDITIONS) | set(UNIT_VLIA), conditions
+            assert set(conditions) <= set(INTENTION_CONDITIONS) | set(UNIT_VLIA) | set(CL_CONDITIONS), conditions
             policy = VLIASmolVLAPolicy.from_pretrained(cfg.policy.pretrained_path)
             policy.to(cfg.policy.device)
             emb = np.load(own.task_embeddings)
@@ -238,10 +248,11 @@ def run(own, rest) -> int:
             def render(vec_env):
                 frames.append(vec_env.envs[0].render())
 
-            set_seed(SEED0 + e)
+            seed = own.seed_base + e
+            set_seed(seed)
             t0 = time.time()
             with torch.no_grad():
-                ret = rollout(env, policy, env_pre, env_post, pre, post, seeds=[SEED0 + e], render_callback=render)
+                ret = rollout(env, policy, env_pre, env_post, pre, post, seeds=[seed], render_callback=render)
             secs = time.time() - t0
             success = bool(ret["success"][0].any())
             done = ret["done"][0].numpy()
@@ -249,9 +260,11 @@ def run(own, rest) -> int:
             video = vid_dir / f"{c}_t{t}_e{e}.mp4"
             if frames:
                 write_video(str(video), np.stack(frames), fps=sub.metadata.get("render_fps", 30))
-            rec = {"condition": c, "task": t, "episode": e, "seed": SEED0 + e, "init_state_id": e,
+            rec = {"condition": c, "task": t, "episode": e, "seed": seed, "seed_base": own.seed_base, "init_state_id": e,
                    "instruction": instr, "z_int_task": (z_task if is_vlia else None), "success": success, "n_steps": n_steps, "seconds": secs,
                    "video": str(video) if frames else None}
+            if "action" in ret:  # first 3 executed actions: tells whether two runs of a unit really differ
+                rec["first_actions"] = np.round(ret["action"][0, :3].float().numpy(), 6).tolist()
             if c.startswith("I-tok"):
                 rec["token_task"] = int(c[len("I-tok"):])
             tmp = path.with_suffix(".tmp")  # atomic: a power cut never leaves a truncated episode file
@@ -508,6 +521,14 @@ def analyze_stage11(own) -> int:
     return 0
 
 
+def check_out(own) -> None:
+    """New rows (closed-loop C) and non-default seeds write only below BOSUNG_OUT (or a /tmp test folder)."""
+    new = own.seed_base != SEED0 or any(c in CL_CONDITIONS for c in own.conditions.split(","))
+    o = str(Path(own.out).resolve())
+    if new and not (o.startswith(BOSUNG_OUT + "/") or o.startswith("/media/dhqg/d3/tmp/") or o.startswith("/tmp/")):
+        raise SystemExit(f"REFUSE: --out {o} is outside {BOSUNG_OUT} for a new row / seed base {own.seed_base}")
+
+
 def dry_run(own) -> int:
     """No env, no model: for each row the first 3 runnable units, with the instruction and the token text exactly as
     unit_inputs() gives them, plus the token vector's norm and first values from --task-embeddings."""
@@ -518,6 +539,8 @@ def dry_run(own) -> int:
     unit_rows = json.loads(Path(own.unit_sentences).read_text())["rows"] if own.unit_sentences else None
     emb = np.load(own.task_embeddings)
     table = dict(zip(map(str, emb["tasks"]), emb["emb"]))
+    check_out(own)
+    print(f"[dry-run] seed = {own.seed_base} + e, init_state_id = e, out = {own.out}")
     for c in own.conditions.split(","):
         shown, skipped = 0, {}
         for t in parse_tasks(own.tasks):
@@ -555,6 +578,7 @@ def main() -> int:
     ap.add_argument("--tasks", default="0-9", help="scene tasks t to run")
     ap.add_argument("--v1-episodes", default="/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes")
     ap.add_argument("--unit-sentences", default=None, help="results/train_100k/unit_sentences.json (100k rows)")
+    ap.add_argument("--seed-base", type=int, default=SEED0, help="seed of episode e = SEED_BASE + e (init state stays e)")
     ap.add_argument("--dry-run", action="store_true", help="print instruction and token of the first 3 units per row; no env, no model")
     own, rest = ap.parse_known_args()
     if own.dry_run:

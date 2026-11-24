@@ -1,0 +1,10 @@
+model,seed_base,success,n,wilson_lo,wilson_hi
+baseline,1000,55,300,0.1436,0.231
+baseline,2000,60,300,0.1587,0.2489
+baseline,3000,61,300,0.1617,0.2525
+vlia,1000,52,300,0.1347,0.2202
+vlia,2000,54,300,0.1407,0.2274
+vlia,3000,66,300,0.1768,0.2703
+vlia-baseline,1000,,300,-5.67,3.67
+vlia-baseline,2000,,300,-7.33,3.33
+vlia-baseline,3000,,300,-3.67,7.0

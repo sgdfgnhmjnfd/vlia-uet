@@ -1,0 +1,14 @@
+{
+ "bootstrap_B": 10000,
+ "bootstrap_seed": 0,
+ "ci": "Wilson 95%",
+ "mcnemar": "exact two-sided binomial",
+ "repo": "f872d18",
+ "g0": {
+  "seed1000_vs_old_success_equal": 10,
+  "seed1000_vs_old_steps_equal": 10,
+  "seed2000_identical_to_seed1000": 0,
+  "seconds_per_episode": 8.4,
+  "seed_has_effect": true
+ }
+}
