@@ -112,6 +112,32 @@ Sources: [`ladder_v1`](results/ladder_v1/summary.md), [`locked_test_final_v1`](r
 
 Sources: [`libero_goal_ablation_v1`](results/libero_goal_ablation_v1/summary.md), [`libero_intention_only_v1`](results/libero_intention_only_v1/summary.md). Correct token − empty: +20 points [+12, +28]. The token here is the SigLIP text embedding of the task description; it does not yet come from the video module.
 
+### Supplementary robot measurements (LIBERO-10, 25k checkpoints, 300 units)
+
+Pre-registered in [`results/bosung_2026-11-20/prereg.md`](results/bosung_2026-11-20/prereg.md); every deviation is in [`DEVIATIONS.md`](results/bosung_2026-11-20/DEVIATIONS.md).
+
+**Closed-loop classifier C.** Earlier, the row `E2E-sup-p25` (52/299) was a *built estimate*: on the 298 units where the supervised video classifier C (Stage 15) picked the right task, the `I-only` episode was reused. C was retrained from the raw demo videos (same code, same nested CV; 299/299 predictions equal the old ones) and VLIA was rolled out on all 299 units with the token C chose.
+
+| Row | Success | vs `E2E-sup-p25-CL` (paired, pp, bootstrap 95%) |
+|---|:-:|---|
+| `E2E-sup-p25-CL` (closed loop, new) | **51/299** (17.1%, Wilson 13.2–21.7) | — |
+| `E2E-sup-p25` (built estimate, unchanged) | 52/299 | −0.3 [−3.0, +2.3], McNemar p = 1 |
+| `E2E` (video module F → token) | 35/299 | +5.4 [+3.0, +8.0], 16 / 0 discordant |
+| `I-wrong` | 3/299 | +16.1 [+11.7, +20.4] |
+
+Source: [`c_vong_kin.md`](results/bosung_2026-11-20/c_vong_kin.md). With identical inputs (token, seed, initial state, identical first actions), 15/299 units still end differently from the old run: a 520-step rollout is not bit-reproducible, so this is the replay noise floor.
+
+**Evaluation seed.** The same 25k checkpoints rolled out again with rollout seeds 2000 + e and 3000 + e (training seed unchanged):
+
+| Model | seed 1000 | seed 2000 | seed 3000 | mean ± SD |
+|---|:-:|:-:|:-:|:-:|
+| Baseline, correct instruction | 55 | 60 | 61 | 58.7 ± 3.2 |
+| VLIA, empty instruction + correct token (`I-only`) | 52 | 54 | 66 | 57.3 ± 7.6 |
+
+VLIA − baseline per seed: −1.0, −2.0, +1.7 points (all intervals contain 0). Changing only the rollout seed changes the result of about 88–89 of 300 units for each model, so differences below about ±5 points are within evaluation noise. Source: [`seed_danh_gia.md`](results/bosung_2026-11-20/seed_danh_gia.md).
+
+**100k training.** VLIA `I-only` was trained on to 100,000 steps (resumable, bit-identical loss after each resume; [`results/train_100k/`](results/train_100k)). The final evaluation at 100k (and the 50k/75k learning-curve points) is running; numbers will be added when it finishes.
+
 ### Predicting what comes next
 
 | Question | Result | Source |
@@ -187,6 +213,8 @@ Stage numbers follow the thesis summary table. Most scripts have a `selftest` co
 | 8 | Improvement attempts, NEXT step, literature baselines | `$PY scripts/run_v3_supplementary.py {gate,stage1,stage2,next}`; `$PY scripts/v3_stage3_mllm.py [--analyze]`; `$PY scripts/run_literature_baselines.py {horizon,next,antgpt,antgpt-analyze,fusion}` | `v3_stage{1,2,3}_*/`, `v3_next_step/`, `lit_baselines_*/` |
 | 9 | Frames vs window; recognition; Qwen re-ranking | `$PY scripts/run_time_horizon.py frames`; `$PY scripts/run_stage9.py {recognition,qwen,antgpt,analyze}` | `stage9{a,b,c,d}_*/` |
 | 10 | Ask Qwen only when F is unsure | `$PY scripts/run_stage10_cascade.py` | `stage10_cascade/` |
+| 100k | VLIA training to 100k steps (resumable chain, `touch PAUSE` stops after the next checkpoint) | `bash scripts/run_train100k_chain.sh vlia`; final eval `bash scripts/run_final_eval_100k.sh …` | `train_100k/` |
+| Bosung | C retrained, closed-loop C row, evaluation seeds 2000/3000 | `bash scripts/run_bosung_c.sh`; `bash scripts/run_sau_train_2026-11-20.sh`; `$PY scripts/analyze_bosung.py` | `bosung_2026-11-20/` |
 
 All result folders are under [`results/`](results). Each has a `summary.md` or `summary.csv`, a `config.json`, and often an `INTERPRETATION.md`.
 
@@ -243,7 +271,8 @@ python scripts/test_stage10_cascade.py
 
 - The locked test has 4 videos, so its intervals are wide and should be read as exploratory.
 - The robot experiment is small (LIBERO-10, 10 episodes per task) and in simulation.
-- The intention token currently comes from the task description, not yet from the intention predicted from video.
+- In most LIBERO rows the intention token comes from the task description; in the `E2E` rows it is predicted from LIBERO demo videos (robot camera), not yet from egocentric human video.
+- LIBERO rollouts are not bit-reproducible run to run, and changing only the rollout seed flips about 30% of units; robot differences of a few points are within this noise. Only one training seed is reported.
 - EgoIntent comes from Ego4D, so encoders pre-trained on Ego4D (LaViLa, EgoVLP) could have seen the same footage; we do not use them ([`stage9d_feasibility`](results/stage9d_feasibility/FEASIBILITY.md)).
 
 ## Citation
