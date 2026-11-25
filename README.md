@@ -136,7 +136,21 @@ Source: [`c_vong_kin.md`](results/bosung_2026-11-20/c_vong_kin.md). With identic
 
 VLIA − baseline per seed: −1.0, −2.0, +1.7 points (all intervals contain 0). Changing only the rollout seed changes the result of about 88–89 of 300 units for each model, so differences below about ±5 points are within evaluation noise. Source: [`seed_danh_gia.md`](results/bosung_2026-11-20/seed_danh_gia.md).
 
-**100k training.** VLIA `I-only` was trained on to 100,000 steps (resumable, bit-identical loss after each resume; [`results/train_100k/`](results/train_100k)). The final evaluation at 100k (and the 50k/75k learning-curve points) is running; numbers will be added when it finishes.
+**VLIA trained to 100k steps.** VLIA `I-only` was trained on to 100,000 steps (resumable, bit-identical loss after each resume) and evaluated on the same 300 units, seed 1000 + e ([`final_100k/summary.md`](results/train_100k/final_100k/summary.md), plan in [`EVAL_PLAN.md`](results/train_100k/EVAL_PLAN.md)). The baseline stays at 25k.
+
+| VLIA row | 100k | 25k | 100k − 25k (paired, pp, bootstrap 95%) |
+|---|:-:|:-:|---|
+| `I-only` (correct token) | **71/300** (Wilson 19.2–28.8%) | 52/300 | +6.3 [+1.3, +11.3] |
+| `I-goal` | 65/300 | 44/300 | +7.0 [+2.3, +12.0] |
+| `I-para` | 61/300 | 52/300 | +3.0 [−1.7, +7.7] |
+| `E2E` (token from video module F) | **60/299** | 35/299 | +8.4 [+3.7, +13.0] |
+| `E2E-gen-p25` | 12/299 | 3/299 | +3.0 [+0.7, +5.7] |
+| `I-wrong` | 8/300 | 3/300 | +1.7 [0.0, +3.7] |
+
+- Rules T1–T5 (correct, paraphrased, goal and video tokens each beat the empty instruction or the wrong token, CI lower bound > 0) pass at 25k and at 100k; for example `I-only` − `empty` = +23.7 [+19.0, +28.7] at 100k.
+- Token vs instruction (VLIA vs baseline 25k on the same units): paraphrased and goal instructions break the baseline (1/300 each) but not the token (+20.0 and +21.3 points at 100k); `E2E` − `L-E2E` is −4.3 [−8.4, −0.3] at 25k and +4.0 [−0.7, +8.7] at 100k ([`token_vs_instruction.csv`](results/train_100k/final_100k/token_vs_instruction.csv), 25k in [`final_25k/`](results/train_100k/final_25k)). `I-only` at 100k − baseline `correct` at 25k: +5.3 [0.0, +10.7].
+- Learning curve (`I-only`, 10 episodes per task): 20 / 24 / 23 / 19 of 100 at 25k / 50k / 75k / 100k, flat on this small set ([`learning_curve.csv`](results/train_100k/final_100k/learning_curve.csv)).
+- The 100k − 25k intervals cover unit sampling only. Replaying the same inputs flips about 5% of units, and the rollout seed moves VLIA 25k between 52 and 66 (above), so the +6 to +8 point gains are of the same size as evaluation noise: a trend, not a settled improvement. One training seed.
 
 ### Predicting what comes next
 

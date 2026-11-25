@@ -1,0 +1,52 @@
+{
+ "vlia": [
+  "/media/dhqg/d3/vlia_outputs/train_100k/eval/vlia_100000"
+ ],
+ "base": [
+  "/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes",
+  "/media/dhqg/d3/vlia_outputs/train_100k/eval/baseline_25000"
+ ],
+ "vlia_25k": [
+  "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/episodes",
+  "/media/dhqg/d3/vlia_outputs/train_100k/eval/vlia_25000"
+ ],
+ "base_25k": [],
+ "curve": [
+  "/tmp/claude-1001/-media-dhqg-d3-vlia-uet/3eb78f27-5067-4cf5-abe0-539ea8e66202/scratchpad/curve/vlia_25000_curve",
+  "/media/dhqg/d3/vlia_outputs/train_100k/eval/vlia_50000_curve",
+  "/media/dhqg/d3/vlia_outputs/train_100k/eval/vlia_75000_curve",
+  "/tmp/claude-1001/-media-dhqg-d3-vlia-uet/3eb78f27-5067-4cf5-abe0-539ea8e66202/scratchpad/curve/vlia_100000_curve"
+ ],
+ "unit_sentences": "/media/dhqg/d3/vlia-100k/results/train_100k/unit_sentences.json",
+ "bootstrap": {
+  "B": 10000,
+  "seed": 0
+ },
+ "rows_found": [
+  "E2E",
+  "E2E-ask",
+  "E2E-gen-p25",
+  "E2E-sup-p25",
+  "I-goal",
+  "I-only",
+  "I-para",
+  "I-wrong",
+  "L-E2E",
+  "L-gen-p25",
+  "L-goal",
+  "L-para",
+  "L-sup-p25",
+  "correct",
+  "empty"
+ ],
+ "rows_found_25k": [
+  "E2E",
+  "E2E-ask",
+  "E2E-gen-p25",
+  "E2E-sup-p25",
+  "I-goal",
+  "I-only",
+  "I-para",
+  "I-wrong"
+ ]
+}

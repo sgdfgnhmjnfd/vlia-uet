@@ -1,0 +1,36 @@
+{
+ "vlia": [
+  "/media/dhqg/d3/vlia_outputs/libero_intention_only_v1/eval/episodes",
+  "/media/dhqg/d3/vlia_outputs/train_100k/eval/vlia_25000"
+ ],
+ "base": [
+  "/media/dhqg/d3/vlia_outputs/libero_goal_ablation_v1/episodes",
+  "/media/dhqg/d3/vlia_outputs/train_100k/eval/baseline_25000"
+ ],
+ "vlia_25k": [],
+ "base_25k": [],
+ "curve": [],
+ "unit_sentences": "/media/dhqg/d3/vlia-100k/results/train_100k/unit_sentences.json",
+ "bootstrap": {
+  "B": 10000,
+  "seed": 0
+ },
+ "rows_found": [
+  "E2E",
+  "E2E-ask",
+  "E2E-gen-p25",
+  "E2E-sup-p25",
+  "I-goal",
+  "I-only",
+  "I-para",
+  "I-wrong",
+  "L-E2E",
+  "L-gen-p25",
+  "L-goal",
+  "L-para",
+  "L-sup-p25",
+  "correct",
+  "empty"
+ ],
+ "rows_found_25k": []
+}
