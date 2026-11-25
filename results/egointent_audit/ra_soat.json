@@ -1,0 +1,270 @@
+{
+ "scenes": {
+  "art_studio": 1,
+  "bedroom": 2,
+  "clothing_closet": 1,
+  "deck": 1,
+  "farm": 2,
+  "garage": 3,
+  "hallway": 1,
+  "kitchen": 5,
+  "laundry_room": 2,
+  "living_room": 2,
+  "space": 1,
+  "workshop": 5,
+  "yard": 1
+ },
+ "fold_scenes": {
+  "0": [
+   "workshop"
+  ],
+  "1": [
+   "kitchen"
+  ],
+  "2": [
+   "garage"
+  ],
+  "3": [
+   "farm"
+  ],
+  "4": [
+   "hallway",
+   "living_room"
+  ],
+  "5": [
+   "bedroom",
+   "yard"
+  ],
+  "6": [
+   "clothing_closet",
+   "space"
+  ],
+  "7": [
+   "art_studio",
+   "deck",
+   "laundry_room"
+  ]
+ },
+ "Ha": {
+  "cap_co_test": 70,
+  "train0": 0,
+  "video_train_lt3": 0,
+  "test_lt5": 20,
+  "tv_mean": 0.28483337952432086,
+  "tv_max": 0.44889235801367827
+ },
+ "Hb": {
+  "lop_gt50_1canh": [
+   "wipe",
+   "position",
+   "align"
+  ],
+  "lop_gt50_1video": [
+   "wipe"
+  ]
+ },
+ "Hc": {
+  "ti_le_2dongtu": 0.054945054945054944,
+  "ti_le_and_then_phay": 0.07592407592407592,
+  "cap_dong_tu_cung_cau": [
+   "adjust+wipe: 7",
+   "adjust+position: 6",
+   "adjust+hold: 5",
+   "hold+walk: 5",
+   "grasp+position: 5",
+   "hold+position: 3"
+  ]
+ },
+ "Hf": {
+  "S18 S|0": {
+   "bal_acc": 0.11225794368055879,
+   "acc": 0.17082917082917082,
+   "recall0": 1,
+   "top2_du_doan": 0.5774225774225774,
+   "loi_gan_nghia": 0.21445783132530122,
+   "lop_du_doan_nhieu": [
+    "place 0.29",
+    "pick_up 0.28",
+    "hold 0.14"
+   ]
+  },
+  "S18 M|50": {
+   "bal_acc": 0.09915123736100248,
+   "acc": 0.12287712287712288,
+   "recall0": 0,
+   "top2_du_doan": 0.4225774225774226,
+   "loi_gan_nghia": 0.23462414578587698,
+   "lop_du_doan_nhieu": [
+    "hold 0.21",
+    "place 0.21",
+    "pick_up 0.14"
+   ]
+  },
+  "S18 S+M|50": {
+   "bal_acc": 0.10364320539550347,
+   "acc": 0.15084915084915085,
+   "recall0": 2,
+   "top2_du_doan": 0.48951048951048953,
+   "loi_gan_nghia": 0.20352941176470588,
+   "lop_du_doan_nhieu": [
+    "place 0.26",
+    "pick_up 0.23",
+    "adjust 0.15"
+   ]
+  },
+  "S18 S+M|100": {
+   "bal_acc": 0.1250035219256796,
+   "acc": 0.1798201798201798,
+   "recall0": 2,
+   "top2_du_doan": 0.5264735264735265,
+   "loi_gan_nghia": 0.21193666260657734,
+   "lop_du_doan_nhieu": [
+    "place 0.31",
+    "pick_up 0.21",
+    "hold 0.13"
+   ]
+  },
+  "S19 S|0": {
+   "bal_acc": 0.09775959675284851,
+   "acc": 0.11588411588411589,
+   "recall0": 1,
+   "top2_du_doan": 0.3156843156843157,
+   "loi_gan_nghia": 0.17288135593220338,
+   "lop_du_doan_nhieu": [
+    "place 0.18",
+    "pick_up 0.14",
+    "walk 0.13"
+   ]
+  },
+  "S19 M|50": {
+   "bal_acc": 0.11876820184628108,
+   "acc": 0.15784215784215785,
+   "recall0": 1,
+   "top2_du_doan": 0.3966033966033966,
+   "loi_gan_nghia": 0.18386714116251482,
+   "lop_du_doan_nhieu": [
+    "place 0.21",
+    "pick_up 0.19",
+    "hold 0.12"
+   ]
+  },
+  "S19 S+M|50": {
+   "bal_acc": 0.11857174299983306,
+   "acc": 0.15784215784215785,
+   "recall0": 2,
+   "top2_du_doan": 0.37362637362637363,
+   "loi_gan_nghia": 0.17319098457888493,
+   "lop_du_doan_nhieu": [
+    "place 0.20",
+    "pick_up 0.17",
+    "grasp 0.12"
+   ]
+  },
+  "S19 S+M|100": {
+   "bal_acc": 0.17810490190476824,
+   "acc": 0.1998001998001998,
+   "recall0": 0,
+   "top2_du_doan": 0.33666333666333664,
+   "loi_gan_nghia": 0.15355805243445692,
+   "lop_du_doan_nhieu": [
+    "place 0.19",
+    "pick_up 0.14",
+    "adjust 0.11"
+   ]
+  }
+ },
+ "Hd": {
+  "trung_vi_buoc_s": 1.7666666666666666,
+  "tb_buoc_s": 2.5402597402597404,
+  "trung_vi_p25_s": 0.23333333333333334,
+  "trung_vi_p50_s": 0.7333333333333333,
+  "trung_vi_p100_s": 1.7666666666666666,
+  "trung_vi_khoang_khung_s": 0.23333333333333334,
+  "p50_lt_05s": 300,
+  "p50_lt_1s": 605,
+  "p50_khung_lap": 20,
+  "fps": [
+   30.0
+  ],
+  "M50_norm_trung_vi": 0.2405617993221759,
+  "spearman_dodai_recall_S18": [
+   0.4012176588288426,
+   0.2504960035253277
+  ],
+  "spearman_dodai_recall_S19": [
+   0.10334394242561099,
+   0.7763340602409097
+  ]
+ },
+ "He": {
+  "rows": [
+   {
+    "dac_trung": "SigLIP S",
+    "cung_video": 0.986013986013986,
+    "ky_vong_cung_video": 0.043144855144855145,
+    "cung_canh": 0.9920079920079921,
+    "ky_vong_cung_canh": 0.11562237762237762,
+    "cung_dong_tu": 0.3246753246753247,
+    "ky_vong_cung_dong_tu": 0.14130269730269732,
+    "cung_dong_tu_canh_khac": 0.13286713286713286,
+    "ky_vong_canh_khac": 0.13473678823822233,
+    "boi_cung_video": 22.85357043623229,
+    "boi_dong_tu_canh_khac": 0.9861236459950061
+   },
+   {
+    "dac_trung": "SigLIP S+M p50 (L2 từng khối rồi ghép)",
+    "cung_video": 0.9140859140859141,
+    "ky_vong_cung_video": 0.043144855144855145,
+    "cung_canh": 0.958041958041958,
+    "ky_vong_cung_canh": 0.11562237762237762,
+    "cung_dong_tu": 0.28471528471528473,
+    "ky_vong_cung_dong_tu": 0.14130269730269732,
+    "cung_dong_tu_canh_khac": 0.11888111888111888,
+    "ky_vong_canh_khac": 0.13473678823822233,
+    "boi_cung_video": 21.186440677966104,
+    "boi_dong_tu_canh_khac": 0.8823211569429003
+   },
+   {
+    "dac_trung": "SigLIP M p50",
+    "cung_video": 0.7262737262737263,
+    "ky_vong_cung_video": 0.043144855144855145,
+    "cung_canh": 0.7782217782217782,
+    "ky_vong_cung_canh": 0.11562237762237762,
+    "cung_dong_tu": 0.30569430569430567,
+    "ky_vong_cung_dong_tu": 0.14130269730269732,
+    "cung_dong_tu_canh_khac": 0.15184815184815184,
+    "ky_vong_canh_khac": 0.13473678823822233,
+    "boi_cung_video": 16.833379642493288,
+    "boi_dong_tu_canh_khac": 1.1269984525657213
+   },
+   {
+    "dac_trung": "VideoMAE S+M p50 (= vector clip V50)",
+    "cung_video": 0.5764235764235764,
+    "ky_vong_cung_video": 0.043144855144855145,
+    "cung_canh": 0.6343656343656343,
+    "ky_vong_cung_canh": 0.11562237762237762,
+    "cung_dong_tu": 0.3066933066933067,
+    "ky_vong_cung_dong_tu": 0.14130269730269732,
+    "cung_dong_tu_canh_khac": 0.15484515484515485,
+    "ky_vong_canh_khac": 0.13473678823822233,
+    "boi_cung_video": 13.3601926461054,
+    "boi_dong_tu_canh_khac": 1.149241843076887
+   },
+   {
+    "dac_trung": "VideoMAE S",
+    "cung_video": 0.8111888111888111,
+    "ky_vong_cung_video": 0.043144855144855145,
+    "cung_canh": 0.8441558441558441,
+    "ky_vong_cung_canh": 0.11562237762237762,
+    "cung_dong_tu": 0.2977022977022977,
+    "ky_vong_cung_dong_tu": 0.14130269730269732,
+    "cung_dong_tu_canh_khac": 0.14185814185814186,
+    "ky_vong_canh_khac": 0.13473678823822233,
+    "boi_cung_video": 18.80151894044642,
+    "boi_dong_tu_canh_khac": 1.052853817528503
+   }
+  ],
+  "ky_vong_cung_dong_tu_trong_cung_video": 0.24565369073944324
+ },
+ "giay": 30.279601335525513
+}

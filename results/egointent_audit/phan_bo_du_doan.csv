@@ -1,0 +1,9 @@
+cau_hinh,bal_acc,acc,recall0,top2_du_doan,loi_gan_nghia,lop_du_doan_nhieu
+S18 S|0,0.1123,0.1708,1,0.5774,0.2145,place 0.29; pick_up 0.28; hold 0.14
+S18 M|50,0.0992,0.1229,0,0.4226,0.2346,hold 0.21; place 0.21; pick_up 0.14
+S18 S+M|50,0.1036,0.1508,2,0.4895,0.2035,place 0.26; pick_up 0.23; adjust 0.15
+S18 S+M|100,0.125,0.1798,2,0.5265,0.2119,place 0.31; pick_up 0.21; hold 0.13
+S19 S|0,0.0978,0.1159,1,0.3157,0.1729,place 0.18; pick_up 0.14; walk 0.13
+S19 M|50,0.1188,0.1578,1,0.3966,0.1839,place 0.21; pick_up 0.19; hold 0.12
+S19 S+M|50,0.1186,0.1578,2,0.3736,0.1732,place 0.20; pick_up 0.17; grasp 0.12
+S19 S+M|100,0.1781,0.1998,0,0.3367,0.1536,place 0.19; pick_up 0.14; adjust 0.11

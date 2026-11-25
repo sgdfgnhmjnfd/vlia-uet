@@ -1,0 +1,9 @@
+fold,canh_test,buoc_test,video_test,so_lop_test,lop_nhieu_nhat_train,ti_le_train,lop_nhieu_nhat_test,ti_le_test,tv_train_test
+0,workshop,216,5,9,place,0.2892,align,0.1898,0.373
+1,kitchen,108,5,9,place,0.2464,place,0.3241,0.2056
+2,garage,143,3,10,place,0.2611,place,0.2168,0.2179
+3,farm,97,2,9,place,0.2533,place,0.268,0.2417
+4,hallway|living_room,127,3,9,place,0.2414,place,0.3465,0.2529
+5,bedroom|yard,150,3,9,place,0.255,wipe,0.38,0.357
+6,clothing_closet|space,57,2,5,place,0.2405,place,0.4912,0.4489
+7,art_studio|deck|laundry_room,103,4,10,place,0.2561,place,0.2427,0.1816

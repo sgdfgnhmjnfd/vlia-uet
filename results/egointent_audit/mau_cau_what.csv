@@ -1,0 +1,51 @@
+lop,what,video,canh,do_dai_s,dong_tu_lop_trong_cau
+place,place the bolt on the lift arm,9a473135,garage,4.4,place
+place,placing screwdriver on lift arm,9a473135,garage,5.7667,place
+place,placing red cloth into washing machine,6644d6c3,laundry_room,0.8667,place
+place,placing scissors on the table,e2c38cc3,workshop,0.9667,place
+place,placing a glass on the drainboard,c2e6d807,living_room,4.8,place
+pick_up,pick up nail gun,3ae7ab6b,workshop,1.3,pick_up
+pick_up,pick up a pink eraser from the table with the left hand,b2cdc6c2,workshop,1.4,pick_up
+pick_up,pick up tape strip from cutting mat,e2c38cc3,workshop,3.4667,pick_up
+pick_up,picking up wine glasses,c2e6d807,living_room,3.7333,pick_up
+pick_up,picking up a stone from the border with the right hand,1fd2bbfe,farm,4.3667,pick_up
+grasp,grasp green bowl,6d738e16,kitchen,0.4667,grasp
+grasp,grasp loose wood strip,3ae7ab6b,workshop,0.4,grasp
+grasp,grasps a retractable knife on the rack with the left hand,b2cdc6c2,workshop,2.4333,grasp
+grasp,grasp the rake with both hands,1fd2bbfe,farm,0.8667,grasp
+grasp,grasping handle of yellow bucket,02d1f024,farm,5.2333,grasp
+wipe,wiping the window glass with a cloth,f6fea609,bedroom,1.9,wipe
+wipe,wipe window glass with towel,f6fea609,bedroom,4.7333,wipe
+wipe,wipe face with right arm,9a473135,garage,1.6,wipe
+wipe,wipe vent grille slats with right hand,f8945922,hallway,1.9,wipe
+wipe,wipe right hand on trousers,edf2c742,workshop,4.3,wipe
+hold,holding a squeegee against the window frame,f6fea609,bedroom,0.0333,hold
+hold,hold vent cover open,f8945922,hallway,6.2,hold
+hold,holding a white plate in front of the open dishwasher,cd8590b6,kitchen,4.6667,hold
+hold,hold the top dishwasher rack,cd8590b6,kitchen,1.6667,hold
+hold,holding a measuring spoon with detergent over the open drawer,6644d6c3,laundry_room,3.2333,hold
+position,positioning the green basin,6d738e16,kitchen,0.6667,position
+position,positioning a thin wood slat vertically,3ae7ab6b,workshop,1.4,position
+position,position the nail gun,3ae7ab6b,workshop,0.3333,position
+position,positioning wood piece,3ae7ab6b,workshop,2.0667,position
+position,positioning polythene cover with left hand and aiming staple gun with right,1fd2bbfe,farm,7.1333,position
+adjust,adjusting vise grips on suspension component,9a473135,garage,3.2333,adjust
+adjust,adjusts engine component with pliers,edf2c742,workshop,2.0,adjust
+adjust,adjust head-mounted camera while holding spirit level,b2cdc6c2,workshop,3.8,adjust|hold
+adjust,adjusting the black plastic liner into the corner of the wooden bed,1fd2bbfe,farm,0.4,adjust
+adjust,adjusting the black plastic sheet along the wooden frame edge,1fd2bbfe,farm,0.4667,adjust
+remove,remove socks from drying rack,ce3ef2da,bedroom,1.2333,remove
+remove,remove vise grips from suspension linkage,9a473135,garage,2.7667,remove
+remove,removes food processor lid,97c1c805,kitchen,1.2333,remove
+remove,remove debris from engine,edf2c742,workshop,2.9333,remove
+remove,removing debris from engine with pliers,edf2c742,workshop,1.8667,remove
+align,aligning the towel edges,ce3ef2da,bedroom,1.8,align
+align,aligning a small wood block against another block,3ae7ab6b,workshop,0.4,align
+align,aligning a spacer block against the wood slat,3ae7ab6b,workshop,0.7333,align
+align,aligning the spirit level on the plywood,b2cdc6c2,workshop,5.5667,align
+align,aligning level on table,b2cdc6c2,workshop,8.6333,align
+walk,walk to wheel hub,9a473135,garage,1.4,walk
+walk,walk towards tool chest,9a473135,garage,1.5333,walk
+walk,walking towards the cat,8301a3fc,kitchen,7.4333,walk
+walk,walking through the hallway,6644d6c3,laundry_room,5.6333,walk
+walk,walking into the laundry room,6644d6c3,laundry_room,6.3333,walk

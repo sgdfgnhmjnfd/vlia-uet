@@ -1,0 +1,6 @@
+dac_trung,cung_video,ky_vong_cung_video,cung_canh,ky_vong_cung_canh,cung_dong_tu,ky_vong_cung_dong_tu,cung_dong_tu_canh_khac,ky_vong_canh_khac,boi_cung_video,boi_dong_tu_canh_khac
+SigLIP S,0.986,0.0431,0.992,0.1156,0.3247,0.1413,0.1329,0.1347,22.8536,0.9861
+SigLIP S+M p50 (L2 từng khối rồi ghép),0.9141,0.0431,0.958,0.1156,0.2847,0.1413,0.1189,0.1347,21.1864,0.8823
+SigLIP M p50,0.7263,0.0431,0.7782,0.1156,0.3057,0.1413,0.1518,0.1347,16.8334,1.127
+VideoMAE S+M p50 (= vector clip V50),0.5764,0.0431,0.6344,0.1156,0.3067,0.1413,0.1548,0.1347,13.3602,1.1492
+VideoMAE S,0.8112,0.0431,0.8442,0.1156,0.2977,0.1413,0.1419,0.1347,18.8015,1.0529
