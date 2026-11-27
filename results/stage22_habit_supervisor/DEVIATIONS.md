@@ -1,0 +1,10 @@
+# Stage 22 deviations (written before any modelling)
+
+1. **`sid` is a scenario id, not a session**, and each task has one `unit_name`, so grouped CV by `sid` / `unit_name` is impossible. Groups come from `input_key` (date / id / block). S7414: 5 recording blocks (main result, CV by block). S8789: 190/208 episodes in one block, so random CV only, reported as "same recording session" (secondary). There is no person id, so "unseen person" cannot be claimed.
+2. **k is not released for S7414 / S8789.** k is labelled by two independent annotators (Trang, Hưng) from the human video before the robot reaches, without model outputs; Cohen's kappa is reported; disagreements are excluded. The robot grasp position is a cross-check only. S7414: only the first pointing of each episode (306).
+3. **S9875–S9878 (k-th donut, k in the instruction) not used:** each k was recorded as one contiguous block (k = 1, 2, 3 on 24/04 in blocks 00/01/02, k = 4 on 27/04), so date, light or setup can reveal k (scene leak). Not downloaded.
+4. **Pedal anchors differ from the prompt.** In S7414 the human pointing subtask (44) and the robot pick subtask (40) both start at frame 0; the pointing subtask ends at about frame 60–85, then the robot reaches. The robot moves from frame ~12–28 (retracting). So `t_point` is not a pedal press; the label clip runs from frame 0 to the end of the first pointing subtask. In S8789 both subtasks span the whole episode (no pointing anchor at all).
+5. **Robot reach onset (heuristic, EE speed after a rest) is not reliable yet:** it falls before the end of pointing in 113/306 episodes and is not found in some. To be checked before Step 3; annotators note `robot_moving` when they see it.
+6. **The four donuts are not identical** (different toppings/colours); the prompt assumed identical targets. Whether the arrangement changes between episodes is not checked yet.
+7. Videos in `full/` are H.264 (not AV1); decoded with PyAV / torchcodec, nothing installed.
+8. Downloads used the HF token Trang provided (rate limit without it); the token is not in any file of the repo.
