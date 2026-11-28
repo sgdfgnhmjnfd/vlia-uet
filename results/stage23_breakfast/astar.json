@@ -1,0 +1,66 @@
+[
+ {
+  "action": "pour_milk",
+  "K": 4,
+  "dishes": [
+   "cereals",
+   "coffee",
+   "milk",
+   "pancake"
+  ],
+  "n_total": 681
+ },
+ {
+  "action": "crack_egg",
+  "K": 3,
+  "dishes": [
+   "friedegg",
+   "pancake",
+   "scrambledegg"
+  ],
+  "n_total": 496
+ },
+ {
+  "action": "take_plate",
+  "K": 6,
+  "dishes": [
+   "friedegg",
+   "juice",
+   "pancake",
+   "salat",
+   "sandwich",
+   "scrambledegg"
+  ],
+  "n_total": 427
+ },
+ {
+  "action": "butter_pan",
+  "K": 3,
+  "dishes": [
+   "friedegg",
+   "pancake",
+   "scrambledegg"
+  ],
+  "n_total": 225
+ },
+ {
+  "action": "take_cup",
+  "K": 3,
+  "dishes": [
+   "coffee",
+   "milk",
+   "tea"
+  ],
+  "n_total": 212
+ },
+ {
+  "action": "pour_oil",
+  "K": 3,
+  "dishes": [
+   "friedegg",
+   "pancake",
+   "scrambledegg"
+  ],
+  "n_total": 158
+ }
+]
